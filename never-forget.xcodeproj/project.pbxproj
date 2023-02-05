@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19D299028AE00EBA6A3 /* AppDelegate.swift */; };
 		3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */; };
-		3551F1A2299028AE00EBA6A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* ViewController.swift */; };
-		3551F1A5299028AE00EBA6A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1A3299028AE00EBA6A3 /* Main.storyboard */; };
+		3551F1A2299028AE00EBA6A3 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* RootViewController.swift */; };
 		3551F1A8299028AE00EBA6A3 /* never_forget.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A6299028AE00EBA6A3 /* never_forget.xcdatamodeld */; };
 		3551F1AA299028AF00EBA6A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1A9299028AF00EBA6A3 /* Assets.xcassets */; };
 		3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */; };
@@ -20,12 +19,12 @@
 		3551F19A299028AE00EBA6A3 /* never-forget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "never-forget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3551F19D299028AE00EBA6A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3551F1A1299028AE00EBA6A3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3551F1A4299028AE00EBA6A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3551F1A1299028AE00EBA6A3 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		3551F1A7299028AE00EBA6A3 /* never_forget.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = never_forget.xcdatamodel; sourceTree = "<group>"; };
 		3551F1A9299028AF00EBA6A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3551F1AC299028AF00EBA6A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3551F1AE299028AF00EBA6A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3551F1B42990291D00EBA6A3 /* never-forget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "never-forget.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +57,24 @@
 		3551F19C299028AE00EBA6A3 /* never-forget */ = {
 			isa = PBXGroup;
 			children = (
-				3551F19D299028AE00EBA6A3 /* AppDelegate.swift */,
-				3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */,
-				3551F1A1299028AE00EBA6A3 /* ViewController.swift */,
-				3551F1A3299028AE00EBA6A3 /* Main.storyboard */,
+				3551F1B529902AA300EBA6A3 /* App */,
+				3551F1B42990291D00EBA6A3 /* never-forget.entitlements */,
+				3551F1A1299028AE00EBA6A3 /* RootViewController.swift */,
 				3551F1A9299028AF00EBA6A3 /* Assets.xcassets */,
 				3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */,
 				3551F1AE299028AF00EBA6A3 /* Info.plist */,
 				3551F1A6299028AE00EBA6A3 /* never_forget.xcdatamodeld */,
 			);
 			path = "never-forget";
+			sourceTree = "<group>";
+		};
+		3551F1B529902AA300EBA6A3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3551F19D299028AE00EBA6A3 /* AppDelegate.swift */,
+				3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +87,8 @@
 				3551F196299028AE00EBA6A3 /* Sources */,
 				3551F197299028AE00EBA6A3 /* Frameworks */,
 				3551F198299028AE00EBA6A3 /* Resources */,
+				3551F1B729902B3900EBA6A3 /* SwiftLint */,
+				3551F1B629902B2900EBA6A3 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -130,18 +139,56 @@
 			files = (
 				3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */,
 				3551F1AA299028AF00EBA6A3 /* Assets.xcassets in Resources */,
-				3551F1A5299028AE00EBA6A3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3551F1B629902B2900EBA6A3 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		3551F1B729902B3900EBA6A3 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3551F196299028AE00EBA6A3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3551F1A2299028AE00EBA6A3 /* ViewController.swift in Sources */,
+				3551F1A2299028AE00EBA6A3 /* RootViewController.swift in Sources */,
 				3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* never_forget.xcdatamodeld in Sources */,
@@ -151,14 +198,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3551F1A3299028AE00EBA6A3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3551F1A4299028AE00EBA6A3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -289,6 +328,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "never-forget/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
@@ -296,9 +336,9 @@
 				INFOPLIST_FILE = "never-forget/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,9 +346,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "makar.urbanov.never-forget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -317,6 +360,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "never-forget/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
@@ -324,9 +368,9 @@
 				INFOPLIST_FILE = "never-forget/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,9 +378,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "makar.urbanov.never-forget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
