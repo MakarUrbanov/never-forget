@@ -5,16 +5,23 @@
 //  Created by makar on 2/5/23.
 //
 
+import SwiftUI
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
+  var coordinator: MainCoordinator?
 
   func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
-    window?.rootViewController = UINavigationController(rootViewController: RootViewController())
+
+    let coordinator = MainCoordinator(UITabBarController())
+    coordinator.start()
+    self.coordinator = coordinator
+
+    window?.rootViewController = coordinator.tabBarController
     window?.makeKeyAndVisible()
   }
 

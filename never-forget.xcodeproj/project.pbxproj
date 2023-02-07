@@ -9,22 +9,40 @@
 /* Begin PBXBuildFile section */
 		3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19D299028AE00EBA6A3 /* AppDelegate.swift */; };
 		3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */; };
-		3551F1A2299028AE00EBA6A3 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* RootViewController.swift */; };
+		3551F1A2299028AE00EBA6A3 /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* MainTab.swift */; };
 		3551F1A8299028AE00EBA6A3 /* never_forget.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A6299028AE00EBA6A3 /* never_forget.xcdatamodeld */; };
 		3551F1AA299028AF00EBA6A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1A9299028AF00EBA6A3 /* Assets.xcassets */; };
 		3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */; };
+		356CD87F2991858100EA9D2D /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */; };
+		356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD8802991859D00EA9D2D /* TabCoordinator.swift */; };
+		356CD88429918E6200EA9D2D /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88329918E6200EA9D2D /* MainTabBarController.swift */; };
+		356CD88929918EBB00EA9D2D /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88629918EBB00EA9D2D /* BaseTabBarController.swift */; };
+		356CD88A29918EBB00EA9D2D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88729918EBB00EA9D2D /* BaseViewController.swift */; };
+		356CD88B29918EBB00EA9D2D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88829918EBB00EA9D2D /* BaseView.swift */; };
+		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
+		35D02D322990486C00536AB8 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D312990486C00536AB8 /* MainCoordinator.swift */; };
+		35E8415F29929D7000BF537E /* ListTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8415E29929D7000BF537E /* ListTab.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3551F19A299028AE00EBA6A3 /* never-forget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "never-forget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3551F19D299028AE00EBA6A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3551F1A1299028AE00EBA6A3 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		3551F1A1299028AE00EBA6A3 /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		3551F1A7299028AE00EBA6A3 /* never_forget.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = never_forget.xcdatamodel; sourceTree = "<group>"; };
 		3551F1A9299028AF00EBA6A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3551F1AC299028AF00EBA6A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3551F1AE299028AF00EBA6A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3551F1B42990291D00EBA6A3 /* never-forget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "never-forget.entitlements"; sourceTree = "<group>"; };
+		356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
+		356CD8802991859D00EA9D2D /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
+		356CD88329918E6200EA9D2D /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		356CD88629918EBB00EA9D2D /* BaseTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
+		356CD88729918EBB00EA9D2D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		356CD88829918EBB00EA9D2D /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		35D02D312990486C00536AB8 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		35E8415E29929D7000BF537E /* ListTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTab.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,13 +75,15 @@
 		3551F19C299028AE00EBA6A3 /* never-forget */ = {
 			isa = PBXGroup;
 			children = (
+				35E8415A299299BB00BF537E /* New Group */,
 				3551F1B529902AA300EBA6A3 /* App */,
-				3551F1B42990291D00EBA6A3 /* never-forget.entitlements */,
-				3551F1A1299028AE00EBA6A3 /* RootViewController.swift */,
-				3551F1A9299028AF00EBA6A3 /* Assets.xcassets */,
-				3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */,
-				3551F1AE299028AF00EBA6A3 /* Info.plist */,
-				3551F1A6299028AE00EBA6A3 /* never_forget.xcdatamodeld */,
+				3551F1B929902DF000EBA6A3 /* Assets */,
+				356CD88229918E4100EA9D2D /* Controllers */,
+				3551F1B829902CF000EBA6A3 /* CoreData */,
+				35D02D2E2990484400536AB8 /* Coordinators */,
+				356CD88529918E6700EA9D2D /* Extensions */,
+				3551F1BA29902E2800EBA6A3 /* SupportingFiles */,
+				35E8415B299299BE00BF537E /* Views */,
 			);
 			path = "never-forget";
 			sourceTree = "<group>";
@@ -75,6 +95,117 @@
 				3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		3551F1B829902CF000EBA6A3 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				3551F1A6299028AE00EBA6A3 /* never_forget.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		3551F1B929902DF000EBA6A3 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3551F1A9299028AF00EBA6A3 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		3551F1BA29902E2800EBA6A3 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				3551F1B42990291D00EBA6A3 /* never-forget.entitlements */,
+				3551F1AE299028AF00EBA6A3 /* Info.plist */,
+				3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		356CD87D2991857100EA9D2D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				35D02D2F2990485000536AB8 /* Coordinator.swift */,
+				356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */,
+				356CD8802991859D00EA9D2D /* TabCoordinator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		356CD88229918E4100EA9D2D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				356CD88C29918ECC00EA9D2D /* Base */,
+				356CD88329918E6200EA9D2D /* MainTabBarController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		356CD88529918E6700EA9D2D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		356CD88C29918ECC00EA9D2D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				356CD88629918EBB00EA9D2D /* BaseTabBarController.swift */,
+				356CD88729918EBB00EA9D2D /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		356CD88E29918EF300EA9D2D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				356CD88829918EBB00EA9D2D /* BaseView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		35D02D2E2990484400536AB8 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				356CD87D2991857100EA9D2D /* Protocols */,
+				35D02D312990486C00536AB8 /* MainCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		35E8415A299299BB00BF537E /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		35E8415B299299BE00BF537E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				35E8415D29929D5400BF537E /* ListTab */,
+				35E8415C29929AE800BF537E /* MainTab */,
+				356CD88E29918EF300EA9D2D /* Base */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		35E8415C29929AE800BF537E /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				3551F1A1299028AE00EBA6A3 /* MainTab.swift */,
+			);
+			path = MainTab;
+			sourceTree = "<group>";
+		};
+		35E8415D29929D5400BF537E /* ListTab */ = {
+			isa = PBXGroup;
+			children = (
+				35E8415E29929D7000BF537E /* ListTab.swift */,
+			);
+			path = ListTab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,10 +319,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3551F1A2299028AE00EBA6A3 /* RootViewController.swift in Sources */,
+				3551F1A2299028AE00EBA6A3 /* MainTab.swift in Sources */,
+				35D02D322990486C00536AB8 /* MainCoordinator.swift in Sources */,
+				356CD88A29918EBB00EA9D2D /* BaseViewController.swift in Sources */,
+				356CD88B29918EBB00EA9D2D /* BaseView.swift in Sources */,
+				356CD88929918EBB00EA9D2D /* BaseTabBarController.swift in Sources */,
+				356CD88429918E6200EA9D2D /* MainTabBarController.swift in Sources */,
+				356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */,
 				3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */,
+				35E8415F29929D7000BF537E /* ListTab.swift in Sources */,
+				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* never_forget.xcdatamodeld in Sources */,
+				356CD87F2991858100EA9D2D /* NavigationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,12 +468,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "never-forget/never-forget.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "never-forget/Info.plist";
+				INFOPLIST_FILE = "never-forget/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -360,12 +500,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "never-forget/never-forget.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "never-forget/Info.plist";
+				INFOPLIST_FILE = "never-forget/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

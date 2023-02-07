@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fatalError("Unresolved error \(error), \(error.userInfo)")
       }
     })
+
     return container
   }()
 
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func saveContext() {
     let context = persistentContainer.viewContext
+
     if context.hasChanges {
       do {
         try context.save()
