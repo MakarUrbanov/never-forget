@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
 
-    let coordinator = MainCoordinator(UITabBarController())
+    let coordinator = MainCoordinator()
     coordinator.start()
     self.coordinator = coordinator
 
