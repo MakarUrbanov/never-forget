@@ -5,11 +5,19 @@
 //  Created by makar on 2/7/23.
 //
 
+import CoreData
 import SwiftUI
 
 struct ListTabView: View {
+
+  @StateObject private var personProvider = PersonProvider()
+//  @FetchRequest(fetchRequest: Person.fetchRequest()) var persons
+
   var body: some View {
-    Text("List tab!")
+    Group {
+      Text("List tab!")
+    }
+    .environment(\.managedObjectContext, personProvider.backgroundContext)
   }
 }
 

@@ -8,7 +8,6 @@
 import SwiftUI
 
 class MainCoordinator: TabCoordinator {
-
   var childCoordinators: [Coordinator] = []
   var tabBarController: UITabBarController
 
@@ -21,5 +20,4 @@ class MainCoordinator: TabCoordinator {
       tabBarController.configure()
     }
   }
-
 }

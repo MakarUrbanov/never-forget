@@ -5,7 +5,6 @@
 import UIKit
 
 class BaseTabBarController: UITabBarController {
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -13,12 +12,10 @@ class BaseTabBarController: UITabBarController {
     setConstraints()
     setAppearanceConfiguration()
   }
-
 }
 
 @objc
 extension BaseTabBarController {
-
   func setViews() {}
 
   func setConstraints() {}
@@ -26,5 +23,4 @@ extension BaseTabBarController {
   func setAppearanceConfiguration() {
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
   }
-
 }

@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
   var window: UIWindow?
   var coordinator: MainCoordinator?
 
@@ -34,7 +33,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func sceneWillEnterForeground(_: UIScene) {}
 
   func sceneDidEnterBackground(_: UIScene) {
-    (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    // TODO: save changes core data
   }
-
 }

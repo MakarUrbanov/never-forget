@@ -5,7 +5,6 @@
 import UIKit
 
 class BaseView: UIView {
-
   override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -18,16 +17,13 @@ class BaseView: UIView {
   required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
 }
 
 @objc
 extension BaseView {
-
   func setViews() {}
 
   func setConstraints() {}
 
   func setAppearanceConfiguration() {}
-
 }

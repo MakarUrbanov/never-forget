@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 final class MainTabController: BaseTabBarController {
-
   func configure() {
     let mainTab = UIHostingController(rootView: MainTabView())
     mainTab.tabBarItem = UITabBarItem(title: "Main",
@@ -23,12 +22,11 @@ final class MainTabController: BaseTabBarController {
 
     setViewControllers([mainTab, listTab], animated: false)
 
+    selectedIndex = 1 // TODO: delete
   }
-
 }
 
 extension MainTabController {
-
   override func setViews() {
     super.setViews()
   }
@@ -40,5 +38,4 @@ extension MainTabController {
   override func setAppearanceConfiguration() {
     super.setAppearanceConfiguration()
   }
-
 }

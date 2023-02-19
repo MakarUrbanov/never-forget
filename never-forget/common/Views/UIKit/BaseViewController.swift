@@ -5,7 +5,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -13,12 +12,10 @@ class BaseViewController: UIViewController {
     setConstraints()
     setAppearanceConfiguration()
   }
-
 }
 
 @objc
 extension BaseViewController {
-
   func setViews() {}
 
   func setConstraints() {}
@@ -26,5 +23,4 @@ extension BaseViewController {
   func setAppearanceConfiguration() {
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
   }
-
 }

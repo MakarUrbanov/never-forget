@@ -11,7 +11,7 @@
  --enable blankLinesAroundMark
  --enable blankLinesBetweenScopes
  --enable braces
- --enable consecutiveBlankLines
+
  --enable consecutiveSpaces
  --enable duplicateimports
  --enable elseOnSameLine
@@ -110,3 +110,6 @@
 
  ### SwiftFormat also removes from start of scope, which is against our empty line guidelines.
  --disable blankLinesAtStartOfScope
+
+
+ --disable consecutiveBlankLines
