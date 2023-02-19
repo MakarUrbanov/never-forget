@@ -12,11 +12,11 @@ class MainCoordinator: TabCoordinator {
   var tabBarController: UITabBarController
 
   init() {
-    tabBarController = MainTabController()
+    tabBarController = MainTabBarController()
   }
 
   func start() {
-    if let tabBarController = tabBarController as? MainTabController {
+    if let tabBarController = tabBarController as? MainTabBarController {
       tabBarController.configure()
     }
   }

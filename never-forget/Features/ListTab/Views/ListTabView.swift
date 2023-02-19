@@ -14,9 +14,9 @@ struct ListTabView: View {
 
   var body: some View {
     VStack {
-      Text("")
+      PersonsListView()
     }
-      .environment(\.managedObjectContext, listTabPersistentContainer.viewContext)
+    .environment(\.managedObjectContext, listTabPersistentContainer.viewContext)
   }
 }
 

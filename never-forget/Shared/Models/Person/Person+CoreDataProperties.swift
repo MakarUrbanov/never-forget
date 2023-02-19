@@ -45,7 +45,3 @@ public extension Person {
   func removeFromEvents(_ values: NSSet)
 
 }
-
-// MARK: - Person + Identifiable
-
-extension Person: Identifiable {}

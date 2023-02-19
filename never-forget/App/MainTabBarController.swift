@@ -1,5 +1,5 @@
 //
-//  MainTabController.swift
+//  MainTabBarController.swift
 //  never-forget
 //
 //  Created by makar on 2/6/23.
@@ -8,15 +8,15 @@
 import SwiftUI
 import UIKit
 
-final class MainTabController: BaseTabBarController {
+final class MainTabBarController: BaseTabBarController {
   func configure() {
     let mainTab = UIHostingController(rootView: MainTabView())
-    mainTab.tabBarItem = UITabBarItem(title: "Main",
+    mainTab.tabBarItem = UITabBarItem(title: Localizable.Tabs.main.toString(),
                                       image: UIImage(systemName: "house"),
                                       selectedImage: UIImage(systemName: "house"))
 
     let listTab = UIHostingController(rootView: ListTabView())
-    listTab.tabBarItem = UITabBarItem(title: "List",
+    listTab.tabBarItem = UITabBarItem(title: Localizable.Tabs.list.toString(),
                                       image: UIImage(systemName: "person"),
                                       selectedImage: UIImage(systemName: "person"))
 
@@ -26,7 +26,7 @@ final class MainTabController: BaseTabBarController {
   }
 }
 
-extension MainTabController {
+extension MainTabBarController {
   override func setViews() {
     super.setViews()
   }

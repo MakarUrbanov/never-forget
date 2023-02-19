@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct PersonsListView: View {
+
+  @FetchRequest(fetchRequest: Person.sortedFetchRequest(), animation: .easeInOut) var persons
+
   var body: some View {
-    Text("Hello, World!")
+    ScrollView(.vertical, showsIndicators: false) {
+      ForEach(persons) { person in
+        PersonCellView(person)
+      }
+    }
   }
 }
 

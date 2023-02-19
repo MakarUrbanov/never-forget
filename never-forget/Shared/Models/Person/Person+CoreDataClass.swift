@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 @objc(Person)
-public class Person: NSManagedObject {}
+public class Person: NSManagedObject, Identifiable {}
 
 extension Person {
 
