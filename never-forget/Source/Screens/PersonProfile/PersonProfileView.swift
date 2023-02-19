@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  PersonProfileView.swift
 //  never-forget
 //
 //  Created by makar on 2/7/23.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct PersonProfileView: View {
   var body: some View {
     Text("Hello, World!")
   }
 }
 
-struct ProfileView_Previews: PreviewProvider {
+struct PersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileView()
+    PersonProfileView()
   }
 }
