@@ -18,6 +18,7 @@
 		355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277229A261550038F8BA /* Person+CoreDataClass.swift */; };
 		355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277329A261550038F8BA /* Person+CoreDataProperties.swift */; };
 		355E277729A288D10038F8BA /* PersonProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277629A288D10038F8BA /* PersonProfileView.swift */; };
+		355E277E29A28FFF0038F8BA /* PersonsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277D29A28FFF0038F8BA /* PersonsListView.swift */; };
 		356CD87F2991858100EA9D2D /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */; };
 		356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD8802991859D00EA9D2D /* TabCoordinator.swift */; };
 		356CD88429918E6200EA9D2D /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88329918E6200EA9D2D /* MainTabController.swift */; };
@@ -46,6 +47,7 @@
 		355E277229A261550038F8BA /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		355E277329A261550038F8BA /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		355E277629A288D10038F8BA /* PersonProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonProfileView.swift; sourceTree = "<group>"; };
+		355E277D29A28FFF0038F8BA /* PersonsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsListView.swift; sourceTree = "<group>"; };
 		356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		356CD8802991859D00EA9D2D /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		356CD88329918E6200EA9D2D /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
@@ -90,13 +92,10 @@
 			isa = PBXGroup;
 			children = (
 				3551F1B529902AA300EBA6A3 /* App */,
-				3551F1B929902DF000EBA6A3 /* Assets */,
-				35E8415B299299BE00BF537E /* common */,
+				35E8415B299299BE00BF537E /* Shared */,
 				3551F1B829902CF000EBA6A3 /* CoreData */,
-				35D02D2E2990484400536AB8 /* Coordinators */,
-				356CD88529918E6700EA9D2D /* Extensions */,
-				35E841642992AE9200BF537E /* Models */,
-				35E841652992AEC200BF537E /* Source */,
+				35D02D2E2990484400536AB8 /* Coordinator */,
+				35E841652992AEC200BF537E /* Features */,
 				3551F1BA29902E2800EBA6A3 /* SupportingFiles */,
 			);
 			path = "never-forget";
@@ -107,6 +106,7 @@
 			children = (
 				3551F19D299028AE00EBA6A3 /* AppDelegate.swift */,
 				3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */,
+				356CD88329918E6200EA9D2D /* MainTabController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -167,6 +167,7 @@
 		355E277929A289320038F8BA /* ListTab */ = {
 			isa = PBXGroup;
 			children = (
+				355E277F29A294820038F8BA /* Views */,
 				35E8415E29929D7000BF537E /* ListTabView.swift */,
 			);
 			path = ListTab;
@@ -186,6 +187,23 @@
 				3551F1A6299028AE00EBA6A3 /* ListTab.xcdatamodeld */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		355E277C29A28FEF0038F8BA /* PersonsList */ = {
+			isa = PBXGroup;
+			children = (
+				355E277D29A28FFF0038F8BA /* PersonsListView.swift */,
+			);
+			path = PersonsList;
+			sourceTree = "<group>";
+		};
+		355E277F29A294820038F8BA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				355E277C29A28FEF0038F8BA /* PersonsList */,
+				355E277A29A289460038F8BA /* PersonProfile */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		356CD87D2991857100EA9D2D /* Protocols */ = {
@@ -214,21 +232,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		35D02D2E2990484400536AB8 /* Coordinators */ = {
+		35D02D2E2990484400536AB8 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				356CD87D2991857100EA9D2D /* Protocols */,
 				35D02D312990486C00536AB8 /* MainCoordinator.swift */,
 			);
-			path = Coordinators;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		35E8415B299299BE00BF537E /* common */ = {
+		35E8415B299299BE00BF537E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3551F1B929902DF000EBA6A3 /* Assets */,
+				356CD88529918E6700EA9D2D /* Extensions */,
+				35E841642992AE9200BF537E /* Models */,
 				356CD88E29918EF300EA9D2D /* Views */,
 			);
-			path = common;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		35E841642992AE9200BF537E /* Models */ = {
@@ -239,40 +260,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		35E841652992AEC200BF537E /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				35E841682992AEF000BF537E /* Screens */,
-				35E841662992AEEA00BF537E /* Modules */,
-				35EEDC6E2992B2F200E30265 /* Components */,
-				35E841672992AEEC00BF537E /* UI */,
-				356CD88329918E6200EA9D2D /* MainTabController.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		35E841662992AEEA00BF537E /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		35E841672992AEEC00BF537E /* UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		35E841682992AEF000BF537E /* Screens */ = {
+		35E841652992AEC200BF537E /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				355E277829A289290038F8BA /* MainTab */,
 				355E277929A289320038F8BA /* ListTab */,
-				355E277A29A289460038F8BA /* PersonProfile */,
 			);
-			path = Screens;
+			path = Features;
 			sourceTree = "<group>";
 		};
 		35E8416B2992B01C00BF537E /* UIKit */ = {
@@ -308,13 +302,6 @@
 				35E841712992B0BA00BF537E /* hex.swift */,
 			);
 			path = UIColor;
-			sourceTree = "<group>";
-		};
-		35EEDC6E2992B2F200E30265 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +431,7 @@
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* ListTab.xcdatamodeld in Sources */,
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
+				355E277E29A28FFF0038F8BA /* PersonsListView.swift in Sources */,
 				355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */,
 				35E8416A2992AFD900BF537E /* addView.swift in Sources */,
 				356CD87F2991858100EA9D2D /* NavigationCoordinator.swift in Sources */,
