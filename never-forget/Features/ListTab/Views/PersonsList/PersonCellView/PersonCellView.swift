@@ -15,20 +15,38 @@ struct PersonCellView: View {
     person.name ?? "un-named"
   }
 
+  var dateOfBirth: String {
+    guard let dateOfBirth = person.dateOfBirth else { fatalError(#function) }
+
+    return dateOfBirth.formatted(.dateTime.year().month().day())
+  }
+
   init(_ person: Person) {
     self.person = person
   }
 
   var body: some View {
     HStack(spacing: 0) {
-      Text(Localizable.name)
-      Text(":")
-      Text(name)
+      VStack(alignment: .leading, spacing: 0) {
+        Text(name)
+          .fontWeight(.bold)
+          .foregroundColor(.Theme.text)
+
+        Text(dateOfBirth)
+          .foregroundColor(.Theme.text.dark(0.5))
+          .fontWeight(.medium)
+      }
+
+      Spacer()
     }
     .frame(maxWidth: .infinity)
     .padding(.vertical)
-    .background(.red)
+    .padding(.horizontal)
     .cornerRadius(6)
+    .overlay(alignment: .bottom) {
+      Divider()
+        .background(Color.Theme.text.dark(10))
+    }
     .padding()
   }
 }
@@ -39,7 +57,7 @@ struct PersonCellView_Previews: PreviewProvider {
       let person = Person(context: ListTabContainerProvider.shared.viewContext)
       person.name = "Andrew"
       person.personDescription = "Friend"
-      person.dateOfBirth = Date.distantPast
+      person.dateOfBirth = Date()
 
       return person
     }()
