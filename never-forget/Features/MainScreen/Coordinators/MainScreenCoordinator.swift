@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-final class MainScreenCoordinator: NavigationCoordinator {
+final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = BaseUINavigationController()
@@ -23,7 +23,7 @@ final class MainScreenCoordinator: NavigationCoordinator {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let listTab = UIHostingController(rootView: MainScreenView())
+    let listTab = UIHostingController(rootView: MainScreenView().environmentObject(self))
     return listTab
   }
 

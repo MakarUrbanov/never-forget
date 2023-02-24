@@ -11,6 +11,8 @@
 		352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */; };
 		352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */; };
 		3521150129A8F76F00559988 /* PeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150029A8F76F00559988 /* PeopleListView.swift */; };
+		3521150A29A8FF5A00559988 /* AddNewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150929A8FF5A00559988 /* AddNewPersonView.swift */; };
+		3521150D29A9099A00559988 /* PeopleListScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */; };
 		3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3542517A29A78D1F005174DA /* BaseUINavigationController.swift */; };
 		354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */; };
 		354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EC29A7A66F00A99389 /* NavigationSteps.swift */; };
@@ -52,6 +54,8 @@
 		352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
 		352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCoordinator.swift; sourceTree = "<group>"; };
 		3521150029A8F76F00559988 /* PeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListView.swift; sourceTree = "<group>"; };
+		3521150929A8FF5A00559988 /* AddNewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPersonView.swift; sourceTree = "<group>"; };
+		3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListScreenViewModel.swift; sourceTree = "<group>"; };
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
 		354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+navigate.swift"; sourceTree = "<group>"; };
 		354E42EC29A7A66F00A99389 /* NavigationSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSteps.swift; sourceTree = "<group>"; };
@@ -146,6 +150,30 @@
 			path = PeopleList;
 			sourceTree = "<group>";
 		};
+		3521150329A8FF0200559988 /* AddNewPersonView */ = {
+			isa = PBXGroup;
+			children = (
+				3521150829A8FF5200559988 /* Views */,
+			);
+			path = AddNewPersonView;
+			sourceTree = "<group>";
+		};
+		3521150829A8FF5200559988 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3521150929A8FF5A00559988 /* AddNewPersonView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3521150B29A9098F00559988 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		3551F191299028AE00EBA6A3 = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +263,7 @@
 		355E277929A289320038F8BA /* PeopleList */ = {
 			isa = PBXGroup;
 			children = (
+				3521150B29A9098F00559988 /* ViewModels */,
 				352114FD29A8F2E700559988 /* Coordinators */,
 				355E277F29A294820038F8BA /* Views */,
 			);
@@ -336,6 +365,7 @@
 		35E841652992AEC200BF537E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				3521150329A8FF0200559988 /* AddNewPersonView */,
 				355E277929A289320038F8BA /* PeopleList */,
 				355E277829A289290038F8BA /* MainScreen */,
 			);
@@ -471,12 +501,14 @@
 				356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */,
 				355E274429998E7D0038F8BA /* PersistentContainerProvider.swift in Sources */,
 				355E27A029A555FD0038F8BA /* Color+uiColor.swift in Sources */,
+				3521150D29A9099A00559988 /* PeopleListScreenViewModel.swift in Sources */,
 				355E279529A2D3D50038F8BA /* LocalizedStringKey+toStringKey.swift in Sources */,
 				358DB2B829A66E32002196C5 /* UIColor+lighter+darker.swift in Sources */,
 				3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */,
 				354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */,
 				352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */,
 				355E278329A2B6A00038F8BA /* PersonCellView.swift in Sources */,
+				3521150A29A8FF5A00559988 /* AddNewPersonView.swift in Sources */,
 				354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */,
 				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
 				358DB2BA29A66F0C002196C5 /* Color+lighter+darker+dark.swift in Sources */,

@@ -39,15 +39,8 @@ struct PersonCellView: View {
 
       Spacer()
     }
-    .frame(maxWidth: .infinity)
     .padding(.vertical, 8)
     .padding(.horizontal, 16)
-    .cornerRadius(6)
-    .overlay(alignment: .bottom) {
-      Divider()
-        .background(Color.Theme.text.dark(10))
-    }
-    .padding()
   }
 }
 

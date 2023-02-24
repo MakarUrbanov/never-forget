@@ -24,7 +24,5 @@ extension BaseUINavigationController {
 
   func setConstraints() {}
 
-  func setAppearanceConfiguration() {
-    navigationBar.isTranslucent = false
-  }
+  func setAppearanceConfiguration() {}
 }

@@ -12,14 +12,12 @@ struct PeopleListView: View {
   @FetchRequest(fetchRequest: Person.sortedFetchRequest(), animation: .easeInOut) var persons
 
   var body: some View {
-    VStack {
-      List {
-        ForEach(persons) { person in
-          PersonCellView(person)
-        }
+    List {
+      ForEach(persons) { person in
+        PersonCellView(person)
       }
-      .listStyle(SidebarListStyle())
     }
+    .listStyle(PlainListStyle())
   }
 }
 

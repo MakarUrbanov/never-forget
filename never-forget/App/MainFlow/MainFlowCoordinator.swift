@@ -19,6 +19,8 @@ final class MainFlowCoordinator: TabCoordinator {
     tabBarController
       .setViewControllers([mainCoordinator.navigationController, peopleListCoordinator.navigationController],
                           animated: false)
+
+    tabBarController.selectedIndex = 1 // TODO: delete
   }
 
 }
