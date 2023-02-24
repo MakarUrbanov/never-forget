@@ -1,5 +1,5 @@
 //
-//  hex.swift
+//  UIColor+hex.swift
 //  never-forget
 //
 //  Created by makar on 2/7/23.

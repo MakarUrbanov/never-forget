@@ -4,7 +4,7 @@
 
 import UIKit
 
-class BaseView: UIView {
+class BaseUIView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -20,7 +20,7 @@ class BaseView: UIView {
 }
 
 @objc
-extension BaseView {
+extension BaseUIView {
   func setViews() {}
 
   func setConstraints() {}

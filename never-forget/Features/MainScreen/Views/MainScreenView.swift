@@ -1,5 +1,5 @@
 //
-//  MainTabView.swift
+//  MainScreenView.swift
 //  never-forget
 //
 //  Created by makar on 2/5/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainTabView: View {
+struct MainScreenView: View {
   var body: some View {
     VStack {
       Text("Main tab")
@@ -15,8 +15,8 @@ struct MainTabView: View {
   }
 }
 
-struct MainTab_Previews: PreviewProvider {
+struct MainScreen_Previews: PreviewProvider {
   static var previews: some View {
-    MainTabView()
+    MainScreenView()
   }
 }

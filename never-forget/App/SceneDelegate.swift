@@ -8,19 +8,19 @@
 import SwiftUI
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
   var window: UIWindow?
-  var coordinator: MainCoordinator?
+  var rootCoordinator: RootCoordinator?
 
   func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
 
-    let coordinator = MainCoordinator()
-    coordinator.start()
-    self.coordinator = coordinator
+    let rootCoordinator = RootCoordinator(window: window ?? UIWindow())
+    rootCoordinator.start()
+    self.rootCoordinator = rootCoordinator
 
-    window?.rootViewController = coordinator.tabBarController
     window?.makeKeyAndVisible()
   }
 

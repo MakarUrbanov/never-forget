@@ -1,5 +1,5 @@
 //
-//  uiColor.swift
+//  Color+uiColor.swift
 //  never-forget
 //
 //  Created by makar on 2/21/23.

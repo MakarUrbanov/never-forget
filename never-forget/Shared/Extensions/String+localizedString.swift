@@ -1,5 +1,5 @@
 //
-//  localizedString.swift
+//  String+localizedString.swift
 //  never-forget
 //
 //  Created by makar on 2/20/23.

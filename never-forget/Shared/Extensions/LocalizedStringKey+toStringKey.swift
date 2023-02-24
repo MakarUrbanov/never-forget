@@ -1,5 +1,5 @@
 //
-//  toStringKey.swift
+//  LocalizedStringKey+toStringKey.swift
 //  never-forget
 //
 //  Created by makar on 2/20/23.

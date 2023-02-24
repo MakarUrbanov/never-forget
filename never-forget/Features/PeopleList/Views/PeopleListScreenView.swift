@@ -1,28 +1,27 @@
 //
-//  ListTabView.swift
+//  PeopleListScreenView.swift
 //  never-forget
 //
-//  Created by makar on 2/7/23.
+//  Created by makar on 2/19/23.
 //
 
-import CoreData
 import SwiftUI
 
-struct ListTabView: View {
+struct PeopleListScreenView: View {
 
   @StateObject private var listTabPersistentContainer = ListTabContainerProvider.shared
 
   var body: some View {
     VStack {
-      PersonsListView()
+      PeopleListView()
     }
     .environment(\.managedObjectContext, listTabPersistentContainer.viewContext)
+    .navigationTitle("Test123")
   }
 }
 
-
-struct ListTabView_Previews: PreviewProvider {
+struct PersonsListView_Previews: PreviewProvider {
   static var previews: some View {
-    ListTabView()
+    PeopleListScreenView()
   }
 }

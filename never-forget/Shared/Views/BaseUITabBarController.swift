@@ -4,7 +4,7 @@
 
 import UIKit
 
-class BaseTabBarController: UITabBarController {
+class BaseUITabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -15,7 +15,7 @@ class BaseTabBarController: UITabBarController {
 }
 
 @objc
-extension BaseTabBarController {
+extension BaseUITabBarController {
   func setViews() {}
 
   func setConstraints() {}

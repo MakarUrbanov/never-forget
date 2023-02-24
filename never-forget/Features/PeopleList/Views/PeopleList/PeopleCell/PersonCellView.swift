@@ -40,8 +40,8 @@ struct PersonCellView: View {
       Spacer()
     }
     .frame(maxWidth: .infinity)
-    .padding(.vertical)
-    .padding(.horizontal)
+    .padding(.vertical, 8)
+    .padding(.horizontal, 16)
     .cornerRadius(6)
     .overlay(alignment: .bottom) {
       Divider()

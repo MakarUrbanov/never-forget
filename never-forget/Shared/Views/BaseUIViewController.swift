@@ -4,7 +4,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseUIViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
 }
 
 @objc
-extension BaseViewController {
+extension BaseUIViewController {
   func setViews() {}
 
   func setConstraints() {}
