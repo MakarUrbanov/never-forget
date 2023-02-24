@@ -20,7 +20,7 @@ final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
 
   func presentAddNewPersonView() {
     let addNewPersonView = UIHostingController(rootView: AddNewPersonView())
-    navigationController.navigate(step: .present(addNewPersonView, .formSheet))
+    navigationController.navigate(step: .present(addNewPersonView, .pageSheet))
   }
 
 }
