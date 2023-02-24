@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PeopleListScreenView: View {
 
-  @StateObject private var listTabPersistentContainer = ListTabContainerProvider.shared
+  @StateObject private var listTabPersistentContainer = PersistentContainerProvider.shared
 
   var body: some View {
     VStack {

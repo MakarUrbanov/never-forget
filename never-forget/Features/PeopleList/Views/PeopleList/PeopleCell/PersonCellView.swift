@@ -54,7 +54,7 @@ struct PersonCellView: View {
 struct PersonCellView_Previews: PreviewProvider {
   static var previews: some View {
     let personMock: Person = {
-      let person = Person(context: ListTabContainerProvider.shared.viewContext)
+      let person = Person(context: PersistentContainerProvider.shared.viewContext)
       person.name = "Andrew"
       person.personDescription = "Friend"
       person.dateOfBirth = Date()

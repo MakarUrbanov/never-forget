@@ -17,10 +17,10 @@
 		3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19D299028AE00EBA6A3 /* AppDelegate.swift */; };
 		3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */; };
 		3551F1A2299028AE00EBA6A3 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* MainScreenView.swift */; };
-		3551F1A8299028AE00EBA6A3 /* ListTab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A6299028AE00EBA6A3 /* ListTab.xcdatamodeld */; };
+		3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */; };
 		3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */; };
 		355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E27412999886F0038F8BA /* PersistentContainerController.swift */; };
-		355E274429998E7D0038F8BA /* ListTabContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E274329998E7D0038F8BA /* ListTabContainerProvider.swift */; };
+		355E274429998E7D0038F8BA /* PersistentContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */; };
 		355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277229A261550038F8BA /* Person+CoreDataClass.swift */; };
 		355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277329A261550038F8BA /* Person+CoreDataProperties.swift */; };
 		355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277D29A28FFF0038F8BA /* PeopleListScreenView.swift */; };
@@ -64,7 +64,7 @@
 		3551F1AE299028AF00EBA6A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3551F1B42990291D00EBA6A3 /* never-forget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "never-forget.entitlements"; sourceTree = "<group>"; };
 		355E27412999886F0038F8BA /* PersistentContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerController.swift; sourceTree = "<group>"; };
-		355E274329998E7D0038F8BA /* ListTabContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTabContainerProvider.swift; sourceTree = "<group>"; };
+		355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerProvider.swift; sourceTree = "<group>"; };
 		355E277229A261550038F8BA /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		355E277329A261550038F8BA /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		355E277D29A28FFF0038F8BA /* PeopleListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListScreenView.swift; sourceTree = "<group>"; };
@@ -188,9 +188,9 @@
 		3551F1B829902CF000EBA6A3 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				355E274529998F110038F8BA /* Providers */,
-				3551F1A6299028AE00EBA6A3 /* ListTab.xcdatamodeld */,
+				3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */,
 				355E27412999886F0038F8BA /* PersistentContainerController.swift */,
+				355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -212,14 +212,6 @@
 				3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */,
 			);
 			path = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		355E274529998F110038F8BA /* Providers */ = {
-			isa = PBXGroup;
-			children = (
-				355E274329998E7D0038F8BA /* ListTabContainerProvider.swift */,
-			);
-			path = Providers;
 			sourceTree = "<group>";
 		};
 		355E277129A25AB00038F8BA /* Person */ = {
@@ -477,7 +469,7 @@
 				352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */,
 				3521150129A8F76F00559988 /* PeopleListView.swift in Sources */,
 				356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */,
-				355E274429998E7D0038F8BA /* ListTabContainerProvider.swift in Sources */,
+				355E274429998E7D0038F8BA /* PersistentContainerProvider.swift in Sources */,
 				355E27A029A555FD0038F8BA /* Color+uiColor.swift in Sources */,
 				355E279529A2D3D50038F8BA /* LocalizedStringKey+toStringKey.swift in Sources */,
 				358DB2B829A66E32002196C5 /* UIColor+lighter+darker.swift in Sources */,
@@ -489,7 +481,7 @@
 				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
 				358DB2BA29A66F0C002196C5 /* Color+lighter+darker+dark.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
-				3551F1A8299028AE00EBA6A3 /* ListTab.xcdatamodeld in Sources */,
+				3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */,
 				355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */,
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */,
@@ -728,13 +720,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		3551F1A6299028AE00EBA6A3 /* ListTab.xcdatamodeld */ = {
+		3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				3551F1A7299028AE00EBA6A3 /* never_forget.xcdatamodel */,
 			);
 			currentVersion = 3551F1A7299028AE00EBA6A3 /* never_forget.xcdatamodel */;
-			path = ListTab.xcdatamodeld;
+			path = NeverForgetModels.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -33,6 +33,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func sceneWillEnterForeground(_: UIScene) {}
 
   func sceneDidEnterBackground(_: UIScene) {
-    // TODO: save changes core data
+    PersistentContainerProvider.shared.saveContext()
   }
 }
