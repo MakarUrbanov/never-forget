@@ -8,6 +8,7 @@
 
 import CoreData
 import Foundation
+import UIKit
 
 extension Person {
 
@@ -17,14 +18,14 @@ extension Person {
 
   static func sortedFetchRequest() -> NSFetchRequest<Person> {
     let request: NSFetchRequest<Person> = fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \Person.name, ascending: true)]
+    request.sortDescriptors = [NSSortDescriptor(keyPath: \Person.dateOfBirth, ascending: true)]
 
     return request
   }
 
 }
 
-// MARK: Generated accessors for events
+// MARK: - Generated accessors for events
 
 public extension Person {
 
@@ -43,5 +44,22 @@ public extension Person {
   @objc(removeEvents:)
   @NSManaged
   func removeFromEvents(_ values: NSSet)
+
+}
+
+// MARK: - Working with photo
+
+extension Person {
+
+  func setPhoto(_ image: UIImage) {
+    let imageData = image.jpegData(compressionQuality: 1)
+    photo = imageData
+  }
+
+  func getDecodedPhoto() -> UIImage? {
+    guard let photoData = photo else { return nil }
+
+    return UIImage(data: photoData)
+  }
 
 }

@@ -16,9 +16,16 @@ struct PersonCellView: View {
   }
 
   var dateOfBirth: String {
-    guard let dateOfBirth = person.dateOfBirth else { fatalError(#function) }
-
+    guard let dateOfBirth = person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
+  }
+
+  var defaultImage: Image {
+    Image(systemName: "person")
+  }
+
+  var userImage: UIImage? {
+    person.getDecodedPhoto()
   }
 
   init(_ person: Person) {
@@ -26,7 +33,22 @@ struct PersonCellView: View {
   }
 
   var body: some View {
-    HStack(spacing: 0) {
+    HStack(spacing: 20) {
+      if let userImage {
+        Image(uiImage: userImage)
+          .resizable()
+          .frame(maxWidth: 40, maxHeight: 40)
+          .scaledToFit()
+          .cornerRadius(40)
+      } else {
+        defaultImage
+          .resizable()
+          .padding(10)
+          .frame(maxWidth: 40, maxHeight: 40)
+          .scaledToFit()
+          .cornerRadius(40)
+      }
+
       VStack(alignment: .leading, spacing: 0) {
         Text(name)
           .fontWeight(.bold)
@@ -39,8 +61,6 @@ struct PersonCellView: View {
 
       Spacer()
     }
-    .padding(.vertical, 8)
-    .padding(.horizontal, 16)
   }
 }
 

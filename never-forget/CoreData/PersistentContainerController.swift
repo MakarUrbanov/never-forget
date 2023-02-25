@@ -24,14 +24,8 @@ class PersistentContainerController: ObservableObject {
   }
 
   func saveContext() {
-    if viewContext.hasChanges {
-      do {
-        try viewContext.save()
-      } catch {
-        let nserror = error as NSError
-        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-      }
-    }
+    saveContextHandler(viewContext)
+    saveContextHandler(backgroundContext)
   }
 
 }
@@ -39,6 +33,17 @@ class PersistentContainerController: ObservableObject {
 // MARK: - Static
 
 extension PersistentContainerController {
+
+  private func saveContextHandler(_ context: NSManagedObjectContext) {
+    if context.hasChanges {
+      do {
+        try context.save()
+      } catch {
+        let nserror = error as NSError
+        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+      }
+    }
+  }
 
   private static func getInitialContainer(for name: String) -> NSPersistentCloudKitContainer {
     let container = NSPersistentCloudKitContainer(name: name)

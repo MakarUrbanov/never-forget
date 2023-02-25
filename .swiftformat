@@ -91,7 +91,7 @@
  --indent 2
  --linebreaks lf ##default
  --maxwidth 120
- --patternlet hoist ##default
+ --patternlet inline
  --semicolons never
  --stripunusedargs always
  --trimwhitespace always

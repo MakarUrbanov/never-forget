@@ -11,7 +11,7 @@ extension UINavigationController {
 
   func navigate(step: NavigationSteps, animated: Bool = true, completion: @escaping () -> Void = {}) {
     switch step {
-      case let .push(controller):
+      case .push(let controller):
         pushViewController(controller, animated: animated)
         completion()
 
@@ -19,7 +19,7 @@ extension UINavigationController {
         popViewController(animated: animated)
         completion()
 
-      case let .present(controller, style):
+      case .present(let controller, let style):
         controller.modalPresentationStyle = style
 
         if let presentedViewController = presentedViewController {

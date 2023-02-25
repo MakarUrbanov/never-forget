@@ -13,6 +13,8 @@ final class AddNewPersonViewModel: ObservableObject {
   @Published var dateOfBirth = Date()
   @Published var description = ""
 
+  @Published var imageData: Data?
+
   let goBack: () -> Void
 
   init(goBack: @escaping () -> Void) {
@@ -23,9 +25,9 @@ final class AddNewPersonViewModel: ObservableObject {
     let isValidForm = !name.trimmed.isEmpty
 
     if isValidForm {
-      createNewPerson()
+      onValidForm()
     } else {
-      // TODO: add handling error
+      onInvalidForm()
     }
   }
 
@@ -33,12 +35,27 @@ final class AddNewPersonViewModel: ObservableObject {
 
 extension AddNewPersonViewModel {
 
-  func createNewPerson() {
+  private func saveContext() {
+    PersistentContainerProvider.shared.saveContext()
+  }
+
+  private func createNewPerson() {
     let person = Person(context: PersistentContainerProvider.shared.viewContext)
     person.name = name
     person.dateOfBirth = dateOfBirth
     person.personDescription = description.trimmed.isEmpty ? nil : description
     person.events = []
+    person.photo = imageData
+  }
+
+  private func onValidForm() {
+    createNewPerson()
+    saveContext()
+    goBack()
+  }
+
+  private func onInvalidForm() {
+    AlertManager.shared.show(with: "Error", and: "Form error") // TODO: localize
   }
 
 }

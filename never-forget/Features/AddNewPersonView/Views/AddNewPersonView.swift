@@ -5,11 +5,13 @@
 //  Created by makar on 2/24/23.
 //
 
+import PhotosUI
 import SwiftUI
 
 struct AddNewPersonView: View {
 
   @StateObject var viewModel: AddNewPersonViewModel
+  @State var selectedPhotos: [PhotosPickerItem] = []
 
   init(goBack: @escaping () -> Void) {
     _viewModel = StateObject(wrappedValue: AddNewPersonViewModel(goBack: goBack))
@@ -17,16 +19,26 @@ struct AddNewPersonView: View {
 
   var body: some View {
     NavigationView {
-      List {
-        Section("Information") { // TODO: localize
-          TextField("Name*", text: $viewModel.name) // TODO: localize
-          TextField("Description", text: $viewModel.description) // TODO: localize
-
-          DatePicker(selection: $viewModel.dateOfBirth, in: ...Date(), displayedComponents: .date) {
-            Text("Date of birth:*") // TODO: localize
+      VStack {
+        List {
+          Section("Photo") {
+            FormPhotoPickerView(selectedPhotos: $selectedPhotos, imageData: $viewModel.imageData)
           }
-          .datePickerStyle(CompactDatePickerStyle())
+          .listRowBackground(Color.clear)
+
+          Section("Information") { // TODO: localize
+            TextField("Name*", text: $viewModel.name) // TODO: localize
+            TextField("Description", text: $viewModel.description) // TODO: localize
+
+            DatePicker(selection: $viewModel.dateOfBirth, in: ...Date(), displayedComponents: .date) {
+              Text("Date of birth:*") // TODO: localize
+            }
+            .datePickerStyle(CompactDatePickerStyle())
+          }
         }
+        .listStyle(.insetGrouped)
+        .background(Color.Theme.background)
+        .scrollContentBackground(.hidden)
       }
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
