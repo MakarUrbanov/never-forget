@@ -11,6 +11,7 @@ import UIKit
 final class RootCoordinator: Coordinator {
   let window: UIWindow
   var childCoordinators: [Coordinator] = []
+  let rootNavigationController = BaseUINavigationController()
 
   init(window: UIWindow) {
     self.window = window
@@ -27,7 +28,9 @@ extension RootCoordinator {
   private func setRootCoordinator() {
     let mainCoordinator = MainFlowCoordinator()
     mainCoordinator.start()
-    window.rootViewController = mainCoordinator.tabBarController
+
+    rootNavigationController.setViewControllers([mainCoordinator.tabBarController], animated: false)
+    window.rootViewController = rootNavigationController
     childCoordinators.append(mainCoordinator)
   }
 

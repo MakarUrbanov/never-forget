@@ -9,30 +9,30 @@ import UIKit
 
 extension UINavigationController {
 
-  func navigate(step: NavigationSteps, animated: Bool = true) {
+  func navigate(step: NavigationSteps, animated: Bool = true, completion: @escaping () -> Void = {}) {
     switch step {
       case let .push(controller):
         pushViewController(controller, animated: animated)
+        completion()
 
       case .pop:
         popViewController(animated: animated)
+        completion()
 
       case let .present(controller, style):
         controller.modalPresentationStyle = style
 
         if let presentedViewController = presentedViewController {
-          presentedViewController.present(controller, animated: animated, completion: nil)
+          presentedViewController.present(controller, animated: animated, completion: completion)
         } else {
-          topViewController?.present(controller,
-                                     animated: animated,
-                                     completion: nil)
+          topViewController?.present(controller, animated: animated, completion: completion)
         }
 
       case .dismiss:
         if let presentedViewController = presentedViewController {
-          presentedViewController.dismiss(animated: animated, completion: nil)
+          presentedViewController.dismiss(animated: animated, completion: completion)
         } else {
-          topViewController?.dismiss(animated: animated, completion: nil)
+          topViewController?.dismiss(animated: animated, completion: completion)
         }
     }
   }

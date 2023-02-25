@@ -9,8 +9,11 @@ import SwiftUI
 
 struct AddNewPersonView: View {
 
-  @StateObject var viewModel = AddNewPersonViewModel()
-  @Environment(\.dismiss) var dismiss
+  @StateObject var viewModel: AddNewPersonViewModel
+
+  init(goBack: @escaping () -> Void) {
+    _viewModel = StateObject(wrappedValue: AddNewPersonViewModel(goBack: goBack))
+  }
 
   var body: some View {
     NavigationView {
@@ -20,12 +23,7 @@ struct AddNewPersonView: View {
           TextField("Description", text: $viewModel.description) // TODO: localize
 
           DatePicker(selection: $viewModel.dateOfBirth, in: ...Date(), displayedComponents: .date) {
-            Text("Date of birth:") // TODO: localize
-              .overlay(alignment: .topTrailing) {
-                Text("*")
-                  .foregroundColor(.Theme.text.dark(0.4))
-                  .offset(x: 8, y: 0)
-              }
+            Text("Date of birth:*") // TODO: localize
           }
           .datePickerStyle(CompactDatePickerStyle())
         }
@@ -33,7 +31,13 @@ struct AddNewPersonView: View {
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
           Button("Cancel") { // TODO: localize
-            dismiss()
+            viewModel.goBack()
+          }
+        }
+
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button("Add") { // TODO: localize
+            viewModel.createNewPersonHandler()
           }
         }
       }
@@ -43,6 +47,6 @@ struct AddNewPersonView: View {
 
 struct CreateNewPersonView_Previews: PreviewProvider {
   static var previews: some View {
-    AddNewPersonView()
+    AddNewPersonView(goBack: {})
   }
 }
