@@ -12,6 +12,8 @@ struct MainScreenView: View {
     VStack {
       Text("Main tab")
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color.Theme.background)
   }
 }
 

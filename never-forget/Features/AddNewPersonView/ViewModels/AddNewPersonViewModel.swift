@@ -55,7 +55,7 @@ extension AddNewPersonViewModel {
   }
 
   private func onInvalidForm() {
-    AlertManager.shared.show(with: "Error", and: "Form error") // TODO: localize
+    AlertManager.shared.show(title: "Error", message: "Form error") // TODO: localize
   }
 
 }

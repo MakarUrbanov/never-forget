@@ -51,12 +51,12 @@ struct PersonCellView: View {
 
       VStack(alignment: .leading, spacing: 0) {
         Text(name)
-          .fontWeight(.bold)
+          .font(.title3.weight(.bold))
           .foregroundColor(.Theme.text)
 
         Text(dateOfBirth)
-          .foregroundColor(.Theme.text.dark(0.5))
-          .fontWeight(.medium)
+          .font(.subheadline.weight(.medium))
+          .foregroundColor(.Theme.text3)
       }
 
       Spacer()
