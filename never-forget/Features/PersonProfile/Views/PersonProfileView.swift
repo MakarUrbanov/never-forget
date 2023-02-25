@@ -1,5 +1,5 @@
 //
-//  AddNewPersonView.swift
+//  PersonProfileView.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -8,13 +8,13 @@
 import PhotosUI
 import SwiftUI
 
-struct AddNewPersonView: View {
+struct PersonProfileView: View {
 
-  @StateObject var viewModel: AddNewPersonViewModel
+  @StateObject var viewModel: PersonProfileViewModel
   @State var selectedPhotos: [PhotosPickerItem] = []
 
   init(goBack: @escaping () -> Void) {
-    _viewModel = StateObject(wrappedValue: AddNewPersonViewModel(goBack: goBack))
+    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(goBack: goBack))
   }
 
   var body: some View {
@@ -59,6 +59,6 @@ struct AddNewPersonView: View {
 
 struct CreateNewPersonView_Previews: PreviewProvider {
   static var previews: some View {
-    AddNewPersonView(goBack: {})
+    PersonProfileView(goBack: {})
   }
 }

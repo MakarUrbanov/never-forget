@@ -1,5 +1,5 @@
 //
-//  AddNewPersonViewModel.swift
+//  PersonProfileViewModel.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AddNewPersonViewModel: ObservableObject {
+final class PersonProfileViewModel: ObservableObject {
 
   @Published var name = ""
   @Published var dateOfBirth = Date()
@@ -33,7 +33,7 @@ final class AddNewPersonViewModel: ObservableObject {
 
 }
 
-extension AddNewPersonViewModel {
+extension PersonProfileViewModel {
 
   private func saveContext() {
     PersistentContainerProvider.shared.saveContext()

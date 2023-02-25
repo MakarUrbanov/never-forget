@@ -18,8 +18,8 @@ final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
     navigationController.setViewControllers([peopleListScreen], animated: false)
   }
 
-  func presentAddNewPersonView() {
-    let addNewPersonView = UIHostingController(rootView: AddNewPersonView(goBack: {
+  func presentPersonProfileView() {
+    let addNewPersonView = UIHostingController(rootView: PersonProfileView(goBack: {
       self.navigationController.navigate(step: .dismiss)
     }))
 
