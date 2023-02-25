@@ -15,6 +15,9 @@ final class RootCoordinator: Coordinator {
 
   init(window: UIWindow) {
     self.window = window
+
+    configureRootNavigationController()
+    connectAlertManager()
   }
 
   func start() {
@@ -24,6 +27,14 @@ final class RootCoordinator: Coordinator {
 }
 
 extension RootCoordinator {
+
+  private func configureRootNavigationController() {
+    rootNavigationController.isNavigationBarHidden = true
+  }
+
+  private func connectAlertManager() {
+    AlertManager.shared.rootNavigationController = rootNavigationController
+  }
 
   private func setRootCoordinator() {
     let mainCoordinator = MainFlowCoordinator()

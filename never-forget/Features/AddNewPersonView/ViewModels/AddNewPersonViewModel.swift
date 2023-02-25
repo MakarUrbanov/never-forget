@@ -16,7 +16,7 @@ final class AddNewPersonViewModel: ObservableObject {
   let goBack: () -> Void
 
   init(goBack: @escaping () -> Void) {
-    goBack = goBack
+    self.goBack = goBack
   }
 
   func createNewPersonHandler() {
