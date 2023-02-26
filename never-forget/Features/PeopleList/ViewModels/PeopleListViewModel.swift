@@ -18,6 +18,10 @@ class PeopleListViewModel: ObservableObject {
     }
   }
 
+  func openPersonProfile(coordinator: PeopleListCoordinator, person: Person) {
+    coordinator.openPersonProfile(person: person)
+  }
+
 }
 
 extension PeopleListViewModel {

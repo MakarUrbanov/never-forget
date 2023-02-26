@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PeopleListView: View {
 
+  @EnvironmentObject var coordinator: PeopleListCoordinator
   @Environment(\.managedObjectContext) var managedObjectContext
   @FetchRequest(fetchRequest: Person.sortedFetchRequest(), animation: .easeInOut) var persons
   @StateObject var viewModel = PeopleListViewModel()
@@ -19,6 +20,10 @@ struct PeopleListView: View {
     List {
       ForEach(persons) { person in
         PersonCellView(person)
+          .background(Color.Theme.background)
+          .onTapGesture {
+            viewModel.openPersonProfile(coordinator: coordinator, person: person)
+          }
           .listRowBackground(Color.clear)
           .swipeActions(allowsFullSwipe: false, content: {
             Button("Delete") { // TODO: translate

@@ -10,11 +10,14 @@ import SwiftUI
 
 struct PersonProfileView: View {
 
+  let isEditMode: Bool
   @StateObject var viewModel: PersonProfileViewModel
   @State var selectedPhotos: [PhotosPickerItem] = []
 
-  init(goBack: @escaping () -> Void) {
-    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(goBack: goBack))
+  init(person: Person? = nil, goBack: @escaping () -> Void) {
+    isEditMode = person != nil
+    let person = person ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
+    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: person, goBack: goBack))
   }
 
   var body: some View {
@@ -22,15 +25,17 @@ struct PersonProfileView: View {
       VStack {
         List {
           Section("Photo") {
-            FormPhotoPickerView(selectedPhotos: $selectedPhotos, imageData: $viewModel.imageData)
+            FormPhotoPickerView(selectedPhotos: $selectedPhotos, imageData: $viewModel.person.photo)
           }
           .listRowBackground(Color.clear)
 
           Section("Information") { // TODO: localize
-            TextField("Name*", text: $viewModel.name) // TODO: localize
-            TextField("Description", text: $viewModel.description) // TODO: localize
+            TextField("Name*", text: Binding($viewModel.person.name, "")) // TODO: localize
+            TextField("Description", text: Binding($viewModel.person.personDescription, "")) // TODO: localize
 
-            DatePicker(selection: $viewModel.dateOfBirth, in: ...Date(), displayedComponents: .date) {
+            DatePicker(selection: Binding($viewModel.person.dateOfBirth, Date()),
+                       in: ...Date(),
+                       displayedComponents: .date) {
               Text("Date of birth:*") // TODO: localize
             }
             .datePickerStyle(CompactDatePickerStyle())
@@ -41,17 +46,10 @@ struct PersonProfileView: View {
         .scrollContentBackground(.hidden)
       }
       .toolbar {
-        ToolbarItem(placement: .navigationBarLeading) {
-          Button("Cancel") { // TODO: localize
-            viewModel.goBack()
-          }
-        }
-
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button("Add") { // TODO: localize
-            viewModel.createNewPersonHandler()
-          }
-        }
+        PersonProfileHeaderButtons(isEditMode: isEditMode,
+                                   goBack: viewModel.goBack,
+                                   save: viewModel.tryToSavePersonHandler,
+                                   add: viewModel.tryToSavePersonHandler)
       }
     }
   }

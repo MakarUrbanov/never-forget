@@ -10,22 +10,13 @@ import CoreData
 class PersistentContainerController: ObservableObject {
 
   private let persistentContainer: NSPersistentCloudKitContainer
-
-  var viewContext: NSManagedObjectContext {
-    persistentContainer.viewContext
-  }
-
-  var backgroundContext: NSManagedObjectContext {
-    persistentContainer.newBackgroundContext()
-  }
+  var viewContext: NSManagedObjectContext
+  var backgroundContext: NSManagedObjectContext
 
   init(storeName: String) {
     persistentContainer = PersistentContainerController.getInitialContainer(for: storeName)
-  }
-
-  func saveContext() {
-    saveContextHandler(viewContext)
-    saveContextHandler(backgroundContext)
+    backgroundContext = persistentContainer.newBackgroundContext()
+    viewContext = persistentContainer.viewContext
   }
 
 }
@@ -58,6 +49,45 @@ extension PersistentContainerController {
     container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
     return container
+  }
+
+}
+
+// MARK: - save context
+
+extension PersistentContainerController {
+
+  func saveAllContexts() {
+    saveContextHandler(viewContext)
+    saveContextHandler(backgroundContext)
+  }
+
+  func saveContext() {
+    saveContextHandler(viewContext)
+  }
+
+  func saveBackgroundContext() {
+    saveContextHandler(backgroundContext)
+  }
+
+}
+
+// MARK: - reset context
+
+extension PersistentContainerController {
+
+
+  func resetAllContexts() {
+    viewContext.reset()
+    backgroundContext.reset()
+  }
+
+  func resetContext() {
+    viewContext.reset()
+  }
+
+  func resetBackgroundContext() {
+    backgroundContext.reset()
   }
 
 }

@@ -26,6 +26,14 @@ final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
     navigationController.navigate(step: .present(addNewPersonView, .pageSheet))
   }
 
+  func openPersonProfile(person: Person) {
+    let addNewPersonView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
+      self.navigationController.navigate(step: .pop)
+    }))
+
+    navigationController.navigate(step: .push(addNewPersonView))
+  }
+
 }
 
 

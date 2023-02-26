@@ -9,20 +9,16 @@ import UIKit
 
 final class PersonProfileViewModel: ObservableObject {
 
-  @Published var name = ""
-  @Published var dateOfBirth = Date()
-  @Published var description = ""
-
-  @Published var imageData: Data?
-
+  @Published var person: Person
   let goBack: () -> Void
 
-  init(goBack: @escaping () -> Void) {
+  init(person: Person, goBack: @escaping () -> Void) {
     self.goBack = goBack
+    self.person = person
   }
 
-  func createNewPersonHandler() {
-    let isValidForm = !name.trimmed.isEmpty
+  func tryToSavePersonHandler() {
+    let isValidForm = !(person.name?.trimmed.isEmpty ?? true)
 
     if isValidForm {
       onValidForm()
@@ -39,17 +35,15 @@ extension PersonProfileViewModel {
     PersistentContainerProvider.shared.saveContext()
   }
 
-  private func createNewPerson() {
-    let person = Person(context: PersistentContainerProvider.shared.viewContext)
-    person.name = name
-    person.dateOfBirth = dateOfBirth
-    person.personDescription = description.trimmed.isEmpty ? nil : description
-    person.events = []
-    person.photo = imageData
+  private func getNewPerson() {
+  }
+
+  func editPerson() {
+    saveContext()
   }
 
   private func onValidForm() {
-    createNewPerson()
+    getNewPerson()
     saveContext()
     goBack()
   }
