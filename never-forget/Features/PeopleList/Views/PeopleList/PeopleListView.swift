@@ -11,26 +11,23 @@ struct PeopleListView: View {
 
   @EnvironmentObject var coordinator: PeopleListCoordinator
   @Environment(\.managedObjectContext) var managedObjectContext
-  @FetchRequest(fetchRequest: Person.sortedFetchRequest(), animation: .easeInOut) var persons
+
+  @FetchRequest(fetchRequest: Person.sortedFetchRequest()) var persons
   @StateObject var viewModel = PeopleListViewModel()
 
-  @State var isPresented = false
-
   var body: some View {
-    List {
-      ForEach(persons) { person in
-        PersonCellView(person)
-          .background(Color.Theme.background)
-          .onTapGesture {
-            viewModel.openPersonProfile(coordinator: coordinator, person: person)
+    List(persons) { person in
+      PersonCellView(person)
+        .background(Color.Theme.background)
+        .onTapGesture {
+          viewModel.openPersonProfile(coordinator: coordinator, person: person)
+        }
+        .listRowBackground(Color.clear)
+        .swipeActions(allowsFullSwipe: false, content: {
+          Button("Delete") { // TODO: translate
+            viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
           }
-          .listRowBackground(Color.clear)
-          .swipeActions(allowsFullSwipe: false, content: {
-            Button("Delete") { // TODO: translate
-              viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
-            }
-          })
-      }
+        })
     }
     .listStyle(.plain)
     .background(Color.Theme.background)

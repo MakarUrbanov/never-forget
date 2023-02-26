@@ -17,7 +17,7 @@ final class PersonProfileViewModel: ObservableObject {
     self.person = person
   }
 
-  func tryToSavePersonHandler() {
+  func validateAndSavePersonHandler() {
     let isValidForm = !(person.name?.trimmed.isEmpty ?? true)
 
     if isValidForm {
@@ -27,24 +27,16 @@ final class PersonProfileViewModel: ObservableObject {
     }
   }
 
+  func onDisappear() {
+    person.managedObjectContext?.rollback()
+  }
+
 }
 
 extension PersonProfileViewModel {
 
-  private func saveContext() {
-    PersistentContainerProvider.shared.saveContext()
-  }
-
-  private func getNewPerson() {
-  }
-
-  func editPerson() {
-    saveContext()
-  }
-
   private func onValidForm() {
-    getNewPerson()
-    saveContext()
+    person.managedObjectContext?.saveSafely()
     goBack()
   }
 

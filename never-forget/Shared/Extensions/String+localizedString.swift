@@ -13,7 +13,7 @@ extension String {
     for key: String,
     locale: Locale = .current
   ) -> String {
-    let language = locale.languageCode
+    let language = locale.language.languageCode?.identifier ?? "en"
     guard let path = Bundle.main.path(forResource: language, ofType: "lproj"),
           let bundle = Bundle(path: path) else { fatalError(#function) }
 

@@ -9,23 +9,14 @@ import SwiftUI
 
 struct PersonCellView: View {
 
-  @State private var person: Person
+  @ObservedObject private var person: Person
 
-  var name: String {
-    person.name ?? "un-named"
-  }
-
+  var name: String { person.name ?? "un-named" }
+  var defaultImage: Image { Image(systemName: "person") }
+  var userImage: UIImage? { person.getDecodedPhoto() }
   var dateOfBirth: String {
     guard let dateOfBirth = person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
-  }
-
-  var defaultImage: Image {
-    Image(systemName: "person")
-  }
-
-  var userImage: UIImage? {
-    person.getDecodedPhoto()
   }
 
   init(_ person: Person) {
