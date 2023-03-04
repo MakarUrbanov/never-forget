@@ -9,7 +9,9 @@ import SwiftUI
 
 struct PersonRowView: View {
 
+  @EnvironmentObject var coordinator: PeopleListCoordinator
   @ObservedObject private var person: Person
+  @StateObject var viewModel = PersonRowViewModel()
 
   var name: String { person.name ?? "un-named" }
   var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
@@ -18,6 +20,7 @@ struct PersonRowView: View {
     guard let dateOfBirth = person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
   }
+
   var personImageData: Binding<Data?> {
     Binding(get: {
       person.photo
@@ -31,28 +34,34 @@ struct PersonRowView: View {
   }
 
   var body: some View {
-    HStack(spacing: 20) {
-      DecodedImageWithPlaceholder(data: personImageData,
-                                  placeholder: defaultImage,
-                                  frame: CGSize(width: 40, height: 40))
-        .scaledToFill()
-        .frame(maxWidth: 40, maxHeight: 40)
-        .cornerRadius(40)
+    Button {
+      viewModel.openPersonProfile(coordinator: coordinator, person: person)
+    } label: {
+      HStack(spacing: 20) {
+        DecodedImageWithPlaceholder(data: personImageData,
+                                    placeholder: defaultImage,
+                                    frame: CGSize(width: 40, height: 40))
+          .scaledToFill()
+          .frame(maxWidth: 40, maxHeight: 40)
+          .cornerRadius(40)
 
-      VStack(alignment: .leading, spacing: 0) {
-        Text(name)
-          .font(.title3.weight(.bold))
-          .foregroundColor(.Theme.text)
-          .lineLimit(2)
+        VStack(alignment: .leading, spacing: 0) {
+          Text(name)
+            .font(.title3.weight(.bold))
+            .foregroundColor(.Theme.text)
+            .lineLimit(2)
 
-        Text(dateOfBirth)
-          .font(.subheadline.weight(.medium))
-          .foregroundColor(.Theme.text3)
-          .lineLimit(1)
+          Text(dateOfBirth)
+            .font(.subheadline.weight(.medium))
+            .foregroundColor(.Theme.text3)
+            .lineLimit(1)
+        }
+
+        Spacer()
       }
-
-      Spacer()
     }
+    .buttonStyle(TouchableOpacityButtonStyle())
+
   }
 }
 

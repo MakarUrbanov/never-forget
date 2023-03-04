@@ -19,9 +19,6 @@ struct PeopleListView: View {
     List(persons) { person in
       PersonRowView(person)
         .background(Color.Theme.background)
-        .onTapGesture {
-          viewModel.openPersonProfile(coordinator: coordinator, person: person)
-        }
         .listRowBackground(Color.clear)
         .swipeActions(allowsFullSwipe: false, content: {
           Button("Delete") { // TODO: translate

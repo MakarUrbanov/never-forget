@@ -55,6 +55,8 @@
 		35D02D322990486C00536AB8 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */; };
 		35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */; };
 		35E0479529B3996B006A2AB3 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */; };
+		35E0479729B40429006A2AB3 /* PersonRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479629B40429006A2AB3 /* PersonRowViewModel.swift */; };
+		35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */; };
 		35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841692992AFD900BF537E /* UIView+addView.swift */; };
 		35E841722992B0BA00BF537E /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841712992B0BA00BF537E /* UIColor+hex.swift */; };
 /* End PBXBuildFile section */
@@ -112,6 +114,8 @@
 		35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedImageWithPlaceholder.swift; sourceTree = "<group>"; };
 		35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
+		35E0479629B40429006A2AB3 /* PersonRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRowViewModel.swift; sourceTree = "<group>"; };
+		35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableOpacityButtonStyle.swift; sourceTree = "<group>"; };
 		35E841692992AFD900BF537E /* UIView+addView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addView.swift"; sourceTree = "<group>"; };
 		35E841712992B0BA00BF537E /* UIColor+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +222,7 @@
 			children = (
 				3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */,
 				3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */,
+				35E0479629B40429006A2AB3 /* PersonRowViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -440,6 +445,22 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		35E0479829B404AD006A2AB3 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				35E0479929B404BA006A2AB3 /* Button */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		35E0479929B404BA006A2AB3 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		35E8415B299299BE00BF537E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +470,7 @@
 				3533AFF329AA46FE00BA2F5F /* Managers */,
 				35E841642992AE9200BF537E /* Models */,
 				3533B00029AB868A00BA2F5F /* Protocols */,
+				35E0479829B404AD006A2AB3 /* Styles */,
 				350BE5B529ABD8F600A40F17 /* Utils */,
 				356CD88E29918EF300EA9D2D /* Views */,
 			);
@@ -599,6 +621,7 @@
 				3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */,
 				350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */,
 				355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */,
+				35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */,
 				35D02D322990486C00536AB8 /* MainFlowCoordinator.swift in Sources */,
 				350BE5B929ABDD5B00A40F17 /* Binding+OptionalInit.swift in Sources */,
 				356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */,
@@ -617,6 +640,7 @@
 				355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */,
 				3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */,
 				3521150A29A8FF5A00559988 /* PersonProfileView.swift in Sources */,
+				35E0479729B40429006A2AB3 /* PersonRowViewModel.swift in Sources */,
 				354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */,
 				350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */,
 				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
