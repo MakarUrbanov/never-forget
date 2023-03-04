@@ -51,11 +51,6 @@ public extension Person {
 
 extension Person {
 
-  func setPhoto(_ image: UIImage) {
-    let imageData = image.jpegData(compressionQuality: 1)
-    photo = imageData
-  }
-
   func getDecodedPhoto() -> UIImage? {
     guard let photoData = photo else { return nil }
 

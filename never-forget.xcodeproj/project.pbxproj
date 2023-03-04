@@ -53,6 +53,8 @@
 		356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88829918EBB00EA9D2D /* BaseUIView.swift */; };
 		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
 		35D02D322990486C00536AB8 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */; };
+		35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */; };
+		35E0479529B3996B006A2AB3 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */; };
 		35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841692992AFD900BF537E /* UIView+addView.swift */; };
 		35E841722992B0BA00BF537E /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841712992B0BA00BF537E /* UIColor+hex.swift */; };
 /* End PBXBuildFile section */
@@ -108,6 +110,8 @@
 		356CD88829918EBB00EA9D2D /* BaseUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedImageWithPlaceholder.swift; sourceTree = "<group>"; };
+		35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
 		35E841692992AFD900BF537E /* UIView+addView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addView.swift"; sourceTree = "<group>"; };
 		35E841712992B0BA00BF537E /* UIColor+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */,
+				35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				35E841692992AFD900BF537E /* UIView+addView.swift */,
 				3521151129A920CD00559988 /* String+trimmed.swift */,
 				350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */,
+				35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -587,6 +593,7 @@
 				355E279729A2D3FF0038F8BA /* LocalizedStringKey+toString.swift in Sources */,
 				3533AFF729AA692B00BA2F5F /* FormPhotoPickerView.swift in Sources */,
 				350BE5BF29ABF4E700A40F17 /* BasePersonProfileView.swift in Sources */,
+				35E0479529B3996B006A2AB3 /* UIImage+resizeImage.swift in Sources */,
 				3551F1A2299028AE00EBA6A3 /* MainScreenView.swift in Sources */,
 				355E278C29A2BF2B0038F8BA /* Localizable.swift in Sources */,
 				3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */,
@@ -621,6 +628,7 @@
 				355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */,
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */,
+				35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift in Sources */,
 				355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */,
 				3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */,
 				35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */,

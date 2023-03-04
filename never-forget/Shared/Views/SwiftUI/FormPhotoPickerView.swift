@@ -18,20 +18,12 @@ struct FormPhotoPickerView: View {
                  selectionBehavior: .ordered,
                  matching: .not(.videos)) {
       VStack(alignment: .center) {
-        if let imageData = imageData, let profileImage = UIImage(data: imageData) {
-          Image(uiImage: profileImage)
-            .resizable()
-            .scaledToFill()
-            .frame(width: 100, height: 100)
-            .cornerRadius(100)
-        } else {
-          Image(systemName: "person")
-            .resizable()
-            .scaledToFit()
-            .padding(30)
-            .frame(width: 100, height: 100)
-            .cornerRadius(100)
-        }
+        DecodedImageWithPlaceholder(data: imageData,
+                                    placeholder: Image(systemName: "person").resizable().padding(30),
+                                    frame: CGSize(width: 100, height: 100))
+          .scaledToFill()
+          .frame(width: 100, height: 100)
+          .cornerRadius(100)
       }
       .frame(maxWidth: .infinity)
       .onChange(of: selectedPhotos) { newPhotos in
