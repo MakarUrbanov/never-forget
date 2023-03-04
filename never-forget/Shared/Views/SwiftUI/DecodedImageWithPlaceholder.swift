@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
-  let data: Data?
+  @Binding var data: Data?
   let placeholder: DefaultImage
   let onLoadEnd: () -> Void
   let frame: CGSize
@@ -16,8 +16,8 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
   @State private var decodedImage: Image?
   @State private var isLoading = true
 
-  init(data: Data?, placeholder: DefaultImage, frame: CGSize, onLoadEnd: @escaping () -> Void = {}) {
-    self.data = data
+  init(data: Binding<Data?>, placeholder: DefaultImage, frame: CGSize, onLoadEnd: @escaping () -> Void = {}) {
+    _data = data
     self.placeholder = placeholder
     self.onLoadEnd = onLoadEnd
     self.frame = frame
@@ -34,6 +34,9 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
           .overlay {
             if isLoading { ProgressView() }
           }
+          .onChange(of: data, perform: { newData in
+            loadAsyncImage(data: newData)
+          })
           .onAppear {
             loadAsyncImage(data: data)
           }
@@ -41,6 +44,7 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
     }
   }
 }
+
 
 extension DecodedImageWithPlaceholder {
 
@@ -67,6 +71,7 @@ extension DecodedImageWithPlaceholder {
 
 struct DecodedImageWithPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
-    DecodedImageWithPlaceholder(data: Data(), placeholder: Image("person"), frame: CGSize(width: 100, height: 100))
+    DecodedImageWithPlaceholder(data: .constant(Data()), placeholder: Image("person"),
+                                frame: CGSize(width: 100, height: 100))
   }
 }

@@ -18,7 +18,7 @@ struct FormPhotoPickerView: View {
                  selectionBehavior: .ordered,
                  matching: .not(.videos)) {
       VStack(alignment: .center) {
-        DecodedImageWithPlaceholder(data: imageData,
+        DecodedImageWithPlaceholder(data: $imageData,
                                     placeholder: Image(systemName: "person").resizable().padding(30),
                                     frame: CGSize(width: 100, height: 100))
           .scaledToFill()

@@ -14,10 +14,16 @@ struct PersonRowView: View {
   var name: String { person.name ?? "un-named" }
   var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
   var userImage: UIImage? { person.getDecodedPhoto() }
-  var personImageData: Data? { person.photo }
   var dateOfBirth: String {
     guard let dateOfBirth = person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
+  }
+  var personImageData: Binding<Data?> {
+    Binding(get: {
+      person.photo
+    }, set: { newValue in
+      person.photo = newValue
+    })
   }
 
   init(_ person: Person) {
@@ -37,10 +43,12 @@ struct PersonRowView: View {
         Text(name)
           .font(.title3.weight(.bold))
           .foregroundColor(.Theme.text)
+          .lineLimit(2)
 
         Text(dateOfBirth)
           .font(.subheadline.weight(.medium))
           .foregroundColor(.Theme.text3)
+          .lineLimit(1)
       }
 
       Spacer()
