@@ -17,7 +17,7 @@ struct PeopleListView: View {
 
   var body: some View {
     List(persons) { person in
-      PersonCellView(person)
+      PersonRowView(person)
         .background(Color.Theme.background)
         .onTapGesture {
           viewModel.openPersonProfile(coordinator: coordinator, person: person)

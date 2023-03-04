@@ -19,9 +19,13 @@ class PersistentContainerController: ObservableObject {
     viewContext = persistentContainer.viewContext
   }
 
+  func exists<T>(_ model: NSManagedObject, in context: NSManagedObjectContext) -> T? {
+    try? context.existingObject(with: model.objectID) as? T
+  }
+
 }
 
-// MARK: - Static
+// MARK: - utils
 
 extension PersistentContainerController {
 

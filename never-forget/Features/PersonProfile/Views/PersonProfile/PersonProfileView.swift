@@ -14,7 +14,12 @@ struct PersonProfileView: View {
   @State var selectedPhotos: [PhotosPickerItem] = []
 
   init(person: Person, goBack: @escaping () -> Void) {
-    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: person, goBack: goBack))
+    let existsPerson: Person? = PersistentContainerProvider.shared.exists(person,
+                                                                          in: PersistentContainerProvider
+                                                                            .shared
+                                                                            .backgroundContext)
+    let correctPerson = existsPerson ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
+    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: correctPerson, goBack: goBack))
   }
 
   var body: some View {

@@ -1,5 +1,5 @@
 //
-//  PersonCellView.swift
+//  PersonRowView.swift
 //  never-forget
 //
 //  Created by makar on 2/19/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PersonCellView: View {
+struct PersonRowView: View {
 
   @ObservedObject private var person: Person
 
@@ -59,7 +59,7 @@ struct PersonCellView_Previews: PreviewProvider {
       return person
     }()
 
-    PersonCellView(personMock)
+    PersonRowView(personMock)
       .environment(\.locale, Locale(identifier: "ru"))
   }
 }

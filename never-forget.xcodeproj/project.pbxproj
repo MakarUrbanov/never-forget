@@ -36,7 +36,7 @@
 		355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277229A261550038F8BA /* Person+CoreDataClass.swift */; };
 		355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277329A261550038F8BA /* Person+CoreDataProperties.swift */; };
 		355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277D29A28FFF0038F8BA /* PeopleListScreenView.swift */; };
-		355E278329A2B6A00038F8BA /* PersonCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278229A2B6A00038F8BA /* PersonCellView.swift */; };
+		355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278229A2B6A00038F8BA /* PersonRowView.swift */; };
 		355E278729A2BDE30038F8BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 355E278929A2BDE30038F8BA /* Localizable.strings */; };
 		355E278C29A2BF2B0038F8BA /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278B29A2BF2B0038F8BA /* Localizable.swift */; };
 		355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278E29A2CFDD0038F8BA /* String+localizedString.swift */; };
@@ -92,7 +92,7 @@
 		355E277229A261550038F8BA /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		355E277329A261550038F8BA /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		355E277D29A28FFF0038F8BA /* PeopleListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListScreenView.swift; sourceTree = "<group>"; };
-		355E278229A2B6A00038F8BA /* PersonCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCellView.swift; sourceTree = "<group>"; };
+		355E278229A2B6A00038F8BA /* PersonRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRowView.swift; sourceTree = "<group>"; };
 		355E278829A2BDE30038F8BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		355E278A29A2BEA00038F8BA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		355E278B29A2BF2B0038F8BA /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		3521150229A8F7AC00559988 /* PeopleList */ = {
 			isa = PBXGroup;
 			children = (
-				355E278129A2B6900038F8BA /* PeopleCell */,
+				355E278129A2B6900038F8BA /* PeopleRow */,
 				3521150029A8F76F00559988 /* PeopleListView.swift */,
 			);
 			path = PeopleList;
@@ -386,12 +386,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		355E278129A2B6900038F8BA /* PeopleCell */ = {
+		355E278129A2B6900038F8BA /* PeopleRow */ = {
 			isa = PBXGroup;
 			children = (
-				355E278229A2B6A00038F8BA /* PersonCellView.swift */,
+				355E278229A2B6A00038F8BA /* PersonRowView.swift */,
 			);
-			path = PeopleCell;
+			path = PeopleRow;
 			sourceTree = "<group>";
 		};
 		355E278429A2BD220038F8BA /* Localizable */ = {
@@ -614,7 +614,7 @@
 				3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */,
 				354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */,
 				352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */,
-				355E278329A2B6A00038F8BA /* PersonCellView.swift in Sources */,
+				355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */,
 				3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */,
 				3521150A29A8FF5A00559988 /* PersonProfileView.swift in Sources */,
 				354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */,
