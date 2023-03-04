@@ -13,8 +13,7 @@ struct PersonProfileView: View {
   @StateObject var viewModel: PersonProfileViewModel
   @State var selectedPhotos: [PhotosPickerItem] = []
 
-  init(person: Person? = nil, goBack: @escaping () -> Void) {
-    let person = person ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
+  init(person: Person, goBack: @escaping () -> Void) {
     _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: person, goBack: goBack))
   }
 
@@ -39,6 +38,6 @@ struct PersonProfileView: View {
 
 struct PersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    PersonProfileView(goBack: {})
+    PersonProfileView(person: Person(context: PersistentContainerProvider.shared.viewContext), goBack: {})
   }
 }

@@ -12,8 +12,9 @@ struct PersonCellView: View {
   @ObservedObject private var person: Person
 
   var name: String { person.name ?? "un-named" }
-  var defaultImage: Image { Image(systemName: "person") }
+  var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
   var userImage: UIImage? { person.getDecodedPhoto() }
+  var personImageData: Data? { person.photo }
   var dateOfBirth: String {
     guard let dateOfBirth = person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
@@ -25,20 +26,12 @@ struct PersonCellView: View {
 
   var body: some View {
     HStack(spacing: 20) {
-      if let userImage {
-        Image(uiImage: userImage)
-          .resizable()
-          .frame(maxWidth: 40, maxHeight: 40)
-          .scaledToFit()
-          .cornerRadius(40)
-      } else {
-        defaultImage
-          .resizable()
-          .padding(10)
-          .frame(maxWidth: 40, maxHeight: 40)
-          .scaledToFit()
-          .cornerRadius(40)
-      }
+      DecodedImageWithPlaceholder(data: personImageData,
+                                  placeholder: defaultImage,
+                                  frame: CGSize(width: 40, height: 40))
+        .scaledToFill()
+        .frame(maxWidth: 40, maxHeight: 40)
+        .cornerRadius(40)
 
       VStack(alignment: .leading, spacing: 0) {
         Text(name)
