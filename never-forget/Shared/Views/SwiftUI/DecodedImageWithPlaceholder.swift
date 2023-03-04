@@ -14,6 +14,7 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
   let frame: CGSize
 
   @State private var decodedImage: Image?
+  @State private var isLoading = true
 
   init(data: Data?, placeholder: DefaultImage, frame: CGSize, onLoadEnd: @escaping () -> Void = {}) {
     self.data = data
@@ -29,6 +30,10 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
           .resizable()
       } else {
         placeholder
+          .opacity(isLoading ? 0 : 1)
+          .overlay {
+            if isLoading { ProgressView() }
+          }
           .onAppear {
             loadAsyncImage(data: data)
           }
@@ -40,15 +45,26 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
 extension DecodedImageWithPlaceholder {
 
   private func loadAsyncImage(data: Data?) {
-    DispatchQueue.global(qos: .background).async {
-      guard let decodedImage = UIImage(data: data ?? Data()) else { return onLoadEnd() }
+    print("mmk start")
+    DispatchQueue.global(qos: .userInteractive).async {
+      print("mmk 1", Date().timeIntervalSince1970)
+      guard let data, let decodedImage = UIImage(data: data) else {
+        onLoadEnd()
+        isLoading = false
+        return
+      }
 
+      print("mmk 2", Date().timeIntervalSince1970)
       let resizableImage = decodedImage.resizeImage(maxSize: frame)
+      print("mmk 3", Date().timeIntervalSince1970)
       let image = Image(uiImage: resizableImage)
+      print("mmk 4", Date().timeIntervalSince1970)
 
       DispatchQueue.main.async {
+        print("mmk end")
         self.decodedImage = image
         onLoadEnd()
+        isLoading = false
       }
     }
   }
