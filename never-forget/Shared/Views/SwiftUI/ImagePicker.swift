@@ -14,6 +14,7 @@ struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to
   typealias UIViewControllerType = PHPickerViewController
 
   @Binding var selectedImage: UIImage?
+  @Binding var isLoading: Bool
   let onDismiss: (() -> Void)?
 
   private let pickerConfiguration: PHPickerConfiguration = {
@@ -25,8 +26,9 @@ struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to
     return config
   }()
 
-  init(selectedImage: Binding<UIImage?>, onDismiss: (() -> Void)? = nil) {
+  init(selectedImage: Binding<UIImage?>, isLoading: Binding<Bool>, onDismiss: (() -> Void)? = nil) {
     _selectedImage = selectedImage
+    _isLoading = isLoading
     self.onDismiss = onDismiss
   }
 
@@ -39,19 +41,22 @@ struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to
   func updateUIViewController(_: PHPickerViewController, context _: Context) {}
 
   func makeCoordinator() -> Coordinator {
-    Coordinator(selectedImage: $selectedImage, onDismiss: onDismiss)
+    Coordinator(selectedImage: $selectedImage, isLoading: $isLoading, onDismiss: onDismiss)
   }
 
   class Coordinator: NSObject, PHPickerViewControllerDelegate {
     @Binding var selectedImage: UIImage?
+    @Binding var isLoading: Bool
     let onDismiss: (() -> Void)?
 
-    init(selectedImage: Binding<UIImage?>, onDismiss: (() -> Void)?) {
+    init(selectedImage: Binding<UIImage?>, isLoading: Binding<Bool>, onDismiss: (() -> Void)?) {
       _selectedImage = selectedImage
+      _isLoading = isLoading
       self.onDismiss = onDismiss
     }
 
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+      isLoading = true
       picker.dismiss(animated: true)
 
       if let item = results.first?.itemProvider {
@@ -63,11 +68,14 @@ struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to
               DispatchQueue.main.async {
                 if let image = image as? UIImage {
                   self.selectedImage = image
+                  self.isLoading = false
                 }
               }
             }
           }
         }
+      } else {
+        isLoading = false
       }
     }
   }

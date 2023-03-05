@@ -8,19 +8,38 @@
 import SwiftUI
 
 struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
-  @Binding var data: Data?
   let placeholder: DefaultImage
   let onLoadEnd: () -> Void
   let frame: CGSize
 
-  @State private var decodedImage: Image?
-  @State private var isLoading = true
+  @Binding var data: Data?
+  @Binding var parentIsLoading: Bool
 
-  init(data: Binding<Data?>, placeholder: DefaultImage, frame: CGSize, onLoadEnd: @escaping () -> Void = {}) {
+  @State private var decodedImage: Image?
+  @State private var isLoading: Bool {
+    didSet {
+      parentIsLoading = isLoading
+    }
+  }
+
+  var correctIsLoading: Bool {
+    parentIsLoading || isLoading
+  }
+
+  init(
+    data: Binding<Data?>,
+    placeholder: DefaultImage,
+    frame: CGSize,
+    isLoading: Binding<Bool> = .constant(false),
+    onLoadEnd: @escaping () -> Void = {}
+  ) {
     _data = data
     self.placeholder = placeholder
     self.onLoadEnd = onLoadEnd
     self.frame = frame
+
+    _parentIsLoading = isLoading
+    _isLoading = State(initialValue: isLoading.wrappedValue)
   }
 
   var body: some View {
@@ -30,15 +49,16 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
           .resizable()
       } else {
         placeholder
-          .opacity(isLoading ? 0 : 1)
-          .overlay {
-            if isLoading { ProgressView() }
-          }
           .onAppear {
             loadAsyncImage(data: data)
           }
       }
     }
+    .opacity(correctIsLoading ? 0 : 1)
+    .overlay {
+      if correctIsLoading { ProgressView() }
+    }
+    .animation(.easeInOut, value: correctIsLoading)
     .onChange(of: data, perform: { newData in
       loadAsyncImage(data: newData)
     })
@@ -72,7 +92,8 @@ extension DecodedImageWithPlaceholder {
 
 struct DecodedImageWithPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
-    DecodedImageWithPlaceholder(data: .constant(Data()), placeholder: Image("person"),
+    DecodedImageWithPlaceholder(data: .constant(Data()),
+                                placeholder: Image("person"),
                                 frame: CGSize(width: 100, height: 100))
   }
 }

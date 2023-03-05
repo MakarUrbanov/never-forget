@@ -43,7 +43,7 @@ struct PersonRowView: View {
                                     frame: CGSize(width: 40, height: 40))
           .scaledToFill()
           .frame(maxWidth: 40, maxHeight: 40)
-          .cornerRadius(40)
+          .mask(Circle())
 
         VStack(alignment: .leading, spacing: 0) {
           Text(name)

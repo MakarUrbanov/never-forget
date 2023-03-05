@@ -12,6 +12,7 @@ struct FormPhotoPickerView: View {
 
   @State private var isPresentedImagePicker = false
   @State private var selectedImage: UIImage?
+  @State private var isLoadingPhoto = false
 
   let compressionQuality: CGFloat
 
@@ -29,13 +30,21 @@ struct FormPhotoPickerView: View {
         imageData = nil
         selectedImage = nil
       }
+      .disabled(imageData == nil)
     } label: {
       DecodedImageWithPlaceholder(data: $imageData,
                                   placeholder: Image(systemName: "person").resizable().padding(30),
-                                  frame: CGSize(width: 100, height: 100))
+                                  frame: CGSize(width: 100, height: 100),
+                                  isLoading: $isLoadingPhoto)
         .scaledToFill()
         .frame(width: 100, height: 100)
         .cornerRadius(100)
+//        .opacity(isLoadingPhoto ? 0 : 1)
+//        .overlay {
+//          if isLoadingPhoto {
+//            ProgressView()
+//          }
+//        }
     }
     .frame(maxWidth: .infinity)
     .onChange(of: selectedImage, perform: { newImage in
@@ -46,7 +55,7 @@ struct FormPhotoPickerView: View {
       }
     })
     .sheet(isPresented: $isPresentedImagePicker) {
-      ImagePicker(selectedImage: $selectedImage)
+      ImagePicker(selectedImage: $selectedImage, isLoading: $isLoadingPhoto)
     }
   }
 }
