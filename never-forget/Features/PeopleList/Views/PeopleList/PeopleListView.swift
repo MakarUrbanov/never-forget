@@ -5,6 +5,7 @@
 //  Created by makar on 2/24/23.
 //
 
+import CoreData
 import SwiftUI
 
 struct PeopleListView: View {
@@ -24,6 +25,7 @@ struct PeopleListView: View {
           Button("Delete") { // TODO: translate
             viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
           }
+          .tint(.red)
         })
     }
     .listStyle(.plain)
@@ -32,7 +34,17 @@ struct PeopleListView: View {
 }
 
 struct PeopleListView_Previews: PreviewProvider {
+
   static var previews: some View {
-    PeopleListView()
+    for _ in 0 ..< 3 {
+      let newPerson = Person(context: PersistentContainerProvider.shared.viewContext)
+      newPerson.name = .randomString(maxLength: 20, numberOfWords: 2)
+    }
+
+    PersistentContainerProvider.shared.viewContext.saveSafely()
+
+    return PeopleListView()
+      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+      .environmentObject(PeopleListCoordinator())
   }
 }

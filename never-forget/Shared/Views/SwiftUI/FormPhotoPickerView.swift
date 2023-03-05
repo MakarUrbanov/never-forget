@@ -39,12 +39,6 @@ struct FormPhotoPickerView: View {
         .scaledToFill()
         .frame(width: 100, height: 100)
         .cornerRadius(100)
-//        .opacity(isLoadingPhoto ? 0 : 1)
-//        .overlay {
-//          if isLoadingPhoto {
-//            ProgressView()
-//          }
-//        }
     }
     .frame(maxWidth: .infinity)
     .onChange(of: selectedImage, perform: { newImage in

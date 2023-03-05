@@ -24,6 +24,8 @@
 		3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF429AA470800BA2F5F /* AlertManager.swift */; };
 		3533AFF729AA692B00BA2F5F /* FormPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */; };
 		3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */; };
+		3540DEAD29B5124200154770 /* View+hideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3540DEAC29B5124200154770 /* View+hideKeyboard.swift */; };
+		3540DEAF29B51BE000154770 /* String+randomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3540DEAE29B51BE000154770 /* String+randomString.swift */; };
 		3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3542517A29A78D1F005174DA /* BaseUINavigationController.swift */; };
 		354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */; };
 		354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EC29A7A66F00A99389 /* NavigationSteps.swift */; };
@@ -80,6 +82,8 @@
 		3533AFF429AA470800BA2F5F /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPhotoPickerView.swift; sourceTree = "<group>"; };
 		3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListViewModel.swift; sourceTree = "<group>"; };
+		3540DEAC29B5124200154770 /* View+hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+hideKeyboard.swift"; sourceTree = "<group>"; };
+		3540DEAE29B51BE000154770 /* String+randomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+randomString.swift"; sourceTree = "<group>"; };
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
 		354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+navigate.swift"; sourceTree = "<group>"; };
 		354E42EC29A7A66F00A99389 /* NavigationSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSteps.swift; sourceTree = "<group>"; };
@@ -415,17 +419,19 @@
 			isa = PBXGroup;
 			children = (
 				350BE5BA29ABEDEC00A40F17 /* CoreData */,
+				350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */,
 				355E279B29A5508B0038F8BA /* Color+Theme.swift */,
 				355E279F29A555FD0038F8BA /* Color+uiColor.swift */,
-				354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */,
 				355E279629A2D3FF0038F8BA /* LocalizedStringKey+toString.swift */,
 				355E279429A2D3D50038F8BA /* LocalizedStringKey+toStringKey.swift */,
 				355E278E29A2CFDD0038F8BA /* String+localizedString.swift */,
-				35E841712992B0BA00BF537E /* UIColor+hex.swift */,
-				35E841692992AFD900BF537E /* UIView+addView.swift */,
+				3540DEAE29B51BE000154770 /* String+randomString.swift */,
 				3521151129A920CD00559988 /* String+trimmed.swift */,
-				350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */,
+				35E841712992B0BA00BF537E /* UIColor+hex.swift */,
 				35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */,
+				354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */,
+				35E841692992AFD900BF537E /* UIView+addView.swift */,
+				3540DEAC29B5124200154770 /* View+hideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -646,10 +652,12 @@
 				355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */,
 				3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */,
 				3521150A29A8FF5A00559988 /* PersonProfileView.swift in Sources */,
+				3540DEAF29B51BE000154770 /* String+randomString.swift in Sources */,
 				35E0479729B40429006A2AB3 /* PersonRowViewModel.swift in Sources */,
 				354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */,
 				350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */,
 				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
+				3540DEAD29B5124200154770 /* View+hideKeyboard.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
 				350BE5BD29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */,
