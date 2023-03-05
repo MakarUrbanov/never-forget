@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BasePersonProfileView: View {
 
-  @Binding var selectedPhotos: [PhotosPickerItem]
+  @Binding var selectedPhoto: PhotosPickerItem?
   @Binding var photo: Data?
   @Binding var name: String?
   @Binding var personDescription: String?
@@ -21,7 +21,7 @@ struct BasePersonProfileView: View {
       List {
         Section("Photo") {
           // FIXME: фризит при открытии на фотке 2МБ
-          FormPhotoPickerView(selectedPhotos: $selectedPhotos, imageData: $photo)
+          FormPhotoPickerView(selectedPhoto: $selectedPhoto, imageData: $photo)
         }
         .listRowBackground(Color.clear)
 
@@ -48,7 +48,7 @@ struct BasePersonProfileView: View {
 
 struct BasePersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    BasePersonProfileView(selectedPhotos: .constant([]),
+    BasePersonProfileView(selectedPhoto: .constant(nil),
                           photo: .constant(nil),
                           name: .constant("Name"),
                           personDescription: .constant("Description"),

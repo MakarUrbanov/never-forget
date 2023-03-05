@@ -10,8 +10,8 @@ import SwiftUI
 
 struct PersonProfileView: View {
 
-  @StateObject var viewModel: PersonProfileViewModel
-  @State var selectedPhotos: [PhotosPickerItem] = []
+  @StateObject private var viewModel: PersonProfileViewModel
+  @State private var selectedPhoto: PhotosPickerItem?
 
   init(person: Person, goBack: @escaping () -> Void) {
     let existsPerson: Person? = PersistentContainerProvider.shared.exists(person,
@@ -23,7 +23,7 @@ struct PersonProfileView: View {
   }
 
   var body: some View {
-    BasePersonProfileView(selectedPhotos: $selectedPhotos,
+    BasePersonProfileView(selectedPhoto: $selectedPhoto,
                           photo: $viewModel.person.photo,
                           name: $viewModel.person.name,
                           personDescription: $viewModel.person.personDescription,
