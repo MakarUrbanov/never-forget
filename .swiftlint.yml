@@ -1,4 +1,12 @@
-only_rules:
+disabled_rules:
+  - todo
+
+analyzer_rules:
+  - unused_import
+  - unused_declaration
+
+opt_in_rules:
+  - unused_capture_list
   - class_delegate_protocol
   - closing_brace
   - closure_end_indentation
@@ -51,7 +59,6 @@ only_rules:
   - trailing_newline
   - trailing_semicolon
   - trailing_whitespace
-  - unused_import
   - unused_optional_binding
   - unused_setter_value
   - vertical_whitespace
@@ -69,6 +76,11 @@ only_rules:
   - switch_case_alignment
   - vertical_parameter_alignment_on_call
   - vertical_parameter_alignment
+  - large_tuple
+
+large_tuple:
+  - 4
+  - 3
 
 switch_case_alignment:
   indented_cases: true

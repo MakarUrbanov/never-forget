@@ -27,7 +27,9 @@ struct BasePersonProfileView: View {
 
         Section("Information") { // TODO: localize
           TextField("Name*", text: Binding($name, "")) // TODO: localize
+            .autocorrectionDisabled(true)
           TextField("Description", text: Binding($personDescription, "")) // TODO: localize
+            .autocorrectionDisabled(true)
 
           DatePicker(selection: Binding($dateOfBirth, Date()),
                      in: ...Date(),
