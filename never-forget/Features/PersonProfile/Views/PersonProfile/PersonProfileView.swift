@@ -5,13 +5,11 @@
 //  Created by makar on 2/24/23.
 //
 
-import PhotosUI
 import SwiftUI
 
 struct PersonProfileView: View {
 
   @StateObject private var viewModel: PersonProfileViewModel
-  @State private var selectedPhoto: PhotosPickerItem?
 
   init(person: Person, goBack: @escaping () -> Void) {
     let existsPerson: Person? = PersistentContainerProvider.shared.exists(person,
@@ -23,8 +21,7 @@ struct PersonProfileView: View {
   }
 
   var body: some View {
-    BasePersonProfileView(selectedPhoto: $selectedPhoto,
-                          photo: $viewModel.person.photo,
+    BasePersonProfileView(photo: $viewModel.person.photo,
                           name: $viewModel.person.name,
                           personDescription: $viewModel.person.personDescription,
                           dateOfBirth: $viewModel.person.dateOfBirth)

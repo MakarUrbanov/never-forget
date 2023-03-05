@@ -5,13 +5,11 @@
 //  Created by makar on 2/27/23.
 //
 
-import PhotosUI
 import SwiftUI
 
 struct CreateNewPersonView: View {
 
   @StateObject private var viewModel: CreateNewPersonViewModel
-  @State private var selectedPhoto: PhotosPickerItem?
 
   init(goBack: @escaping () -> Void) {
     let person = Person(context: PersistentContainerProvider.shared.backgroundContext)
@@ -20,8 +18,7 @@ struct CreateNewPersonView: View {
 
   var body: some View {
     NavigationView {
-      BasePersonProfileView(selectedPhoto: $selectedPhoto,
-                            photo: $viewModel.person.photo,
+      BasePersonProfileView(photo: $viewModel.person.photo,
                             name: $viewModel.person.name,
                             personDescription: $viewModel.person.personDescription,
                             dateOfBirth: $viewModel.person.dateOfBirth)

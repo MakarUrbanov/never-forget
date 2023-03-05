@@ -5,44 +5,54 @@
 //  Created by makar on 2/25/23.
 //
 
-import PhotosUI
 import SwiftUI
 
 struct FormPhotoPickerView: View {
-  @Binding var selectedPhoto: PhotosPickerItem?
   @Binding var imageData: Data?
 
+  @State private var isPresentedImagePicker = false
+  @State private var selectedImage: UIImage?
+
+  let compressionQuality: CGFloat
+
+  init(imageData: Binding<Data?>, compressionQuality: CGFloat = 0.5) {
+    _imageData = imageData
+    self.compressionQuality = compressionQuality
+  }
+
   var body: some View {
-    PhotosPicker(selection: $selectedPhoto, matching: .not(.videos)) {
-      VStack(alignment: .center) {
-        DecodedImageWithPlaceholder(data: $imageData,
-                                    placeholder: Image(systemName: "person").resizable().padding(30),
-                                    frame: CGSize(width: 100, height: 100))
-          .scaledToFill()
-          .frame(width: 100, height: 100)
-          .cornerRadius(100)
+    Menu {
+      Button("Add") { // TODO: translate
+        isPresentedImagePicker = true
       }
+      Button("Delete", role: .destructive) { // TODO: translate
+        imageData = nil
+        selectedImage = nil
+      }
+    } label: {
+      DecodedImageWithPlaceholder(data: $imageData,
+                                  placeholder: Image(systemName: "person").resizable().padding(30),
+                                  frame: CGSize(width: 100, height: 100))
+        .scaledToFill()
+        .frame(width: 100, height: 100)
+        .cornerRadius(100)
     }
     .frame(maxWidth: .infinity)
-    .onChange(of: selectedPhoto) { newPhoto in
-      guard let photo = newPhoto else { return }
-
-      photo.loadTransferable(type: Data.self) { result in
-        switch result {
-          case .success(let image):
-            DispatchQueue.main.async {
-              imageData = image
-            }
-          case .failure:
-            break
+    .onChange(of: selectedImage, perform: { newImage in
+      DispatchQueue.main.async {
+        if let image = newImage?.jpegData(compressionQuality: compressionQuality) {
+          imageData = image
         }
       }
+    })
+    .sheet(isPresented: $isPresentedImagePicker) {
+      ImagePicker(selectedImage: $selectedImage)
     }
   }
 }
 
 struct PhotoPickerView_Previews: PreviewProvider {
   static var previews: some View {
-    FormPhotoPickerView(selectedPhoto: .constant(nil), imageData: .constant(nil))
+    FormPhotoPickerView(imageData: .constant(nil))
   }
 }

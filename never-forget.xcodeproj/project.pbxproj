@@ -12,6 +12,7 @@
 		350BE5BF29ABF4E700A40F17 /* BasePersonProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5BE29ABF4E700A40F17 /* BasePersonProfileView.swift */; };
 		350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */; };
 		350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */; };
+		35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35104EC829B420BE00E40E1E /* ImagePicker.swift */; };
 		352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114F229A8DA4D00559988 /* RootCoordinator.swift */; };
 		352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */; };
 		352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */; };
@@ -67,6 +68,7 @@
 		350BE5BE29ABF4E700A40F17 /* BasePersonProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePersonProfileView.swift; sourceTree = "<group>"; };
 		350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonView.swift; sourceTree = "<group>"; };
 		350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonViewModel.swift; sourceTree = "<group>"; };
+		35104EC829B420BE00E40E1E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		352114F229A8DA4D00559988 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
 		352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCoordinator.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			children = (
 				3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */,
 				35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */,
+				35104EC829B420BE00E40E1E /* ImagePicker.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */,
 				356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */,
 				356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */,
+				35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */,
 				352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */,
 				3521150129A8F76F00559988 /* PeopleListView.swift in Sources */,
 				356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */,

@@ -34,14 +34,14 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
           .overlay {
             if isLoading { ProgressView() }
           }
-          .onChange(of: data, perform: { newData in
-            loadAsyncImage(data: newData)
-          })
           .onAppear {
             loadAsyncImage(data: data)
           }
       }
     }
+    .onChange(of: data, perform: { newData in
+      loadAsyncImage(data: newData)
+    })
   }
 }
 
@@ -53,6 +53,7 @@ extension DecodedImageWithPlaceholder {
       guard let data, let decodedImage = UIImage(data: data) else {
         onLoadEnd()
         isLoading = false
+        decodedImage = nil
         return
       }
 
