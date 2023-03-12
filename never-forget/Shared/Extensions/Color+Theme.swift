@@ -18,6 +18,7 @@ extension Color {
     static let text2 = Color("text2")
     static let text3 = Color("text3")
     static let text4 = Color("text4")
+    static let error = Color("error")
   }
 
 }

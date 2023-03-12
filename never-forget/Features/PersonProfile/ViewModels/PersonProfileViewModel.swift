@@ -5,22 +5,23 @@
 //  Created by makar on 2/24/23.
 //
 
+import SwiftUI
 import UIKit
 
 final class PersonProfileViewModel: ObservableObject {
 
-  @Published var person: Person
+  @Published var person: ValidatedValue<Person>
+
   let goBack: () -> Void
 
   init(person: Person, goBack: @escaping () -> Void) {
     self.goBack = goBack
-    self.person = person
+    self.person = ValidatedValue(value: person, isValidateOnInit: true,
+                                 validate: PersonProfileViewModel.validatePersonName)
   }
 
   func validateAndSavePersonHandler() {
-    let isValidForm = !(person.name?.trimmed.isEmpty ?? true)
-
-    if isValidForm {
+    if person.isValid {
       onValidForm()
     } else {
       onInvalidForm()
@@ -28,7 +29,7 @@ final class PersonProfileViewModel: ObservableObject {
   }
 
   func onDisappear() {
-    person.managedObjectContext?.rollback()
+    person.value.managedObjectContext?.rollback()
   }
 
 }
@@ -36,12 +37,29 @@ final class PersonProfileViewModel: ObservableObject {
 extension PersonProfileViewModel {
 
   private func onValidForm() {
-    person.managedObjectContext?.saveSafely()
+    person.value.managedObjectContext?.saveSafely()
     goBack()
   }
 
   private func onInvalidForm() {
-    AlertManager.shared.show(title: "Error", message: "Form error") // TODO: localize
+    person.editErrorVisibility(true)
+  }
+
+}
+
+// MARK: - Validator
+
+extension PersonProfileViewModel {
+
+  private static func validatePersonName(_ person: Person) -> ValidatedValue<Person>.ValidatorResult {
+    let isUsernameValid = !(person.name?.isEmpty ?? true)
+
+    switch true {
+      case isUsernameValid:
+        return .init(isValid: true)
+      default:
+        return .init(isValid: false, errorMessage: "Enter name")
+    }
   }
 
 }

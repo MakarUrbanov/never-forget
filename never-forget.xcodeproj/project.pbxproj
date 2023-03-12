@@ -29,6 +29,8 @@
 		3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3542517A29A78D1F005174DA /* BaseUINavigationController.swift */; };
 		354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */; };
 		354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EC29A7A66F00A99389 /* NavigationSteps.swift */; };
+		354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9629BE061F009BFB6D /* ValidatedValue.swift */; };
+		354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9A29BE2139009BFB6D /* View+if.swift */; };
 		3551F19E299028AE00EBA6A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19D299028AE00EBA6A3 /* AppDelegate.swift */; };
 		3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */; };
 		3551F1A2299028AE00EBA6A3 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A1299028AE00EBA6A3 /* MainScreenView.swift */; };
@@ -87,6 +89,8 @@
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
 		354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+navigate.swift"; sourceTree = "<group>"; };
 		354E42EC29A7A66F00A99389 /* NavigationSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSteps.swift; sourceTree = "<group>"; };
+		354E8B9629BE061F009BFB6D /* ValidatedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedValue.swift; sourceTree = "<group>"; };
+		354E8B9A29BE2139009BFB6D /* View+if.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+if.swift"; sourceTree = "<group>"; };
 		3551F19A299028AE00EBA6A3 /* never-forget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "never-forget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3551F19D299028AE00EBA6A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -432,6 +436,7 @@
 				354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */,
 				35E841692992AFD900BF537E /* UIView+addView.swift */,
 				3540DEAC29B5124200154770 /* View+hideKeyboard.swift */,
+				354E8B9A29BE2139009BFB6D /* View+if.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -443,6 +448,14 @@
 				3533AFF829AA6AB700BA2F5F /* UIKit */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		35C3D11329BA6AC0000208B6 /* FormValidator */ = {
+			isa = PBXGroup;
+			children = (
+				354E8B9629BE061F009BFB6D /* ValidatedValue.swift */,
+			);
+			path = FormValidator;
 			sourceTree = "<group>";
 		};
 		35D02D2E2990484400536AB8 /* Coordinator */ = {
@@ -475,6 +488,7 @@
 			children = (
 				3551F1B929902DF000EBA6A3 /* Assets */,
 				356CD88529918E6700EA9D2D /* Extensions */,
+				35C3D11329BA6AC0000208B6 /* FormValidator */,
 				355E278429A2BD220038F8BA /* Localizable */,
 				3533AFF329AA46FE00BA2F5F /* Managers */,
 				35E841642992AE9200BF537E /* Models */,
@@ -636,6 +650,7 @@
 				35D02D322990486C00536AB8 /* MainFlowCoordinator.swift in Sources */,
 				350BE5B929ABDD5B00A40F17 /* Binding+OptionalInit.swift in Sources */,
 				356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */,
+				354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */,
 				356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */,
 				356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */,
 				35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */,
@@ -660,6 +675,7 @@
 				3540DEAD29B5124200154770 /* View+hideKeyboard.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
 				350BE5BD29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift in Sources */,
+				354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */,
 				3521151029A90EA200559988 /* PersonProfileViewModel.swift in Sources */,
 				3521151229A920CD00559988 /* String+trimmed.swift in Sources */,

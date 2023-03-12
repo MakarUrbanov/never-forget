@@ -19,7 +19,6 @@ struct PeopleListView: View {
   var body: some View {
     List(persons) { person in
       PersonRowView(person)
-        .background(Color.Theme.background)
         .listRowBackground(Color.clear)
         .swipeActions(allowsFullSwipe: false, content: {
           Button("Delete") { // TODO: translate

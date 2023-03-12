@@ -21,10 +21,7 @@ struct PersonProfileView: View {
   }
 
   var body: some View {
-    BasePersonProfileView(photo: $viewModel.person.photo,
-                          name: $viewModel.person.name,
-                          personDescription: $viewModel.person.personDescription,
-                          dateOfBirth: $viewModel.person.dateOfBirth)
+    BasePersonProfileView(person: $viewModel.person)
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button("Save") { // TODO: localize

@@ -18,20 +18,17 @@ struct CreateNewPersonView: View {
 
   var body: some View {
     NavigationView {
-      BasePersonProfileView(photo: $viewModel.person.photo,
-                            name: $viewModel.person.name,
-                            personDescription: $viewModel.person.personDescription,
-                            dateOfBirth: $viewModel.person.dateOfBirth)
+      BasePersonProfileView(person: $viewModel.person)
         .toolbar {
           ToolbarItem(placement: .navigationBarLeading) {
             Button("Cancel") { // TODO: localize
-              viewModel.cancel()
+              viewModel.onPressOnCancel()
             }
           }
 
           ToolbarItem(placement: .navigationBarTrailing) {
             Button("Add") { // TODO: localize
-              viewModel.createNewPerson()
+              viewModel.onPressAddNewPerson()
             }
           }
         }
