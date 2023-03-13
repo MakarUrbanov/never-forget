@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import OSLog
 import SwiftUI
 
 struct PeopleListView: View {
@@ -35,12 +36,10 @@ struct PeopleListView: View {
 struct PeopleListView_Previews: PreviewProvider {
 
   static var previews: some View {
-    for _ in 0 ..< 3 {
-      let newPerson = Person(context: PersistentContainerProvider.shared.viewContext)
-      newPerson.name = .randomString(maxLength: 20, numberOfWords: 2)
-    }
-
-    PersistentContainerProvider.shared.viewContext.saveSafely()
+    let newPerson = Person(context: PersistentContainerProvider.shared.viewContext)
+    newPerson.name = .randomString(maxLength: 20, numberOfWords: 2)
+    newPerson.photo = Bool.random() ? UIImage(named: "MockImage")?.jpegData(compressionQuality: 1) : nil
+    newPerson.dateOfBirth = Date.getRandomDate()
 
     return PeopleListView()
       .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)

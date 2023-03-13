@@ -27,7 +27,7 @@ struct PeopleListScreenView: View {
   }
 }
 
-struct PersonsListView_Previews: PreviewProvider {
+struct PeopleListScreenView_Previews: PreviewProvider {
   static var previews: some View {
     PeopleListScreenView()
   }
