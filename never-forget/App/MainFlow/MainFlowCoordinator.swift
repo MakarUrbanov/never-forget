@@ -20,7 +20,7 @@ final class MainFlowCoordinator: TabCoordinator {
       .setViewControllers([mainCoordinator.navigationController, peopleListCoordinator.navigationController],
                           animated: false)
 
-    tabBarController.selectedIndex = 1 // TODO: delete
+//    tabBarController.selectedIndex = 1 // TODO: delete
   }
 
 }
