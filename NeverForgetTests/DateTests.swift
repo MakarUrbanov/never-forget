@@ -5,7 +5,7 @@
 //  Created by makar on 3/13/23.
 //
 
-@testable import never_forget
+@testable import NeverForgetApp
 import XCTest
 
 final class DateTests: XCTestCase {

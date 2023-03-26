@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3551F199299028AE00EBA6A3"
-               BuildableName = "never-forget.app"
-               BlueprintName = "never-forget"
-               ReferencedContainer = "container:never-forget.xcodeproj">
+               BuildableName = "NeverForgetApp.app"
+               BlueprintName = "NeverForgetApp"
+               ReferencedContainer = "container:NeverForgetApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "354E8BA129BE6B82009BFB6D"
-               BuildableName = "never-forgetTests.xctest"
-               BlueprintName = "never-forgetTests"
-               ReferencedContainer = "container:never-forget.xcodeproj">
+               BuildableName = "NeverForgetAppTests.xctest"
+               BlueprintName = "NeverForgetAppTests"
+               ReferencedContainer = "container:NeverForgetApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3551F199299028AE00EBA6A3"
-            BuildableName = "never-forget.app"
-            BlueprintName = "never-forget"
-            ReferencedContainer = "container:never-forget.xcodeproj">
+            BuildableName = "NeverForgetApp.app"
+            BlueprintName = "NeverForgetApp"
+            ReferencedContainer = "container:NeverForgetApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3551F199299028AE00EBA6A3"
-            BuildableName = "never-forget.app"
-            BlueprintName = "never-forget"
-            ReferencedContainer = "container:never-forget.xcodeproj">
+            BuildableName = "NeverForgetApp.app"
+            BlueprintName = "NeverForgetApp"
+            ReferencedContainer = "container:NeverForgetApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

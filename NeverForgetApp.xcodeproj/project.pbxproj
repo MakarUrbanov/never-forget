@@ -13,9 +13,6 @@
 		350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */; };
 		350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */; };
 		35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35104EC829B420BE00E40E1E /* ImagePicker.swift */; };
-		351BD24F29C620020036A2C8 /* NFDatePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351BD24929C620020036A2C8 /* NFDatePicker.framework */; };
-		351BD25129C620020036A2C8 /* NFDatePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 351BD24929C620020036A2C8 /* NFDatePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		351BD25929C622580036A2C8 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 351BD25829C622580036A2C8 /* FSCalendar */; };
 		352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114F229A8DA4D00559988 /* RootCoordinator.swift */; };
 		352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */; };
 		352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */; };
@@ -74,13 +71,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		351BD24D29C620020036A2C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3551F192299028AE00EBA6A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 351BD24829C620020036A2C8;
-			remoteInfo = NFDatePicker;
-		};
 		354E8BA629BE6B82009BFB6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3551F192299028AE00EBA6A3 /* Project object */;
@@ -97,7 +87,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				351BD25129C620020036A2C8 /* NFDatePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,7 +100,6 @@
 		350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonView.swift; sourceTree = "<group>"; };
 		350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonViewModel.swift; sourceTree = "<group>"; };
 		35104EC829B420BE00E40E1E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		351BD24929C620020036A2C8 /* NFDatePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NFDatePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		352114F229A8DA4D00559988 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
 		352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCoordinator.swift; sourceTree = "<group>"; };
@@ -131,9 +119,9 @@
 		354E8B9629BE061F009BFB6D /* ValidatedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedValue.swift; sourceTree = "<group>"; };
 		354E8B9A29BE2139009BFB6D /* View+if.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+if.swift"; sourceTree = "<group>"; };
 		354E8B9C29BE6713009BFB6D /* Date+randomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+randomDate.swift"; sourceTree = "<group>"; };
-		354E8BA229BE6B82009BFB6D /* never-forgetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "never-forgetTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		354E8BA229BE6B82009BFB6D /* NeverForgetAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NeverForgetAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		354E8BA429BE6B82009BFB6D /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
-		3551F19A299028AE00EBA6A3 /* never-forget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "never-forget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeverForgetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3551F19D299028AE00EBA6A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3551F19F299028AE00EBA6A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3551F1A1299028AE00EBA6A3 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -175,13 +163,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		351BD24629C620020036A2C8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		354E8B9F29BE6B82009BFB6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -193,8 +174,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				351BD24F29C620020036A2C8 /* NFDatePicker.framework in Frameworks */,
-				351BD25929C622580036A2C8 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,19 +329,19 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		354E8BA329BE6B82009BFB6D /* never-forgetTests */ = {
+		354E8BA329BE6B82009BFB6D /* NeverForgetTests */ = {
 			isa = PBXGroup;
 			children = (
 				354E8BA429BE6B82009BFB6D /* DateTests.swift */,
 			);
-			path = "never-forgetTests";
+			path = NeverForgetTests;
 			sourceTree = "<group>";
 		};
 		3551F191299028AE00EBA6A3 = {
 			isa = PBXGroup;
 			children = (
-				3551F19C299028AE00EBA6A3 /* never-forget */,
-				354E8BA329BE6B82009BFB6D /* never-forgetTests */,
+				3551F19C299028AE00EBA6A3 /* NeverForgetApp */,
+				354E8BA329BE6B82009BFB6D /* NeverForgetTests */,
 				3551F19B299028AE00EBA6A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -370,14 +349,13 @@
 		3551F19B299028AE00EBA6A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3551F19A299028AE00EBA6A3 /* never-forget.app */,
-				354E8BA229BE6B82009BFB6D /* never-forgetTests.xctest */,
-				351BD24929C620020036A2C8 /* NFDatePicker.framework */,
+				3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */,
+				354E8BA229BE6B82009BFB6D /* NeverForgetAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3551F19C299028AE00EBA6A3 /* never-forget */ = {
+		3551F19C299028AE00EBA6A3 /* NeverForgetApp */ = {
 			isa = PBXGroup;
 			children = (
 				3551F1B529902AA300EBA6A3 /* App */,
@@ -387,7 +365,7 @@
 				35E8415B299299BE00BF537E /* Shared */,
 				3551F1BA29902E2800EBA6A3 /* SupportingFiles */,
 			);
-			path = "never-forget";
+			path = NeverForgetApp;
 			sourceTree = "<group>";
 		};
 		3551F1B529902AA300EBA6A3 /* App */ = {
@@ -603,38 +581,10 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		351BD24429C620020036A2C8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		351BD24829C620020036A2C8 /* NFDatePicker */ = {
+		354E8BA129BE6B82009BFB6D /* NeverForgetAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 351BD25429C620020036A2C8 /* Build configuration list for PBXNativeTarget "NFDatePicker" */;
-			buildPhases = (
-				351BD24429C620020036A2C8 /* Headers */,
-				351BD24529C620020036A2C8 /* Sources */,
-				351BD24629C620020036A2C8 /* Frameworks */,
-				351BD24729C620020036A2C8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = NFDatePicker;
-			productName = NFDatePicker;
-			productReference = 351BD24929C620020036A2C8 /* NFDatePicker.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		354E8BA129BE6B82009BFB6D /* never-forgetTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 354E8BA829BE6B82009BFB6D /* Build configuration list for PBXNativeTarget "never-forgetTests" */;
+			buildConfigurationList = 354E8BA829BE6B82009BFB6D /* Build configuration list for PBXNativeTarget "NeverForgetAppTests" */;
 			buildPhases = (
 				354E8B9E29BE6B82009BFB6D /* Sources */,
 				354E8B9F29BE6B82009BFB6D /* Frameworks */,
@@ -645,14 +595,14 @@
 			dependencies = (
 				354E8BA729BE6B82009BFB6D /* PBXTargetDependency */,
 			);
-			name = "never-forgetTests";
+			name = NeverForgetAppTests;
 			productName = "never-forgetTests";
-			productReference = 354E8BA229BE6B82009BFB6D /* never-forgetTests.xctest */;
+			productReference = 354E8BA229BE6B82009BFB6D /* NeverForgetAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3551F199299028AE00EBA6A3 /* never-forget */ = {
+		3551F199299028AE00EBA6A3 /* NeverForgetApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3551F1B1299028AF00EBA6A3 /* Build configuration list for PBXNativeTarget "never-forget" */;
+			buildConfigurationList = 3551F1B1299028AF00EBA6A3 /* Build configuration list for PBXNativeTarget "NeverForgetApp" */;
 			buildPhases = (
 				3551F196299028AE00EBA6A3 /* Sources */,
 				3551F197299028AE00EBA6A3 /* Frameworks */,
@@ -664,14 +614,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				351BD24E29C620020036A2C8 /* PBXTargetDependency */,
 			);
-			name = "never-forget";
+			name = NeverForgetApp;
 			packageProductDependencies = (
-				351BD25829C622580036A2C8 /* FSCalendar */,
 			);
 			productName = "never-forget";
-			productReference = 3551F19A299028AE00EBA6A3 /* never-forget.app */;
+			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -684,10 +632,6 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
-					351BD24829C620020036A2C8 = {
-						CreatedOnToolsVersion = 14.2;
-						LastSwiftMigration = 1420;
-					};
 					354E8BA129BE6B82009BFB6D = {
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 3551F199299028AE00EBA6A3;
@@ -697,7 +641,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3551F195299028AE00EBA6A3 /* Build configuration list for PBXProject "never-forget" */;
+			buildConfigurationList = 3551F195299028AE00EBA6A3 /* Build configuration list for PBXProject "NeverForgetApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -708,27 +652,18 @@
 			);
 			mainGroup = 3551F191299028AE00EBA6A3;
 			packageReferences = (
-				351BD25729C622580036A2C8 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 3551F19B299028AE00EBA6A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3551F199299028AE00EBA6A3 /* never-forget */,
-				354E8BA129BE6B82009BFB6D /* never-forgetTests */,
-				351BD24829C620020036A2C8 /* NFDatePicker */,
+				3551F199299028AE00EBA6A3 /* NeverForgetApp */,
+				354E8BA129BE6B82009BFB6D /* NeverForgetAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		351BD24729C620020036A2C8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		354E8BA029BE6B82009BFB6D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -791,13 +726,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		351BD24529C620020036A2C8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		354E8B9E29BE6B82009BFB6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -872,14 +800,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		351BD24E29C620020036A2C8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 351BD24829C620020036A2C8 /* NFDatePicker */;
-			targetProxy = 351BD24D29C620020036A2C8 /* PBXContainerItemProxy */;
-		};
 		354E8BA729BE6B82009BFB6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3551F199299028AE00EBA6A3 /* never-forget */;
+			target = 3551F199299028AE00EBA6A3 /* NeverForgetApp */;
 			targetProxy = 354E8BA629BE6B82009BFB6D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -905,77 +828,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		351BD25229C620020036A2C8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3LK6LB7235;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = makar.urbanov.NFDatePicker;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		351BD25329C620020036A2C8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3LK6LB7235;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = makar.urbanov.NFDatePicker;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		354E8BA929BE6B82009BFB6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -990,7 +842,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/never-forget.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/never-forget";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NeverForgetApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NeverForgetApp";
 			};
 			name = Debug;
 		};
@@ -1008,7 +860,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/never-forget.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/never-forget";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NeverForgetApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NeverForgetApp";
 			};
 			name = Release;
 		};
@@ -1133,12 +985,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "NeverForgetApp/SupportingFiles/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "never-forget/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = NeverForgetApp/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Never Forget";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1165,12 +1018,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "NeverForgetApp/SupportingFiles/never-forget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LK6LB7235;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "never-forget/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = NeverForgetApp/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Never Forget";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1195,16 +1049,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		351BD25429C620020036A2C8 /* Build configuration list for PBXNativeTarget "NFDatePicker" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				351BD25229C620020036A2C8 /* Debug */,
-				351BD25329C620020036A2C8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		354E8BA829BE6B82009BFB6D /* Build configuration list for PBXNativeTarget "never-forgetTests" */ = {
+		354E8BA829BE6B82009BFB6D /* Build configuration list for PBXNativeTarget "NeverForgetAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				354E8BA929BE6B82009BFB6D /* Debug */,
@@ -1213,7 +1058,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3551F195299028AE00EBA6A3 /* Build configuration list for PBXProject "never-forget" */ = {
+		3551F195299028AE00EBA6A3 /* Build configuration list for PBXProject "NeverForgetApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3551F1AF299028AF00EBA6A3 /* Debug */,
@@ -1222,7 +1067,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3551F1B1299028AF00EBA6A3 /* Build configuration list for PBXNativeTarget "never-forget" */ = {
+		3551F1B1299028AF00EBA6A3 /* Build configuration list for PBXNativeTarget "NeverForgetApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3551F1B2299028AF00EBA6A3 /* Debug */,
@@ -1232,25 +1077,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		351BD25729C622580036A2C8 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		351BD25829C622580036A2C8 /* FSCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 351BD25729C622580036A2C8 /* XCRemoteSwiftPackageReference "FSCalendar" */;
-			productName = FSCalendar;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */ = {
