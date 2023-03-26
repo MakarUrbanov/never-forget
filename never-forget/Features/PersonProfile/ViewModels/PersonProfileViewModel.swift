@@ -16,8 +16,11 @@ final class PersonProfileViewModel: ObservableObject {
 
   init(person: Person, goBack: @escaping () -> Void) {
     self.goBack = goBack
-    self.person = ValidatedValue(value: person, isValidateOnInit: true,
-                                 validate: PersonProfileViewModel.validatePersonName)
+    self.person = ValidatedValue(
+      value: person,
+      isValidateOnInit: true,
+      validate: PersonProfileViewModel.validatePersonName
+    )
   }
 
   func validateAndSavePersonHandler() {

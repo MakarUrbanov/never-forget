@@ -38,12 +38,14 @@ struct PersonRowView: View {
       viewModel.openPersonProfile(coordinator: coordinator, person: person)
     } label: {
       HStack(spacing: 20) {
-        DecodedImageWithPlaceholder(data: personImageData,
-                                    placeholder: defaultImage,
-                                    frame: CGSize(width: 40, height: 40))
-          .scaledToFill()
-          .frame(maxWidth: 40, maxHeight: 40)
-          .mask(Circle())
+        DecodedImageWithPlaceholder(
+          data: personImageData,
+          placeholder: defaultImage,
+          frame: CGSize(width: 40, height: 40)
+        )
+        .scaledToFill()
+        .frame(maxWidth: 40, maxHeight: 40)
+        .mask(Circle())
 
         VStack(alignment: .leading, spacing: 0) {
           Text(name)

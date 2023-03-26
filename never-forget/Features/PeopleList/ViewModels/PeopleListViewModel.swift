@@ -28,8 +28,10 @@ extension PeopleListViewModel {
     let noButtonOptions: AlertManager.AlertButtonOptions = (title: "No", style: .default, handler: { _ in
     })
 
-    AlertManager.shared.show(title: "Delete person?",
-                             buttonOptions: [yesButtonOptions, noButtonOptions]) // TODO: translate
+    AlertManager.shared.show(
+      title: "Delete person?",
+      buttonOptions: [yesButtonOptions, noButtonOptions]
+    ) // TODO: translate
   }
 
 }

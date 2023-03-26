@@ -12,10 +12,12 @@ struct PersonProfileView: View {
   @StateObject private var viewModel: PersonProfileViewModel
 
   init(person: Person, goBack: @escaping () -> Void) {
-    let existsPerson: Person? = PersistentContainerProvider.shared.exists(person,
-                                                                          in: PersistentContainerProvider
-                                                                            .shared
-                                                                            .backgroundContext)
+    let existsPerson: Person? = PersistentContainerProvider.shared.exists(
+      person,
+      in: PersistentContainerProvider
+        .shared
+        .backgroundContext
+    )
     let correctPerson = existsPerson ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
     _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: correctPerson, goBack: goBack))
   }

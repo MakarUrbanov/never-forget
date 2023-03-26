@@ -1,17 +1,13 @@
 ## File options
-
  --exclude Pods
- --swiftversion 5.3
-
+ --swiftversion 5.7
 
  ## Enabled rules
-
  --enable andOperator
  --enable anyObjectProtocol
  --enable blankLinesAroundMark
  --enable blankLinesBetweenScopes
  --enable braces
-
  --enable consecutiveSpaces
  --enable duplicateimports
  --enable elseOnSameLine
@@ -72,9 +68,9 @@
  --marktypes never
 
  ### Wrap
- --wraparguments after-first
+ --wraparguments before-first
  --wrapparameters before-first
- --wrapcollections after-first
+ --wrapcollections before-first
 
  ### Attributes
  --funcattributes prev-line
@@ -101,15 +97,7 @@
 
 
  ## Disabled rules
-
- ### SwiftFormat also removes from funcs, so let's let SwiftLint takes care of it.
  --disable redundantReturn
-
- ### SwiftFormat also removes from end of scope, which is against our empty line guidelines.
  --disable blankLinesAtEndOfScope
-
- ### SwiftFormat also removes from start of scope, which is against our empty line guidelines.
  --disable blankLinesAtStartOfScope
-
-
  --disable consecutiveBlankLines

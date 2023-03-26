@@ -32,13 +32,15 @@ struct FormPhotoPickerView: View {
       }
       .disabled(imageData == nil)
     } label: {
-      DecodedImageWithPlaceholder(data: $imageData,
-                                  placeholder: Image(systemName: "person").resizable().padding(30),
-                                  frame: CGSize(width: 100, height: 100),
-                                  isLoading: $isLoadingPhoto)
-        .scaledToFill()
-        .frame(width: 100, height: 100)
-        .cornerRadius(100)
+      DecodedImageWithPlaceholder(
+        data: $imageData,
+        placeholder: Image(systemName: "person").resizable().padding(30),
+        frame: CGSize(width: 100, height: 100),
+        isLoading: $isLoadingPhoto
+      )
+      .scaledToFill()
+      .frame(width: 100, height: 100)
+      .cornerRadius(100)
     }
     .frame(maxWidth: .infinity)
     .onChange(of: selectedImage, perform: { newImage in

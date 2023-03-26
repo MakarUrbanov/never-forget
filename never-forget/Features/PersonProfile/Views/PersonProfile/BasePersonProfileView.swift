@@ -10,8 +10,10 @@ import SwiftUI
 struct BasePersonProfileView: View {
 
   @Binding var person: ValidatedValue<Person>
-  private var isValidUsername: Binding<Bool> { Binding(get: { !person.isVisibleError || person.isValid },
-                                                       set: { _ in })
+  private var isValidUsername: Binding<Bool> { Binding(
+    get: { !person.isVisibleError || person.isValid },
+    set: { _ in }
+  )
   }
 
   var body: some View {
@@ -41,9 +43,11 @@ struct BasePersonProfileView: View {
                 .offset(CGSize(width: 0, height: 8))
             }
 
-          DatePicker(selection: Binding($person.value.dateOfBirth, Date()),
-                     in: ...Date(),
-                     displayedComponents: .date) {
+          DatePicker(
+            selection: Binding($person.value.dateOfBirth, Date()),
+            in: ...Date(),
+            displayedComponents: .date
+          ) {
             Text("Date of birth:*") // TODO: localize
           }
           .datePickerStyle(CompactDatePickerStyle())

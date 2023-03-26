@@ -48,9 +48,11 @@ extension PeopleListCoordinator {
 extension PeopleListCoordinator {
 
   private func getPeopleListScreenView() -> UIViewController {
-    let listTab = UIHostingController(rootView: PeopleListScreenView()
-      .environmentObject(self)
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext))
+    let listTab = UIHostingController(
+      rootView: PeopleListScreenView()
+        .environmentObject(self)
+        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+    )
     return listTab
   }
 

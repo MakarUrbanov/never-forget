@@ -92,8 +92,10 @@ extension DecodedImageWithPlaceholder {
 
 struct DecodedImageWithPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
-    DecodedImageWithPlaceholder(data: .constant(Data()),
-                                placeholder: Image("person"),
-                                frame: CGSize(width: 100, height: 100))
+    DecodedImageWithPlaceholder(
+      data: .constant(Data()),
+      placeholder: Image("person"),
+      frame: CGSize(width: 100, height: 100)
+    )
   }
 }

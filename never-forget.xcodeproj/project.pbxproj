@@ -13,10 +13,8 @@
 		350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */; };
 		350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */; };
 		35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35104EC829B420BE00E40E1E /* ImagePicker.swift */; };
-		351BD24C29C620020036A2C8 /* NFDatePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 351BD24B29C620020036A2C8 /* NFDatePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		351BD24F29C620020036A2C8 /* NFDatePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351BD24929C620020036A2C8 /* NFDatePicker.framework */; };
 		351BD25129C620020036A2C8 /* NFDatePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 351BD24929C620020036A2C8 /* NFDatePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		351BD25629C6217A0036A2C8 /* NFDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BD25529C6217A0036A2C8 /* NFDatePicker.swift */; };
 		351BD25929C622580036A2C8 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 351BD25829C622580036A2C8 /* FSCalendar */; };
 		352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114F229A8DA4D00559988 /* RootCoordinator.swift */; };
 		352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */; };
@@ -63,6 +61,8 @@
 		356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */; };
 		356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */; };
 		356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88829918EBB00EA9D2D /* BaseUIView.swift */; };
+		357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F229CE0C9C009F5988 /* AppPreloader.swift */; };
+		357950F629CE117B009F5988 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F529CE117B009F5988 /* Logger.swift */; };
 		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
 		35D02D322990486C00536AB8 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */; };
 		35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */; };
@@ -112,8 +112,6 @@
 		350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonViewModel.swift; sourceTree = "<group>"; };
 		35104EC829B420BE00E40E1E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		351BD24929C620020036A2C8 /* NFDatePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NFDatePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		351BD24B29C620020036A2C8 /* NFDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NFDatePicker.h; sourceTree = "<group>"; };
-		351BD25529C6217A0036A2C8 /* NFDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFDatePicker.swift; sourceTree = "<group>"; };
 		352114F229A8DA4D00559988 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
 		352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCoordinator.swift; sourceTree = "<group>"; };
@@ -164,6 +162,8 @@
 		356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUITabBarController.swift; sourceTree = "<group>"; };
 		356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		356CD88829918EBB00EA9D2D /* BaseUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
+		357950F229CE0C9C009F5988 /* AppPreloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreloader.swift; sourceTree = "<group>"; };
+		357950F529CE117B009F5988 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		35D02D312990486C00536AB8 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedImageWithPlaceholder.swift; sourceTree = "<group>"; };
@@ -224,15 +224,6 @@
 				3521150929A8FF5A00559988 /* PersonProfileView.swift */,
 			);
 			path = PersonProfile;
-			sourceTree = "<group>";
-		};
-		351BD24A29C620020036A2C8 /* NFDatePicker */ = {
-			isa = PBXGroup;
-			children = (
-				351BD24B29C620020036A2C8 /* NFDatePicker.h */,
-				351BD25529C6217A0036A2C8 /* NFDatePicker.swift */,
-			);
-			path = NFDatePicker;
 			sourceTree = "<group>";
 		};
 		352114F129A8DA3500559988 /* Protocols */ = {
@@ -340,6 +331,7 @@
 				3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */,
 				35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholder.swift */,
 				35104EC829B420BE00E40E1E /* ImagePicker.swift */,
+				357950F229CE0C9C009F5988 /* AppPreloader.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -371,7 +363,6 @@
 			children = (
 				3551F19C299028AE00EBA6A3 /* never-forget */,
 				354E8BA329BE6B82009BFB6D /* never-forgetTests */,
-				351BD24A29C620020036A2C8 /* NFDatePicker */,
 				3551F19B299028AE00EBA6A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -532,6 +523,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		357950F429CE116F009F5988 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				357950F529CE117B009F5988 /* Logger.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		35C3D11329BA6AC0000208B6 /* FormValidator */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +570,7 @@
 				3551F1B929902DF000EBA6A3 /* Assets */,
 				356CD88529918E6700EA9D2D /* Extensions */,
 				35C3D11329BA6AC0000208B6 /* FormValidator */,
+				357950F429CE116F009F5988 /* Helpers */,
 				355E278429A2BD220038F8BA /* Localizable */,
 				3533AFF329AA46FE00BA2F5F /* Managers */,
 				35E841642992AE9200BF537E /* Models */,
@@ -608,7 +608,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				351BD24C29C620020036A2C8 /* NFDatePicker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,7 +795,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				351BD25629C6217A0036A2C8 /* NFDatePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +829,7 @@
 				354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */,
 				356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */,
 				356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */,
+				357950F629CE117B009F5988 /* Logger.swift in Sources */,
 				35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */,
 				352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */,
 				3521150129A8F76F00559988 /* PeopleListView.swift in Sources */,
@@ -855,6 +854,7 @@
 				350BE5BD29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift in Sources */,
 				354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */,
+				357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */,
 				3521151029A90EA200559988 /* PersonProfileViewModel.swift in Sources */,
 				3521151229A920CD00559988 /* String+trimmed.swift in Sources */,
 				355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */,
@@ -1131,7 +1131,6 @@
 		3551F1B2299028AF00EBA6A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";
@@ -1164,7 +1163,6 @@
 		3551F1B3299028AF00EBA6A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "never-forget/SupportingFiles/never-forget.entitlements";

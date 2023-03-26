@@ -15,8 +15,11 @@ class CreateNewPersonViewModel: ObservableObject {
 
   init(person: Person, goBack: @escaping () -> Void) {
     self.goBack = goBack
-    self.person = ValidatedValue(value: person, isValidateOnInit: true,
-                                 validate: CreateNewPersonViewModel.validatePersonName)
+    self.person = ValidatedValue(
+      value: person,
+      isValidateOnInit: true,
+      validate: CreateNewPersonViewModel.validatePersonName
+    )
   }
 
   func onPressAddNewPerson() {

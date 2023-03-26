@@ -22,14 +22,14 @@ extension UINavigationController {
       case .present(let controller, let style):
         controller.modalPresentationStyle = style
 
-        if let presentedViewController = presentedViewController {
+        if let presentedViewController {
           presentedViewController.present(controller, animated: animated, completion: completion)
         } else {
           topViewController?.present(controller, animated: animated, completion: completion)
         }
 
       case .dismiss:
-        if let presentedViewController = presentedViewController {
+        if let presentedViewController {
           presentedViewController.dismiss(animated: animated, completion: completion)
         } else {
           topViewController?.dismiss(animated: animated, completion: completion)

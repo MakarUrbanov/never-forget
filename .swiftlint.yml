@@ -1,5 +1,6 @@
 disabled_rules:
   - todo
+  - opening_brace
 
 analyzer_rules:
   - unused_import
@@ -14,6 +15,7 @@ opt_in_rules:
   - closure_spacing
   - collection_alignment
   - colon
+  - sorted_imports
   - comma
   - control_statement
   - convenience_type
@@ -44,7 +46,6 @@ opt_in_rules:
   - literal_expression_end_indentation
   - mark
   - notification_center_detachment
-  - opening_brace
   - operator_usage_whitespace
   - redundant_discardable_let
   - redundant_optional_initialization
@@ -121,7 +122,7 @@ type_name:
     - Id
 
 identifier_name:
-  allowed_symbols: "_"
+  allowed_symbols: "_0123456789"
   min_length: 3
   max_length:
     warning: 60
@@ -136,6 +137,10 @@ identifier_name:
 enum_case_associated_values_count:
   warning: 3
   error: 3
+
+cyclomatic_complexity:
+  warning: 10
+  error: 20
 
 line_length:
   warning: 120
