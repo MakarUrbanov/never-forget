@@ -10,7 +10,7 @@ import SwiftUI
 final class PeopleListScreenViewModel: ObservableObject {
 
   func presentAddNewPerson(coordinator: PeopleListCoordinator) {
-    coordinator.presentAddNewPersonView()
+    coordinator.presentCreateNewPersonView()
   }
 
 }

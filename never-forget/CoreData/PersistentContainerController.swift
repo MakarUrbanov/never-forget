@@ -10,35 +10,35 @@ import CoreData
 class PersistentContainerController: ObservableObject {
 
   private let persistentContainer: NSPersistentCloudKitContainer
-
-  var viewContext: NSManagedObjectContext {
-    persistentContainer.viewContext
-  }
-
-  var backgroundContext: NSManagedObjectContext {
-    persistentContainer.newBackgroundContext()
-  }
+  var viewContext: NSManagedObjectContext
+  var backgroundContext: NSManagedObjectContext
 
   init(storeName: String) {
     persistentContainer = PersistentContainerController.getInitialContainer(for: storeName)
+    backgroundContext = persistentContainer.newBackgroundContext()
+    viewContext = persistentContainer.viewContext
   }
 
-  func saveContext() {
-    if viewContext.hasChanges {
+  func exists<T>(_ model: NSManagedObject, in context: NSManagedObjectContext) -> T? {
+    try? context.existingObject(with: model.objectID) as? T
+  }
+
+}
+
+// MARK: - utils
+
+extension PersistentContainerController {
+
+  private func saveContextHandler(_ context: NSManagedObjectContext) {
+    if context.hasChanges {
       do {
-        try viewContext.save()
+        try context.save()
       } catch {
         let nserror = error as NSError
         fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
       }
     }
   }
-
-}
-
-// MARK: - Static
-
-extension PersistentContainerController {
 
   private static func getInitialContainer(for name: String) -> NSPersistentCloudKitContainer {
     let container = NSPersistentCloudKitContainer(name: name)

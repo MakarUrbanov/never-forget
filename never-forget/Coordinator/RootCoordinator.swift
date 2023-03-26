@@ -11,9 +11,13 @@ import UIKit
 final class RootCoordinator: Coordinator {
   let window: UIWindow
   var childCoordinators: [Coordinator] = []
+  let rootNavigationController = BaseUINavigationController()
 
   init(window: UIWindow) {
     self.window = window
+
+    configureRootNavigationController()
+    connectAlertManager()
   }
 
   func start() {
@@ -24,10 +28,20 @@ final class RootCoordinator: Coordinator {
 
 extension RootCoordinator {
 
+  private func configureRootNavigationController() {
+    rootNavigationController.isNavigationBarHidden = true
+  }
+
+  private func connectAlertManager() {
+    AlertManager.shared.rootNavigationController = rootNavigationController
+  }
+
   private func setRootCoordinator() {
     let mainCoordinator = MainFlowCoordinator()
     mainCoordinator.start()
-    window.rootViewController = mainCoordinator.tabBarController
+
+    rootNavigationController.setViewControllers([mainCoordinator.tabBarController], animated: false)
+    window.rootViewController = rootNavigationController
     childCoordinators.append(mainCoordinator)
   }
 
