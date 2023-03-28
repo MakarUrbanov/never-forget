@@ -17,12 +17,6 @@ final class CalendarCell: FSCalendarCell {
   func configure(for date: Date, at position: FSCalendarMonthPosition) {
     self.date = date
     monthPosition = position
-
-    imageView.backgroundColor = .red
-    imageView.isHidden = true
-    backgroundView?.backgroundColor = .red
-    layoutIfNeeded()
-    layoutSubviews()
   }
 
   override func performSelecting() {

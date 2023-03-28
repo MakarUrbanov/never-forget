@@ -17,7 +17,7 @@ struct MainScreenView: View {
     var set: Set<Date> = Set()
 
     persons.forEach { person in
-      guard let dateOfBirth = person.dateOfBirth else { fatalError("Person must have dateOfBirth property") }
+      guard let dateOfBirth = person.dateOfBirth else { fatalError("Person entity should have dateOfBirth property") }
       set.insert(dateOfBirth)
     }
 

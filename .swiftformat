@@ -20,7 +20,6 @@
  --enable isempty
  --enable leadingdelimiters
  --enable linebreakAtEndOfFile
- --enable marktypes
  --enable numberFormatting
  --enable preferkeypath
  --enable redundantbackticks
@@ -63,9 +62,6 @@
  --decimalgrouping 3
  --hexgrouping 4,8
  --binarygrouping 4
-
- ### MARK
- --marktypes never
 
  ### Wrap
  --wraparguments before-first

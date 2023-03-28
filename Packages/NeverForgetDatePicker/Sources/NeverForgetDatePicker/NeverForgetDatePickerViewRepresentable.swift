@@ -31,14 +31,14 @@ public struct NeverForgetDatePickerViewRepresentable: UIViewRepresentable {
   public class Coordinator: NSObject, NeverForgetDatePickerViewMyDelegate {
 
     @Binding var selectedDate: Date
-    var datesOfEvents: Set<Date>
+    private let datesOfEvents: Set<Date>
 
     public init(selectedDate: Binding<Date>, datesOfEvents: Set<Date>) {
       _selectedDate = selectedDate
       self.datesOfEvents = datesOfEvents
     }
 
-    public func calendar(_: FSCalendar, didSelect date: Date, at _: FSCalendarMonthPosition) {
+    func customCalendar(_: FSCalendar, didSelect date: Date, at _: FSCalendarMonthPosition) {
       selectedDate = date
     }
 
@@ -53,6 +53,8 @@ public struct NeverForgetDatePickerViewRepresentable: UIViewRepresentable {
   }
 
 }
+
+// MARK: - Preview
 
 struct NeverForgetDatePickerView_Previews: PreviewProvider {
   static var previews: some View {

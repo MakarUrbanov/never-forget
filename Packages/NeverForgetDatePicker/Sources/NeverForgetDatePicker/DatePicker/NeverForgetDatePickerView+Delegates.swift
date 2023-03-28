@@ -1,51 +1,15 @@
 //
-//  File.swift
+//  NeverForgetDatePickerView+Delegates.swift
 //
 //
-//  Created by makar on 3/26/23.
+//  Created by makar on 3/28/23.
 //
 
 import Foundation
 import FSCalendar
 import SwiftUI
 
-public final class NeverForgetDatePickerView: FSCalendar {
-
-  private var colorScheme: ColorScheme
-
-  weak var myDelegate: NeverForgetDatePickerViewMyDelegate?
-
-  private var calendarHeight: NSLayoutConstraint?
-
-  init(colorScheme: ColorScheme) {
-    self.colorScheme = colorScheme
-
-    super.init(frame: .zero)
-
-    allowsMultipleSelection = false
-    delegate = self
-    dataSource = self
-    scope = .week
-
-    register(CalendarCell.self, forCellReuseIdentifier: CalendarCell.identifier)
-    headerHeight = 20
-    weekdayHeight = 20
-    calendarHeight = heightAnchor.constraint(equalToConstant: 100)
-    calendarHeight?.isActive = true
-  }
-
-  @available(*, unavailable) required init?(coder _: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func updateColorScheme(_ colorScheme: ColorScheme) {
-    self.colorScheme = colorScheme
-    reloadData()
-  }
-
-}
-
-// MARK: FSCalendarDataSource
+// MARK: - FSCalendarDataSource
 
 extension NeverForgetDatePickerView: FSCalendarDataSource {
 
@@ -106,15 +70,9 @@ extension NeverForgetDatePickerView: FSCalendarDataSource {
 
 }
 
-// MARK: FSCalendarDelegate
-
+// MARK: - FSCalendarDelegate
 
 extension NeverForgetDatePickerView: FSCalendarDelegate {
-
-  public func calendar(_: FSCalendar, boundingRectWillChange bounds: CGRect, animated _: Bool) {
-    calendarHeight?.constant = bounds.height
-    layoutIfNeeded()
-  }
 
   public func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
     myDelegate?.customCalendar?(calendar, didSelect: date, at: monthPosition)
@@ -122,7 +80,7 @@ extension NeverForgetDatePickerView: FSCalendarDelegate {
 
 }
 
-// MARK: FSCalendarDelegateAppearance
+// MARK: - FSCalendarDelegateAppearance
 
 extension NeverForgetDatePickerView: FSCalendarDelegateAppearance {
 
@@ -130,8 +88,10 @@ extension NeverForgetDatePickerView: FSCalendarDelegateAppearance {
     colorScheme == .dark ? .white : .black
   }
 
-  public func calendar(_: FSCalendar, appearance _: FSCalendarAppearance, titleDefaultColorFor _: Date) -> UIColor? {
-    colorScheme == .dark ? .white : .black
+  public func calendar(_: FSCalendar, appearance _: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+    let color: UIColor = colorScheme == .dark ? .white : .black
+    let isFutureDate = Calendar.current.isDateInToday(date) || Date.now < date
+    return color.withAlphaComponent(isFutureDate ? 1 : 0.5)
   }
 
   public func calendar(_: FSCalendar, appearance _: FSCalendarAppearance, titleSelectionColorFor _: Date) -> UIColor? {
