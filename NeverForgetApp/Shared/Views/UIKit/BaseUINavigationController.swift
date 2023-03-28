@@ -18,8 +18,7 @@ class BaseUINavigationController: UINavigationController {
 }
 
 
-@objc
-extension BaseUINavigationController {
+@objc extension BaseUINavigationController {
   func setViews() {}
 
   func setConstraints() {}

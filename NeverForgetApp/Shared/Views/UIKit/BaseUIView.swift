@@ -13,14 +13,12 @@ class BaseUIView: UIView {
     setAppearanceConfiguration()
   }
 
-  @available(*, unavailable)
-  required init?(coder _: NSCoder) {
+  @available(*, unavailable)  required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 }
 
-@objc
-extension BaseUIView {
+@objc extension BaseUIView {
   func setViews() {}
 
   func setConstraints() {}

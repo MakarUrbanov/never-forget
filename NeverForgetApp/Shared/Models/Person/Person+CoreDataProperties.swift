@@ -30,20 +30,16 @@ extension Person {
 public extension Person {
 
   @objc(addEventsObject:)
-  @NSManaged
-  func addToEvents(_ value: Event)
+  @NSManaged  func addToEvents(_ value: Event)
 
   @objc(removeEventsObject:)
-  @NSManaged
-  func removeFromEvents(_ value: Event)
+  @NSManaged  func removeFromEvents(_ value: Event)
 
   @objc(addEvents:)
-  @NSManaged
-  func addToEvents(_ values: NSSet)
+  @NSManaged  func addToEvents(_ values: NSSet)
 
   @objc(removeEvents:)
-  @NSManaged
-  func removeFromEvents(_ values: NSSet)
+  @NSManaged  func removeFromEvents(_ values: NSSet)
 
 }
 

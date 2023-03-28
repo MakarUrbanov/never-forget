@@ -58,6 +58,7 @@
 		356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */; };
 		356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */; };
 		356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88829918EBB00EA9D2D /* BaseUIView.swift */; };
+		357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */; };
 		357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F229CE0C9C009F5988 /* AppPreloader.swift */; };
 		357950F629CE117B009F5988 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F529CE117B009F5988 /* Logger.swift */; };
 		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
@@ -150,6 +151,7 @@
 		356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUITabBarController.swift; sourceTree = "<group>"; };
 		356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		356CD88829918EBB00EA9D2D /* BaseUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
+		357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NeverForgetDatePicker; path = Packages/NeverForgetDatePicker; sourceTree = "<group>"; };
 		357950F229CE0C9C009F5988 /* AppPreloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreloader.swift; sourceTree = "<group>"; };
 		357950F529CE117B009F5988 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -174,19 +176,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		350BE5B529ABD8F600A40F17 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		350BE5BA29ABEDEC00A40F17 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,13 +318,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		3533B00029AB868A00BA2F5F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		354E8BA329BE6B82009BFB6D /* NeverForgetTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +332,8 @@
 				3551F19C299028AE00EBA6A3 /* NeverForgetApp */,
 				354E8BA329BE6B82009BFB6D /* NeverForgetTests */,
 				3551F19B299028AE00EBA6A3 /* Products */,
+				357044A929D08B9700C6A7C2 /* Frameworks */,
+				357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */,
 			);
 			sourceTree = "<group>";
 		};
@@ -501,6 +492,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		357044A929D08B9700C6A7C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		357950F429CE116F009F5988 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,9 +550,7 @@
 				355E278429A2BD220038F8BA /* Localizable */,
 				3533AFF329AA46FE00BA2F5F /* Managers */,
 				35E841642992AE9200BF537E /* Models */,
-				3533B00029AB868A00BA2F5F /* Protocols */,
 				35E0479829B404AD006A2AB3 /* Styles */,
-				350BE5B529ABD8F600A40F17 /* Utils */,
 				356CD88E29918EF300EA9D2D /* Views */,
 			);
 			path = Shared;
@@ -617,6 +613,7 @@
 			);
 			name = NeverForgetApp;
 			packageProductDependencies = (
+				357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */,
 			);
 			productName = "never-forget";
 			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
@@ -1077,6 +1074,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NeverForgetDatePicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */ = {
