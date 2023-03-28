@@ -12,7 +12,17 @@ struct MainScreenView: View {
   @Environment(\.colorScheme) var colorScheme
 
   @State private var selectedDate = Date.now
-  @State private var datesOfEvents: Set<Date> = Set()
+  @FetchRequest(fetchRequest: Person.sortedFetchRequest()) var persons
+  private var datesOfEvents: Set<Date> {
+    var set: Set<Date> = Set()
+
+    persons.forEach { person in
+      guard let dateOfBirth = person.dateOfBirth else { fatalError("Person must have dateOfBirth property") }
+      set.insert(dateOfBirth)
+    }
+
+    return set
+  }
 
   var body: some View {
     VStack {

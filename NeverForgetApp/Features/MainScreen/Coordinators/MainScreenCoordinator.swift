@@ -23,7 +23,12 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let listTab = UIHostingController(rootView: MainScreenView().environmentObject(self))
+    let listTab = UIHostingController(
+      rootView:
+      MainScreenView()
+        .environmentObject(self)
+        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+    )
     return listTab
   }
 
