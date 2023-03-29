@@ -50,6 +50,7 @@ extension NeverForgetDatePickerView {
 
   private func setAppearance() {
     appearance.headerDateFormat = "MMM yyy"
+    appearance.headerMinimumDissolvedAlpha = 0.1
     appearance.headerTitleColor = colorScheme == .dark ? .white : .black
     appearance.weekdayTextColor = colorScheme == .dark ? .white : .black
   }

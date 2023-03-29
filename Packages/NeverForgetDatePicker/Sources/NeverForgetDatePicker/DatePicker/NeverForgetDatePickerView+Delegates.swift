@@ -98,8 +98,10 @@ extension NeverForgetDatePickerView: FSCalendarDelegateAppearance {
     colorScheme == .dark ? .black : .white
   }
 
-  public func calendar(_: FSCalendar, appearance _: FSCalendarAppearance, fillDefaultColorFor _: Date) -> UIColor? {
-    .clear
+  public func calendar(_: FSCalendar, appearance _: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+    let isToday = Calendar.current.isDateInToday(date)
+    let color: UIColor = colorScheme == .dark ? .white : .black
+    return isToday ? color.withAlphaComponent(0.6) : .clear
   }
 
 }
