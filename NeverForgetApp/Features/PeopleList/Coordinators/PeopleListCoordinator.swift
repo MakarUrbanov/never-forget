@@ -34,11 +34,11 @@ extension PeopleListCoordinator {
   }
 
   func openPersonProfile(person: Person) {
-    let addNewPersonView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
+    let personProfileView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
       self.navigationController.navigate(step: .pop)
     }))
 
-    navigationController.navigate(step: .push(addNewPersonView))
+    navigationController.navigate(step: .push(personProfileView))
   }
 
 }

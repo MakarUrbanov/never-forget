@@ -20,8 +20,9 @@ public struct NeverForgetDatePickerViewRepresentable: UIViewRepresentable {
     return calendar
   }
 
-  public func updateUIView(_ picker: NeverForgetDatePickerView, context _: Context) {
+  public func updateUIView(_ picker: NeverForgetDatePickerView, context: Context) {
     picker.updateColorScheme(colorScheme)
+    context.coordinator.datesOfEvents = datesOfEvents
   }
 
   public func makeCoordinator() -> Coordinator {
@@ -31,7 +32,7 @@ public struct NeverForgetDatePickerViewRepresentable: UIViewRepresentable {
   public class Coordinator: NSObject, NeverForgetDatePickerViewMyDelegate {
 
     @Binding var selectedDate: Date
-    private let datesOfEvents: Set<Date>
+    var datesOfEvents: Set<Date>
 
     public init(selectedDate: Binding<Date>, datesOfEvents: Set<Date>) {
       _selectedDate = selectedDate

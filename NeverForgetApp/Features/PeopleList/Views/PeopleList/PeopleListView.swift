@@ -18,17 +18,20 @@ struct PeopleListView: View {
   @StateObject var viewModel = PeopleListViewModel()
 
   var body: some View {
-    List(persons) { person in
-      PersonRowView(person)
-        .listRowBackground(Color.clear)
-        .swipeActions(allowsFullSwipe: false, content: {
-          Button("Delete") { // TODO: translate
-            viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
-          }
-          .tint(.red)
-        })
+    VStack {
+      List(persons) { person in
+        PersonRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
+          .listRowBackground(Color.clear)
+          .swipeActions(allowsFullSwipe: false, content: {
+            Button("Delete") { // TODO: translate
+              viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
+            }
+            .tint(.red)
+          })
+      }
+      .listStyle(.plain)
     }
-    .listStyle(.plain)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.Theme.background)
   }
 }
