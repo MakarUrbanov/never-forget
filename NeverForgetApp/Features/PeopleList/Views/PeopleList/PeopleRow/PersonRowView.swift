@@ -11,15 +11,16 @@ struct PersonRowView: View {
 
   @StateObject var viewModel: PersonRowViewModel
 
-  var name: String { viewModel.person.name ?? "un-named" }
-  var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
-  var userImage: UIImage? { viewModel.person.getDecodedPhoto() }
-  var dateOfBirth: String {
+  private var name: String { viewModel.person.name ?? "un-named" }
+  private var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
+  private var userImage: UIImage? { viewModel.person.getDecodedPhoto() }
+  private var dateFormat: String
+  private var dateOfBirth: String {
     guard let dateOfBirth = viewModel.person.dateOfBirth else { return "" }
-    return dateOfBirth.formatted(.dateTime.year().month().day())
+    return DateFormatter(dateFormat: dateFormat).string(from: dateOfBirth)
   }
 
-  var personImageData: Binding<Data?> {
+  private var personImageData: Binding<Data?> {
     Binding(get: {
       viewModel.person.photo
     }, set: { newValue in
@@ -27,8 +28,9 @@ struct PersonRowView: View {
     })
   }
 
-  init(_ person: Person, openPersonProfile: @escaping (Person) -> Void) {
+  init(_ person: Person, dateFormat: String = "dd MMMM yyyy", openPersonProfile: @escaping (Person) -> Void) {
     _viewModel = StateObject(wrappedValue: PersonRowViewModel(person: person, openPersonProfile: openPersonProfile))
+    self.dateFormat = dateFormat
   }
 
   var body: some View {
