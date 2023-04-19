@@ -9,36 +9,34 @@ import SwiftUI
 
 struct PersonRowView: View {
 
-  @EnvironmentObject var coordinator: PeopleListCoordinator
-  @ObservedObject private var person: Person
-  @StateObject var viewModel = PersonRowViewModel()
+  @StateObject var viewModel: PersonRowViewModel
 
-  var name: String { person.name ?? "un-named" }
+  var name: String { viewModel.person.name ?? "un-named" }
   var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
-  var userImage: UIImage? { person.getDecodedPhoto() }
+  var userImage: UIImage? { viewModel.person.getDecodedPhoto() }
   var dateOfBirth: String {
-    guard let dateOfBirth = person.dateOfBirth else { return "" }
+    guard let dateOfBirth = viewModel.person.dateOfBirth else { return "" }
     return dateOfBirth.formatted(.dateTime.year().month().day())
   }
 
   var personImageData: Binding<Data?> {
     Binding(get: {
-      person.photo
+      viewModel.person.photo
     }, set: { newValue in
-      person.photo = newValue
+      viewModel.person.photo = newValue
     })
   }
 
-  init(_ person: Person) {
-    self.person = person
+  init(_ person: Person, openPersonProfile: @escaping (Person) -> Void) {
+    _viewModel = StateObject(wrappedValue: PersonRowViewModel(person: person, openPersonProfile: openPersonProfile))
   }
 
   var body: some View {
     Button {
-      viewModel.openPersonProfile(coordinator: coordinator, person: person)
+      viewModel.openPersonProfileHandler()
     } label: {
       HStack(spacing: 20) {
-        DecodedImageWithPlaceholder(
+        DecodedImageWithPlaceholderView(
           data: personImageData,
           placeholder: defaultImage,
           frame: CGSize(width: 40, height: 40)
@@ -79,7 +77,6 @@ struct PersonCellView_Previews: PreviewProvider {
       return person
     }()
 
-    PersonRowView(personMock)
-      .environment(\.locale, Locale(identifier: "ru"))
+    PersonRowView(personMock, openPersonProfile: { _ in })
   }
 }

@@ -20,6 +20,22 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 
 }
 
+// MARK: - Navigations
+
+extension MainScreenCoordinator {
+
+  func goToPersonProfile(person: Person) {
+    let addNewPersonView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
+      self.navigationController.navigate(step: .pop)
+    }))
+
+    navigationController.navigate(step: .push(addNewPersonView))
+  }
+
+}
+
+// MARK: - Utils
+
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
