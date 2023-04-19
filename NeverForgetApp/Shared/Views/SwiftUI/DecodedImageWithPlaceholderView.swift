@@ -1,5 +1,5 @@
 //
-//  DecodedImageWithPlaceholder.swift
+//  DecodedImageWithPlaceholderView.swift
 //  never-forget
 //
 //  Created by makar on 3/4/23.
@@ -7,23 +7,25 @@
 
 import SwiftUI
 
-struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
+struct DecodedImageWithPlaceholderView<DefaultImage: View>: View {
   let placeholder: DefaultImage
   let onLoadEnd: () -> Void
   let frame: CGSize
 
-  @Binding var data: Data?
-  @Binding var parentIsLoading: Bool
+  private let imageDrawerQueue = DispatchQueue(label: "com.imageDrawerQueue", qos: .userInteractive)
 
+  @Binding var data: Data?
   @State private var decodedImage: Image?
-  @State private var isLoading: Bool {
+
+  @Binding var parentIsLoading: Bool
+  @State private var localIsLoading = true {
     didSet {
-      parentIsLoading = isLoading
+      parentIsLoading = localIsLoading
     }
   }
 
-  var correctIsLoading: Bool {
-    parentIsLoading || isLoading
+  private var correctIsLoading: Bool {
+    parentIsLoading || localIsLoading
   }
 
   init(
@@ -39,7 +41,6 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
     self.frame = frame
 
     _parentIsLoading = isLoading
-    _isLoading = State(initialValue: isLoading.wrappedValue)
   }
 
   var body: some View {
@@ -49,30 +50,35 @@ struct DecodedImageWithPlaceholder<DefaultImage: View>: View {
           .resizable()
       } else {
         placeholder
+          .opacity(correctIsLoading ? 0 : 1)
+          .overlay {
+            if correctIsLoading {
+              ProgressView()
+                .zIndex(2)
+            }
+          }
           .onAppear {
             loadAsyncImage(data: data)
           }
       }
     }
-    .opacity(correctIsLoading ? 0 : 1)
-    .overlay {
-      if correctIsLoading { ProgressView() }
-    }
-    .animation(.easeInOut, value: correctIsLoading)
     .onChange(of: data, perform: { newData in
       loadAsyncImage(data: newData)
     })
   }
+
 }
 
 
-extension DecodedImageWithPlaceholder {
+extension DecodedImageWithPlaceholderView {
 
   private func loadAsyncImage(data: Data?) {
-    DispatchQueue.global(qos: .userInteractive).async {
+    localIsLoading = true
+
+    imageDrawerQueue.async {
       guard let data, let decodedImage = UIImage(data: data) else {
         onLoadEnd()
-        isLoading = false
+        localIsLoading = false
         decodedImage = nil
         return
       }
@@ -80,11 +86,9 @@ extension DecodedImageWithPlaceholder {
       let resizableImage = decodedImage.resizeImage(maxSize: frame)
       let image = Image(uiImage: resizableImage)
 
-      DispatchQueue.main.async {
-        self.decodedImage = image
-        onLoadEnd()
-        isLoading = false
-      }
+      self.decodedImage = image
+      onLoadEnd()
+      localIsLoading = false
     }
   }
 
@@ -92,7 +96,7 @@ extension DecodedImageWithPlaceholder {
 
 struct DecodedImageWithPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
-    DecodedImageWithPlaceholder(
+    DecodedImageWithPlaceholderView(
       data: .constant(Data()),
       placeholder: Image("person"),
       frame: CGSize(width: 100, height: 100)

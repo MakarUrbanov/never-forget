@@ -11,27 +11,34 @@ import SwiftUI
 struct MainScreenView: View {
   @Environment(\.colorScheme) var colorScheme
 
+  @StateObject var viewModel = MainScreenViewModel()
   @State private var selectedDate = Date.now
-  @FetchRequest(fetchRequest: Person.sortedFetchRequest()) var persons
-  private var datesOfEvents: Set<Date> {
-    var set: Set<Date> = Set()
-
-    persons.forEach { person in
-      guard let dateOfBirth = person.dateOfBirth else { fatalError("Person entity should have dateOfBirth property") }
-      set.insert(dateOfBirth)
-    }
-
-    return set
-  }
+  @FetchRequest(fetchRequest: Person.sortedFetchRequest()) private var persons
 
   var body: some View {
-    VStack {
-      NeverForgetDatePickerViewRepresentable(selectedDate: $selectedDate, datesOfEvents: datesOfEvents)
+    ZStack(alignment: .top) {
+      NeverForgetDatePickerViewRepresentable(selectedDate: $selectedDate, datesOfEvents: viewModel.datesOfEvents)
         .frame(maxWidth: .infinity, maxHeight: 300)
 
-      Spacer()
+      VStack {
+        Text("Upcoming birthdays") // TODO: translate
+          .font(.title3)
+          .fontWeight(.bold)
+          .frame(maxWidth: .infinity, alignment: .leading)
+
+        MainScreenPeopleList(peopleSections: viewModel.peopleListSectioned, selectedDate: $selectedDate)
+      }
+      .padding(.leading)
+      .padding(.bottom, 100)
+      .offset(y: 100)
     }
-    .navigationTitle("Main Tab") // TODO: localize
+    .onAppear {
+      viewModel.onChangePersonsList(persons: persons)
+    }
+    .onChange(of: Array(persons), perform: { _ in
+      viewModel.onChangePersonsList(persons: persons)
+    })
+    .navigationTitle("Main Tab") // TODO: translate
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.Theme.background)
   }

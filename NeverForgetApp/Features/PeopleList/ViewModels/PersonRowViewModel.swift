@@ -9,8 +9,16 @@ import Foundation
 
 class PersonRowViewModel: ObservableObject {
 
-  func openPersonProfile(coordinator: PeopleListCoordinator, person: Person) {
-    coordinator.openPersonProfile(person: person)
+  let person: Person
+  private let openPersonProfile: (Person) -> Void
+
+  init(person: Person, openPersonProfile: @escaping (Person) -> Void) {
+    self.person = person
+    self.openPersonProfile = openPersonProfile
+  }
+
+  func openPersonProfileHandler() {
+    openPersonProfile(person)
   }
 
 }

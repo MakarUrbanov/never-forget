@@ -32,7 +32,7 @@ struct FormPhotoPickerView: View {
       }
       .disabled(imageData == nil)
     } label: {
-      DecodedImageWithPlaceholder(
+      DecodedImageWithPlaceholderView(
         data: $imageData,
         placeholder: Image(systemName: "person").resizable().padding(30),
         frame: CGSize(width: 100, height: 100),
