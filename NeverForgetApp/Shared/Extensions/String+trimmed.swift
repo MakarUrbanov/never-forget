@@ -1,5 +1,5 @@
 //
-//  String+trimmed.swift
+//  String+trim.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
 
-  var trimmed: String {
+  func trim() -> String {
     trimmingCharacters(in: .whitespacesAndNewlines)
   }
 

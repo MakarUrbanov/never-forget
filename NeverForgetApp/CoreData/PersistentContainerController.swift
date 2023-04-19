@@ -31,11 +31,13 @@ extension PersistentContainerController {
 
   private func saveContextHandler(_ context: NSManagedObjectContext) {
     if context.hasChanges {
-      do {
-        try context.save()
-      } catch {
-        let nserror = error as NSError
-        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+      context.perform {
+        do {
+          try context.save()
+        } catch {
+          let nserror = error as NSError
+          fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
       }
     }
   }

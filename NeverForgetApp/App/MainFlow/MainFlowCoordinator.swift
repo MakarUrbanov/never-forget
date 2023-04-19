@@ -16,13 +16,10 @@ final class MainFlowCoordinator: TabCoordinator {
     let peopleListCoordinator = getPeopleListCoordinator()
 
     childCoordinators += [mainCoordinator, peopleListCoordinator]
-    tabBarController
-      .setViewControllers(
-        [mainCoordinator.navigationController, peopleListCoordinator.navigationController],
-        animated: false
-      )
-
-//    tabBarController.selectedIndex = 1 // TODO: delete
+    tabBarController.setViewControllers(
+      [mainCoordinator.navigationController, peopleListCoordinator.navigationController],
+      animated: false
+    )
   }
 
 }

@@ -14,8 +14,7 @@ class BaseUIViewController: UIViewController {
   }
 }
 
-@objc
-extension BaseUIViewController {
+@objc extension BaseUIViewController {
   func setViews() {}
 
   func setConstraints() {}

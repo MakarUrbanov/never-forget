@@ -9,8 +9,7 @@
 import CoreData
 import Foundation
 
-@objc(Person)
-public class Person: NSManagedObject, Identifiable {
+@objc(Person) public class Person: NSManagedObject, Identifiable {
 
   @NSManaged var dateOfBirth: Date?
   @NSManaged var name: String?

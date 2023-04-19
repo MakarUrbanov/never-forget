@@ -14,8 +14,7 @@ class BaseUITabBarController: UITabBarController {
   }
 }
 
-@objc
-extension BaseUITabBarController {
+@objc extension BaseUITabBarController {
   func setViews() {}
 
   func setConstraints() {}

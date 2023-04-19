@@ -9,8 +9,7 @@ import SwiftUI
 
 extension View {
 
-  @ViewBuilder
-  func `if`(_ condition: Bool, transform: @escaping (Self) -> some View) -> some View {
+  @ViewBuilder func `if`(_ condition: Bool, transform: @escaping (Self) -> some View) -> some View {
     if condition {
       transform(self)
     } else {
