@@ -25,24 +25,6 @@ extension Person {
 
 }
 
-// MARK: - Generated accessors for events
-
-public extension Person {
-
-  @objc(addEventsObject:)
-  @NSManaged func addToEvents(_ value: Event)
-
-  @objc(removeEventsObject:)
-  @NSManaged func removeFromEvents(_ value: Event)
-
-  @objc(addEvents:)
-  @NSManaged func addToEvents(_ values: NSSet)
-
-  @objc(removeEvents:)
-  @NSManaged func removeFromEvents(_ values: NSSet)
-
-}
-
 // MARK: - Working with photo
 
 extension Person {

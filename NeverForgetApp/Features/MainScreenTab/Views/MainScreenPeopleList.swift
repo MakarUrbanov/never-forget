@@ -23,6 +23,9 @@ struct MainScreenPeopleList: View {
       LazyVStack(spacing: 20) {
         ForEach(peopleSections) { peopleSection in
           MainScreenPeopleSection(section: peopleSection, goToPersonProfile: coordinator.goToPersonProfile(person:))
+
+          Divider()
+            .background(Color.Theme.text4)
         }
       }
     }
@@ -33,6 +36,5 @@ struct MainScreenPeopleList: View {
 struct MainScreenPeopleList_Previews: PreviewProvider {
   static var previews: some View {
     MainScreenPeopleList(peopleSections: [], selectedDate: .constant(Date.now))
-      .environmentObject(MainScreenCoordinator())
   }
 }

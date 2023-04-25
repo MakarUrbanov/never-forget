@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
-        <attribute name="date" attributeType="Date" defaultDateTimeInterval="698506740" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String" defaultValueString=""/>
-        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="events" inverseEntity="Person"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="AppNotificationRules" representedClassName="AppNotificationRules" syncable="YES" codeGenerationType="class">
+        <attribute name="isNotificationOneDayBeforeEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="isNotificationOnEventDayEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="isNotificationOneWeekBeforeEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <relationship name="appSettings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppSettings" inverseName="appNotificationRules" inverseEntity="AppSettings"/>
+        <relationship name="onEventDayTimes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppNotificationTime" inverseName="appNotificationRules" inverseEntity="AppNotificationTime"/>
+    </entity>
+    <entity name="AppNotificationTime" representedClassName="AppNotificationTime" syncable="YES" codeGenerationType="class">
+        <attribute name="hours" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+        <attribute name="minutes" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="appNotificationRules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="onEventDayTimes" inverseEntity="AppNotificationRules"/>
+    </entity>
+    <entity name="AppSettings" representedClassName="AppSettings" syncable="YES" codeGenerationType="class">
+        <relationship name="appNotificationRules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="appSettings" inverseEntity="AppNotificationRules"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="dateOfBirth" attributeType="Date" defaultDateTimeInterval="698506680" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="personDescription" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary" customClassName="UIImage"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="owner" inverseEntity="Event"/>
     </entity>
 </model>

@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
-
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = BaseUINavigationController()
 
@@ -25,10 +24,13 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 extension MainScreenCoordinator {
 
   func goToPersonProfile(person: Person) {
-    let addNewPersonView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
+    let view = PersonProfileView(person: person, goBack: {
       self.navigationController.navigate(step: .pop)
-    }))
+    })
+    .environmentObject(self)
+    .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
 
+    let addNewPersonView = UIHostingController(rootView: view)
     navigationController.navigate(step: .push(addNewPersonView))
   }
 
@@ -39,12 +41,11 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let listTab = UIHostingController(
-      rootView:
-      MainScreenView()
-        .environmentObject(self)
-        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
-    )
+    let view = MainScreenView()
+      .environmentObject(self)
+      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+
+    let listTab = UIHostingController(rootView: view)
     return listTab
   }
 

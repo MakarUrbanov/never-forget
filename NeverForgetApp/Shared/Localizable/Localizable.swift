@@ -15,6 +15,7 @@ enum Localizable {
   enum Tabs {
     static let main = LocalizedStringKey("main")
     static let list = LocalizedStringKey("list")
+    static let settings = LocalizedStringKey("settings")
   }
 
 }

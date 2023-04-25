@@ -9,17 +9,17 @@ import Foundation
 
 enum Logger {
 
-  static func error(prefix: String? = nil, _ values: Any...) {
+  static func error(prefix: String? = nil, _ values: Any?...) {
     let correctPrefix = getPrefix(case: "ERROR 🔴", usersPrefix: prefix)
     toPrint(with: correctPrefix, values)
   }
 
-  static func warn(prefix: String? = nil, _ values: Any...) {
+  static func warn(prefix: String? = nil, _ values: Any?...) {
     let correctPrefix = getPrefix(case: "WARN 🟠", usersPrefix: prefix)
     toPrint(with: correctPrefix, values)
   }
 
-  static func info(prefix: String? = nil, _ values: Any...) {
+  static func info(prefix: String? = nil, _ values: Any?...) {
     let correctPrefix = getPrefix(case: "INFO 🔵", usersPrefix: prefix)
     toPrint(with: correctPrefix, values)
   }

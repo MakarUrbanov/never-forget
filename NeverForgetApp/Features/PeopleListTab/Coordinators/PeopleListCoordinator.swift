@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
-
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = BaseUINavigationController()
 
@@ -26,17 +25,21 @@ final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
 extension PeopleListCoordinator {
 
   func presentCreateNewPersonView() {
-    let createNewPersonView = UIHostingController(rootView: CreateNewPersonView(goBack: {
-      self.navigationController.navigate(step: .dismiss)
-    }))
+    let view = CreateNewPersonView(goBack: { self.navigationController.navigate(step: .dismiss) })
+      .environmentObject(self)
+      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+
+    let createNewPersonView = UIHostingController(rootView: view)
 
     navigationController.navigate(step: .present(createNewPersonView, .pageSheet))
   }
 
   func openPersonProfile(person: Person) {
-    let personProfileView = UIHostingController(rootView: PersonProfileView(person: person, goBack: {
-      self.navigationController.navigate(step: .pop)
-    }))
+    let view = PersonProfileView(person: person, goBack: { self.navigationController.navigate(step: .pop) })
+      .environmentObject(self)
+      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+
+    let personProfileView = UIHostingController(rootView: view)
 
     navigationController.navigate(step: .push(personProfileView))
   }
@@ -48,11 +51,11 @@ extension PeopleListCoordinator {
 extension PeopleListCoordinator {
 
   private func getPeopleListScreenView() -> UIViewController {
-    let listTab = UIHostingController(
-      rootView: PeopleListScreenView()
-        .environmentObject(self)
-        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
-    )
+    let view = PeopleListScreenView()
+      .environmentObject(self)
+      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+
+    let listTab = UIHostingController(rootView: view)
     return listTab
   }
 
