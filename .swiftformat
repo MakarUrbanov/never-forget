@@ -89,6 +89,7 @@
  --voidtype void
  --indentcase true
  --wrapternary before-operators
+ --ranges no-space
 
 
  ## Disabled rules

@@ -14,9 +14,9 @@ extension Date {
     let calendar = Calendar.current
     guard let year = calendar.dateComponents([.year], from: Date()).year else { return Date() }
 
-    let randomizedYear = Int.random(in: 1_900 ... year)
-    let randomizedMonth = Int.random(in: 1 ... 12)
-    let randomizedDay = Int.random(in: 1 ... 28)
+    let randomizedYear = Int.random(in: 1_900...year)
+    let randomizedMonth = Int.random(in: 1...12)
+    let randomizedDay = Int.random(in: 1...28)
 
     let dateComponents = DateComponents(year: randomizedYear, month: randomizedMonth, day: randomizedDay)
 

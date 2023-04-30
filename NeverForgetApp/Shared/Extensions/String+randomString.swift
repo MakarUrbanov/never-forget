@@ -10,7 +10,7 @@ import Foundation
 extension String {
 
   static func randomString(length: Int) -> String {
-    return String((0 ..< length).map { _ in String.getRandomLetter() })
+    return String((0..<length).map { _ in String.getRandomLetter() })
   }
 
   static func randomString(maxLength: Int, numberOfWords: Int) -> String {
@@ -24,7 +24,7 @@ extension String {
     }
 
     return Array(repeating: "", count: numberOfWords).map { _ in
-      Array(repeating: String(""), count: Int.random(in: 1 ... maxLength)).map { _ in
+      Array(repeating: String(""), count: Int.random(in: 1...maxLength)).map { _ in
         String(String.getRandomLetter())
       }.joined()
     }.joined(separator: " ")

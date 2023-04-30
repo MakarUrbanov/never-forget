@@ -19,33 +19,68 @@ struct PeopleListView: View {
 
   var body: some View {
     VStack {
-      List(persons) { person in
-        PersonRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
-          .listRowBackground(Color.clear)
-          .swipeActions(allowsFullSwipe: false, content: {
-            Button("Delete") { // TODO: translate
-              viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
+      if persons.isEmpty {
+        PeopleListWelcomeMessage()
+      } else {
+        List {
+          Group {
+            ForEach(persons) { person in
+              PersonRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
+                .listRowBackground(Color.clear)
+                .swipeActions(allowsFullSwipe: false, content: {
+                  Button("Delete") { // TODO: translate
+                    viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
+                  }
+                  .tint(.red)
+                })
             }
-            .tint(.red)
-          })
+          }
+          .listRowBackground(Color.clear)
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
       }
-      .listStyle(.plain)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.Theme.background)
+    .background(Color.clear)
   }
 }
 
 struct PeopleListView_Previews: PreviewProvider {
 
-  static var previews: some View {
+  private static func addPerson() {
     let newPerson = Person(context: PersistentContainerProvider.shared.viewContext)
     newPerson.name = .randomString(maxLength: 20, numberOfWords: 2)
     newPerson.photo = Bool.random() ? UIImage(named: "MockImage")?.jpegData(compressionQuality: 1) : nil
     newPerson.dateOfBirth = Date.getRandomDate()
 
-    return PeopleListView()
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
-      .environmentObject(PeopleListCoordinator())
+    PersistentContainerProvider.shared.viewContext.saveSafely()
+  }
+
+  private static func deletePersons() {
+    let persons = try? PersistentContainerProvider.shared.viewContext.fetch(Person.fetchRequest()) as? [Person]
+
+    persons?.forEach { person in
+      PersistentContainerProvider.shared.viewContext.delete(person)
+    }
+
+    PersistentContainerProvider.shared.viewContext.saveSafely()
+  }
+
+  static var previews: some View {
+    ZStack(alignment: .bottom) {
+      PeopleListView()
+        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+        .environmentObject(PeopleListCoordinator())
+
+      VStack {
+        Button("Add person") {
+          addPerson()
+        }
+        Button("Delete persons") {
+          deletePersons()
+        }
+      }
+    }
   }
 }

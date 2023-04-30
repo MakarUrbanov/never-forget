@@ -61,7 +61,6 @@ struct PersonRowView: View {
 
         Spacer()
       }
-      .background(Color.Theme.background)
     }
     .buttonStyle(TouchableOpacityButtonStyle())
 

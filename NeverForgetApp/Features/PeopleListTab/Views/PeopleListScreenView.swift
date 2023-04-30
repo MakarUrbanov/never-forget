@@ -13,17 +13,16 @@ struct PeopleListScreenView: View {
   @StateObject var viewModel = PeopleListScreenViewModel()
 
   var body: some View {
-    VStack {
-      PeopleListView()
-    }
-    .navigationTitle("Your friends list") // TODO: localize
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Add") { // TODO: localize
-          viewModel.presentAddNewPerson(coordinator: coordinator)
+    PeopleListView()
+      .background(Color.Theme.background)
+      .navigationTitle("Your friends list") // TODO: localize
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button("Add") { // TODO: localize
+            viewModel.presentAddNewPerson(coordinator: coordinator)
+          }
         }
       }
-    }
   }
 }
 
