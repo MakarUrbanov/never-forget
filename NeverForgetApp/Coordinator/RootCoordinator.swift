@@ -26,12 +26,7 @@ final class RootCoordinator: Coordinator {
 
   func start() {
     setRootCoordinator()
-    notificationManager.requestFirstPermission { success, error in
-      if success {
-        print("mmk success")
-      } else if let error {
-        print("mmk error: \(error)")
-      }
+    notificationManager.requestFirstPermission { isSuccess in
     }
   }
 

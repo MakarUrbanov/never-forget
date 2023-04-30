@@ -10,9 +10,11 @@ public class NFLocalNotificationsManager {
 
 // MARK: - Authorization
 
-public extension NFLocalNotificationsManager {
+extension NFLocalNotificationsManager {
 
-  func requestFirstPermission(completion: @escaping (Bool, Error?) -> Void = { _, _ in }) {
+  public typealias isSuccessAuthorization = Bool
+
+  public func requestFirstPermission(completion: @escaping (isSuccessAuthorization) -> Void = { _ in }) {
     checkAuthorizationStatus { status in
       if status == .notDetermined {
         self.requestPermission(completion: completion)
@@ -20,19 +22,15 @@ public extension NFLocalNotificationsManager {
     }
   }
 
-  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
+  public func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
     center.getNotificationSettings { settings in
       completion(settings.authorizationStatus)
     }
   }
 
-  private func requestPermission(completion: @escaping (Bool, Error?) -> Void) {
-    center.requestAuthorization(options: [.alert, .badge]) { isSuccess, error in
-      if isSuccess {
-        completion(true, nil)
-      } else if let error {
-        completion(false, error)
-      }
+  private func requestPermission(completion: @escaping (isSuccessAuthorization) -> Void) {
+    center.requestAuthorization(options: [.alert, .badge]) { isSuccess, _ in
+      completion(isSuccess)
     }
   }
 
