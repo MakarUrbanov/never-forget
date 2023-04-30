@@ -3,6 +3,11 @@ import UserNotifications
 public class NFLocalNotificationsManager {
 
   private let center = UNUserNotificationCenter.current()
+  private let userDefaultsManager = NFLNUserDefaultManager()
+
+  public var isDenied: Bool {
+    userDefaultsManager.getBool(.isDenied)
+  }
 
   public init() {}
 
@@ -10,28 +15,37 @@ public class NFLocalNotificationsManager {
 
 // MARK: - Authorization
 
-extension NFLocalNotificationsManager {
+public extension NFLocalNotificationsManager {
 
-  public typealias isSuccessAuthorization = Bool
+  typealias IsSuccessAuthorization = Bool
 
-  public func requestFirstPermission(completion: @escaping (isSuccessAuthorization) -> Void = { _ in }) {
+  func requestFirstPermission(completion: @escaping (IsSuccessAuthorization) -> Void = { _ in }) {
     checkAuthorizationStatus { status in
       if status == .notDetermined {
         self.requestPermission(completion: completion)
+
+        return
       }
+
+      completion(false)
     }
   }
 
-  public func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
+  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
     center.getNotificationSettings { settings in
       completion(settings.authorizationStatus)
     }
   }
 
-  private func requestPermission(completion: @escaping (isSuccessAuthorization) -> Void) {
-    center.requestAuthorization(options: [.alert, .badge]) { isSuccess, _ in
+  private func requestPermission(completion: @escaping (IsSuccessAuthorization) -> Void) {
+    center.requestAuthorization(options: [.alert, .badge, .sound]) { isSuccess, _ in
+      self.setIsDenied(!isSuccess)
       completion(isSuccess)
     }
+  }
+
+  private func setIsDenied(_ value: Bool) {
+    userDefaultsManager.setBool(value, key: .isDenied)
   }
 
 }

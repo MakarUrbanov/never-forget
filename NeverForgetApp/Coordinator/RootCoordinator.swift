@@ -26,7 +26,8 @@ final class RootCoordinator: Coordinator {
 
   func start() {
     setRootCoordinator()
-    notificationManager.requestFirstPermission { isSuccess in
+    notificationManager.requestFirstPermission { _ in
+      print("mmk isDenied: \(self.notificationManager.isDenied)")
     }
   }
 
