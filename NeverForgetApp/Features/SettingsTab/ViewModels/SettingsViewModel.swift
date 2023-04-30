@@ -12,7 +12,6 @@ final class SettingsViewModel: ObservableObject {
   private let appSettingsManager: AppSettingsManager
 
   private let saveSettingsDebouncer = Debouncer(delay: 0.5)
-  private let sortDebouncer = Debouncer(delay: 0.7)
 
   @Published var localAppSettings = AppSettingsAdapter(appNotificationRules: AppNotificationRulesAdapter()) {
     didSet { saveSettings() }
@@ -59,10 +58,12 @@ final class SettingsViewModel: ObservableObject {
   }
 
   func sortOnEventDayTimes() {
-    sortDebouncer.perform { [weak self] in
-      guard let self else { return }
-      self.localAppSettings.appNotificationRules.sortOnEventDayTimes()
-    }
+    localAppSettings.appNotificationRules.sortOnEventDayTimes()
+  }
+
+  func filterOnEventDayTimes() {
+    let filtered = localAppSettings.appNotificationRules.getFilteredOnEventDayTimes()
+    localAppSettings.appNotificationRules.onEventDayTimes = filtered
   }
 
 }
@@ -161,7 +162,7 @@ extension SettingsViewModel {
       onEventDayTimes.sort(by: SettingsViewModel.sortOnEventDayTimes)
     }
 
-    private func getFilteredOnEventDayTimes() -> [AppNotificationTimeAdapter] {
+    func getFilteredOnEventDayTimes() -> [AppNotificationTimeAdapter] {
       onEventDayTimes.reduce(into: [AppNotificationTimeAdapter]()) { partialResult, time in
         if !partialResult.contains(where: { $0.fullMinutes == time.fullMinutes }) {
           return partialResult += [time]

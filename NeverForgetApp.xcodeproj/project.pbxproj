@@ -68,6 +68,9 @@
 		357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F229CE0C9C009F5988 /* AppPreloader.swift */; };
 		357950F629CE117B009F5988 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F529CE117B009F5988 /* Logger.swift */; };
 		3580D7BC29F0701F00EBB33B /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580D7BB29F0701F00EBB33B /* MainFlowCoordinator.swift */; };
+		358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */ = {isa = PBXBuildFile; productRef = 358728F829FDF7BA00148218 /* NFLocalNotificationsManager */; };
+		358728FB29FE0BE500148218 /* PeopleListWelcomeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358728FA29FE0BE500148218 /* PeopleListWelcomeMessage.swift */; };
+		358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */; };
 		359CDD0029D4BA7000EDAF2C /* MainScreenPeopleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359CDCFF29D4BA7000EDAF2C /* MainScreenPeopleList.swift */; };
 		359CDD0329D623DD00EDAF2C /* DateFormatter+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359CDD0229D623DD00EDAF2C /* DateFormatter+init.swift */; };
 		359CDD0529D6247C00EDAF2C /* String+uppercasedFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */; };
@@ -130,6 +133,7 @@
 		3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabCoordinator.swift; sourceTree = "<group>"; };
 		3538282B29F1B2F3003F19D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		353A732829FDE0870074A409 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
+		353A732C29FDF1B00074A409 /* NFLocalNotificationsManager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NFLocalNotificationsManager; path = Packages/NFLocalNotificationsManager; sourceTree = "<group>"; };
 		3540DEAC29B5124200154770 /* View+hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+hideKeyboard.swift"; sourceTree = "<group>"; };
 		3540DEAE29B51BE000154770 /* String+randomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+randomString.swift"; sourceTree = "<group>"; };
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 		357950F229CE0C9C009F5988 /* AppPreloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreloader.swift; sourceTree = "<group>"; };
 		357950F529CE117B009F5988 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3580D7BB29F0701F00EBB33B /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		358728FA29FE0BE500148218 /* PeopleListWelcomeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListWelcomeMessage.swift; sourceTree = "<group>"; };
+		358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationTimesView.swift; sourceTree = "<group>"; };
 		359CDCFF29D4BA7000EDAF2C /* MainScreenPeopleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPeopleList.swift; sourceTree = "<group>"; };
 		359CDD0229D623DD00EDAF2C /* DateFormatter+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+init.swift"; sourceTree = "<group>"; };
 		359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+uppercasedFirst.swift"; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */,
+				358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				355E278129A2B6900038F8BA /* PeopleRow */,
+				358728FA29FE0BE500148218 /* PeopleListWelcomeMessage.swift */,
 				3521150029A8F76F00559988 /* PeopleListView.swift */,
 			);
 			path = PeopleList;
@@ -351,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				3538282B29F1B2F3003F19D9 /* SettingsView.swift */,
+				358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -371,6 +380,7 @@
 				3551F19B299028AE00EBA6A3 /* Products */,
 				357044A929D08B9700C6A7C2 /* Frameworks */,
 				357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */,
+				353A732C29FDF1B00074A409 /* NFLocalNotificationsManager */,
 			);
 			sourceTree = "<group>";
 		};
@@ -693,6 +703,7 @@
 			name = NeverForgetApp;
 			packageProductDependencies = (
 				357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */,
+				358728F829FDF7BA00148218 /* NFLocalNotificationsManager */,
 			);
 			productName = "never-forget";
 			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
@@ -814,6 +825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				358728FB29FE0BE500148218 /* PeopleListWelcomeMessage.swift in Sources */,
 				355E279C29A5508B0038F8BA /* Color+Theme.swift in Sources */,
 				352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */,
 				359CDD0329D623DD00EDAF2C /* DateFormatter+init.swift in Sources */,
@@ -873,6 +885,7 @@
 				3521151029A90EA200559988 /* PersonProfileViewModel.swift in Sources */,
 				3521151229A920CD00559988 /* String+trimmed.swift in Sources */,
 				355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */,
+				358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */,
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
 				35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */,
@@ -1171,6 +1184,10 @@
 		357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NeverForgetDatePicker;
+		};
+		358728F829FDF7BA00148218 /* NFLocalNotificationsManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NFLocalNotificationsManager;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
 final class RootCoordinator: Coordinator {
+
   let window: UIWindow
   var childCoordinators: [Coordinator] = []
   let rootNavigationController = BaseUINavigationController()
+  private let notificationManager = NFLocalNotificationsManager()
 
   init(window: UIWindow) {
     self.window = window
@@ -23,6 +26,13 @@ final class RootCoordinator: Coordinator {
 
   func start() {
     setRootCoordinator()
+    notificationManager.requestFirstPermission { success, error in
+      if success {
+        print("mmk success")
+      } else if let error {
+        print("mmk error: \(error)")
+      }
+    }
   }
 
 }

@@ -38,23 +38,13 @@ struct SettingsView: View {
           )
 
           if notificationRules.wrappedValue.isNotificationOnEventDayEnabled {
-            ForEach(notificationRules.onEventDayTimes, id: \.id) { $time in
-              DatePicker("Notify at:", selection: $time.date, displayedComponents: .hourAndMinute) // TODO: translate
-                .deleteDisabled(notificationRules.onEventDayTimes.count == 1)
-                .onChange(of: time.fullMinutes) { _ in
-                  viewModel.sortOnEventDayTimes()
-                }
-            }
-            .onDelete { indexSet in
-              viewModel.deleteOnEventDayTime(indexSet)
+            NavigationLink {
+              SettingsNotificationTimesView()
+                .environmentObject(viewModel)
+            } label: {
+              Text("Notification times (\(notificationRules.onEventDayTimes.count))") // TODO: translate
             }
 
-            Button("Add notification time") { // TODO: translate
-              withAnimation {
-                viewModel.addNewOnEventDayTime()
-              }
-            }
-            .disabled(notificationRules.onEventDayTimes.count >= 5)
           }
         }
 
