@@ -12,7 +12,7 @@
 		350BE5BF29ABF4E700A40F17 /* BasePersonProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5BE29ABF4E700A40F17 /* BasePersonProfileView.swift */; };
 		350BE5C229ABF73D00A40F17 /* CreateNewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */; };
 		350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */; };
-		35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35104EC829B420BE00E40E1E /* ImagePicker.swift */; };
+		35104EC929B420BE00E40E1E /* ImagePickerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35104EC829B420BE00E40E1E /* ImagePickerRepresentable.swift */; };
 		352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114F229A8DA4D00559988 /* RootCoordinator.swift */; };
 		352114FC29A8EC4900559988 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */; };
 		352114FF29A8F2F500559988 /* PeopleListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */; };
@@ -28,6 +28,7 @@
 		3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */; };
 		3538282929F1B1F3003F19D9 /* SettingsTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */; };
 		3538282C29F1B2F3003F19D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538282B29F1B2F3003F19D9 /* SettingsView.swift */; };
+		353A732929FDE0870074A409 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353A732829FDE0870074A409 /* Debouncer.swift */; };
 		3540DEAD29B5124200154770 /* View+hideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3540DEAC29B5124200154770 /* View+hideKeyboard.swift */; };
 		3540DEAF29B51BE000154770 /* String+randomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3540DEAE29B51BE000154770 /* String+randomString.swift */; };
 		3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3542517A29A78D1F005174DA /* BaseUINavigationController.swift */; };
@@ -112,7 +113,7 @@
 		350BE5BE29ABF4E700A40F17 /* BasePersonProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePersonProfileView.swift; sourceTree = "<group>"; };
 		350BE5C129ABF73D00A40F17 /* CreateNewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonView.swift; sourceTree = "<group>"; };
 		350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonViewModel.swift; sourceTree = "<group>"; };
-		35104EC829B420BE00E40E1E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		35104EC829B420BE00E40E1E /* ImagePickerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerRepresentable.swift; sourceTree = "<group>"; };
 		352114F229A8DA4D00559988 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		352114FB29A8EC4900559988 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
 		352114FE29A8F2F500559988 /* PeopleListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCoordinator.swift; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListViewModel.swift; sourceTree = "<group>"; };
 		3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabCoordinator.swift; sourceTree = "<group>"; };
 		3538282B29F1B2F3003F19D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		353A732829FDE0870074A409 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		3540DEAC29B5124200154770 /* View+hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+hideKeyboard.swift"; sourceTree = "<group>"; };
 		3540DEAE29B51BE000154770 /* String+randomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+randomString.swift"; sourceTree = "<group>"; };
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
@@ -320,7 +322,7 @@
 			children = (
 				3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */,
 				35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift */,
-				35104EC829B420BE00E40E1E /* ImagePicker.swift */,
+				35104EC829B420BE00E40E1E /* ImagePickerRepresentable.swift */,
 				357950F229CE0C9C009F5988 /* AppPreloader.swift */,
 			);
 			path = SwiftUI;
@@ -554,6 +556,7 @@
 			children = (
 				357950F529CE117B009F5988 /* Logger.swift */,
 				35BD2F4329D794F9000A9801 /* UnfairLock.swift */,
+				353A732829FDE0870074A409 /* Debouncer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */,
 				350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */,
 				355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */,
+				353A732929FDE0870074A409 /* Debouncer.swift in Sources */,
 				35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */,
 				350BE5B929ABDD5B00A40F17 /* Binding+OptionalInit.swift in Sources */,
 				3570093529F7117500EAF446 /* AppSettingsManager.swift in Sources */,
@@ -836,7 +840,7 @@
 				3538282C29F1B2F3003F19D9 /* SettingsView.swift in Sources */,
 				357950F629CE117B009F5988 /* Logger.swift in Sources */,
 				3580D7BC29F0701F00EBB33B /* MainFlowCoordinator.swift in Sources */,
-				35104EC929B420BE00E40E1E /* ImagePicker.swift in Sources */,
+				35104EC929B420BE00E40E1E /* ImagePickerRepresentable.swift in Sources */,
 				352E3FEF29DB5AE000E385A3 /* MainScreenPeopleSection.swift in Sources */,
 				352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */,
 				3521150129A8F76F00559988 /* PeopleListView.swift in Sources */,

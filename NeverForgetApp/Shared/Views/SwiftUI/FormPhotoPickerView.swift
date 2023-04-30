@@ -51,7 +51,7 @@ struct FormPhotoPickerView: View {
       }
     })
     .sheet(isPresented: $isPresentedImagePicker) {
-      ImagePicker(selectedImage: $selectedImage, isLoading: $isLoadingPhoto)
+      ImagePickerRepresentable(selectedImage: $selectedImage, isLoading: $isLoadingPhoto)
     }
   }
 }

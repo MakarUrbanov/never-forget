@@ -1,5 +1,5 @@
 //
-//  ImagePicker.swift
+//  ImagePickerRepresentable.swift
 //  never-forget
 //
 //  Created by makar on 3/5/23.
@@ -10,7 +10,7 @@ import PhotosUI
 import SwiftUI
 import UIKit
 
-struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to use not only one photo
+struct ImagePickerRepresentable: UIViewControllerRepresentable { // TODO: expand usability to use not only one photo
   typealias UIViewControllerType = PHPickerViewController
 
   @Binding var selectedImage: UIImage?
@@ -63,7 +63,7 @@ struct ImagePicker: UIViewControllerRepresentable { // TODO: expand usability to
         if item.canLoadObject(ofClass: UIImage.self) {
           item.loadObject(ofClass: UIImage.self) { image, error in
             if error != nil {
-              print("IMAGE PICKER ERROR")
+              Logger.error(prefix: "IMAGE PICKER ERROR", error)
             } else {
               DispatchQueue.main.async {
                 if let image = image as? UIImage {

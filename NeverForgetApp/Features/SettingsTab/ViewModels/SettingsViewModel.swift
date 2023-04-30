@@ -11,6 +11,9 @@ import SwiftUI
 final class SettingsViewModel: ObservableObject {
   private let appSettingsManager: AppSettingsManager
 
+  private let saveSettingsDebouncer = Debouncer(delay: 0.5)
+  private let sortDebouncer = Debouncer(delay: 0.7)
+
   @Published var localAppSettings = AppSettingsAdapter(appNotificationRules: AppNotificationRulesAdapter()) {
     didSet { saveSettings() }
   }
@@ -22,8 +25,44 @@ final class SettingsViewModel: ObservableObject {
   }
 
   func saveSettings() {
-    let newSettings = localAppSettings.getAppSettings(in: AppSettingsManager.context)
-    appSettingsManager.updateSettings(newSettings)
+    saveSettingsDebouncer.perform { [weak self] in
+      guard let self else { return }
+      let newSettings = self.localAppSettings.getAppSettings(in: AppSettingsManager.context)
+      self.appSettingsManager.updateSettings(newSettings)
+    }
+  }
+
+  func addNewOnEventDayTime() {
+    if localAppSettings.appNotificationRules.onEventDayTimes.isEmpty {
+      let newTime = AppNotificationTimeAdapter()
+      localAppSettings.appNotificationRules.onEventDayTimes.append(newTime)
+    } else {
+      let maximalTime = localAppSettings.appNotificationRules.onEventDayTimes.reduce(0) { partialResult, time in
+        if partialResult < time.fullMinutes {
+          return Int(time.fullMinutes)
+        }
+
+        return partialResult
+      }
+
+      let hours = maximalTime / 60 + 1
+      let minutes = maximalTime % 60
+      let newTime = AppNotificationTimeAdapter(hours: Int16(hours), minutes: Int16(minutes))
+
+      localAppSettings.appNotificationRules.onEventDayTimes.append(newTime)
+    }
+  }
+
+  func deleteOnEventDayTime(_ indexSet: IndexSet) {
+    localAppSettings.appNotificationRules.removeOnEventDayTime(indexSet)
+    saveSettings()
+  }
+
+  func sortOnEventDayTimes() {
+    sortDebouncer.perform { [weak self] in
+      guard let self else { return }
+      self.localAppSettings.appNotificationRules.sortOnEventDayTimes()
+    }
   }
 
 }
@@ -34,7 +73,7 @@ extension SettingsViewModel: AppSettingsManagerDelegate {
 
   func settingsFetched(_ settings: AppSettings?) {
     guard let newSettings = settings else { return }
-    localAppSettings.updateAppSettings(newSettings)
+    localAppSettings.setAppSettings(newSettings)
   }
 
 }
@@ -43,26 +82,42 @@ extension SettingsViewModel: AppSettingsManagerDelegate {
 
 extension SettingsViewModel {
 
-  struct AppNotificationTimeAdapter: Hashable {
-    var hours: Int16 = 10
-    var minutes: Int16 = 10
+  struct AppNotificationTimeAdapter: Hashable, Identifiable {
+    let id = UUID().uuidString
+
+    var date: Date
+    var hours: Int { Calendar.current.component(.hour, from: date) }
+    var minutes: Int { Calendar.current.component(.minute, from: date) }
+    var fullMinutes: Int { Int(hours * 60 + minutes) }
+
+    init(hours: Int16 = 10, minutes: Int16 = 0) {
+      let correctHours = hours == 24 ? 0 : hours
+
+      date = Calendar.current
+        .date(bySettingHour: Int(correctHours), minute: Int(minutes), second: 0, of: Date.now) ?? Date.now
+    }
+
+    mutating func setDate(_ date: Date) {
+      self.date = date
+    }
 
     func getAppNotificationTime(in context: NSManagedObjectContext) -> AppNotificationTime {
       let entity = AppNotificationTime(context: context)
-      entity.hours = hours
-      entity.minutes = minutes
+      entity.hours = Int16(hours)
+      entity.minutes = Int16(minutes)
 
       return entity
     }
+
   }
 
   struct AppNotificationRulesAdapter {
     var isNotificationOneDayBeforeEnabled = true
     var isNotificationOnEventDayEnabled = true
     var isNotificationOneWeekBeforeEnabled = true
-    var onEventDayTimes: Set<AppNotificationTimeAdapter> = []
+    var onEventDayTimes: [AppNotificationTimeAdapter] = []
 
-    private mutating func updateOnEventDayTimes(_ newTimes: NSSet) {
+    private mutating func setOnEventDayTimes(_ newTimes: NSSet) {
       let newTimes = newTimes.compactMap { time in
         if let time = time as? AppNotificationTime {
           let localTime = AppNotificationTimeAdapter(hours: time.hours, minutes: time.minutes)
@@ -71,17 +126,18 @@ extension SettingsViewModel {
 
         return nil
       }
+      .sorted(by: SettingsViewModel.sortOnEventDayTimes)
 
-      onEventDayTimes = Set(newTimes)
+      onEventDayTimes = newTimes
     }
 
-    mutating func updateNotificationRules(_ newRules: AppNotificationRules) {
+    mutating func setNotificationRules(_ newRules: AppNotificationRules) {
       isNotificationOnEventDayEnabled = newRules.isNotificationOnEventDayEnabled
       isNotificationOneDayBeforeEnabled = newRules.isNotificationOneDayBeforeEnabled
       isNotificationOneWeekBeforeEnabled = newRules.isNotificationOneWeekBeforeEnabled
 
       if let newOnEventDayTimes = newRules.onEventDayTimes {
-        updateOnEventDayTimes(newOnEventDayTimes)
+        setOnEventDayTimes(newOnEventDayTimes)
       }
     }
 
@@ -90,8 +146,27 @@ extension SettingsViewModel {
       rules.isNotificationOnEventDayEnabled = isNotificationOnEventDayEnabled
       rules.isNotificationOneDayBeforeEnabled = isNotificationOneDayBeforeEnabled
       rules.isNotificationOneWeekBeforeEnabled = isNotificationOneWeekBeforeEnabled
-      rules.onEventDayTimes = NSSet(array: onEventDayTimes.map { $0.getAppNotificationTime(in: context) })
+
+      let filteredTimes = getFilteredOnEventDayTimes()
+      rules.onEventDayTimes = NSSet(array: filteredTimes.map { $0.getAppNotificationTime(in: context) })
+
       return rules
+    }
+
+    mutating func removeOnEventDayTime(_ indexSet: IndexSet) {
+      onEventDayTimes.remove(atOffsets: indexSet)
+    }
+
+    mutating func sortOnEventDayTimes() {
+      onEventDayTimes.sort(by: SettingsViewModel.sortOnEventDayTimes)
+    }
+
+    private func getFilteredOnEventDayTimes() -> [AppNotificationTimeAdapter] {
+      onEventDayTimes.reduce(into: [AppNotificationTimeAdapter]()) { partialResult, time in
+        if !partialResult.contains(where: { $0.fullMinutes == time.fullMinutes }) {
+          return partialResult += [time]
+        }
+      }
     }
 
   }
@@ -105,12 +180,23 @@ extension SettingsViewModel {
       return convertedSettings
     }
 
-    mutating func updateAppSettings(_ newSettings: AppSettings) {
+    mutating func setAppSettings(_ newSettings: AppSettings) {
       if let newNotificationRules = newSettings.appNotificationRules {
-        appNotificationRules.updateNotificationRules(newNotificationRules)
+        appNotificationRules.setNotificationRules(newNotificationRules)
       }
     }
 
   }
+
+}
+
+// MARK: - Utils
+
+extension SettingsViewModel {
+
+  private static let sortOnEventDayTimes: (AppNotificationTimeAdapter, AppNotificationTimeAdapter)
+    -> Bool = { lhs, rhs in
+      (lhs.hours * 60 + lhs.minutes) < (rhs.hours * 60 + rhs.minutes)
+    }
 
 }

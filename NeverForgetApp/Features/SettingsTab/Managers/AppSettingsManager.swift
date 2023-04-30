@@ -7,13 +7,18 @@
 
 import Foundation
 
+// MARK: Delegate
+
 protocol AppSettingsManagerDelegate: AnyObject {
   func settingsFetched(_ settings: AppSettings?)
 }
 
+// MARK: Manager
+
 final class AppSettingsManager: ObservableObject {
 
   static let context = PersistentContainerProvider.shared.viewContext
+
   weak var delegate: AppSettingsManagerDelegate?
 
   @Published var settings: AppSettings?
@@ -31,6 +36,13 @@ final class AppSettingsManager: ObservableObject {
         // first set of the appNotificationRules
         if appSettings.appNotificationRules == nil {
           settings?.appNotificationRules = getInitializedAppNotificationRules()
+        }
+
+        let isNotificationTimesNil = appSettings.appNotificationRules?.onEventDayTimes == nil
+        let isNotificationTimesEmpty = appSettings.appNotificationRules?.onEventDayTimes?.count == 0
+
+        if isNotificationTimesNil || isNotificationTimesEmpty {
+          settings?.appNotificationRules?.onEventDayTimes = [AppSettingsManager.initialOnEventDayTime]
         }
       } else {
         settings = AppSettings(context: AppSettingsManager.context)
@@ -55,12 +67,20 @@ final class AppSettingsManager: ObservableObject {
 
 }
 
+// MARK: Utils for initialization of the notification rules
 
 extension AppSettingsManager {
 
+  private static let initialOnEventDayTime: AppNotificationTime = {
+    let time = AppNotificationTime(context: AppSettingsManager.context)
+    time.hours = 10
+    time.minutes = 0
+    return time
+  }()
+
   private func getInitializedAppNotificationRules() -> AppNotificationRules {
     let appNotificationRules = AppNotificationRules(context: AppSettingsManager.context)
-    appNotificationRules.onEventDayTimes = []
+    appNotificationRules.onEventDayTimes = [AppSettingsManager.initialOnEventDayTime]
     return appNotificationRules
   }
 

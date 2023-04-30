@@ -10,52 +10,58 @@ import SwiftUI
 struct SettingsView: View {
 
   @StateObject var viewModel = SettingsViewModel()
+  @Environment(\.keyboardShortcut) var keyboardShortcut
 
   var notificationRules: Binding<SettingsViewModel.AppNotificationRulesAdapter> {
     Binding(projectedValue: $viewModel.localAppSettings.appNotificationRules)
   }
 
-  @State var isExpanded = true
-  @State var timesMOCK: [Int] = []
-
   var body: some View {
     VStack {
       Form {
-        Section("Notification rules") {
+        Section("Notification rules") { // TODO: translate
           Toggle(
-            "Notify one week before",
+            "Notify 1 week before", // TODO: translate
             isOn: notificationRules.isNotificationOneWeekBeforeEnabled
           )
 
           Toggle(
-            "Notify one day before",
+            "Notify 1 day before", // TODO: translate
             isOn: notificationRules.isNotificationOneDayBeforeEnabled
           )
+        }
 
+        Section("On the event day") { // TODO: translate
           Toggle(
-            "Notify on the day",
+            "Notify on the event day", // TODO: translate
             isOn: notificationRules.isNotificationOnEventDayEnabled
           )
 
-          LabeledContent("Notificate in") {
-            Button("Add") { // TODO: translate
-              timesMOCK += [Int.random(in: 0 ... 10)]
+          if notificationRules.wrappedValue.isNotificationOnEventDayEnabled {
+            ForEach(notificationRules.onEventDayTimes, id: \.id) { $time in
+              DatePicker("Notify at:", selection: $time.date, displayedComponents: .hourAndMinute) // TODO: translate
+                .deleteDisabled(notificationRules.onEventDayTimes.count == 1)
+                .onChange(of: time.fullMinutes) { _ in
+                  viewModel.sortOnEventDayTimes()
+                }
             }
-          }
-
-          if !notificationRules.wrappedValue.onEventDayTimes.isEmpty {
-            ForEach(timesMOCK, id: \.self) { time in
-              Text("\(time)")
+            .onDelete { indexSet in
+              viewModel.deleteOnEventDayTime(indexSet)
             }
-            .padding(.horizontal)
-            .animation(.easeIn, value: notificationRules.wrappedValue.onEventDayTimes.count)
-          }
 
+            Button("Add notification time") { // TODO: translate
+              withAnimation {
+                viewModel.addNewOnEventDayTime()
+              }
+            }
+            .disabled(notificationRules.onEventDayTimes.count >= 5)
+          }
         }
+
       }
     }
     .scrollContentBackground(.hidden)
-    .navigationTitle("Settings") // TODO: translate
+    .navigationTitle(Localizable.Tabs.settings)
     .background(Color.Theme.background)
   }
 }

@@ -17,7 +17,6 @@
  --enable fileHeader
  --enable indent
  --enable initcoderunavailable
- --enable isempty
  --enable leadingdelimiters
  --enable linebreakAtEndOfFile
  --enable numberFormatting
