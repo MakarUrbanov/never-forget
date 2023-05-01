@@ -21,6 +21,9 @@
 		3521150D29A9099A00559988 /* PeopleListScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */; };
 		3521151029A90EA200559988 /* PersonProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150F29A90EA200559988 /* PersonProfileViewModel.swift */; };
 		3521151229A920CD00559988 /* String+trimmed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521151129A920CD00559988 /* String+trimmed.swift */; };
+		3525B2EE29FF2CB7001D83CF /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */; };
+		3525B2F229FF32CC001D83CF /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2F129FF32CC001D83CF /* LocalNotification.swift */; };
+		3525B2F429FF3E81001D83CF /* NotificationsCategoryIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2F329FF3E81001D83CF /* NotificationsCategoryIdentifiers.swift */; };
 		352E3FED29DB4C6500E385A3 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E3FEC29DB4C6500E385A3 /* MainScreenViewModel.swift */; };
 		352E3FEF29DB5AE000E385A3 /* MainScreenPeopleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E3FEE29DB5AE000E385A3 /* MainScreenPeopleSection.swift */; };
 		3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF429AA470800BA2F5F /* AlertManager.swift */; };
@@ -125,6 +128,9 @@
 		3521150C29A9099A00559988 /* PeopleListScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListScreenViewModel.swift; sourceTree = "<group>"; };
 		3521150F29A90EA200559988 /* PersonProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonProfileViewModel.swift; sourceTree = "<group>"; };
 		3521151129A920CD00559988 /* String+trimmed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+trimmed.swift"; sourceTree = "<group>"; };
+		3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
+		3525B2F129FF32CC001D83CF /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		3525B2F329FF3E81001D83CF /* NotificationsCategoryIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCategoryIdentifiers.swift; sourceTree = "<group>"; };
 		352E3FEC29DB4C6500E385A3 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
 		352E3FEE29DB5AE000E385A3 /* MainScreenPeopleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPeopleSection.swift; sourceTree = "<group>"; };
 		3533AFF429AA470800BA2F5F /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
@@ -296,6 +302,16 @@
 				350BE5C329ABF77500A40F17 /* CreateNewPersonViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		3525B2EF29FF2D19001D83CF /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */,
+				3525B2F129FF32CC001D83CF /* LocalNotification.swift */,
+				3525B2F329FF3E81001D83CF /* NotificationsCategoryIdentifiers.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		352E3FEB29DB4C5800E385A3 /* ViewModels */ = {
@@ -638,6 +654,7 @@
 				355E278429A2BD220038F8BA /* Localizable */,
 				3533AFF329AA46FE00BA2F5F /* Managers */,
 				35E841642992AE9200BF537E /* Models */,
+				3525B2EF29FF2D19001D83CF /* Notifications */,
 				35E0479829B404AD006A2AB3 /* Styles */,
 				356CD88E29918EF300EA9D2D /* Views */,
 			);
@@ -835,8 +852,10 @@
 				3538282929F1B1F3003F19D9 /* SettingsTabCoordinator.swift in Sources */,
 				350BE5BF29ABF4E700A40F17 /* BasePersonProfileView.swift in Sources */,
 				35E0479529B3996B006A2AB3 /* UIImage+resizeImage.swift in Sources */,
+				3525B2EE29FF2CB7001D83CF /* LocalNotificationsManager.swift in Sources */,
 				3551F1A2299028AE00EBA6A3 /* MainScreenView.swift in Sources */,
 				355E278C29A2BF2B0038F8BA /* Localizable.swift in Sources */,
+				3525B2F429FF3E81001D83CF /* NotificationsCategoryIdentifiers.swift in Sources */,
 				3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */,
 				350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */,
 				355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */,
@@ -891,6 +910,7 @@
 				355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */,
 				35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift in Sources */,
 				359CDD0529D6247C00EDAF2C /* String+uppercasedFirst.swift in Sources */,
+				3525B2F229FF32CC001D83CF /* LocalNotification.swift in Sources */,
 				355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */,
 				3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */,
 				35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */,
