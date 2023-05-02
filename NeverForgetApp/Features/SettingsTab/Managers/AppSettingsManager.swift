@@ -23,7 +23,7 @@ final class AppSettingsManager: ObservableObject {
 
   @Published var settings: AppSettings?
 
-  func fetch() {
+  func fetch(completion: @escaping (AppSettings?) -> () = { _ in }) {
     let fetchRequest = AppSettings.fetchRequest()
     fetchRequest.fetchLimit = 1
 
@@ -49,11 +49,12 @@ final class AppSettingsManager: ObservableObject {
         settings?.appNotificationRules = getInitializedAppNotificationRules()
       }
     } catch {
-      Logger.error(prefix: "Error loading settings from Core Data")
+      Logger.error(message: "Error loading settings from Core Data")
     }
 
     save()
     delegate?.settingsFetched(settings)
+    completion(settings)
   }
 
   func save() {

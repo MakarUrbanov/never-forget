@@ -30,7 +30,7 @@ final class LocalNotificationsManager {
     )
 
     notificationsManager.scheduleAnnualNotification(notification) { errorMessage in
-      Logger.error(prefix: "Scheduling notification error", errorMessage)
+      Logger.error(message: "Scheduling notification error", errorMessage)
     }
   }
 
@@ -50,13 +50,8 @@ final class LocalNotificationsManager {
     }
   }
 
-  // TODO: move to upper abstraction
-  func deleteAllNotifications(by userIdPrefix: String) {
-    getPendingNotifications { notifications in
-      for notification in notifications where notification.identifier.hasPrefix(userIdPrefix) {
-        self.notificationsManager.removeNotification(identifiers: [notification.identifier])
-      }
-    }
+  func removePendingNotification(identifier: String) {
+    notificationsManager.removeNotification(identifiers: [identifier])
   }
 
 }
