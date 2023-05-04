@@ -116,13 +116,15 @@ extension SettingsViewModel {
     var isNotificationOneDayBeforeEnabled = true
     var isNotificationOnEventDayEnabled = true
     var isNotificationOneWeekBeforeEnabled = true
+
+    var timeOnOneWeekBefore: AppNotificationTimeAdapter = .init()
+    var timeOnOneDayBefore: AppNotificationTimeAdapter = .init()
     var onEventDayTimes: [AppNotificationTimeAdapter] = []
 
     private mutating func setOnEventDayTimes(_ newTimes: NSSet) {
-      let newTimes = newTimes.compactMap { time in
+      let newTimes: [AppNotificationTimeAdapter] = newTimes.compactMap { time in
         if let time = time as? AppNotificationTime {
-          let localTime = AppNotificationTimeAdapter(hours: time.hours, minutes: time.minutes)
-          return localTime
+          return AppNotificationRulesAdapter.convertAppTime(time)
         }
 
         return nil
@@ -137,6 +139,9 @@ extension SettingsViewModel {
       isNotificationOneDayBeforeEnabled = newRules.isNotificationOneDayBeforeEnabled
       isNotificationOneWeekBeforeEnabled = newRules.isNotificationOneWeekBeforeEnabled
 
+      timeOnOneWeekBefore = AppNotificationRulesAdapter.convertAppTime(newRules.timeOnOneWeekBefore)
+      timeOnOneDayBefore = AppNotificationRulesAdapter.convertAppTime(newRules.timeOnOneDayBefore)
+
       if let newOnEventDayTimes = newRules.onEventDayTimes {
         setOnEventDayTimes(newOnEventDayTimes)
       }
@@ -147,6 +152,8 @@ extension SettingsViewModel {
       rules.isNotificationOnEventDayEnabled = isNotificationOnEventDayEnabled
       rules.isNotificationOneDayBeforeEnabled = isNotificationOneDayBeforeEnabled
       rules.isNotificationOneWeekBeforeEnabled = isNotificationOneWeekBeforeEnabled
+      rules.timeOnOneWeekBefore = AppNotificationRulesAdapter.convertToAppTime(timeOnOneWeekBefore, in: context)
+      rules.timeOnOneDayBefore = AppNotificationRulesAdapter.convertToAppTime(timeOnOneDayBefore, in: context)
 
       let filteredTimes = getFilteredOnEventDayTimes()
       rules.onEventDayTimes = NSSet(array: filteredTimes.map { $0.getAppNotificationTime(in: context) })
@@ -168,6 +175,21 @@ extension SettingsViewModel {
           return partialResult += [time]
         }
       }
+    }
+
+    private static func convertAppTime(_ time: AppNotificationTime?) -> AppNotificationTimeAdapter {
+      AppNotificationTimeAdapter(hours: time?.hours ?? 10, minutes: time?.minutes ?? 0)
+    }
+
+    private static func convertToAppTime(
+      _ time: AppNotificationTimeAdapter,
+      in context: NSManagedObjectContext
+    ) -> AppNotificationTime {
+      let appTime = AppNotificationTime(context: context)
+      appTime.hours = Int16(time.hours)
+      appTime.minutes = Int16(time.minutes)
+
+      return appTime
     }
 
   }

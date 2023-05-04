@@ -23,7 +23,7 @@ final class AppSettingsManager: ObservableObject {
 
   @Published var settings: AppSettings?
 
-  func fetch(completion: @escaping (AppSettings?) -> () = { _ in }) {
+  func fetch(completion: @escaping (AppSettings?) -> Void = { _ in }) {
     let fetchRequest = AppSettings.fetchRequest()
     fetchRequest.fetchLimit = 1
 
@@ -42,7 +42,7 @@ final class AppSettingsManager: ObservableObject {
         let isNotificationTimesEmpty = appSettings.appNotificationRules?.onEventDayTimes?.count == 0
 
         if isNotificationTimesNil || isNotificationTimesEmpty {
-          settings?.appNotificationRules?.onEventDayTimes = [AppSettingsManager.initialOnEventDayTime]
+          settings?.appNotificationRules?.onEventDayTimes = [AppSettingsManager.getInitialOnEventDayTime()]
         }
       } else {
         settings = AppSettings(context: AppSettingsManager.context)
@@ -72,16 +72,18 @@ final class AppSettingsManager: ObservableObject {
 
 extension AppSettingsManager {
 
-  private static let initialOnEventDayTime: AppNotificationTime = {
+  private static func getInitialOnEventDayTime() -> AppNotificationTime {
     let time = AppNotificationTime(context: AppSettingsManager.context)
     time.hours = 10
     time.minutes = 0
     return time
-  }()
+  }
 
   private func getInitializedAppNotificationRules() -> AppNotificationRules {
     let appNotificationRules = AppNotificationRules(context: AppSettingsManager.context)
-    appNotificationRules.onEventDayTimes = [AppSettingsManager.initialOnEventDayTime]
+    appNotificationRules.timeOnOneWeekBefore = AppSettingsManager.getInitialOnEventDayTime()
+    appNotificationRules.timeOnOneDayBefore = AppSettingsManager.getInitialOnEventDayTime()
+    appNotificationRules.onEventDayTimes = [AppSettingsManager.getInitialOnEventDayTime()]
     return appNotificationRules
   }
 
