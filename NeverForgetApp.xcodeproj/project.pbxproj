@@ -22,11 +22,11 @@
 		3521151029A90EA200559988 /* PersonProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521150F29A90EA200559988 /* PersonProfileViewModel.swift */; };
 		3521151229A920CD00559988 /* String+trimmed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3521151129A920CD00559988 /* String+trimmed.swift */; };
 		3525B2EE29FF2CB7001D83CF /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */; };
-		3525B2F72A0048F3001D83CF /* PersonProfileNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2F62A0048F3001D83CF /* PersonProfileNotificationsManager.swift */; };
+		3525B2F72A0048F3001D83CF /* PersonsNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2F62A0048F3001D83CF /* PersonsNotificationsManager.swift */; };
 		3525B2FB2A004FB6001D83CF /* LocalNotificationForBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2FA2A004FB6001D83CF /* LocalNotificationForBirthday.swift */; };
 		352E3FED29DB4C6500E385A3 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E3FEC29DB4C6500E385A3 /* MainScreenViewModel.swift */; };
 		352E3FEF29DB5AE000E385A3 /* MainScreenPeopleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E3FEE29DB5AE000E385A3 /* MainScreenPeopleSection.swift */; };
-		3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF429AA470800BA2F5F /* AlertManager.swift */; };
+		3533AFF529AA470800BA2F5F /* AppAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF429AA470800BA2F5F /* AppAlertManager.swift */; };
 		3533AFF729AA692B00BA2F5F /* FormPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */; };
 		3533AFFB29AA6DE800BA2F5F /* PeopleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */; };
 		3538282929F1B1F3003F19D9 /* SettingsTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */; };
@@ -131,11 +131,11 @@
 		3521150F29A90EA200559988 /* PersonProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonProfileViewModel.swift; sourceTree = "<group>"; };
 		3521151129A920CD00559988 /* String+trimmed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+trimmed.swift"; sourceTree = "<group>"; };
 		3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
-		3525B2F62A0048F3001D83CF /* PersonProfileNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonProfileNotificationsManager.swift; sourceTree = "<group>"; };
+		3525B2F62A0048F3001D83CF /* PersonsNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsNotificationsManager.swift; sourceTree = "<group>"; };
 		3525B2FA2A004FB6001D83CF /* LocalNotificationForBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationForBirthday.swift; sourceTree = "<group>"; };
 		352E3FEC29DB4C6500E385A3 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
 		352E3FEE29DB5AE000E385A3 /* MainScreenPeopleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPeopleSection.swift; sourceTree = "<group>"; };
-		3533AFF429AA470800BA2F5F /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		3533AFF429AA470800BA2F5F /* AppAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAlertManager.swift; sourceTree = "<group>"; };
 		3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPhotoPickerView.swift; sourceTree = "<group>"; };
 		3533AFFA29AA6DE800BA2F5F /* PeopleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListViewModel.swift; sourceTree = "<group>"; };
 		3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabCoordinator.swift; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 		3525B2F52A0048DE001D83CF /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				3525B2F62A0048F3001D83CF /* PersonProfileNotificationsManager.swift */,
+				3525B2F62A0048F3001D83CF /* PersonsNotificationsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 		3533AFF329AA46FE00BA2F5F /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				3533AFF429AA470800BA2F5F /* AlertManager.swift */,
+				3533AFF429AA470800BA2F5F /* AppAlertManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -880,13 +880,13 @@
 				3525B2EE29FF2CB7001D83CF /* LocalNotificationsManager.swift in Sources */,
 				3551F1A2299028AE00EBA6A3 /* MainScreenView.swift in Sources */,
 				355E278C29A2BF2B0038F8BA /* Localizable.swift in Sources */,
-				3533AFF529AA470800BA2F5F /* AlertManager.swift in Sources */,
+				3533AFF529AA470800BA2F5F /* AppAlertManager.swift in Sources */,
 				350BE5C429ABF77500A40F17 /* CreateNewPersonViewModel.swift in Sources */,
 				355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */,
 				353A732929FDE0870074A409 /* Debouncer.swift in Sources */,
 				35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */,
 				350BE5B929ABDD5B00A40F17 /* Binding+OptionalInit.swift in Sources */,
-				3525B2F72A0048F3001D83CF /* PersonProfileNotificationsManager.swift in Sources */,
+				3525B2F72A0048F3001D83CF /* PersonsNotificationsManager.swift in Sources */,
 				3570093529F7117500EAF446 /* AppSettingsManager.swift in Sources */,
 				356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */,
 				354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */,

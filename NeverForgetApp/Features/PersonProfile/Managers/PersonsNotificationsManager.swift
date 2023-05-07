@@ -1,5 +1,5 @@
 //
-//  PersonProfileNotificationsManager.swift
+//  PersonsNotificationsManager.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/1/23.
@@ -10,45 +10,58 @@ import NFLocalNotificationsManager
 
 // swiftlint:disable force_unwrapping
 // swiftlint:disable force_cast
-class PersonProfileNotificationsManager {
+class PersonsNotificationsManager {
 
-  private var appSettingsManager: AppSettingsManager
+  private var appSettingsManager = AppSettingsManager()
   private let notificationsManager = LocalNotificationsManager.shared
-
-  init() {
-    appSettingsManager = AppSettingsManager()
-  }
+  private let reschedulingAllPersonsNotificationsActor = ReschedulingAllPersonsNotificationsActor()
 
   func rescheduleBirthdayNotifications(
     for person: Person
   ) async throws {
+    if !person.isNotificationsEnabled {
+      // delete all scheduled notifications of this user
+      let userId = PersonsNotificationsManager.getUserIdFromPersonObject(person)
+      await deleteAllNotifications(withPrefix: userId)
+
+      throw RescheduleNotificationsError.notificationOfThisUserIsForbidden
+    }
+
     /// fetching settings
     guard let appSettings = appSettingsManager.fetch() else {
       throw RescheduleNotificationsError.hasNoAppSettings
     }
 
-    let usersObjectUrl = PersonProfileNotificationsManager.getUserIdFromPersonObject(person)
+    let usersObjectUrl = PersonsNotificationsManager.getUserIdFromPersonObject(person)
 
     // delete pended notifications
-    await deleteAllNotifications(with: usersObjectUrl)
+    await deleteAllNotifications(withPrefix: usersObjectUrl)
 
     // generating new notifications
-    let generatedNotifications = PersonProfileNotificationsManager.generateNotifications(
+    let generatedNotifications = PersonsNotificationsManager.generateNotifications(
       for: person,
       settings: appSettings
     )
 
     // schedule notifications
-    await withThrowingTaskGroup(of: Void.self, body: { group in
+    try await withThrowingTaskGroup(of: Void.self) { group in
       generatedNotifications.forEach { notification in
         group.addTask {
           try await self.notificationsManager.scheduleNotification(notification)
         }
       }
-    })
+
+      try await group.waitForAll()
+    }
   }
 
-  func deleteAllNotifications(with prefix: String) async {
+  func rescheduleNotificationsToAllPersons() async throws {
+    try await reschedulingAllPersonsNotificationsActor.rescheduleNotificationsToAllPersons { person in
+      try await self.rescheduleBirthdayNotifications(for: person)
+    }
+  }
+
+  func deleteAllNotifications(withPrefix prefix: String) async {
     let pendingNotifications = await notificationsManager.getPendingNotifications()
 
     for notification in pendingNotifications where notification.identifier.hasPrefix(prefix) {
@@ -58,9 +71,41 @@ class PersonProfileNotificationsManager {
 
 }
 
+// MARK: - Rescheduling Actor
+
+extension PersonsNotificationsManager {
+
+  actor ReschedulingAllPersonsNotificationsActor {
+
+    func rescheduleNotificationsToAllPersons(
+      rescheduleBirthdayNotifications: @escaping (Person) async throws -> Void
+    ) async throws {
+      let fetchRequestPersons = Person.fetchRequest()
+
+      guard let persons = try PersistentContainerProvider.shared
+        .viewContext.fetch(fetchRequestPersons) as? [Person] else
+      {
+        return
+      }
+
+      try await withThrowingTaskGroup(of: Void.self) { group in
+        for person in persons {
+          group.addTask(priority: .medium) {
+            try await rescheduleBirthdayNotifications(person)
+          }
+        }
+
+        try await group.waitForAll()
+      }
+    }
+
+  }
+
+}
+
 // MARK: - Notifications
 
-extension PersonProfileNotificationsManager {
+extension PersonsNotificationsManager {
 
   /// Makes array of notifications with settings and times from the app settings
   private static func generateNotifications(
@@ -187,9 +232,9 @@ extension PersonProfileNotificationsManager {
 
 // MARK: - Helpers
 
-extension PersonProfileNotificationsManager {
+extension PersonsNotificationsManager {
 
-  private static func getUserIdFromPersonObject(_ person: Person) -> String {
+  static func getUserIdFromPersonObject(_ person: Person) -> String {
     person.objectID.uriRepresentation().absoluteString
   }
 
@@ -239,10 +284,11 @@ extension PersonProfileNotificationsManager {
 
 // MARK: - Types
 
-extension PersonProfileNotificationsManager {
+extension PersonsNotificationsManager {
 
   enum RescheduleNotificationsError: Error {
     case hasNoAppSettings
+    case notificationOfThisUserIsForbidden
   }
 
 }

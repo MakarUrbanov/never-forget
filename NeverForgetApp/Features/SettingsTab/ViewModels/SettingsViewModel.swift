@@ -9,9 +9,11 @@ import CoreData
 import SwiftUI
 
 final class SettingsViewModel: ObservableObject {
-  private let appSettingsManager: AppSettingsManager
 
-  private let saveSettingsDebouncer = Debouncer(delay: 0.5)
+  private let appSettingsManager: AppSettingsManager
+  private let personsNotificationsManager = PersonsNotificationsManager()
+
+  private let saveSettingsDebouncer = Debouncer(delay: 0.8)
 
   @Published var localAppSettings = AppSettingsAdapter(appNotificationRules: AppNotificationRulesAdapter()) {
     didSet { saveSettings() }
@@ -26,8 +28,13 @@ final class SettingsViewModel: ObservableObject {
   func saveSettings() {
     saveSettingsDebouncer.perform { [weak self] in
       guard let self else { return }
+
       let newSettings = self.localAppSettings.getAppSettings(in: AppSettingsManager.context)
       self.appSettingsManager.updateSettings(newSettings)
+
+      Task {
+        await self.reschedulingAllPersonsNotifications()
+      }
     }
   }
 
@@ -75,6 +82,20 @@ extension SettingsViewModel: AppSettingsManagerDelegate {
   func settingsFetched(_ settings: AppSettings?) {
     guard let newSettings = settings else { return }
     localAppSettings.setAppSettings(newSettings)
+  }
+
+}
+
+// MARK: - Notifications
+
+extension SettingsViewModel {
+
+  private func reschedulingAllPersonsNotifications() async {
+    do {
+      try await personsNotificationsManager.rescheduleNotificationsToAllPersons()
+    } catch {
+      Logger.error(message: "Error when rescheduling of the all persons notifications", error)
+    }
   }
 
 }

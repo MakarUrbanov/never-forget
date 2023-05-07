@@ -52,7 +52,16 @@ public extension NFLocalNotificationsManager {
 public extension NFLocalNotificationsManager {
 
   func removeNotification(identifiers: [String]) {
-    center.removePendingNotificationRequests(withIdentifiers: identifiers)
+    Task(priority: .medium) {
+      let notifications = await self.getPendingNotifications()
+      center.removePendingNotificationRequests(withIdentifiers: identifiers)
+
+      for notification in notifications where identifiers.contains(notification.identifier) {
+        notification.content.attachments.forEach { attachment in
+          self.attachmentManager.deleteExistingImage(at: attachment.url)
+        }
+      }
+    }
   }
 
   func scheduleAnnualNotification(

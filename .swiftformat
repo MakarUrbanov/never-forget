@@ -84,7 +84,6 @@
  --maxwidth 120
  --patternlet inline
  --semicolons never
- --stripunusedargs always
  --trimwhitespace always
  --voidtype void
  --indentcase true
@@ -97,3 +96,4 @@
  --disable blankLinesAtEndOfScope
  --disable blankLinesAtStartOfScope
  --disable consecutiveBlankLines
+ --disable unusedArguments

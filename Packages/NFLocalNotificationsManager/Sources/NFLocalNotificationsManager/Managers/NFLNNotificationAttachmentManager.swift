@@ -39,6 +39,18 @@ class NFLNNotificationAttachmentManager {
     return imageUrl
   }
 
+  func deleteExistingImage(at url: URL) {
+    if fileManager.fileExists(atPath: url.path) {
+      do {
+        try fileManager.removeItem(at: url)
+      } catch {
+        NFLNLogger.error(message: "Error deleting image file", url, error)
+      }
+    } else {
+      NFLNLogger.warn(message: "Can't find image with url:", url)
+    }
+  }
+
 }
 
 extension NFLNNotificationAttachmentManager {
@@ -63,16 +75,6 @@ extension NFLNNotificationAttachmentManager {
     }
 
     return imageData
-  }
-
-  private func deleteExistingImage(at url: URL) {
-    if fileManager.fileExists(atPath: url.path) {
-      do {
-        try fileManager.removeItem(at: url)
-      } catch {
-        print("Error deleting image file: \(error)")
-      }
-    }
   }
 
 }

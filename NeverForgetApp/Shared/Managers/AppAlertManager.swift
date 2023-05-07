@@ -1,5 +1,5 @@
 //
-//  AlertManager.swift
+//  AppAlertManager.swift
 //  never-forget
 //
 //  Created by makar on 2/25/23.
@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-class AlertManager {
+class AppAlertManager {
 
   typealias AlertButtonOptions = (title: String, style: UIAlertAction.Style, handler: (UIAlertAction) -> Void)
 
-  static let shared = AlertManager()
+  static let shared = AppAlertManager()
 
   weak var rootNavigationController: UINavigationController?
 
@@ -21,7 +21,7 @@ class AlertManager {
   func show(
     title: String = "",
     message: String = "",
-    buttonOptions: [AlertButtonOptions] = [AlertManager.defaultOkButtonOptions]
+    buttonOptions: [AlertButtonOptions] = [AppAlertManager.defaultOkButtonOptions]
   ) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     setButtons(buttonOptions, alert: alert)
@@ -32,7 +32,7 @@ class AlertManager {
 
 // MARK: - private
 
-extension AlertManager {
+extension AppAlertManager {
 
   private func presentAlert(_ alert: UIAlertController) {
     rootNavigationController?.navigate(step: .present(alert, .automatic), animated: true)
@@ -49,7 +49,7 @@ extension AlertManager {
 
 // MARK: - static
 
-extension AlertManager {
+extension AppAlertManager {
 
   private static let defaultOkButtonOptions: AlertButtonOptions = (title: "OK", style: .default, handler: { _ in })
 

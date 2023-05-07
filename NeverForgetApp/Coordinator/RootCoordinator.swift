@@ -39,7 +39,7 @@ extension RootCoordinator {
   }
 
   private func connectAlertManager() {
-    AlertManager.shared.rootNavigationController = rootNavigationController
+    AppAlertManager.shared.rootNavigationController = rootNavigationController
   }
 
   private func setRootCoordinator() {

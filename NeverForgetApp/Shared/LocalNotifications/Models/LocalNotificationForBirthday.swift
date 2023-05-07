@@ -130,11 +130,11 @@ private extension LocalNotificationForBirthday {
       "🎈 Start the day with celebration"
     ] }
 
-    private static func getOnTheBirthdayMorningBodies(username _: String) -> [String] { [
+    private static func getOnTheBirthdayMorningBodies(username: String) -> [String] { [
       // swiftlint:disable line_length
-      "Good morning! Today is (username)'s birthday 🎉 Don't forget to send your best wishes and make their day special 🎁",
-      "Hey there! Just a morning reminder that today is (username)'s birthday 🎂 Time to shower them with love and wishes 🌟",
-      "Wake up and celebrate! Today is (username)'s special day 🎈 Send your warmest wishes and spread the birthday cheer 🎊"
+      "Good morning! Today is \(username)'s birthday 🎉 Don't forget to send your best wishes and make their day special 🎁",
+      "Hey there! Just a morning reminder that today is \(username)'s birthday 🎂 Time to shower them with love and wishes 🌟",
+      "Wake up and celebrate! Today is \(username)'s special day 🎈 Send your warmest wishes and spread the birthday cheer 🎊"
       // swiftlint:enable line_length
     ] }
 
@@ -146,10 +146,10 @@ private extension LocalNotificationForBirthday {
       "🌻 Don't forget the birthday"
     ] }
 
-    private static func getOnTheBirthdayDayBodies(username _: String) -> [String] { [
-      "It's noon already! Have you wished (username) a happy birthday? If not, now's the perfect time 🥳🎁",
-      "In case you missed it, today is (username)'s birthday 🎉 Don't forget to send your heartfelt wishes 💌",
-      "A sunny reminder: Today is (username)'s special day! 🌞 Make sure to send your warmest birthday greetings 🎈🎊"
+    private static func getOnTheBirthdayDayBodies(username: String) -> [String] { [
+      "It's noon already! Have you wished \(username) a happy birthday? If not, now's the perfect time 🥳🎁",
+      "In case you missed it, today is \(username)'s birthday 🎉 Don't forget to send your heartfelt wishes 💌",
+      "A sunny reminder: Today is \(username)'s special day! 🌞 Make sure to send your warmest birthday greetings 🎈🎊"
     ] }
 
     // MARK: Evening
@@ -160,11 +160,11 @@ private extension LocalNotificationForBirthday {
       "🌟 Birthday wishes under the stars"
     ] }
 
-    private static func getOnTheBirthdayEveningBodies(username _: String) -> [String] { [
+    private static func getOnTheBirthdayEveningBodies(username: String) -> [String] { [
       // swiftlint:disable line_length
-      "The day is almost over, but it's not too late to wish (username) a happy birthday 🎂🌛",
-      "As the sun sets, don't forget to send your warm birthday wishes to (username) and make their night special 🌟🎉",
-      "Before the day ends, be sure to celebrate (username)'s birthday under the stars 🌌 Send your best wishes and end the day on a high note 🎊"
+      "The day is almost over, but it's not too late to wish \(username) a happy birthday 🎂🌛",
+      "As the sun sets, don't forget to send your warm birthday wishes to \(username) and make their night special 🌟🎉",
+      "Before the day ends, be sure to celebrate \(username)'s birthday under the stars 🌌 Send your best wishes and end the day on a high note 🎊"
       // swiftlint:enable line_length
     ] }
 

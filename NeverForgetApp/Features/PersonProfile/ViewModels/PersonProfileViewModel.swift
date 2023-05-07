@@ -11,6 +11,7 @@ import UIKit
 final class PersonProfileViewModel: ObservableObject {
 
   @Published var person: ValidatedValue<Person>
+  private let personNotificationsManager = PersonsNotificationsManager()
 
   let goBack: () -> Void
 
@@ -41,11 +42,22 @@ extension PersonProfileViewModel {
 
   private func onValidForm() {
     person.value.managedObjectContext?.saveSafely()
+    rescheduleNotifications()
     goBack()
   }
 
   private func onInvalidForm() {
     person.editErrorVisibility(true)
+  }
+
+  private func rescheduleNotifications() {
+    Task {
+      do {
+        try await personNotificationsManager.rescheduleBirthdayNotifications(for: person.value)
+      } catch {
+        Logger.error(message: "Scheduling notifications error", error)
+      }
+    }
   }
 
 }

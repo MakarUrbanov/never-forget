@@ -10,28 +10,38 @@ import SwiftUI
 
 class PeopleListViewModel: ObservableObject {
 
+  private let personsNotificationsManager = PersonsNotificationsManager()
+
   func deleteUser(managedObjectContext: NSManagedObjectContext, person: Person) {
-    askToDelete {
+    let deletePerson: () -> Void = {
+      let userId = PersonsNotificationsManager.getUserIdFromPersonObject(person)
+
+      Task {
+        await self.personsNotificationsManager.deleteAllNotifications(withPrefix: userId)
+      }
+
       managedObjectContext.delete(person)
       managedObjectContext.saveSafely()
     }
+
+    askToDelete(personName: person.name ?? "", delete: deletePerson)
   }
 
 }
 
 extension PeopleListViewModel {
 
-  private func askToDelete(delete: @escaping () -> Void) {
-    let yesButtonOptions: AlertManager.AlertButtonOptions = (title: "Yes", style: .destructive, handler: { _ in
+  private func askToDelete(personName: String, delete: @escaping () -> Void) {
+    let yesButtonOptions: AppAlertManager.AlertButtonOptions = (title: "Yes", style: .destructive, handler: { _ in
       delete()
     })
-    let noButtonOptions: AlertManager.AlertButtonOptions = (title: "No", style: .default, handler: { _ in
+    let noButtonOptions: AppAlertManager.AlertButtonOptions = (title: "No", style: .default, handler: { _ in
     })
 
-    AlertManager.shared.show(
-      title: "Delete person?",
+    AppAlertManager.shared.show(
+      title: "Delete \(personName)?", // TODO: translate
       buttonOptions: [yesButtonOptions, noButtonOptions]
-    ) // TODO: translate
+    )
   }
 
 }
