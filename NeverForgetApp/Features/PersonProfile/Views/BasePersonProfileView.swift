@@ -10,10 +10,8 @@ import SwiftUI
 struct BasePersonProfileView: View {
 
   @Binding var person: ValidatedValue<Person>
-  private var isValidUsername: Binding<Bool> { Binding(
-    get: { !person.isVisibleError || person.isValid },
-    set: { _ in }
-  )
+  private var isValidUsername: Bool {
+    !person.isVisibleError || person.isValid
   }
 
   var body: some View {
@@ -24,18 +22,18 @@ struct BasePersonProfileView: View {
         }
         .listRowBackground(Color.clear)
 
-        Section("Information") { // TODO: localize
-          TextField("Name*", text: Binding($person.value.name, "")) // TODO: localize
+        Section("Information") { // TODO: translate
+          TextField("Name *", text: Binding($person.value.name, "")) // TODO: translate
             .listRowSeparator(.hidden, edges: .all)
-            .foregroundColor(isValidUsername.wrappedValue ? Color.Theme.text : Color.Theme.error)
+            .foregroundColor(isValidUsername ? Color.Theme.text : Color.Theme.error)
             .autocorrectionDisabled(true)
             .overlay(alignment: .bottom) {
               Divider()
-                .background(isValidUsername.wrappedValue ? .clear : Color.Theme.error)
+                .background(isValidUsername ? .clear : Color.Theme.error)
                 .offset(CGSize(width: 0, height: 8))
             }
 
-          TextField("Description", text: Binding($person.value.personDescription, "")) // TODO: localize
+          TextField("Description", text: Binding($person.value.personDescription, "")) // TODO: translate
             .listRowSeparator(.hidden, edges: .all)
             .autocorrectionDisabled(true)
             .overlay(alignment: .bottom) {
@@ -48,7 +46,7 @@ struct BasePersonProfileView: View {
             in: ...Date(),
             displayedComponents: .date
           ) {
-            Text("Date of birth:*") // TODO: localize
+            Text("Date of birth: *") // TODO: translate
           }
           .datePickerStyle(CompactDatePickerStyle())
 
@@ -56,9 +54,13 @@ struct BasePersonProfileView: View {
         }
       }
       .listStyle(.insetGrouped)
-      .background(Color.Theme.background)
       .scrollContentBackground(.hidden)
+
+      PersonNotificationsPermissionInfoBlockView(person: $person.value)
+        .padding(.horizontal)
+        .padding(.bottom)
     }
+    .background(Color.Theme.background)
   }
 }
 

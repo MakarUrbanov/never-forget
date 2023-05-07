@@ -19,6 +19,12 @@ final class LocalNotificationsManager {
     notificationsManager.requestFirstPermission()
   }
 
+  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
+    notificationsManager.checkAuthorizationStatus { status in
+      completion(status)
+    }
+  }
+
   func scheduleNotification(_ notification: NFLNScheduledEventNotification) async throws {
     try await notificationsManager.scheduleAnnualNotification(notification)
   }

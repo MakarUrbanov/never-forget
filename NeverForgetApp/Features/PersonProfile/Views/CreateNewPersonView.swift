@@ -21,13 +21,13 @@ struct CreateNewPersonView: View {
       BasePersonProfileView(person: $viewModel.person)
         .toolbar {
           ToolbarItem(placement: .navigationBarLeading) {
-            Button("Cancel") { // TODO: localize
+            Button("Cancel") { // TODO: translate
               viewModel.onPressOnCancel()
             }
           }
 
           ToolbarItem(placement: .navigationBarTrailing) {
-            Button("Add") { // TODO: localize
+            Button("Add") { // TODO: translate
               viewModel.onPressAddNewPerson()
             }
           }
