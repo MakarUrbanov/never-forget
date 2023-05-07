@@ -1,5 +1,4 @@
-import XCTest
 @testable import NFLogger
+import XCTest
 
-final class NFLoggerTests: XCTestCase {
-}
+final class NFLoggerTests: XCTestCase {}

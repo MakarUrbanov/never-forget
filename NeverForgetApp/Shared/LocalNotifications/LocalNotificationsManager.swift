@@ -19,16 +19,7 @@ final class LocalNotificationsManager {
     notificationsManager.requestFirstPermission()
   }
 
-  func scheduleNotification(_ notification: LocalNotification) {
-    let notification = NFLNScheduledEventNotification(
-      identifier: notification.identifier,
-      title: notification.title,
-      body: notification.body,
-      date: notification.date,
-      deepLink: notification.deepLink,
-      categoryIdentifier: notification.categoryIdentifier?.rawValue
-    )
-
+  func scheduleNotification(_ notification: NFLNScheduledEventNotification) {
     notificationsManager.scheduleAnnualNotification(notification) { errorMessage in
       Logger.error(message: "Scheduling notification error", errorMessage)
     }
@@ -50,22 +41,32 @@ final class LocalNotificationsManager {
     }
   }
 
-  func removePendingNotification(identifier: String) {
-    notificationsManager.removeNotification(identifiers: [identifier])
+  func removePendingNotifications(identifiers: [String]) {
+    notificationsManager.removeNotification(identifiers: identifiers)
   }
 
 }
 
-// MARK: - Categories
+// MARK: - Categories & Actions
 
 extension LocalNotificationsManager {
+
+  enum CategoryIdentifiers: String {
+    case onBirthday
+  }
+
+  func registerCategories() {
+    notificationsManager.registerCategories([
+      Categories.birthdayNotification
+    ])
+  }
 
   private enum IntentIdentifiers {
     static let birthday = "BIRTHDAY_INTENT_IDENTIFIER"
   }
 
   private enum Actions {
-    static let accept = UNNotificationAction(
+    static let accept = UNNotificationAction( // TODO: delete. Test action
       identifier: "ACCEPT_ACTION",
       title: "Accept",
       icon: .init(systemImageName: "checkmark")
@@ -74,14 +75,10 @@ extension LocalNotificationsManager {
 
   private enum Categories {
     static let birthdayNotification = UNNotificationCategory(
-      identifier: NotificationsCategoryIdentifiers.onBirthday.rawValue,
+      identifier: CategoryIdentifiers.onBirthday.rawValue,
       actions: [Actions.accept],
       intentIdentifiers: [IntentIdentifiers.birthday]
     )
-  }
-
-  func registerCategories() {
-    notificationsManager.registerCategories([Categories.birthdayNotification])
   }
 
 }

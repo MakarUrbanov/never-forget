@@ -4,7 +4,7 @@ public class NFLocalNotificationsManager {
 
   let center = UNUserNotificationCenter.current()
 
-  private let userDefaultsManager = NFLNUserDefaultManager()
+  let attachmentManager = NFLNNotificationAttachmentManager.shared
 
   public init() {}
 
@@ -21,7 +21,6 @@ public class NFLocalNotificationsManager {
 public extension NFLocalNotificationsManager {
 
   typealias IsSuccessAuthorization = Bool
-
   func requestFirstPermission(completion: @escaping (IsSuccessAuthorization) -> Void = { _ in }) {
     checkAuthorizationStatus { status in
       if status == .notDetermined {
@@ -43,14 +42,14 @@ public extension NFLocalNotificationsManager {
       completion(isSuccess)
 
       if let error {
-        print(#function, "error: \(error.localizedDescription)")
+        NFLNLogger.error(message: "Request permission error", error)
       }
     }
   }
 
 }
 
-// MARK: - Schedule local notification
+// MARK: - Notifications
 
 public extension NFLocalNotificationsManager {
 
@@ -64,9 +63,8 @@ public extension NFLocalNotificationsManager {
   ) {
     let content = configureContent(for: notification)
 
-    // TODO: remove .second
     let dateComponents = Calendar.current.dateComponents(
-      [.month, .day, .hour, .minute, .second],
+      [.month, .day, .hour, .minute],
       from: notification.date
     )
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -76,9 +74,19 @@ public extension NFLocalNotificationsManager {
     center.add(request) { error in
       if let error {
         errorHandler(error.localizedDescription)
-        print(#function, "Error \(error.localizedDescription)")
+        NFLNLogger.error(message: "Scheduling notification error", error)
       }
     }
+  }
+
+}
+
+// MARK: - Categories
+
+public extension NFLocalNotificationsManager {
+
+  func registerCategories(_ categories: Set<UNNotificationCategory>) {
+    center.setNotificationCategories(categories)
   }
 
   private func configureContent(for notification: NFLNScheduledEventNotification) -> UNMutableNotificationContent {
@@ -91,21 +99,23 @@ public extension NFLocalNotificationsManager {
       content.userInfo = ["deepLink": deepLink.link.absoluteString]
         .merging(deepLink.providedData, uniquingKeysWith: { $1 })
     }
+
     if let categoryIdentifier = notification.categoryIdentifier {
       content.categoryIdentifier = categoryIdentifier
     }
 
+    if let imageData = notification.image {
+      do {
+        let imageUrl = try attachmentManager.saveImage(imageData)
+        let attachment = try UNNotificationAttachment(identifier: "image", url: imageUrl, options: nil)
+
+        content.attachments = [attachment]
+      } catch {
+        NFLNLogger.error(message: "Error adding image to the attachments", error)
+      }
+    }
+
     return content
-  }
-
-}
-
-// MARK: - Register categories
-
-public extension NFLocalNotificationsManager {
-
-  func registerCategories(_ categories: Set<UNNotificationCategory>) {
-    center.setNotificationCategories(categories)
   }
 
 }

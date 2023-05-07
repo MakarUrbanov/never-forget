@@ -99,7 +99,7 @@ collection_alignment:
   align_colons: true
 
 force_unwrapping:
-  severity: error
+  severity: warning
 
 implicit_return:
   included:

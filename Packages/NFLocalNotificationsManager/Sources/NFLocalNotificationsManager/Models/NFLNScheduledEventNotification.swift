@@ -14,6 +14,7 @@ public struct NFLNScheduledEventNotification {
   let date: Date
   let deepLink: NFLNDeepLink?
   let categoryIdentifier: String?
+  let image: Data?
 
   public init(
     identifier: String,
@@ -21,7 +22,8 @@ public struct NFLNScheduledEventNotification {
     body: String,
     date: Date,
     deepLink: NFLNDeepLink?,
-    categoryIdentifier: String?
+    categoryIdentifier: String?,
+    image: Data?
   ) {
     self.identifier = identifier
     self.title = title
@@ -29,6 +31,7 @@ public struct NFLNScheduledEventNotification {
     self.date = date
     self.deepLink = deepLink
     self.categoryIdentifier = categoryIdentifier
+    self.image = image
   }
 
 }

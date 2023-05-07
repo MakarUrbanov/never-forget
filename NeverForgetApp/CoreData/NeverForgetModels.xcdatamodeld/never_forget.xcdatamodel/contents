@@ -5,12 +5,16 @@
         <attribute name="isNotificationOnEventDayEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="isNotificationOneWeekBeforeEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <relationship name="appSettings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppSettings" inverseName="appNotificationRules" inverseEntity="AppSettings"/>
-        <relationship name="onEventDayTimes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppNotificationTime" inverseName="appNotificationRules" inverseEntity="AppNotificationTime"/>
+        <relationship name="onEventDayTimes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppNotificationTime" inverseName="onEventDayTimes" inverseEntity="AppNotificationTime"/>
+        <relationship name="timeOnOneDayBefore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationTime" inverseName="timeOnOneDayBefore" inverseEntity="AppNotificationTime"/>
+        <relationship name="timeOnOneWeekBefore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationTime" inverseName="timeOnOneWeekBefore" inverseEntity="AppNotificationTime"/>
     </entity>
     <entity name="AppNotificationTime" representedClassName="AppNotificationTime" syncable="YES" codeGenerationType="class">
         <attribute name="hours" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
         <attribute name="minutes" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="appNotificationRules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="onEventDayTimes" inverseEntity="AppNotificationRules"/>
+        <relationship name="onEventDayTimes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="onEventDayTimes" inverseEntity="AppNotificationRules"/>
+        <relationship name="timeOnOneDayBefore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="timeOnOneDayBefore" inverseEntity="AppNotificationRules"/>
+        <relationship name="timeOnOneWeekBefore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="timeOnOneWeekBefore" inverseEntity="AppNotificationRules"/>
     </entity>
     <entity name="AppSettings" representedClassName="AppSettings" syncable="YES" codeGenerationType="class">
         <relationship name="appNotificationRules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="appSettings" inverseEntity="AppNotificationRules"/>
