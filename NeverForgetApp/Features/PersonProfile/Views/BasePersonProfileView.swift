@@ -51,6 +51,8 @@ struct BasePersonProfileView: View {
             Text("Date of birth:*") // TODO: localize
           }
           .datePickerStyle(CompactDatePickerStyle())
+
+          Toggle("Notifications enabled", isOn: $person.value.isNotificationsEnabled) // TODO: translate
         }
       }
       .listStyle(.insetGrouped)

@@ -19,26 +19,22 @@ final class LocalNotificationsManager {
     notificationsManager.requestFirstPermission()
   }
 
-  func scheduleNotification(_ notification: NFLNScheduledEventNotification) {
-    notificationsManager.scheduleAnnualNotification(notification) { errorMessage in
-      Logger.error(message: "Scheduling notification error", errorMessage)
-    }
+  func scheduleNotification(_ notification: NFLNScheduledEventNotification) async throws {
+    try await notificationsManager.scheduleAnnualNotification(notification)
   }
 
-  func getPendingNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
-    notificationsManager.getPendingNotifications { notifications in
-      completion(notifications)
-    }
+  func getPendingNotifications() async -> [UNNotificationRequest] {
+    return await notificationsManager.getPendingNotifications()
   }
 
-  func deleteAllNotifications() {
-    getPendingNotifications { notifications in
-      let identifiers = notifications.reduce([]) { partialResult, notification in
-        partialResult + [notification.identifier]
-      }
+  func deleteAllNotifications() async {
+    let pendingNotifications = await getPendingNotifications()
 
-      self.notificationsManager.removeNotification(identifiers: identifiers)
+    let identifiers = pendingNotifications.reduce([]) { partialResult, notification in
+      partialResult + [notification.identifier]
     }
+
+    notificationsManager.removeNotification(identifiers: identifiers)
   }
 
   func removePendingNotifications(identifiers: [String]) {

@@ -21,6 +21,7 @@
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="dateOfBirth" attributeType="Date" defaultDateTimeInterval="698506680" usesScalarValueType="NO"/>
+        <attribute name="isNotificationsEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="personDescription" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary" customClassName="UIImage"/>

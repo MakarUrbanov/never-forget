@@ -20,40 +20,39 @@ class PersonProfileNotificationsManager {
   }
 
   func rescheduleBirthdayNotifications(
-    for person: Person,
-    completion: @escaping (Bool) -> Void
-  ) {
+    for person: Person
+  ) async throws {
     /// fetching settings
-    appSettingsManager.fetch { settings in
-      guard let settings else {
-        completion(false)
-        return
-      }
+    guard let appSettings = appSettingsManager.fetch() else {
+      throw RescheduleNotificationsError.hasNoAppSettings
+    }
 
-      let usersObjectUrl = PersonProfileNotificationsManager.getUserIdFromPersonObject(person)
+    let usersObjectUrl = PersonProfileNotificationsManager.getUserIdFromPersonObject(person)
 
-      // delete pended notifications
-      self.deleteAllNotifications(with: usersObjectUrl) {
-        let generatedNotifications = PersonProfileNotificationsManager.generateNotifications(
-          for: person,
-          settings: settings
-        )
+    // delete pended notifications
+    await deleteAllNotifications(with: usersObjectUrl)
 
-        // schedule notifications
-        generatedNotifications.forEach { notification in
-          self.notificationsManager.scheduleNotification(notification)
+    // generating new notifications
+    let generatedNotifications = PersonProfileNotificationsManager.generateNotifications(
+      for: person,
+      settings: appSettings
+    )
+
+    // schedule notifications
+    await withThrowingTaskGroup(of: Void.self, body: { group in
+      generatedNotifications.forEach { notification in
+        group.addTask {
+          try await self.notificationsManager.scheduleNotification(notification)
         }
       }
-    }
+    })
   }
 
-  func deleteAllNotifications(with prefix: String, completion: @escaping () -> Void) {
-    notificationsManager.getPendingNotifications { notifications in
-      for notification in notifications where notification.identifier.hasPrefix(prefix) {
-        self.notificationsManager.removePendingNotifications(identifiers: [notification.identifier])
-      }
+  func deleteAllNotifications(with prefix: String) async {
+    let pendingNotifications = await notificationsManager.getPendingNotifications()
 
-      completion()
+    for notification in pendingNotifications where notification.identifier.hasPrefix(prefix) {
+      self.notificationsManager.removePendingNotifications(identifiers: [notification.identifier])
     }
   }
 
@@ -234,6 +233,16 @@ extension PersonProfileNotificationsManager {
       date: date,
       imageData: imageData
     )))
+  }
+
+}
+
+// MARK: - Types
+
+extension PersonProfileNotificationsManager {
+
+  enum RescheduleNotificationsError: Error {
+    case hasNoAppSettings
   }
 
 }

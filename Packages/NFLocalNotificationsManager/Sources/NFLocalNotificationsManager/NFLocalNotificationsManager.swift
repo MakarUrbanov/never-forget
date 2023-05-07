@@ -8,10 +8,8 @@ public class NFLocalNotificationsManager {
 
   public init() {}
 
-  public func getPendingNotifications(completions: @escaping ([UNNotificationRequest]) -> Void) {
-    center.getPendingNotificationRequests { pendingNotifications in
-      completions(pendingNotifications)
-    }
+  public func getPendingNotifications() async -> [UNNotificationRequest] {
+    return await center.pendingNotificationRequests()
   }
 
 }
@@ -58,9 +56,8 @@ public extension NFLocalNotificationsManager {
   }
 
   func scheduleAnnualNotification(
-    _ notification: NFLNScheduledEventNotification,
-    errorHandler: @escaping (String) -> Void
-  ) {
+    _ notification: NFLNScheduledEventNotification
+  ) async throws {
     let content = configureContent(for: notification)
 
     let dateComponents = Calendar.current.dateComponents(
@@ -71,12 +68,7 @@ public extension NFLocalNotificationsManager {
 
     let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: trigger)
 
-    center.add(request) { error in
-      if let error {
-        errorHandler(error.localizedDescription)
-        NFLNLogger.error(message: "Scheduling notification error", error)
-      }
-    }
+    try await center.add(request)
   }
 
 }

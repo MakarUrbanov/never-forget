@@ -23,7 +23,8 @@ final class AppSettingsManager: ObservableObject {
 
   @Published var settings: AppSettings?
 
-  func fetch(completion: @escaping (AppSettings?) -> Void = { _ in }) {
+  @discardableResult
+  func fetch() -> AppSettings? {
     let fetchRequest = AppSettings.fetchRequest()
     fetchRequest.fetchLimit = 1
 
@@ -54,7 +55,8 @@ final class AppSettingsManager: ObservableObject {
 
     save()
     delegate?.settingsFetched(settings)
-    completion(settings)
+
+    return settings
   }
 
   func save() {

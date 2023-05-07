@@ -15,5 +15,6 @@ import Foundation
   @NSManaged var name: String?
   @NSManaged var personDescription: String?
   @NSManaged var photo: Data?
+  @NSManaged var isNotificationsEnabled: Bool
 
 }
