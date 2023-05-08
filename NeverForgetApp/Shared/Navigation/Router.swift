@@ -13,7 +13,7 @@ final class Router {}
 extension Router {
 
   enum Routes {
-    case personProfile(UIHostingController<PersonProfileView>)
+    case personProfile(UIHostingController<ContactProfileView>)
   }
 
 }

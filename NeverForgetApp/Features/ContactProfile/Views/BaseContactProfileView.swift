@@ -1,5 +1,5 @@
 //
-//  BasePersonProfileView.swift
+//  BaseContactProfileView.swift
 //  never-forget
 //
 //  Created by makar on 2/27/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BasePersonProfileView: View {
+struct BaseContactProfileView: View {
 
   @Binding var person: ValidatedValue<Person>
   private var isValidUsername: Bool {
@@ -56,7 +56,7 @@ struct BasePersonProfileView: View {
       .listStyle(.insetGrouped)
       .scrollContentBackground(.hidden)
 
-      PersonNotificationsPermissionInfoBlockView(person: $person.value)
+      ContactNotificationsPermissionInfoBlockView(person: $person.value)
         .padding(.horizontal)
         .padding(.bottom)
     }
@@ -72,6 +72,6 @@ struct BasePersonProfileView_Previews: PreviewProvider {
       .init(isValid: false, errorMessage: "Error message")
     }
 
-    return BasePersonProfileView(person: .constant(.init(value: person, validate: validate)))
+    return BaseContactProfileView(person: .constant(.init(value: person, validate: validate)))
   }
 }

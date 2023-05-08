@@ -10,11 +10,11 @@ import SwiftUI
 
 class ContactsListViewModel: ObservableObject {
 
-  private let personsNotificationsManager = PersonsNotificationsManager()
+  private let personsNotificationsManager = ContactNotificationsManager()
 
   func deleteUser(managedObjectContext: NSManagedObjectContext, person: Person) {
     let deletePerson: () -> Void = {
-      let userId = PersonsNotificationsManager.getUserIdFromPersonObject(person)
+      let userId = ContactNotificationsManager.getUserIdFromPersonObject(person)
 
       Task {
         await self.personsNotificationsManager.deleteAllNotifications(withPrefix: userId)

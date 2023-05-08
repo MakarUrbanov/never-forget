@@ -1,5 +1,5 @@
 //
-//  CreateNewPersonView.swift
+//  CreateNewContactView.swift
 //  never-forget
 //
 //  Created by makar on 2/27/23.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct CreateNewPersonView: View {
+struct CreateNewContactView: View {
 
-  @StateObject private var viewModel: CreateNewPersonViewModel
+  @StateObject private var viewModel: CreateNewContactViewModel
 
   init(goBack: @escaping () -> Void) {
     let person = Person(context: PersistentContainerProvider.shared.backgroundContext)
-    _viewModel = StateObject(wrappedValue: CreateNewPersonViewModel(person: person, goBack: goBack))
+    _viewModel = StateObject(wrappedValue: CreateNewContactViewModel(person: person, goBack: goBack))
   }
 
   var body: some View {
     NavigationView {
-      BasePersonProfileView(person: $viewModel.person)
+      BaseContactProfileView(person: $viewModel.person)
         .toolbar {
           ToolbarItem(placement: .navigationBarLeading) {
             Button("Cancel") { // TODO: translate
@@ -39,6 +39,6 @@ struct CreateNewPersonView: View {
 
 struct CreateNewPersonView_Previews: PreviewProvider {
   static var previews: some View {
-    CreateNewPersonView(goBack: {})
+    CreateNewContactView(goBack: {})
   }
 }

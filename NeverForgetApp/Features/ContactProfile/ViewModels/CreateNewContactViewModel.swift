@@ -1,5 +1,5 @@
 //
-//  CreateNewPersonViewModel.swift
+//  CreateNewContactViewModel.swift
 //  never-forget
 //
 //  Created by makar on 2/27/23.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class CreateNewPersonViewModel: ObservableObject {
+class CreateNewContactViewModel: ObservableObject {
 
   @Published var person: ValidatedValue<Person>
-  private let personNotificationsManager = PersonsNotificationsManager()
+  private let personNotificationsManager = ContactNotificationsManager()
 
   let goBack: () -> Void
 
@@ -19,7 +19,7 @@ class CreateNewPersonViewModel: ObservableObject {
     self.person = ValidatedValue(
       value: person,
       isValidateOnInit: true,
-      validate: CreateNewPersonViewModel.validatePersonName
+      validate: CreateNewContactViewModel.validatePersonName
     )
   }
 
@@ -39,7 +39,7 @@ class CreateNewPersonViewModel: ObservableObject {
 }
 
 
-extension CreateNewPersonViewModel {
+extension CreateNewContactViewModel {
 
   private func createNewPerson() {
     person.value.managedObjectContext?.saveSafely()
@@ -66,7 +66,7 @@ extension CreateNewPersonViewModel {
 
 // MARK: - Validator
 
-extension CreateNewPersonViewModel {
+extension CreateNewContactViewModel {
 
   private static func validatePersonName(_ person: Person) -> ValidatedValue<Person>.ValidatorResult {
     let isUsernameValid = !person.name.isEmpty

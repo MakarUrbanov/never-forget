@@ -26,7 +26,7 @@ final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
 extension ContactsListCoordinator {
 
   func presentCreateNewPersonView() {
-    let view = CreateNewPersonView(goBack: { self.navigationController.navigate(step: .dismiss) })
+    let view = CreateNewContactView(goBack: { self.navigationController.navigate(step: .dismiss) })
       .environmentObject(self)
       .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
 
@@ -36,7 +36,7 @@ extension ContactsListCoordinator {
   }
 
   func openPersonProfile(person: Person) {
-    let view = PersonProfileView(person: person, goBack: { self.navigationController.navigate(step: .pop) })
+    let view = ContactProfileView(person: person, goBack: { self.navigationController.navigate(step: .pop) })
       .environmentObject(self)
       .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
 

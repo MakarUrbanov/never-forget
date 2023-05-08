@@ -1,5 +1,5 @@
 //
-//  PersonNotificationsPermissionInfoBlock.swift
+//  ContactNotificationsPermissionInfoBlockView.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/7/23.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct PersonNotificationsPermissionInfoBlockView: View {
+struct ContactNotificationsPermissionInfoBlockView: View {
 
-  @StateObject var viewModel: PersonNotificationsPermissionInfoBlockViewModel
+  @StateObject var viewModel: ContactNotificationsPermissionInfoBlockViewModel
 
   init(person: Binding<Person>) {
-    _viewModel = StateObject(wrappedValue: PersonNotificationsPermissionInfoBlockViewModel(person: person))
+    _viewModel = StateObject(wrappedValue: ContactNotificationsPermissionInfoBlockViewModel(person: person))
   }
 
   var body: some View {
@@ -59,6 +59,6 @@ struct PersonNotificationsPermissionInfoBlock_Previews: PreviewProvider {
   }()
 
   static var previews: some View {
-    PersonNotificationsPermissionInfoBlockView(person: .constant(person))
+    ContactNotificationsPermissionInfoBlockView(person: .constant(person))
   }
 }

@@ -1,5 +1,5 @@
 //
-//  PersonNotificationsPermissionInfoBlockViewModel.swift
+//  ContactNotificationsPermissionInfoBlockViewModel.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/7/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class PersonNotificationsPermissionInfoBlockViewModel: ObservableObject {
+class ContactNotificationsPermissionInfoBlockViewModel: ObservableObject {
 
   private let localNotificationsManager = LocalNotificationsManager.shared
   private let appSettings = AppSettingsManager()

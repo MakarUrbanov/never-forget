@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct PersonProfileView: View {
+struct ContactProfileView: View {
 
-  @StateObject private var viewModel: PersonProfileViewModel
+  @StateObject private var viewModel: ContactProfileViewModel
 
   init(person: Person, goBack: @escaping () -> Void) {
     let existsPerson: Person? = PersistentContainerProvider.shared.exists(
@@ -19,11 +19,11 @@ struct PersonProfileView: View {
         .backgroundContext
     )
     let correctPerson = existsPerson ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
-    _viewModel = StateObject(wrappedValue: PersonProfileViewModel(person: correctPerson, goBack: goBack))
+    _viewModel = StateObject(wrappedValue: ContactProfileViewModel(person: correctPerson, goBack: goBack))
   }
 
   var body: some View {
-    BasePersonProfileView(person: $viewModel.person)
+    BaseContactProfileView(person: $viewModel.person)
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button("Save") { // TODO: translate
@@ -39,6 +39,6 @@ struct PersonProfileView: View {
 
 struct PersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    PersonProfileView(person: Person(context: PersistentContainerProvider.shared.viewContext), goBack: {})
+    ContactProfileView(person: Person(context: PersistentContainerProvider.shared.viewContext), goBack: {})
   }
 }

@@ -25,7 +25,7 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 extension MainScreenCoordinator {
 
   func goToPersonProfile(person: Person) {
-    let view = PersonProfileView(person: person, goBack: {
+    let view = ContactProfileView(person: person, goBack: {
       self.navigationController.navigate(step: .pop)
     })
     .environmentObject(self)

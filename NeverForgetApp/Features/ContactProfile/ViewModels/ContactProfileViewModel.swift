@@ -1,5 +1,5 @@
 //
-//  PersonProfileViewModel.swift
+//  ContactProfileViewModel.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -8,10 +8,10 @@
 import SwiftUI
 import UIKit
 
-final class PersonProfileViewModel: ObservableObject {
+final class ContactProfileViewModel: ObservableObject {
 
   @Published var person: ValidatedValue<Person>
-  private let personNotificationsManager = PersonsNotificationsManager()
+  private let personNotificationsManager = ContactNotificationsManager()
 
   let goBack: () -> Void
 
@@ -20,7 +20,7 @@ final class PersonProfileViewModel: ObservableObject {
     self.person = ValidatedValue(
       value: person,
       isValidateOnInit: true,
-      validate: PersonProfileViewModel.validatePersonName
+      validate: ContactProfileViewModel.validatePersonName
     )
   }
 
@@ -38,7 +38,7 @@ final class PersonProfileViewModel: ObservableObject {
 
 }
 
-extension PersonProfileViewModel {
+extension ContactProfileViewModel {
 
   private func onValidForm() {
     person.value.managedObjectContext?.saveSafely()
@@ -64,7 +64,7 @@ extension PersonProfileViewModel {
 
 // MARK: - Validator
 
-extension PersonProfileViewModel {
+extension ContactProfileViewModel {
 
   private static func validatePersonName(_ person: Person) -> ValidatedValue<Person>.ValidatorResult {
     let isUsernameValid = !person.name.isEmpty

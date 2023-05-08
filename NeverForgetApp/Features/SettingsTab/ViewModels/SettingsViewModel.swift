@@ -11,7 +11,7 @@ import SwiftUI
 final class SettingsViewModel: ObservableObject {
 
   private let appSettingsManager: AppSettingsManager
-  private let personsNotificationsManager = PersonsNotificationsManager()
+  private let personsNotificationsManager = ContactNotificationsManager()
 
   private let saveSettingsDebouncer = Debouncer(delay: 0.8)
 

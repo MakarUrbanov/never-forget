@@ -1,5 +1,5 @@
 //
-//  PersonsNotificationsManager.swift
+//  ContactNotificationsManager.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/1/23.
@@ -10,7 +10,7 @@ import NFLocalNotificationsManager
 
 // swiftlint:disable force_unwrapping
 // swiftlint:disable force_cast
-class PersonsNotificationsManager {
+class ContactNotificationsManager {
 
   private var appSettingsManager = AppSettingsManager()
   private let notificationsManager = LocalNotificationsManager.shared
@@ -21,7 +21,7 @@ class PersonsNotificationsManager {
   ) async throws {
     if !person.isNotificationsEnabled {
       // delete all scheduled notifications of this user
-      let userId = PersonsNotificationsManager.getUserIdFromPersonObject(person)
+      let userId = ContactNotificationsManager.getUserIdFromPersonObject(person)
       await deleteAllNotifications(withPrefix: userId)
 
       throw RescheduleNotificationsError.notificationOfThisUserIsForbidden
@@ -32,13 +32,13 @@ class PersonsNotificationsManager {
       throw RescheduleNotificationsError.hasNoAppSettings
     }
 
-    let usersObjectUrl = PersonsNotificationsManager.getUserIdFromPersonObject(person)
+    let usersObjectUrl = ContactNotificationsManager.getUserIdFromPersonObject(person)
 
     // delete pended notifications
     await deleteAllNotifications(withPrefix: usersObjectUrl)
 
     // generating new notifications
-    let generatedNotifications = PersonsNotificationsManager.generateNotifications(
+    let generatedNotifications = ContactNotificationsManager.generateNotifications(
       for: person,
       settings: appSettings
     )
@@ -79,7 +79,7 @@ class PersonsNotificationsManager {
 
 // MARK: - Rescheduling Actor
 
-extension PersonsNotificationsManager {
+extension ContactNotificationsManager {
 
   actor ReschedulingAllPersonsNotificationsActor {
 
@@ -111,7 +111,7 @@ extension PersonsNotificationsManager {
 
 // MARK: - Notifications
 
-extension PersonsNotificationsManager {
+extension ContactNotificationsManager {
 
   /// Makes array of notifications with settings and times from the app settings
   private static func generateNotifications(
@@ -238,7 +238,7 @@ extension PersonsNotificationsManager {
 
 // MARK: - Helpers
 
-extension PersonsNotificationsManager {
+extension ContactNotificationsManager {
 
   static func getUserIdFromPersonObject(_ person: Person) -> String {
     person.objectID.uriRepresentation().absoluteString
@@ -291,7 +291,7 @@ extension PersonsNotificationsManager {
 
 // MARK: - Types
 
-extension PersonsNotificationsManager {
+extension ContactNotificationsManager {
 
   enum RescheduleNotificationsError: Error {
     case hasNoAppSettings
