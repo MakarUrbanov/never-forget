@@ -52,7 +52,7 @@ extension ContactsListCoordinator {
 extension ContactsListCoordinator {
 
   private func getPeopleListScreenView() -> UIViewController {
-    let view = PeopleListScreenView()
+    let view = ContactsListScreenView()
       .environmentObject(self)
       .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
 

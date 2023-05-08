@@ -1,5 +1,5 @@
 //
-//  PeopleListViewModel.swift
+//  ContactsListViewModel.swift
 //  never-forget
 //
 //  Created by makar on 2/25/23.
@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-class PeopleListViewModel: ObservableObject {
+class ContactsListViewModel: ObservableObject {
 
   private let personsNotificationsManager = PersonsNotificationsManager()
 
@@ -29,7 +29,7 @@ class PeopleListViewModel: ObservableObject {
 
 }
 
-extension PeopleListViewModel {
+extension ContactsListViewModel {
 
   private func askToDelete(personName: String, delete: @escaping () -> Void) {
     let yesButtonOptions: AppAlertManager.AlertButtonOptions = (title: "Yes", style: .destructive, handler: { _ in

@@ -1,5 +1,5 @@
 //
-//  PeopleListScreenView.swift
+//  ContactsListScreenView.swift
 //  never-forget
 //
 //  Created by makar on 2/19/23.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct PeopleListScreenView: View {
+struct ContactsListScreenView: View {
 
   @EnvironmentObject var coordinator: ContactsListCoordinator
-  @StateObject var viewModel = PeopleListScreenViewModel()
+  @StateObject var viewModel = ContactsListScreenViewModel()
 
   var body: some View {
-    PeopleListView()
+    ContactsListView()
       .background(Color.Theme.background)
       .navigationTitle("Your contacts list") // TODO: translate
       .toolbar {
@@ -28,6 +28,6 @@ struct PeopleListScreenView: View {
 
 struct PeopleListScreenView_Previews: PreviewProvider {
   static var previews: some View {
-    PeopleListScreenView()
+    ContactsListScreenView()
   }
 }

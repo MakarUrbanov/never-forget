@@ -1,5 +1,5 @@
 //
-//  PeopleListWelcomeMessage.swift
+//  ContactsListWelcomeMessage.swift
 //  NeverForgetApp
 //
 //  Created by makar on 4/30/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PeopleListWelcomeMessage: View {
+struct ContactsListWelcomeMessage: View {
   var body: some View {
     GeometryReader { geometryProxy in
       VStack(alignment: .center) {
@@ -28,6 +28,6 @@ struct PeopleListWelcomeMessage: View {
 
 struct PeopleListCreateMessage_Previews: PreviewProvider {
   static var previews: some View {
-    PeopleListWelcomeMessage()
+    ContactsListWelcomeMessage()
   }
 }

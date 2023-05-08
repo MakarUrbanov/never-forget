@@ -1,5 +1,5 @@
 //
-//  PeopleListView.swift
+//  ContactsListView.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -9,18 +9,18 @@ import CoreData
 import OSLog
 import SwiftUI
 
-struct PeopleListView: View {
+struct ContactsListView: View {
 
   @EnvironmentObject var coordinator: ContactsListCoordinator
   @Environment(\.managedObjectContext) var managedObjectContext
 
   @FetchRequest(fetchRequest: Person.sortedFetchRequest()) var persons
-  @StateObject var viewModel = PeopleListViewModel()
+  @StateObject var viewModel = ContactsListViewModel()
 
   var body: some View {
     VStack {
       if persons.isEmpty {
-        PeopleListWelcomeMessage()
+        ContactsListWelcomeMessage()
       } else {
         List {
           Group {
@@ -69,7 +69,7 @@ struct PeopleListView_Previews: PreviewProvider {
 
   static var previews: some View {
     ZStack(alignment: .bottom) {
-      PeopleListView()
+      ContactsListView()
         .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
         .environmentObject(ContactsListCoordinator())
 
