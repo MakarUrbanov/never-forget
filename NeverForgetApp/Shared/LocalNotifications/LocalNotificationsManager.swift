@@ -29,7 +29,6 @@ final class LocalNotificationsManager {
     do {
       try await notificationsManager.scheduleAnnualNotification(notification)
     } catch {
-      print("mmk error", error)
       throw error
     }
   }

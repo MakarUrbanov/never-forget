@@ -12,16 +12,24 @@ enum LocalNotificationDeepLinks {
 
   enum Components: String {
     case mainFlow
+
+    case contactsListScreen
+    case mainScreen
+    case settingsScreen
+
     case personProfile
   }
 
-  static let personProfile: NFLNDeepLink = .init(
-    link: URL(deepLinkComponents: [.mainFlow, .personProfile]),
-    providedData: [:]
-  )
+  static func makeToPersonProfile(personId: String) -> NFLNDeepLink {
+    NFLNDeepLink(
+      link: URL(deepLinkComponents: [.mainFlow, .mainScreen, .personProfile]),
+      providedData: ["personId": personId]
+    )
+  }
 }
 
 extension URL {
+
   init(deepLinkComponents: [LocalNotificationDeepLinks.Components]) {
     let link = deepLinkComponents.reduce("") { partialResult, component in
       partialResult.isEmpty
@@ -32,4 +40,19 @@ extension URL {
     // swiftlint:disable:next force_unwrapping
     self.init(string: link)!
   }
+
+  func getDeepLinkComponents() -> [LocalNotificationDeepLinks.Components]? {
+    var deepLinkComponents: [LocalNotificationDeepLinks.Components] = []
+
+    for component in pathComponents {
+      if let deepLinkComponent = LocalNotificationDeepLinks.Components(rawValue: component) {
+        deepLinkComponents.append(deepLinkComponent)
+      } else {
+        return nil
+      }
+    }
+
+    return deepLinkComponents
+  }
+
 }

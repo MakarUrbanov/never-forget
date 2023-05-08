@@ -23,9 +23,17 @@ extension Person {
     return request
   }
 
+  static func fetchPerson(withId id: String, context: NSManagedObjectContext) throws -> Person? {
+    let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+    let fetchedPersons = try context.fetch(fetchRequest)
+    return fetchedPersons.first
+  }
+
 }
 
-// MARK: - Working with photo
+// MARK: - Utils
 
 extension Person {
 

@@ -158,7 +158,7 @@ extension PersonsNotificationsManager {
     person: Person,
     timeOnOneWeekBefore: AppNotificationTime
   ) -> NFLNScheduledEventNotification {
-    let dateOfBirth = person.dateOfBirth!
+    let dateOfBirth = person.dateOfBirth
     let userId = getUserIdFromPersonObject(person)
     let notificationDate = combineOnEventDayTimesWithBirthdayDate(
       birthdayDate: dateOfBirth,
@@ -184,7 +184,7 @@ extension PersonsNotificationsManager {
     person: Person,
     timeOnOneDayBefore: AppNotificationTime
   ) -> NFLNScheduledEventNotification {
-    let dateOfBirth = person.dateOfBirth!
+    let dateOfBirth = person.dateOfBirth
     let userId = getUserIdFromPersonObject(person)
     let notificationDate = combineOnEventDayTimesWithBirthdayDate(
       birthdayDate: dateOfBirth,
@@ -210,7 +210,7 @@ extension PersonsNotificationsManager {
     person: Person,
     onEventDayTimes: NSSet
   ) -> [NFLNScheduledEventNotification] {
-    let dateOfBirth = person.dateOfBirth!
+    let dateOfBirth = person.dateOfBirth
     let userId = getUserIdFromPersonObject(person)
     let notificationDates = combineOnEventDayTimesWithBirthdayDate(
       birthdayDate: dateOfBirth,
@@ -274,11 +274,12 @@ extension PersonsNotificationsManager {
     type: LocalNotificationForBirthday.BirthdayNotificationType,
     person: Person
   ) -> NFLNScheduledEventNotification {
-    let username = person.name ?? "Unnamed" // TODO: translate
+    let username = person.name
     let imageData = person.photo
 
     return LocalNotificationsFactory.makeNotification(for: .onBirthday(.init(
       type: type,
+      personId: person.id,
       identifier: identifier,
       username: username,
       date: date,

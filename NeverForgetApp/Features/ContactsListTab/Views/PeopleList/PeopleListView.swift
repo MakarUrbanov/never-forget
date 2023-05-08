@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PeopleListView: View {
 
-  @EnvironmentObject var coordinator: PeopleListCoordinator
+  @EnvironmentObject var coordinator: ContactsListCoordinator
   @Environment(\.managedObjectContext) var managedObjectContext
 
   @FetchRequest(fetchRequest: Person.sortedFetchRequest()) var persons
@@ -71,7 +71,7 @@ struct PeopleListView_Previews: PreviewProvider {
     ZStack(alignment: .bottom) {
       PeopleListView()
         .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
-        .environmentObject(PeopleListCoordinator())
+        .environmentObject(ContactsListCoordinator())
 
       VStack {
         Button("Add person") {

@@ -30,7 +30,13 @@ struct MainScreenPeopleSection: View {
 }
 
 struct MainScreenPeopleSection_Previews: PreviewProvider {
-  static let section = PeopleListSectioned(title: "Today:", month: 5, persons: [])
+  static let person: Person = {
+    let person = Person(context: PersistentContainerProvider.shared.viewContext)
+    person.name = "Test user"
+    return person
+  }()
+
+  static let section = PeopleListSectioned(title: "Today:", month: 5, persons: [person])
 
   static var previews: some View {
     MainScreenPeopleSection(section: section, goToPersonProfile: { _ in })

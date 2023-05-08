@@ -69,7 +69,7 @@ extension CreateNewPersonViewModel {
 extension CreateNewPersonViewModel {
 
   private static func validatePersonName(_ person: Person) -> ValidatedValue<Person>.ValidatorResult {
-    let isUsernameValid = !(person.name?.isEmpty ?? true)
+    let isUsernameValid = !person.name.isEmpty
 
     switch true {
       case isUsernameValid:

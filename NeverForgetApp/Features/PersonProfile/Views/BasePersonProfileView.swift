@@ -23,7 +23,7 @@ struct BasePersonProfileView: View {
         .listRowBackground(Color.clear)
 
         Section("Information") { // TODO: translate
-          TextField("Name *", text: Binding($person.value.name, "")) // TODO: translate
+          TextField("Name *", text: $person.value.name) // TODO: translate
             .listRowSeparator(.hidden, edges: .all)
             .foregroundColor(isValidUsername ? Color.Theme.text : Color.Theme.error)
             .autocorrectionDisabled(true)
@@ -33,7 +33,7 @@ struct BasePersonProfileView: View {
                 .offset(CGSize(width: 0, height: 8))
             }
 
-          TextField("Description", text: Binding($person.value.personDescription, "")) // TODO: translate
+          TextField("Description", text: $person.value.personDescription) // TODO: translate
             .listRowSeparator(.hidden, edges: .all)
             .autocorrectionDisabled(true)
             .overlay(alignment: .bottom) {
@@ -42,7 +42,7 @@ struct BasePersonProfileView: View {
             }
 
           DatePicker(
-            selection: Binding($person.value.dateOfBirth, Date()),
+            selection: $person.value.dateOfBirth,
             in: ...Date(),
             displayedComponents: .date
           ) {

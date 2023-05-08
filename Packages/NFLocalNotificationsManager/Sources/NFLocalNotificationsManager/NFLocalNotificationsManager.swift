@@ -57,8 +57,8 @@ public extension NFLocalNotificationsManager {
 
   func removeNotification(identifiers: [String]) async {
     let notifications = await getPendingNotifications()
+
     center.removePendingNotificationRequests(withIdentifiers: identifiers)
-    print("mmk REMOVE: \(identifiers.count)")
 
     for notification in notifications where identifiers.contains(notification.identifier) {
       notification.content.attachments.forEach { attachment in
@@ -76,7 +76,7 @@ public extension NFLocalNotificationsManager {
       [.month, .day, .hour, .minute],
       from: notification.date
     )
-    print("mmk notification.date: \(notification.date)")
+
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
     let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: trigger)
@@ -100,9 +100,8 @@ public extension NFLocalNotificationsManager {
     content.body = notification.body
     content.sound = UNNotificationSound.default
 
-    if let deepLink = notification.deepLink {
-      content.userInfo = ["deepLink": deepLink.link.absoluteString]
-        .merging(deepLink.providedData, uniquingKeysWith: { $1 })
+    if let deepLink = notification.deepLink, let encodedDeepLink = try? JSONEncoder().encode(deepLink) {
+      content.userInfo = ["deepLink": encodedDeepLink]
     }
 
     if let categoryIdentifier = notification.categoryIdentifier {

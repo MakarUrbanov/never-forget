@@ -47,7 +47,10 @@ class PersonNotificationsPermissionInfoBlockViewModel: ObservableObject {
       && !isNotificationsDenied
 
     setMessage()
-    self.isBlockHidden = isBlockHidden
+
+    DispatchQueue.main.async {
+      self.isBlockHidden = isBlockHidden
+    }
   }
 
   private enum Messages: String {

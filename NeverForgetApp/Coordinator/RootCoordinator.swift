@@ -65,6 +65,25 @@ extension RootCoordinator {
     LocalNotificationsManager.shared.registerCategories()
   }
 
-  func handleDeepLink(_ userInfo: [AnyHashable: Any]) {}
+}
+
+// MARK: - Deep link
+
+extension RootCoordinator {
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {
+    guard let deepLink, let deepLinkComponents = deepLink.link.getDeepLinkComponents() else { return }
+
+    switch deepLinkComponents.first {
+      case .mainFlow:
+        for coordinator in childCoordinators where (coordinator as? MainFlowCoordinator) != nil {
+          let updatedDeepLink = deepLink.dropFirstLinkComponent()
+          coordinator.handleDeepLink(updatedDeepLink)
+        }
+
+      default:
+        break
+    }
+  }
 
 }

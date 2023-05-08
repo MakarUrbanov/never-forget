@@ -24,7 +24,7 @@ class PeopleListViewModel: ObservableObject {
       managedObjectContext.saveSafely()
     }
 
-    askToDelete(personName: person.name ?? "", delete: deletePerson)
+    askToDelete(personName: person.name, delete: deletePerson)
   }
 
 }

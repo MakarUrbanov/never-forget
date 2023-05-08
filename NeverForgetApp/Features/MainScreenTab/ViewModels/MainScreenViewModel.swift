@@ -30,8 +30,7 @@ extension MainScreenViewModel {
     var set: Set<Date> = Set()
 
     persons.forEach { person in
-      guard let dateOfBirth = person.dateOfBirth else { fatalError("Person entity should have dateOfBirth property") }
-      set.insert(dateOfBirth)
+      set.insert(person.dateOfBirth)
     }
 
     return set
@@ -131,7 +130,7 @@ extension MainScreenViewModel {
     var listSectioned: [String: PeopleListSectioned] = ["today": todayBirthdays, "tomorrow": tomorrowBirthdays]
 
     persons.forEach { person in
-      guard let personsDateOfBirth = person.dateOfBirth else { fatalError("Person has no DOB") }
+      let personsDateOfBirth = person.dateOfBirth
       let personsMonthOfDateOfBirth = Calendar.current.component(.month, from: personsDateOfBirth)
       let isDateOfBirthInThisYear = checkIsDatesMonthInFutureInCurrentYear(personsDateOfBirth)
       let sectionIndexByMonth = isDateOfBirthInThisYear ? personsMonthOfDateOfBirth : 12 + personsMonthOfDateOfBirth

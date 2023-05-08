@@ -11,21 +11,39 @@ import NFLocalNotificationsManager
 struct LocalNotificationForBirthday: LocalNotificationProtocol {
 
   let type: BirthdayNotificationType
+  let personId: String
   let identifier: String
   let username: String
   let date: Date
   let image: Data?
 
+  init(
+    type: BirthdayNotificationType,
+    personId: String,
+    identifier: String,
+    username: String,
+    date: Date,
+    image: Data?
+  ) {
+    self.type = type
+    self.personId = personId
+    self.identifier = identifier
+    self.username = username
+    self.date = date
+    self.image = image
+  }
+
   func makeNFLNScheduledEventNotification() -> NFLNScheduledEventNotification {
     let title = LocalNotificationForBirthday.generateTitle(type: type, date: date)
     let body = LocalNotificationForBirthday.generateBody(type: type, date: date, username: username)
+    let deepLink = LocalNotificationDeepLinks.makeToPersonProfile(personId: personId)
 
     return NFLNScheduledEventNotification(
       identifier: identifier,
       title: title,
       body: body,
       date: date,
-      deepLink: LocalNotificationDeepLinks.personProfile,
+      deepLink: deepLink,
       categoryIdentifier: nil,
       image: image
     )

@@ -5,6 +5,7 @@
 //  Created by makar on 2/6/23.
 //
 
+import NFLocalNotificationsManager
 import SwiftUI
 
 final class MainFlowCoordinator: TabCoordinator {
@@ -29,9 +30,11 @@ final class MainFlowCoordinator: TabCoordinator {
 
 }
 
+// MARK: - Navigation
+
 extension MainFlowCoordinator {
 
-  // MARK: - initialize main tab coordinator
+  // MARK: initialize main tab coordinator
 
   private func getMainCoordinator() -> MainScreenCoordinator {
     let mainScreenCoordinator = MainScreenCoordinator()
@@ -46,10 +49,10 @@ extension MainFlowCoordinator {
     return mainScreenCoordinator
   }
 
-  // MARK: - initialize people list tab coordinator
+  // MARK: initialize people list tab coordinator
 
-  private func getPeopleListCoordinator() -> PeopleListCoordinator {
-    let peopleListCoordinator = PeopleListCoordinator()
+  private func getPeopleListCoordinator() -> ContactsListCoordinator {
+    let peopleListCoordinator = ContactsListCoordinator()
     peopleListCoordinator.start()
 
     peopleListCoordinator.navigationController.tabBarItem = UITabBarItem(
@@ -61,7 +64,7 @@ extension MainFlowCoordinator {
     return peopleListCoordinator
   }
 
-  // MARK: - initialize settings tab coordinator
+  // MARK: initialize settings tab coordinator
 
   private func getSettingsTabCoordinator() -> SettingsTabCoordinator {
     let coordinator = SettingsTabCoordinator()
@@ -74,6 +77,34 @@ extension MainFlowCoordinator {
     )
 
     return coordinator
+  }
+
+}
+
+
+// MARK: - Deep Link
+
+extension MainFlowCoordinator {
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {
+    guard let deepLink, let deepLinkComponents = deepLink.link.getDeepLinkComponents() else { return }
+
+    switch deepLinkComponents.first {
+      case .mainScreen:
+        for coordinator in childCoordinators where (coordinator as? MainScreenCoordinator) != nil {
+          if let index: Int = tabBarController.viewControllers?
+            .firstIndex(where: { $0 === (coordinator as? MainScreenCoordinator)?.navigationController })
+          {
+            tabBarController.selectedIndex = index
+          }
+
+          let updatedDeepLink = deepLink.dropFirstLinkComponent()
+          coordinator.handleDeepLink(updatedDeepLink)
+        }
+
+      default:
+        break
+    }
   }
 
 }

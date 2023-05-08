@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PeopleListScreenView: View {
 
-  @EnvironmentObject var coordinator: PeopleListCoordinator
+  @EnvironmentObject var coordinator: ContactsListCoordinator
   @StateObject var viewModel = PeopleListScreenViewModel()
 
   var body: some View {

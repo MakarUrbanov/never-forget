@@ -21,6 +21,7 @@ enum LocalNotificationsFactory {
       case .onBirthday(let birthdayNotificationData):
         return LocalNotificationForBirthday(
           type: birthdayNotificationData.type,
+          personId: birthdayNotificationData.personId,
           identifier: birthdayNotificationData.identifier,
           username: birthdayNotificationData.username,
           date: birthdayNotificationData.date,
@@ -35,6 +36,7 @@ extension LocalNotificationsFactory {
 
   struct BirthdayNotificationData {
     let type: LocalNotificationForBirthday.BirthdayNotificationType
+    let personId: String
     let identifier: String
     let username: String
     let date: Date
