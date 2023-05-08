@@ -23,12 +23,9 @@ class PersonNotificationsPermissionInfoBlockViewModel: ObservableObject {
     _person = person
   }
 
-  func checkIsBlockHidden() {
-    localNotificationsManager.checkAuthorizationStatus { status in
-      DispatchQueue.main.async {
-        self.isNotificationsDenied = status == .denied
-      }
-    }
+  func checkIsBlockHidden() async {
+    let isDenied = await localNotificationsManager.checkAuthorizationStatus() == .denied
+    isNotificationsDenied = isDenied
 
     guard let notificationRules = appSettings.fetch()?.appNotificationRules else {
       return

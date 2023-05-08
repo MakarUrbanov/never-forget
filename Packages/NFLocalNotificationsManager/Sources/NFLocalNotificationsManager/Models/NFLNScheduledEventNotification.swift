@@ -8,13 +8,13 @@
 import Foundation
 
 public struct NFLNScheduledEventNotification {
-  let identifier: String
-  let title: String
-  let body: String
-  let date: Date
-  let deepLink: NFLNDeepLink?
-  let categoryIdentifier: String?
-  let image: Data?
+  public let identifier: String
+  public let title: String
+  public let body: String
+  public let date: Date
+  public let deepLink: NFLNDeepLink?
+  public let categoryIdentifier: String?
+  public let image: Data?
 
   public init(
     identifier: String,

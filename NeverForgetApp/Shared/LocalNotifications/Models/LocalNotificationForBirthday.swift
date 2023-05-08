@@ -14,7 +14,6 @@ struct LocalNotificationForBirthday: LocalNotificationProtocol {
   let identifier: String
   let username: String
   let date: Date
-  let deepLink: NFLNDeepLink?
   let image: Data?
 
   func makeNFLNScheduledEventNotification() -> NFLNScheduledEventNotification {
@@ -26,7 +25,7 @@ struct LocalNotificationForBirthday: LocalNotificationProtocol {
       title: title,
       body: body,
       date: date,
-      deepLink: deepLink,
+      deepLink: LocalNotificationDeepLinks.personProfile,
       categoryIdentifier: nil,
       image: image
     )

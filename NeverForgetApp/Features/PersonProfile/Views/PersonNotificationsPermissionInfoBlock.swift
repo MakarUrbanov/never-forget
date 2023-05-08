@@ -32,13 +32,17 @@ struct PersonNotificationsPermissionInfoBlockView: View {
         .strokeBorder(Color.Theme.accentColor, lineWidth: 1)
     }
     .onChange(of: viewModel.person.isNotificationsEnabled, perform: { _ in
-      viewModel.checkIsBlockHidden()
+      Task {
+        await viewModel.checkIsBlockHidden()
+      }
     })
-    .onAppear {
-      viewModel.checkIsBlockHidden()
+    .task {
+      await viewModel.checkIsBlockHidden()
     }
     .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: { _ in
-      viewModel.checkIsBlockHidden()
+      Task {
+        await viewModel.checkIsBlockHidden()
+      }
     })
     .opacity(viewModel.isBlockHidden ? 0 : 1)
     .animation(.easeInOut(duration: 0.3), value: viewModel.isBlockHidden)

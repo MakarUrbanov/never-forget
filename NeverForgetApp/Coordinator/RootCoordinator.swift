@@ -21,11 +21,11 @@ final class RootCoordinator: Coordinator {
 
     configureRootNavigationController()
     connectAlertManager()
+    initializeNotifications()
   }
 
   func start() {
     setRootCoordinator()
-    initializeNotifications()
   }
 
 }
@@ -58,8 +58,13 @@ extension RootCoordinator {
 extension RootCoordinator {
 
   func initializeNotifications() {
-    LocalNotificationsManager.shared.requestPermission()
+    Task {
+      await LocalNotificationsManager.shared.requestPermission()
+    }
+
     LocalNotificationsManager.shared.registerCategories()
   }
+
+  func handleDeepLink(_ userInfo: [AnyHashable: Any]) {}
 
 }

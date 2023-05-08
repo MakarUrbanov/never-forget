@@ -9,5 +9,11 @@ import Foundation
 
 public struct NFLNDeepLink {
   let link: URL
-  let providedData: [String: Any] = [:]
+  let providedData: [String: Any]
+
+  public init(link: URL, providedData: [String: Any]) {
+    self.link = link
+    self.providedData = providedData
+  }
+
 }

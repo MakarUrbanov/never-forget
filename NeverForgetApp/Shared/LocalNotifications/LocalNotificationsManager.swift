@@ -15,18 +15,23 @@ final class LocalNotificationsManager {
 
   private let notificationsManager = NFLocalNotificationsManager()
 
-  func requestPermission() {
-    notificationsManager.requestFirstPermission()
+  @discardableResult
+  func requestPermission() async -> Bool {
+    let isSucceed = await notificationsManager.requestFirstPermission()
+    return isSucceed
   }
 
-  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
-    notificationsManager.checkAuthorizationStatus { status in
-      completion(status)
-    }
+  func checkAuthorizationStatus() async -> UNAuthorizationStatus {
+    return await notificationsManager.checkAuthorizationStatus()
   }
 
   func scheduleNotification(_ notification: NFLNScheduledEventNotification) async throws {
-    try await notificationsManager.scheduleAnnualNotification(notification)
+    do {
+      try await notificationsManager.scheduleAnnualNotification(notification)
+    } catch {
+      print("mmk error", error)
+      throw error
+    }
   }
 
   func getPendingNotifications() async -> [UNNotificationRequest] {
@@ -40,11 +45,11 @@ final class LocalNotificationsManager {
       partialResult + [notification.identifier]
     }
 
-    notificationsManager.removeNotification(identifiers: identifiers)
+    await notificationsManager.removeNotification(identifiers: identifiers)
   }
 
-  func removePendingNotifications(identifiers: [String]) {
-    notificationsManager.removeNotification(identifiers: identifiers)
+  func removePendingNotifications(identifiers: [String]) async {
+    await notificationsManager.removeNotification(identifiers: identifiers)
   }
 
 }

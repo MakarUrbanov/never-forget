@@ -64,8 +64,14 @@ class PersonsNotificationsManager {
   func deleteAllNotifications(withPrefix prefix: String) async {
     let pendingNotifications = await notificationsManager.getPendingNotifications()
 
-    for notification in pendingNotifications where notification.identifier.hasPrefix(prefix) {
-      self.notificationsManager.removePendingNotifications(identifiers: [notification.identifier])
+    await withTaskGroup(of: Void.self) { group in
+      for notification in pendingNotifications where notification.identifier.hasPrefix(prefix) {
+        group.addTask {
+          await self.notificationsManager.removePendingNotifications(identifiers: [notification.identifier])
+        }
+      }
+
+      await group.waitForAll()
     }
   }
 

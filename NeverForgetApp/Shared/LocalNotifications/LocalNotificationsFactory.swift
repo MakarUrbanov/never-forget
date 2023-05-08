@@ -24,7 +24,6 @@ enum LocalNotificationsFactory {
           identifier: birthdayNotificationData.identifier,
           username: birthdayNotificationData.username,
           date: birthdayNotificationData.date,
-          deepLink: nil,
           image: birthdayNotificationData.imageData
         ).makeNFLNScheduledEventNotification()
     }

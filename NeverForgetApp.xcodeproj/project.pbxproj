@@ -86,6 +86,7 @@
 		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
 		35D1F83B29D9DCE400965AB6 /* Color+random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D1F83A29D9DCE400965AB6 /* Color+random.swift */; };
 		35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2836F29F72E48002E7286 /* SettingsViewModel.swift */; };
+		35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D527282A084010008274FB /* LocalNotificationDeepLinks.swift */; };
 		35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift */; };
 		35E0479529B3996B006A2AB3 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */; };
 		35E0479729B40429006A2AB3 /* PersonRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479629B40429006A2AB3 /* PersonRowViewModel.swift */; };
@@ -202,6 +203,7 @@
 		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		35D1F83A29D9DCE400965AB6 /* Color+random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+random.swift"; sourceTree = "<group>"; };
 		35D2836F29F72E48002E7286 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		35D527282A084010008274FB /* LocalNotificationDeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationDeepLinks.swift; sourceTree = "<group>"; };
 		35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedImageWithPlaceholderView.swift; sourceTree = "<group>"; };
 		35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
 		35E0479629B40429006A2AB3 /* PersonRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRowViewModel.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				3525B2FA2A004FB6001D83CF /* LocalNotificationForBirthday.swift */,
+				35D527282A084010008274FB /* LocalNotificationDeepLinks.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -940,6 +943,7 @@
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
 				35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* PeopleListScreenView.swift in Sources */,
+				35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */,
 				35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift in Sources */,
 				359CDD0529D6247C00EDAF2C /* String+uppercasedFirst.swift in Sources */,
 				355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */,

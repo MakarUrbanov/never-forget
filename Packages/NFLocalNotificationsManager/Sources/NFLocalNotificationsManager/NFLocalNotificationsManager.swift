@@ -19,29 +19,33 @@ public class NFLocalNotificationsManager {
 public extension NFLocalNotificationsManager {
 
   typealias IsSuccessAuthorization = Bool
-  func requestFirstPermission(completion: @escaping (IsSuccessAuthorization) -> Void = { _ in }) {
-    checkAuthorizationStatus { status in
-      if status == .notDetermined {
-        self.requestPermission(completion: completion)
+  func requestFirstPermission() async -> Bool {
+    let authorizationStatus = await checkAuthorizationStatus()
+    let isStatusNotDetermined = authorizationStatus == .notDetermined
 
-        return
+    if isStatusNotDetermined {
+      do {
+        let isSucceed = try await requestPermission()
+        return isSucceed
+      } catch {
+        return false
       }
     }
+
+    return authorizationStatus != .denied
   }
 
-  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
-    center.getNotificationSettings { settings in
-      completion(settings.authorizationStatus)
-    }
+  func checkAuthorizationStatus() async -> UNAuthorizationStatus {
+    return await center.notificationSettings().authorizationStatus
   }
 
-  private func requestPermission(completion: @escaping (IsSuccessAuthorization) -> Void) {
-    center.requestAuthorization(options: [.alert, .badge, .sound]) { isSuccess, error in
-      completion(isSuccess)
-
-      if let error {
-        NFLNLogger.error(message: "Request permission error", error)
-      }
+  private func requestPermission() async throws -> Bool {
+    do {
+      let isSucceed = try await center.requestAuthorization(options: [.alert, .badge, .sound])
+      return isSucceed
+    } catch {
+      NFLNLogger.error(message: "Request a permission error", error)
+      throw error
     }
   }
 
@@ -51,15 +55,14 @@ public extension NFLocalNotificationsManager {
 
 public extension NFLocalNotificationsManager {
 
-  func removeNotification(identifiers: [String]) {
-    Task(priority: .medium) {
-      let notifications = await self.getPendingNotifications()
-      center.removePendingNotificationRequests(withIdentifiers: identifiers)
+  func removeNotification(identifiers: [String]) async {
+    let notifications = await getPendingNotifications()
+    center.removePendingNotificationRequests(withIdentifiers: identifiers)
+    print("mmk REMOVE: \(identifiers.count)")
 
-      for notification in notifications where identifiers.contains(notification.identifier) {
-        notification.content.attachments.forEach { attachment in
-          self.attachmentManager.deleteExistingImage(at: attachment.url)
-        }
+    for notification in notifications where identifiers.contains(notification.identifier) {
+      notification.content.attachments.forEach { attachment in
+        self.attachmentManager.deleteExistingImage(at: attachment.url)
       }
     }
   }
@@ -73,6 +76,7 @@ public extension NFLocalNotificationsManager {
       [.month, .day, .hour, .minute],
       from: notification.date
     )
+    print("mmk notification.date: \(notification.date)")
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
     let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: trigger)
