@@ -5,6 +5,7 @@
 //  Created by makar on 2/24/23.
 //
 
+import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
@@ -32,6 +33,38 @@ extension MainScreenCoordinator {
 
     let addNewPersonView = UIHostingController(rootView: view)
     navigationController.navigate(step: .push(addNewPersonView))
+  }
+
+}
+
+// MARK: - Deep link
+
+extension MainScreenCoordinator {
+
+  private func fetchPersonAndGoToProfile(personId: String) {
+    do {
+      if let person = try Person
+        .fetchPerson(withId: personId, context: PersistentContainerProvider.shared.viewContext)
+      {
+        goToPersonProfile(person: person)
+      }
+    } catch {
+      Logger.error(message: "Can't fetch the person by personId", error)
+    }
+  }
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {
+    guard let deepLink, let deepLinkComponents = deepLink.link.getDeepLinkComponents() else { return }
+
+    switch deepLinkComponents.first {
+      case .personProfile:
+        guard let personId = deepLink.providedData["personId"] else { return }
+
+        fetchPersonAndGoToProfile(personId: personId)
+
+      default:
+        break
+    }
   }
 
 }

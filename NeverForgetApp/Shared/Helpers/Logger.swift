@@ -6,60 +6,40 @@
 //
 
 import Foundation
+import NFLogger
 
 enum Logger {
 
-  static func error(prefix: String? = nil, _ values: Any?...) {
-    let correctPrefix = getPrefix(case: "ERROR 🔴", usersPrefix: prefix)
-    toPrint(with: correctPrefix, values)
+  private static let logger = NFLogger(moduleName: "NFApp")
+
+  static func error(
+    message: String? = nil,
+    _ values: Any?...,
+    fileID: String = #fileID,
+    function: String = #function,
+    line: Int = #line
+  ) {
+    Logger.logger.error(message: message, values, fileID: fileID, function: function, line: line)
   }
 
-  static func warn(prefix: String? = nil, _ values: Any?...) {
-    let correctPrefix = getPrefix(case: "WARN 🟠", usersPrefix: prefix)
-    toPrint(with: correctPrefix, values)
+  static func warn(
+    message: String? = nil,
+    _ values: Any?...,
+    fileID: String = #fileID,
+    function: String = #function,
+    line: Int = #line
+  ) {
+    Logger.logger.warning(message: message, values, fileID: fileID, function: function, line: line)
   }
 
-  static func info(prefix: String? = nil, _ values: Any?...) {
-    let correctPrefix = getPrefix(case: "INFO 🔵", usersPrefix: prefix)
-    toPrint(with: correctPrefix, values)
-  }
-
-}
-
-// MARK: - Output
-
-extension Logger {
-
-  private static func myDump(name: String, _ values: Any...) {
-    dump(values, name: name)
-  }
-
-  private static func myPrint(name: String, _ output: String) {
-    print("\(name) \(output)")
-  }
-
-  private static func toPrint(with name: String, _ values: Any...) {
-    if let valuesString = values as? [String] {
-      let joinedString = valuesString.joined(separator: ", ")
-      myPrint(name: name, joinedString)
-    } else {
-      myDump(name: name, values)
-    }
-  }
-
-}
-
-
-// MARK: - Prefix
-
-extension Logger {
-
-  private static let DEFAULT_PREFIX = "Never Forget"
-
-  private static func getPrefix(case prefix: String, usersPrefix: String?) -> String {
-    let prefixes = [DEFAULT_PREFIX, usersPrefix, prefix].compactMap { $0 }
-
-    return prefixes.joined(separator: " ")
+  static func info(
+    message: String? = nil,
+    _ values: Any?...,
+    fileID: String = #fileID,
+    function: String = #function,
+    line: Int = #line
+  ) {
+    Logger.logger.info(message: message, values, fileID: fileID, function: function, line: line)
   }
 
 }

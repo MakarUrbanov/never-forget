@@ -9,16 +9,16 @@ import SwiftUI
 
 struct PeopleListScreenView: View {
 
-  @EnvironmentObject var coordinator: PeopleListCoordinator
+  @EnvironmentObject var coordinator: ContactsListCoordinator
   @StateObject var viewModel = PeopleListScreenViewModel()
 
   var body: some View {
     PeopleListView()
       .background(Color.Theme.background)
-      .navigationTitle("Your friends list") // TODO: localize
+      .navigationTitle("Your contacts list") // TODO: translate
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
-          Button("Add") { // TODO: localize
+          Button("Add") { // TODO: translate
             viewModel.presentAddNewPerson(coordinator: coordinator)
           }
         }

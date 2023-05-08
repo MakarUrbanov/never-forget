@@ -4,14 +4,12 @@ public class NFLocalNotificationsManager {
 
   let center = UNUserNotificationCenter.current()
 
-  private let userDefaultsManager = NFLNUserDefaultManager()
+  let attachmentManager = NFLNNotificationAttachmentManager.shared
 
   public init() {}
 
-  public func getPendingNotifications(completions: @escaping ([UNNotificationRequest]) -> Void) {
-    center.getPendingNotificationRequests { pendingNotifications in
-      completions(pendingNotifications)
-    }
+  public func getPendingNotifications() async -> [UNNotificationRequest] {
+    return await center.pendingNotificationRequests()
   }
 
 }
@@ -21,64 +19,79 @@ public class NFLocalNotificationsManager {
 public extension NFLocalNotificationsManager {
 
   typealias IsSuccessAuthorization = Bool
+  func requestFirstPermission() async -> Bool {
+    let authorizationStatus = await checkAuthorizationStatus()
+    let isStatusNotDetermined = authorizationStatus == .notDetermined
 
-  func requestFirstPermission(completion: @escaping (IsSuccessAuthorization) -> Void = { _ in }) {
-    checkAuthorizationStatus { status in
-      if status == .notDetermined {
-        self.requestPermission(completion: completion)
-
-        return
+    if isStatusNotDetermined {
+      do {
+        let isSucceed = try await requestPermission()
+        return isSucceed
+      } catch {
+        return false
       }
     }
+
+    return authorizationStatus != .denied
   }
 
-  func checkAuthorizationStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
-    center.getNotificationSettings { settings in
-      completion(settings.authorizationStatus)
-    }
+  func checkAuthorizationStatus() async -> UNAuthorizationStatus {
+    return await center.notificationSettings().authorizationStatus
   }
 
-  private func requestPermission(completion: @escaping (IsSuccessAuthorization) -> Void) {
-    center.requestAuthorization(options: [.alert, .badge, .sound]) { isSuccess, error in
-      completion(isSuccess)
-
-      if let error {
-        print(#function, "error: \(error.localizedDescription)")
-      }
+  private func requestPermission() async throws -> Bool {
+    do {
+      let isSucceed = try await center.requestAuthorization(options: [.alert, .badge, .sound])
+      return isSucceed
+    } catch {
+      NFLNLogger.error(message: "Request a permission error", error)
+      throw error
     }
   }
 
 }
 
-// MARK: - Schedule local notification
+// MARK: - Notifications
 
 public extension NFLocalNotificationsManager {
 
-  func removeNotification(identifiers: [String]) {
+  func removeNotification(identifiers: [String]) async {
+    let notifications = await getPendingNotifications()
+
     center.removePendingNotificationRequests(withIdentifiers: identifiers)
+
+    for notification in notifications where identifiers.contains(notification.identifier) {
+      notification.content.attachments.forEach { attachment in
+        self.attachmentManager.deleteExistingImage(at: attachment.url)
+      }
+    }
   }
 
   func scheduleAnnualNotification(
-    _ notification: NFLNScheduledEventNotification,
-    errorHandler: @escaping (String) -> Void
-  ) {
+    _ notification: NFLNScheduledEventNotification
+  ) async throws {
     let content = configureContent(for: notification)
 
-    // TODO: remove .second
     let dateComponents = Calendar.current.dateComponents(
-      [.month, .day, .hour, .minute, .second],
+      [.month, .day, .hour, .minute],
       from: notification.date
     )
+
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
     let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: trigger)
 
-    center.add(request) { error in
-      if let error {
-        errorHandler(error.localizedDescription)
-        print(#function, "Error \(error.localizedDescription)")
-      }
-    }
+    try await center.add(request)
+  }
+
+}
+
+// MARK: - Categories
+
+public extension NFLocalNotificationsManager {
+
+  func registerCategories(_ categories: Set<UNNotificationCategory>) {
+    center.setNotificationCategories(categories)
   }
 
   private func configureContent(for notification: NFLNScheduledEventNotification) -> UNMutableNotificationContent {
@@ -87,25 +100,26 @@ public extension NFLocalNotificationsManager {
     content.body = notification.body
     content.sound = UNNotificationSound.default
 
-    if let deepLink = notification.deepLink {
-      content.userInfo = ["deepLink": deepLink.link.absoluteString]
-        .merging(deepLink.providedData, uniquingKeysWith: { $1 })
+    if let deepLink = notification.deepLink, let encodedDeepLink = try? JSONEncoder().encode(deepLink) {
+      content.userInfo = ["deepLink": encodedDeepLink]
     }
+
     if let categoryIdentifier = notification.categoryIdentifier {
       content.categoryIdentifier = categoryIdentifier
     }
 
+    if let imageData = notification.image {
+      do {
+        let imageUrl = try attachmentManager.saveImage(imageData)
+        let attachment = try UNNotificationAttachment(identifier: "image", url: imageUrl, options: nil)
+
+        content.attachments = [attachment]
+      } catch {
+        NFLNLogger.error(message: "Error adding image to the attachments", error)
+      }
+    }
+
     return content
-  }
-
-}
-
-// MARK: - Register categories
-
-public extension NFLocalNotificationsManager {
-
-  func registerCategories(_ categories: Set<UNNotificationCategory>) {
-    center.setNotificationCategories(categories)
   }
 
 }

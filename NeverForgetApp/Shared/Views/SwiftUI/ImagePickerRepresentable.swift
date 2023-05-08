@@ -63,7 +63,7 @@ struct ImagePickerRepresentable: UIViewControllerRepresentable { // TODO: expand
         if item.canLoadObject(ofClass: UIImage.self) {
           item.loadObject(ofClass: UIImage.self) { image, error in
             if error != nil {
-              Logger.error(prefix: "IMAGE PICKER ERROR", error)
+              Logger.error(message: "IMAGE PICKER ERROR", error)
             } else {
               DispatchQueue.main.async {
                 if let image = image as? UIImage {

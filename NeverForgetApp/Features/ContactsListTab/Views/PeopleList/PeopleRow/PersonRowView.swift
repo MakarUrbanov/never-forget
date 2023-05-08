@@ -11,12 +11,12 @@ struct PersonRowView: View {
 
   @StateObject var viewModel: PersonRowViewModel
 
-  private var name: String { viewModel.person.name ?? "un-named" }
+  private var name: String { viewModel.person.name }
   private var defaultImage: some View { Image(systemName: "person").resizable().padding(10) }
   private var userImage: UIImage? { viewModel.person.getDecodedPhoto() }
   private var dateFormat: String
   private var dateOfBirth: String {
-    guard let dateOfBirth = viewModel.person.dateOfBirth else { return "" }
+    let dateOfBirth = viewModel.person.dateOfBirth
     return DateFormatter(dateFormat: dateFormat).string(from: dateOfBirth)
   }
 
@@ -37,6 +37,7 @@ struct PersonRowView: View {
     Button {
       viewModel.openPersonProfileHandler()
     } label: {
+
       HStack(spacing: 20) {
         DecodedImageWithPlaceholderView(
           data: personImageData,
@@ -61,9 +62,10 @@ struct PersonRowView: View {
 
         Spacer()
       }
+      .contentShape(Rectangle())
+
     }
     .buttonStyle(TouchableOpacityButtonStyle())
-
   }
 }
 

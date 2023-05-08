@@ -1,14 +1,15 @@
 //
-//  PeopleListCoordinator.swift
+//  ContactsListCoordinator.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
 //
 
+import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
-final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
+final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = BaseUINavigationController()
 
@@ -22,7 +23,7 @@ final class PeopleListCoordinator: NavigationCoordinator, ObservableObject {
 
 // MARK: - navigation
 
-extension PeopleListCoordinator {
+extension ContactsListCoordinator {
 
   func presentCreateNewPersonView() {
     let view = CreateNewPersonView(goBack: { self.navigationController.navigate(step: .dismiss) })
@@ -48,7 +49,7 @@ extension PeopleListCoordinator {
 
 // MARK: - utils
 
-extension PeopleListCoordinator {
+extension ContactsListCoordinator {
 
   private func getPeopleListScreenView() -> UIViewController {
     let view = PeopleListScreenView()
@@ -58,5 +59,13 @@ extension PeopleListCoordinator {
     let listTab = UIHostingController(rootView: view)
     return listTab
   }
+
+}
+
+// MARK: - Deep link
+
+extension ContactsListCoordinator {
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {} // TODO: rework
 
 }

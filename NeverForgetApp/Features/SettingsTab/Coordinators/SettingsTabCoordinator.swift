@@ -5,6 +5,7 @@
 //  Created by makar on 4/20/23.
 //
 
+import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
@@ -30,5 +31,13 @@ extension SettingsTabCoordinator {
 
     return UIHostingController(rootView: view)
   }
+
+}
+
+// MARK: - Deep link
+
+extension SettingsTabCoordinator {
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {} // TODO: rework
 
 }

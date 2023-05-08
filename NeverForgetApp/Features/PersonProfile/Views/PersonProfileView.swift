@@ -26,7 +26,7 @@ struct PersonProfileView: View {
     BasePersonProfileView(person: $viewModel.person)
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
-          Button("Save") { // TODO: localize
+          Button("Save") { // TODO: translate
             viewModel.validateAndSavePersonHandler()
           }
         }

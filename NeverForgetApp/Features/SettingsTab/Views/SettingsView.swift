@@ -19,16 +19,34 @@ struct SettingsView: View {
   var body: some View {
     VStack {
       Form {
-        Section("Notification rules") { // TODO: translate
+        Section("Notify one week before") { // TODO: translate
           Toggle(
-            "Notify 1 week before", // TODO: translate
+            "Enabled", // TODO: translate
             isOn: notificationRules.isNotificationOneWeekBeforeEnabled
           )
 
+          if notificationRules.isNotificationOneWeekBeforeEnabled.wrappedValue {
+            DatePicker(
+              "Notify at:", // TODO: translate
+              selection: notificationRules.timeOnOneWeekBefore.date,
+              displayedComponents: .hourAndMinute
+            )
+          }
+        }
+
+        Section("Notify one day before") { // TODO: translate
           Toggle(
-            "Notify 1 day before", // TODO: translate
+            "Enabled", // TODO: translate
             isOn: notificationRules.isNotificationOneDayBeforeEnabled
           )
+
+          if notificationRules.isNotificationOneDayBeforeEnabled.wrappedValue {
+            DatePicker(
+              "Notify at:", // TODO: translate
+              selection: notificationRules.timeOnOneDayBefore.date,
+              displayedComponents: .hourAndMinute
+            )
+          }
         }
 
         Section("On the event day") { // TODO: translate

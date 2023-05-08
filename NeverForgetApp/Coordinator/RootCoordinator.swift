@@ -21,11 +21,11 @@ final class RootCoordinator: Coordinator {
 
     configureRootNavigationController()
     connectAlertManager()
+    initializeNotifications()
   }
 
   func start() {
     setRootCoordinator()
-    initializeNotifications()
   }
 
 }
@@ -39,7 +39,7 @@ extension RootCoordinator {
   }
 
   private func connectAlertManager() {
-    AlertManager.shared.rootNavigationController = rootNavigationController
+    AppAlertManager.shared.rootNavigationController = rootNavigationController
   }
 
   private func setRootCoordinator() {
@@ -58,8 +58,32 @@ extension RootCoordinator {
 extension RootCoordinator {
 
   func initializeNotifications() {
-    LocalNotificationsManager.shared.requestPermission()
+    Task {
+      await LocalNotificationsManager.shared.requestPermission()
+    }
+
     LocalNotificationsManager.shared.registerCategories()
+  }
+
+}
+
+// MARK: - Deep link
+
+extension RootCoordinator {
+
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) {
+    guard let deepLink, let deepLinkComponents = deepLink.link.getDeepLinkComponents() else { return }
+
+    switch deepLinkComponents.first {
+      case .mainFlow:
+        for coordinator in childCoordinators where (coordinator as? MainFlowCoordinator) != nil {
+          let updatedDeepLink = deepLink.dropFirstLinkComponent()
+          coordinator.handleDeepLink(updatedDeepLink)
+        }
+
+      default:
+        break
+    }
   }
 
 }

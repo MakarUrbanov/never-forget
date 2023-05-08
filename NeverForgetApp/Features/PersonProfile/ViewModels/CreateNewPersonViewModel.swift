@@ -10,6 +10,7 @@ import Foundation
 class CreateNewPersonViewModel: ObservableObject {
 
   @Published var person: ValidatedValue<Person>
+  private let personNotificationsManager = PersonsNotificationsManager()
 
   let goBack: () -> Void
 
@@ -42,11 +43,22 @@ extension CreateNewPersonViewModel {
 
   private func createNewPerson() {
     person.value.managedObjectContext?.saveSafely()
+    scheduleNotifications()
     goBack()
   }
 
   private func onInvalidForm() {
     person.editErrorVisibility(true)
+  }
+
+  private func scheduleNotifications() {
+    Task {
+      do {
+        try await personNotificationsManager.rescheduleBirthdayNotifications(for: person.value)
+      } catch {
+        Logger.error(message: "Scheduling notifications error", error)
+      }
+    }
   }
 
 }
@@ -57,7 +69,7 @@ extension CreateNewPersonViewModel {
 extension CreateNewPersonViewModel {
 
   private static func validatePersonName(_ person: Person) -> ValidatedValue<Person>.ValidatorResult {
-    let isUsernameValid = !(person.name?.isEmpty ?? true)
+    let isUsernameValid = !person.name.isEmpty
 
     switch true {
       case isUsernameValid:
