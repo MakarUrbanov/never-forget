@@ -5,6 +5,7 @@
 //  Created by makar on 2/24/23.
 //
 
+import CoreData
 import SwiftUI
 import UIKit
 
@@ -15,10 +16,12 @@ final class ContactProfileViewModel: ObservableObject {
 
   let goBack: () -> Void
 
-  init(person: Person, goBack: @escaping () -> Void) {
+  init(person: Person, context: NSManagedObjectContext, goBack: @escaping () -> Void) {
     self.goBack = goBack
+    // swiftlint:disable:next force_unwrapping
+    let personInNewContext = CoreDataWrapper.shared.existingObject(person, in: context)!
     self.person = ValidatedValue(
-      value: person,
+      value: personInNewContext,
       isValidateOnInit: true,
       validate: ContactProfileViewModel.validatePersonName
     )
@@ -41,7 +44,7 @@ final class ContactProfileViewModel: ObservableObject {
 extension ContactProfileViewModel {
 
   private func onValidForm() {
-    person.value.managedObjectContext?.saveSafely()
+    person.value.managedObjectContext?.saveChanges()
     rescheduleNotifications()
     goBack()
   }

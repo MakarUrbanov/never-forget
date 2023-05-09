@@ -66,7 +66,7 @@ struct BaseContactProfileView: View {
 
 struct BasePersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    let person = Person(context: PersistentContainerProvider.shared.viewContext)
+    let person = Person(context: CoreDataWrapper.shared.viewContext)
     person.name = "User name"
     let validate: (Person) -> ValidatedValue<Person>.ValidatorResult = { _ in
       .init(isValid: false, errorMessage: "Error message")

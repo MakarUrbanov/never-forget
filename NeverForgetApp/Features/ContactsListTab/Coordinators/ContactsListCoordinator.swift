@@ -28,7 +28,7 @@ extension ContactsListCoordinator {
   func presentCreateNewPersonView() {
     let view = CreateNewContactView(goBack: { self.navigationController.navigate(step: .dismiss) })
       .environmentObject(self)
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
 
     let createNewPersonView = UIHostingController(rootView: view)
 
@@ -38,7 +38,7 @@ extension ContactsListCoordinator {
   func openPersonProfile(person: Person) {
     let view = ContactProfileView(person: person, goBack: { self.navigationController.navigate(step: .pop) })
       .environmentObject(self)
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
 
     let personProfileView = UIHostingController(rootView: view)
 
@@ -54,7 +54,7 @@ extension ContactsListCoordinator {
   private func getPeopleListScreenView() -> UIViewController {
     let view = ContactsListScreenView()
       .environmentObject(self)
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
 
     let listTab = UIHostingController(rootView: view)
     return listTab

@@ -60,7 +60,7 @@ class ContactNotificationsPermissionInfoBlockViewModel: ObservableObject {
     case notificationsDisabledInAppSettings =
       "You have disabled notification rules in the app settings. Adjust the settings to receive birthday reminders based on your preferences" // TODO: translate
     case notificationsForUserDisabled =
-      "Notifications for this contact are currently disabled. Enable them in the profile settings to receive birthday reminders" // TODO: translate
+      "Notifications for this contact are currently disabled. Enable them to receive birthday reminders" // TODO: translate
     // swiftlint:enable line_length
   }
 

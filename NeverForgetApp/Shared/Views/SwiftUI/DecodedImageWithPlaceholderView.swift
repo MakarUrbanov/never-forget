@@ -12,7 +12,7 @@ struct DecodedImageWithPlaceholderView<DefaultImage: View>: View {
   let onLoadEnd: () -> Void
   let frame: CGSize
 
-  private let imageDrawerQueue = DispatchQueue(label: "com.imageDrawerQueue", qos: .userInteractive)
+  private let imageDrawerQueue = DispatchQueue(label: "com.NeverForget.imageDrawerQueue", qos: .userInteractive)
 
   @Binding var data: Data?
   @State private var decodedImage: Image?

@@ -29,7 +29,7 @@ extension MainScreenCoordinator {
       self.navigationController.navigate(step: .pop)
     })
     .environmentObject(self)
-    .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+    .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
 
     let addNewPersonView = UIHostingController(rootView: view)
     navigationController.navigate(step: .push(addNewPersonView))
@@ -44,7 +44,7 @@ extension MainScreenCoordinator {
   private func fetchPersonAndGoToProfile(personId: String) {
     do {
       if let person = try Person
-        .fetchPerson(withId: personId, context: PersistentContainerProvider.shared.viewContext)
+        .fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext)
       {
         goToPersonProfile(person: person)
       }
@@ -76,7 +76,7 @@ extension MainScreenCoordinator {
   private func getMainScreenView() -> UIViewController {
     let view = MainScreenView()
       .environmentObject(self)
-      .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
 
     let listTab = UIHostingController(rootView: view)
     return listTab

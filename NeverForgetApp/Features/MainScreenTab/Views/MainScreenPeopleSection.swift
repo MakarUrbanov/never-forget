@@ -31,7 +31,7 @@ struct MainScreenPeopleSection: View {
 
 struct MainScreenPeopleSection_Previews: PreviewProvider {
   static let person: Person = {
-    let person = Person(context: PersistentContainerProvider.shared.viewContext)
+    let person = Person(context: CoreDataWrapper.shared.viewContext)
     person.name = "Test user"
     return person
   }()

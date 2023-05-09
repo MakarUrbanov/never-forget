@@ -72,7 +72,7 @@ struct PersonRowView: View {
 struct PersonCellView_Previews: PreviewProvider {
   static var previews: some View {
     let personMock: Person = {
-      let person = Person(context: PersistentContainerProvider.shared.viewContext)
+      let person = Person(context: CoreDataWrapper.shared.viewContext)
       person.name = "Andrew"
       person.personDescription = "Friend"
       person.dateOfBirth = Date()

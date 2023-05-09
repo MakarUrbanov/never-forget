@@ -12,14 +12,13 @@ struct ContactProfileView: View {
   @StateObject private var viewModel: ContactProfileViewModel
 
   init(person: Person, goBack: @escaping () -> Void) {
-    let existsPerson: Person? = PersistentContainerProvider.shared.exists(
-      person,
-      in: PersistentContainerProvider
-        .shared
-        .backgroundContext
+    _viewModel = StateObject(
+      wrappedValue: ContactProfileViewModel(
+        person: person,
+        context: CoreDataWrapper.shared.backgroundContext,
+        goBack: goBack
+      )
     )
-    let correctPerson = existsPerson ?? Person(context: PersistentContainerProvider.shared.backgroundContext)
-    _viewModel = StateObject(wrappedValue: ContactProfileViewModel(person: correctPerson, goBack: goBack))
   }
 
   var body: some View {
@@ -39,6 +38,6 @@ struct ContactProfileView: View {
 
 struct PersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    ContactProfileView(person: Person(context: PersistentContainerProvider.shared.viewContext), goBack: {})
+    ContactProfileView(person: Person(context: CoreDataWrapper.shared.viewContext), goBack: {})
   }
 }

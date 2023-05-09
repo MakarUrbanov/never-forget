@@ -12,8 +12,7 @@ struct CreateNewContactView: View {
   @StateObject private var viewModel: CreateNewContactViewModel
 
   init(goBack: @escaping () -> Void) {
-    let person = Person(context: PersistentContainerProvider.shared.backgroundContext)
-    _viewModel = StateObject(wrappedValue: CreateNewContactViewModel(person: person, goBack: goBack))
+    _viewModel = StateObject(wrappedValue: CreateNewContactViewModel(goBack: goBack))
   }
 
   var body: some View {

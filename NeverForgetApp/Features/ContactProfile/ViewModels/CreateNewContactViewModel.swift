@@ -14,8 +14,9 @@ class CreateNewContactViewModel: ObservableObject {
 
   let goBack: () -> Void
 
-  init(person: Person, goBack: @escaping () -> Void) {
+  init(goBack: @escaping () -> Void) {
     self.goBack = goBack
+    let person = Person(context: CoreDataWrapper.shared.backgroundContext)
     self.person = ValidatedValue(
       value: person,
       isValidateOnInit: true,
@@ -42,7 +43,7 @@ class CreateNewContactViewModel: ObservableObject {
 extension CreateNewContactViewModel {
 
   private func createNewPerson() {
-    person.value.managedObjectContext?.saveSafely()
+    person.value.managedObjectContext?.saveChanges()
     scheduleNotifications()
     goBack()
   }
