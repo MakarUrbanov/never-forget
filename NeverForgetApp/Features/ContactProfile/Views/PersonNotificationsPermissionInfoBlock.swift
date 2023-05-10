@@ -51,7 +51,7 @@ struct ContactNotificationsPermissionInfoBlockView: View {
 
 struct PersonNotificationsPermissionInfoBlock_Previews: PreviewProvider {
   private static let person: Person = {
-    let person = Person(context: PersistentContainerProvider.shared.viewContext)
+    let person = Person(context: CoreDataWrapper.shared.viewContext)
     person.name = "Test person"
     person.isNotificationsEnabled = true
 

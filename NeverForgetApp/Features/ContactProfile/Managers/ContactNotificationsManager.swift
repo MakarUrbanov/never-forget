@@ -88,9 +88,7 @@ extension ContactNotificationsManager {
     ) async throws {
       let fetchRequestPersons = Person.fetchRequest()
 
-      guard let persons = try PersistentContainerProvider.shared
-        .viewContext.fetch(fetchRequestPersons) as? [Person] else
-      {
+      guard let persons = try CoreDataWrapper.shared.viewContext.fetch(fetchRequestPersons) as? [Person] else {
         return
       }
 

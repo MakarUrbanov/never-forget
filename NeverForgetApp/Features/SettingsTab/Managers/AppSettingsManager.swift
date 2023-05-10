@@ -17,7 +17,7 @@ protocol AppSettingsManagerDelegate: AnyObject {
 
 final class AppSettingsManager: ObservableObject {
 
-  static let context = PersistentContainerProvider.shared.viewContext
+  static let context = CoreDataWrapper.shared.viewContext
 
   weak var delegate: AppSettingsManagerDelegate?
 
@@ -60,7 +60,7 @@ final class AppSettingsManager: ObservableObject {
   }
 
   func save() {
-    AppSettingsManager.context.saveSafely()
+    AppSettingsManager.context.saveChanges()
   }
 
   func updateSettings(_ newSettings: AppSettings) {

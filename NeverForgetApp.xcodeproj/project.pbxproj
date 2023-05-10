@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		350BE5B929ABDD5B00A40F17 /* Binding+OptionalInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */; };
-		350BE5BD29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5BC29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift */; };
 		350BE5BF29ABF4E700A40F17 /* BaseContactProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5BE29ABF4E700A40F17 /* BaseContactProfileView.swift */; };
 		350BE5C229ABF73D00A40F17 /* CreateNewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C129ABF73D00A40F17 /* CreateNewContactView.swift */; };
 		350BE5C429ABF77500A40F17 /* CreateNewContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350BE5C329ABF77500A40F17 /* CreateNewContactViewModel.swift */; };
@@ -47,11 +46,10 @@
 		3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */; };
 		3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3551F1AB299028AF00EBA6A3 /* LaunchScreen.storyboard */; };
 		355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E27412999886F0038F8BA /* PersistentContainerController.swift */; };
-		355E274429998E7D0038F8BA /* PersistentContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */; };
 		355E277429A261560038F8BA /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277229A261550038F8BA /* Person+CoreDataClass.swift */; };
 		355E277529A261560038F8BA /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277329A261550038F8BA /* Person+CoreDataProperties.swift */; };
 		355E277E29A28FFF0038F8BA /* ContactsListScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E277D29A28FFF0038F8BA /* ContactsListScreenView.swift */; };
-		355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278229A2B6A00038F8BA /* PersonRowView.swift */; };
+		355E278329A2B6A00038F8BA /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278229A2B6A00038F8BA /* ContactRowView.swift */; };
 		355E278729A2BDE30038F8BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 355E278929A2BDE30038F8BA /* Localizable.strings */; };
 		355E278C29A2BF2B0038F8BA /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278B29A2BF2B0038F8BA /* Localizable.swift */; };
 		355E278F29A2CFDD0038F8BA /* String+localizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E278E29A2CFDD0038F8BA /* String+localizedString.swift */; };
@@ -61,6 +59,7 @@
 		355E27A029A555FD0038F8BA /* Color+uiColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E279F29A555FD0038F8BA /* Color+uiColor.swift */; };
 		355E27A329A55B770038F8BA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355E27A229A55B770038F8BA /* Colors.xcassets */; };
 		355E27A529A55C130038F8BA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355E27A429A55C130038F8BA /* Images.xcassets */; };
+		356BD33E2A09A5090099B215 /* CoreDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BD33D2A09A5090099B215 /* CoreDataWrapper.swift */; };
 		356CD87F2991858100EA9D2D /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */; };
 		356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD8802991859D00EA9D2D /* TabCoordinator.swift */; };
 		356CD88929918EBB00EA9D2D /* BaseUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */; };
@@ -121,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+OptionalInit.swift"; sourceTree = "<group>"; };
-		350BE5BC29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+safeSave.swift"; sourceTree = "<group>"; };
 		350BE5BE29ABF4E700A40F17 /* BaseContactProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseContactProfileView.swift; sourceTree = "<group>"; };
 		350BE5C129ABF73D00A40F17 /* CreateNewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewContactView.swift; sourceTree = "<group>"; };
 		350BE5C329ABF77500A40F17 /* CreateNewContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewContactViewModel.swift; sourceTree = "<group>"; };
@@ -166,11 +164,10 @@
 		3551F1AE299028AF00EBA6A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3551F1B42990291D00EBA6A3 /* never-forget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "never-forget.entitlements"; sourceTree = "<group>"; };
 		355E27412999886F0038F8BA /* PersistentContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerController.swift; sourceTree = "<group>"; };
-		355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerProvider.swift; sourceTree = "<group>"; };
 		355E277229A261550038F8BA /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		355E277329A261550038F8BA /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		355E277D29A28FFF0038F8BA /* ContactsListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListScreenView.swift; sourceTree = "<group>"; };
-		355E278229A2B6A00038F8BA /* PersonRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRowView.swift; sourceTree = "<group>"; };
+		355E278229A2B6A00038F8BA /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		355E278829A2BDE30038F8BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		355E278A29A2BEA00038F8BA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		355E278B29A2BF2B0038F8BA /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -181,6 +178,7 @@
 		355E279F29A555FD0038F8BA /* Color+uiColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+uiColor.swift"; sourceTree = "<group>"; };
 		355E27A229A55B770038F8BA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		355E27A429A55C130038F8BA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		356BD33D2A09A5090099B215 /* CoreDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataWrapper.swift; sourceTree = "<group>"; };
 		356CD87E2991858100EA9D2D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		356CD8802991859D00EA9D2D /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		356CD88629918EBB00EA9D2D /* BaseUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUITabBarController.swift; sourceTree = "<group>"; };
@@ -235,14 +233,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		350BE5BA29ABEDEC00A40F17 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				350BE5BC29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 		352114F129A8DA3500559988 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +262,7 @@
 		3521150229A8F7AC00559988 /* PeopleList */ = {
 			isa = PBXGroup;
 			children = (
-				355E278129A2B6900038F8BA /* PeopleRow */,
+				355E278129A2B6900038F8BA /* ContactRow */,
 				358728FA29FE0BE500148218 /* ContactsListWelcomeMessage.swift */,
 				3521150029A8F76F00559988 /* ContactsListView.swift */,
 			);
@@ -470,7 +460,7 @@
 			children = (
 				3551F1A6299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld */,
 				355E27412999886F0038F8BA /* PersistentContainerController.swift */,
-				355E274329998E7D0038F8BA /* PersistentContainerProvider.swift */,
+				356BD33D2A09A5090099B215 /* CoreDataWrapper.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -543,12 +533,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		355E278129A2B6900038F8BA /* PeopleRow */ = {
+		355E278129A2B6900038F8BA /* ContactRow */ = {
 			isa = PBXGroup;
 			children = (
-				355E278229A2B6A00038F8BA /* PersonRowView.swift */,
+				355E278229A2B6A00038F8BA /* ContactRowView.swift */,
 			);
-			path = PeopleRow;
+			path = ContactRow;
 			sourceTree = "<group>";
 		};
 		355E278429A2BD220038F8BA /* Localizable */ = {
@@ -563,7 +553,6 @@
 		356CD88529918E6700EA9D2D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				350BE5BA29ABEDEC00A40F17 /* CoreData */,
 				350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */,
 				355E279B29A5508B0038F8BA /* Color+Theme.swift */,
 				355E279F29A555FD0038F8BA /* Color+uiColor.swift */,
@@ -914,7 +903,6 @@
 				352114F329A8DA4D00559988 /* RootCoordinator.swift in Sources */,
 				3521150129A8F76F00559988 /* ContactsListView.swift in Sources */,
 				356CD8812991859D00EA9D2D /* TabCoordinator.swift in Sources */,
-				355E274429998E7D0038F8BA /* PersistentContainerProvider.swift in Sources */,
 				355E27A029A555FD0038F8BA /* Color+uiColor.swift in Sources */,
 				3521150D29A9099A00559988 /* ContactsListScreenViewModel.swift in Sources */,
 				355E279529A2D3D50038F8BA /* LocalizedStringKey+toStringKey.swift in Sources */,
@@ -923,7 +911,7 @@
 				352114FF29A8F2F500559988 /* ContactsListCoordinator.swift in Sources */,
 				359CDD0029D4BA7000EDAF2C /* MainScreenPeopleList.swift in Sources */,
 				35BD2F4429D794F9000A9801 /* UnfairLock.swift in Sources */,
-				355E278329A2B6A00038F8BA /* PersonRowView.swift in Sources */,
+				355E278329A2B6A00038F8BA /* ContactRowView.swift in Sources */,
 				3533AFFB29AA6DE800BA2F5F /* ContactsListViewModel.swift in Sources */,
 				35B4535F29DA0280004F3696 /* PeopleListSectioned.swift in Sources */,
 				3521150A29A8FF5A00559988 /* ContactProfileView.swift in Sources */,
@@ -934,7 +922,6 @@
 				35D02D302990485000536AB8 /* Coordinator.swift in Sources */,
 				3540DEAD29B5124200154770 /* View+hideKeyboard.swift in Sources */,
 				3551F1A0299028AE00EBA6A3 /* SceneDelegate.swift in Sources */,
-				350BE5BD29ABEE0700A40F17 /* NSManagedObjectContext+safeSave.swift in Sources */,
 				354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */,
 				3551F1A8299028AE00EBA6A3 /* NeverForgetModels.xcdatamodeld in Sources */,
 				357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */,
@@ -946,6 +933,7 @@
 				358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */,
 				355E27422999886F0038F8BA /* PersistentContainerController.swift in Sources */,
 				35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */,
+				356BD33E2A09A5090099B215 /* CoreDataWrapper.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* ContactsListScreenView.swift in Sources */,
 				35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */,
 				35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift in Sources */,

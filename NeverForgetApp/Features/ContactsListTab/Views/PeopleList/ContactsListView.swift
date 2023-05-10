@@ -25,11 +25,11 @@ struct ContactsListView: View {
         List {
           Group {
             ForEach(persons) { person in
-              PersonRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
+              ContactRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
                 .listRowBackground(Color.clear)
                 .swipeActions(allowsFullSwipe: false, content: {
                   Button("Delete") { // TODO: translate
-                    viewModel.deleteUser(managedObjectContext: managedObjectContext, person: person)
+                    viewModel.deleteUser(context: managedObjectContext, person: person)
                   }
                   .tint(.red)
                 })
@@ -48,29 +48,31 @@ struct ContactsListView: View {
 
 struct PeopleListView_Previews: PreviewProvider {
 
+  private static let context = CoreDataWrapper.shared.viewContext
+
   private static func addPerson() {
-    let newPerson = Person(context: PersistentContainerProvider.shared.viewContext)
+    let newPerson = Person(context: context)
     newPerson.name = .randomString(maxLength: 20, numberOfWords: 2)
     newPerson.photo = Bool.random() ? UIImage(named: "MockImage")?.jpegData(compressionQuality: 1) : nil
     newPerson.dateOfBirth = Date.getRandomDate()
 
-    PersistentContainerProvider.shared.viewContext.saveSafely()
+    context.saveChanges()
   }
 
   private static func deletePersons() {
-    let persons = try? PersistentContainerProvider.shared.viewContext.fetch(Person.fetchRequest()) as? [Person]
+    let persons = try? context.fetch(Person.fetchRequest()) as? [Person]
 
     persons?.forEach { person in
-      PersistentContainerProvider.shared.viewContext.delete(person)
+      context.delete(person)
     }
 
-    PersistentContainerProvider.shared.viewContext.saveSafely()
+    context.saveChanges()
   }
 
   static var previews: some View {
     ZStack(alignment: .bottom) {
       ContactsListView()
-        .environment(\.managedObjectContext, PersistentContainerProvider.shared.viewContext)
+        .environment(\.managedObjectContext, context)
         .environmentObject(ContactsListCoordinator())
 
       VStack {

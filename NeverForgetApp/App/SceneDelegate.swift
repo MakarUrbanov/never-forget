@@ -37,7 +37,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificatio
   func sceneWillEnterForeground(_: UIScene) {}
 
   func sceneDidEnterBackground(_: UIScene) {
-    PersistentContainerProvider.shared.viewContext.saveSafely()
+    CoreDataWrapper.shared.viewContext.saveChanges()
   }
 
   // MARK: - Notifications

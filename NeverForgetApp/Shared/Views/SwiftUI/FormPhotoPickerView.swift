@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct FormPhotoPickerView: View {
-  @Binding var imageData: Data?
 
+  @Binding var imageData: Data?
   @State private var isPresentedImagePicker = false
-  @State private var selectedImage: UIImage?
   @State private var isLoadingPhoto = false
 
   let compressionQuality: CGFloat
@@ -28,12 +27,11 @@ struct FormPhotoPickerView: View {
       }
       Button("Delete", role: .destructive) { // TODO: translate
         imageData = nil
-        selectedImage = nil
       }
       .disabled(imageData == nil)
     } label: {
       DecodedImageWithPlaceholderView(
-        data: $imageData,
+        imageData: imageData,
         placeholder: Image(systemName: "person").resizable().padding(30),
         frame: CGSize(width: 100, height: 100),
         isLoading: $isLoadingPhoto
@@ -43,15 +41,8 @@ struct FormPhotoPickerView: View {
       .cornerRadius(100)
     }
     .frame(maxWidth: .infinity)
-    .onChange(of: selectedImage, perform: { newImage in
-      DispatchQueue.main.async {
-        if let image = newImage?.jpegData(compressionQuality: compressionQuality) {
-          imageData = image
-        }
-      }
-    })
     .sheet(isPresented: $isPresentedImagePicker) {
-      ImagePickerRepresentable(selectedImage: $selectedImage, isLoading: $isLoadingPhoto)
+      ImagePickerRepresentable(selectedImage: $imageData, isLoading: $isLoadingPhoto)
     }
   }
 }

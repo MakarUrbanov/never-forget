@@ -12,7 +12,7 @@ class ContactsListViewModel: ObservableObject {
 
   private let personsNotificationsManager = ContactNotificationsManager()
 
-  func deleteUser(managedObjectContext: NSManagedObjectContext, person: Person) {
+  func deleteUser(context: NSManagedObjectContext, person: Person) {
     let deletePerson: () -> Void = {
       let userId = ContactNotificationsManager.getUserIdFromPersonObject(person)
 
@@ -20,8 +20,8 @@ class ContactsListViewModel: ObservableObject {
         await self.personsNotificationsManager.deleteAllNotifications(withPrefix: userId)
       }
 
-      managedObjectContext.delete(person)
-      managedObjectContext.saveSafely()
+      context.delete(person)
+      context.saveChanges()
     }
 
     askToDelete(personName: person.name, delete: deletePerson)

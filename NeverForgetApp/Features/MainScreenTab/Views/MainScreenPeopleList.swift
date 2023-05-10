@@ -11,10 +11,8 @@ struct MainScreenPeopleList: View {
 
   @EnvironmentObject var coordinator: MainScreenCoordinator
   private let peopleSections: [PeopleListSectioned]
-  @Binding var selectedDate: Date
 
-  init(peopleSections: [PeopleListSectioned], selectedDate: Binding<Date>) {
-    _selectedDate = selectedDate
+  init(peopleSections: [PeopleListSectioned]) {
     self.peopleSections = peopleSections
   }
 
@@ -35,6 +33,6 @@ struct MainScreenPeopleList: View {
 
 struct MainScreenPeopleList_Previews: PreviewProvider {
   static var previews: some View {
-    MainScreenPeopleList(peopleSections: [], selectedDate: .constant(Date.now))
+    MainScreenPeopleList(peopleSections: [])
   }
 }

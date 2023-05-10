@@ -14,29 +14,24 @@ struct MainScreenView: View {
   @StateObject var viewModel = MainScreenViewModel()
   @State private var selectedDate = Date.now
   @FetchRequest(fetchRequest: Person.sortedFetchRequest()) private var persons
+  @EnvironmentObject var coordinator: MainScreenCoordinator
 
   var body: some View {
-    ZStack(alignment: .top) {
-      NeverForgetDatePickerViewRepresentable(selectedDate: $selectedDate, datesOfEvents: viewModel.datesOfEvents)
-        .frame(maxWidth: .infinity, maxHeight: 300)
+    VStack {
+      Text("Upcoming birthdays") // TODO: translate
+        .font(.title3)
+        .fontWeight(.bold)
+        .frame(maxWidth: .infinity, alignment: .leading)
 
-      VStack {
-        Text("Upcoming birthdays") // TODO: translate
-          .font(.title3)
-          .fontWeight(.bold)
-          .frame(maxWidth: .infinity, alignment: .leading)
-
-        MainScreenPeopleList(peopleSections: viewModel.peopleListSectioned, selectedDate: $selectedDate)
-      }
-      .padding(.leading)
-      .padding(.bottom, 100)
-      .offset(y: 100)
+      MainScreenPeopleList(peopleSections: viewModel.peopleListSectioned)
+        .padding(.trailing)
     }
+    .padding(.leading)
     .onAppear {
-      viewModel.onChangePersonsList(persons: persons)
+      viewModel.onChangePersonsList(persons: Array(persons))
     }
-    .onChange(of: Array(persons), perform: { _ in
-      viewModel.onChangePersonsList(persons: persons)
+    .onChange(of: Array(persons), perform: { newPersons in
+      viewModel.onChangePersonsList(persons: newPersons)
     })
     .navigationTitle("Main Tab") // TODO: translate
     .frame(maxWidth: .infinity, maxHeight: .infinity)
