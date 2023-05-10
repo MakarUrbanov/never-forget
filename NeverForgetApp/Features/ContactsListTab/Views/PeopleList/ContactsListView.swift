@@ -25,7 +25,7 @@ struct ContactsListView: View {
         List {
           Group {
             ForEach(persons) { person in
-              PersonRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
+              ContactRowView(person, openPersonProfile: coordinator.openPersonProfile(person:))
                 .listRowBackground(Color.clear)
                 .swipeActions(allowsFullSwipe: false, content: {
                   Button("Delete") { // TODO: translate

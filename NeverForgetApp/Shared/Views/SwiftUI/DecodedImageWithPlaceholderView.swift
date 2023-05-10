@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct DecodedImageWithPlaceholderView<DefaultImage: View>: View {
-  let placeholder: DefaultImage
+struct DecodedImageWithPlaceholderView<PlaceholderImage: View>: View {
+
+  let placeholder: PlaceholderImage
   let onLoadEnd: () -> Void
   let frame: CGSize
 
   private let imageDrawerQueue = DispatchQueue(label: "com.NeverForget.imageDrawerQueue", qos: .userInteractive)
 
-  @Binding var data: Data?
+  var imageData: Data?
   @State private var decodedImage: Image?
 
   @Binding var parentIsLoading: Bool
@@ -29,13 +30,13 @@ struct DecodedImageWithPlaceholderView<DefaultImage: View>: View {
   }
 
   init(
-    data: Binding<Data?>,
-    placeholder: DefaultImage,
+    imageData: Data?,
+    placeholder: PlaceholderImage,
     frame: CGSize,
     isLoading: Binding<Bool> = .constant(false),
     onLoadEnd: @escaping () -> Void = {}
   ) {
-    _data = data
+    self.imageData = imageData
     self.placeholder = placeholder
     self.onLoadEnd = onLoadEnd
     self.frame = frame
@@ -57,12 +58,12 @@ struct DecodedImageWithPlaceholderView<DefaultImage: View>: View {
                 .zIndex(2)
             }
           }
-          .onAppear {
-            loadAsyncImage(data: data)
-          }
       }
     }
-    .onChange(of: data, perform: { newData in
+    .onAppear {
+      loadAsyncImage(data: imageData)
+    }
+    .onChange(of: imageData, perform: { newData in
       loadAsyncImage(data: newData)
     })
   }
@@ -75,7 +76,7 @@ extension DecodedImageWithPlaceholderView {
   private func loadAsyncImage(data: Data?) {
     localIsLoading = true
 
-    imageDrawerQueue.async {
+    imageDrawerQueue.sync {
       guard let data, let decodedImage = UIImage(data: data) else {
         onLoadEnd()
         localIsLoading = false
@@ -97,7 +98,7 @@ extension DecodedImageWithPlaceholderView {
 struct DecodedImageWithPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
     DecodedImageWithPlaceholderView(
-      data: .constant(Data()),
+      imageData: Data(),
       placeholder: Image("person"),
       frame: CGSize(width: 100, height: 100)
     )

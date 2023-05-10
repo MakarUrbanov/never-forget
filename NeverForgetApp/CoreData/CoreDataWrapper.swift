@@ -18,7 +18,9 @@ final class CoreDataWrapper {
   private init() {
     persistentContainer = CoreDataWrapper.getInitialContainer()
     viewContext = persistentContainer.viewContext
+
     backgroundContext = persistentContainer.newBackgroundContext()
+    backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
   }
 
   func existingObject<T: NSManagedObject>(_ model: T, in context: NSManagedObjectContext) -> T? {
@@ -26,12 +28,15 @@ final class CoreDataWrapper {
   }
 
   func newBackgroundQueueContext() -> NSManagedObjectContext {
-    persistentContainer.newBackgroundContext()
+    let context = persistentContainer.newBackgroundContext()
+    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    return context
   }
 
   func newMainQueueContext() -> NSManagedObjectContext {
     let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     context.parent = viewContext
+    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     return context
   }
 

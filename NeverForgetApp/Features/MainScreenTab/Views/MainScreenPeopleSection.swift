@@ -15,7 +15,7 @@ struct MainScreenPeopleSection: View {
     LazyVStack(pinnedViews: .sectionHeaders) {
       Section {
         ForEach(section.persons) { people in
-          PersonRowView(people, dateFormat: "dd MMM", openPersonProfile: goToPersonProfile)
+          ContactRowView(people, dateFormat: "dd MMM", openPersonProfile: goToPersonProfile)
         }
       } header: {
         Text(section.title)

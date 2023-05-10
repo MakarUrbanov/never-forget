@@ -13,8 +13,8 @@ class MainScreenViewModel: ObservableObject {
   @Published var peopleListSectioned: [PeopleListSectioned] = []
   @Published var datesOfEvents: Set<Date> = []
 
-  func onChangePersonsList(persons: FetchedResults<Person>) {
-    let sectionedPersonsList = MainScreenViewModel.createSectionedPersonsList(Array(persons))
+  func onChangePersonsList(persons: [Person]) {
+    let sectionedPersonsList = MainScreenViewModel.createSectionedPersonsList(persons)
     peopleListSectioned = sectionedPersonsList
 
     datesOfEvents = MainScreenViewModel.computeDatesOfEvents(persons: persons)
@@ -26,7 +26,7 @@ class MainScreenViewModel: ObservableObject {
 
 extension MainScreenViewModel {
 
-  private static func computeDatesOfEvents(persons: FetchedResults<Person>) -> Set<Date> {
+  private static func computeDatesOfEvents(persons: [Person]) -> Set<Date> {
     var set: Set<Date> = Set()
 
     persons.forEach { person in
@@ -35,65 +35,6 @@ extension MainScreenViewModel {
 
     return set
   }
-
-//  private static func createSectionedPersonsList(_ persons: [Person]) -> [PeopleListSectioned] {
-//    var todayBirthdays = PeopleListSectioned(title: "Today:", persons: []) // TODO: translate
-//    var tomorrowBirthdays = PeopleListSectioned(title: "Tomorrow:", persons: []) // TODO: translate
-//    var list: [PeopleListSectioned] = []
-//
-//    persons.forEach { person in
-//      guard let dateOfBirth = person.dateOfBirth else { return }
-//
-//      let dateOfBirthDateComponents = Calendar.current.dateComponents(
-//        [.year, .month, .day],
-//        from: dateOfBirth
-//      )
-//      let todayDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-//      let tomorrowDateComponents = Calendar.current.dateComponents(
-//        [.year, .month, .day],
-//        from: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date.now
-//      )
-//
-//      let isTodayBirthdate = dateOfBirthDateComponents.day == todayDateComponents.day && dateOfBirthDateComponents
-//        .month == todayDateComponents.month
-//      let isTomorrowBirthdate = dateOfBirthDateComponents.day == tomorrowDateComponents.day &&
-//      dateOfBirthDateComponents
-//        .month == tomorrowDateComponents.month
-//
-//      switch true {
-//        case isTodayBirthdate:
-//          todayBirthdays.addPerson(person)
-//        case isTomorrowBirthdate:
-//          tomorrowBirthdays.addPerson(person)
-//        default:
-//          guard let month = dateOfBirthDateComponents.month else { break }
-//
-//          guard let index = list.firstIndex(where: { section in
-//            section.month == month
-//          }) else {
-//            let dateFormat = dateOfBirthDateComponents.year == todayDateComponents.year ? "MMMM" : "MMMM yyyy"
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = dateFormat
-//            let sectionTitle = dateFormatter.string(from: dateOfBirth).capitalized
-//            let section = PeopleListSectioned(title: sectionTitle, month: month, persons: [person])
-//            list.append(section)
-//            break
-//          }
-//
-//          list[index].addPerson(person)
-//      }
-//    }
-//
-//    let firstSections: [PeopleListSectioned] = [todayBirthdays, tomorrowBirthdays].filter { section in
-//      !section.persons.isEmpty
-//    }
-//
-//    if !firstSections.isEmpty {
-//      list.insert(contentsOf: firstSections, at: 0)
-//    }
-//
-//    return list
-//  }
 
 }
 
