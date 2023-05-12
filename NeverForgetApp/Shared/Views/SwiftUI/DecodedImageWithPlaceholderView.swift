@@ -7,13 +7,15 @@
 
 import SwiftUI
 
+private struct DecodedImageDrawerQueueProvider {
+  static let imageDrawerQueue = DispatchQueue(label: "com.NeverForget.imageDrawerQueue", qos: .userInteractive)
+}
+
 struct DecodedImageWithPlaceholderView<PlaceholderImage: View>: View {
 
   let placeholder: PlaceholderImage
   let onLoadEnd: () -> Void
   let frame: CGSize
-
-  private let imageDrawerQueue = DispatchQueue(label: "com.NeverForget.imageDrawerQueue", qos: .userInteractive)
 
   var imageData: Data?
   @State private var decodedImage: Image?
@@ -76,20 +78,24 @@ extension DecodedImageWithPlaceholderView {
   private func loadAsyncImage(data: Data?) {
     localIsLoading = true
 
-    imageDrawerQueue.sync {
+    DecodedImageDrawerQueueProvider.imageDrawerQueue.async {
       guard let data, let decodedImage = UIImage(data: data) else {
-        onLoadEnd()
-        localIsLoading = false
-        decodedImage = nil
+        DispatchQueue.main.async {
+          onLoadEnd()
+          localIsLoading = false
+          decodedImage = nil
+        }
         return
       }
 
       let resizableImage = decodedImage.resizeImage(maxSize: frame)
       let image = Image(uiImage: resizableImage)
 
-      self.decodedImage = image
-      onLoadEnd()
-      localIsLoading = false
+      DispatchQueue.main.async {
+        self.decodedImage = image
+        onLoadEnd()
+        localIsLoading = false
+      }
     }
   }
 
