@@ -1,5 +1,5 @@
 //
-//  MainScreenPeopleList.swift
+//  MainScreenContactsListView.swift
 //  NeverForgetApp
 //
 //  Created by makar on 3/29/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainScreenPeopleList: View {
+struct MainScreenContactsListView: View {
 
   @EnvironmentObject var coordinator: MainScreenCoordinator
   private let peopleSections: [PeopleListSectioned]
@@ -20,7 +20,7 @@ struct MainScreenPeopleList: View {
     ScrollView {
       LazyVStack(spacing: 20) {
         ForEach(peopleSections) { peopleSection in
-          MainScreenPeopleSection(section: peopleSection, goToPersonProfile: coordinator.goToPersonProfile(person:))
+          MainScreenPeopleSectionView(section: peopleSection, goToPersonProfile: coordinator.goToPersonProfile(person:))
 
           Divider()
             .background(Color.Theme.text4)
@@ -33,6 +33,6 @@ struct MainScreenPeopleList: View {
 
 struct MainScreenPeopleList_Previews: PreviewProvider {
   static var previews: some View {
-    MainScreenPeopleList(peopleSections: [])
+    MainScreenContactsListView(peopleSections: [])
   }
 }

@@ -20,7 +20,7 @@ struct ContactsListView: View {
   var body: some View {
     VStack {
       if persons.isEmpty {
-        ContactsListWelcomeMessage()
+        ContactsListWelcomeMessageView()
       } else {
         List {
           Group {

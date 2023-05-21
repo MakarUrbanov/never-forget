@@ -1,5 +1,5 @@
 //
-//  MainScreenPeopleSection.swift
+//  MainScreenPeopleSectionView.swift
 //  NeverForgetApp
 //
 //  Created by makar on 4/3/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainScreenPeopleSection: View {
+struct MainScreenPeopleSectionView: View {
   let section: PeopleListSectioned
   let goToPersonProfile: (Person) -> Void
 
@@ -39,6 +39,6 @@ struct MainScreenPeopleSection_Previews: PreviewProvider {
   static let section = PeopleListSectioned(title: "Today:", month: 5, persons: [person])
 
   static var previews: some View {
-    MainScreenPeopleSection(section: section, goToPersonProfile: { _ in })
+    MainScreenPeopleSectionView(section: section, goToPersonProfile: { _ in })
   }
 }

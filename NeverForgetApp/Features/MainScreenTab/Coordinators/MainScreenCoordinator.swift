@@ -14,7 +14,8 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
   var navigationController: UINavigationController = BaseUINavigationController()
 
   func start() {
-    let mainScreen = getMainScreenView()
+    let mainScreen = getNewMainScreenView()
+//    let mainScreen = getMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
   }
 
@@ -43,9 +44,7 @@ extension MainScreenCoordinator {
 
   private func fetchPersonAndGoToProfile(personId: String) {
     do {
-      if let person = try Person
-        .fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext)
-      {
+      if let person = try Person.fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext) {
         goToPersonProfile(person: person)
       }
     } catch {
@@ -80,6 +79,13 @@ extension MainScreenCoordinator {
 
     let listTab = UIHostingController(rootView: view)
     return listTab
+  }
+
+  private func getNewMainScreenView() -> UIViewController {
+    let viewController = MainScreenViewController(coordinator: self)
+    viewController.navigationItem.title = Localizable.Tabs.main.toString()
+
+    return viewController
   }
 
 }

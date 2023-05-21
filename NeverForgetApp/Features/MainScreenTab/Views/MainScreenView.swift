@@ -23,7 +23,7 @@ struct MainScreenView: View {
         .fontWeight(.bold)
         .frame(maxWidth: .infinity, alignment: .leading)
 
-      MainScreenPeopleList(peopleSections: viewModel.peopleListSectioned)
+      MainScreenContactsListView(peopleSections: viewModel.peopleListSectioned)
         .padding(.trailing)
     }
     .padding(.leading)
