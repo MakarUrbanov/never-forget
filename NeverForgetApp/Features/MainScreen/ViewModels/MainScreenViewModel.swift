@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Protocol
 
-protocol NewMainScreenViewModelProtocol: AnyObject {
+protocol MainScreenViewModelProtocol: AnyObject {
   var coordinator: MainScreenCoordinator? { get set }
   var personsSectioned: Bindable<[TableViewPersonsSection]> { get }
   var personsManager: MainScreenPersonsCoreDataManager { get }
@@ -20,7 +20,7 @@ protocol NewMainScreenViewModelProtocol: AnyObject {
 
 // MARK: - ViewModel
 
-final class NewMainScreenViewModel: NewMainScreenViewModelProtocol {
+final class MainScreenViewModel: MainScreenViewModelProtocol {
 
   let personsManager: MainScreenPersonsCoreDataManager
   var personsSectioned: Bindable<[TableViewPersonsSection]> = Bindable([])
@@ -44,10 +44,10 @@ final class NewMainScreenViewModel: NewMainScreenViewModelProtocol {
 
 // MARK: - CoreDataManager Delegate
 
-extension NewMainScreenViewModel: MainScreenPersonsCoreDataManagerDelegate {
+extension MainScreenViewModel: MainScreenPersonsCoreDataManagerDelegate {
 
   func personsChanged(_ persons: [Person]) {
-    let sectioned = NewMainScreenViewModel.generateTableSections(persons: persons)
+    let sectioned = MainScreenViewModel.generateTableSections(persons: persons)
     personsSectioned.value = sectioned
   }
 
@@ -55,7 +55,7 @@ extension NewMainScreenViewModel: MainScreenPersonsCoreDataManagerDelegate {
 
 // MARK: - Utils
 
-extension NewMainScreenViewModel {
+extension MainScreenViewModel {
 
   private static func computeNextYearOfDateOfBirth(_ dateOfBirth: Date) -> Int {
     let dateOfBirthComponents = Calendar.current.dateComponents([.month, .day], from: dateOfBirth)
@@ -106,7 +106,7 @@ extension NewMainScreenViewModel {
 
     return sectionsDictionary
       .map {
-        TableViewPersonsSection(section: $0.key, persons: $0.value.sorted(by: { $0.dateOfBirth < $1.dateOfBirth }))
+        TableViewPersonsSection(section: $0.key, persons: $0.value.sorted(by: { $0.dateOfBirth > $1.dateOfBirth }))
       }
       .sorted { $0.section.referenceNumber < $1.section.referenceNumber }
   }

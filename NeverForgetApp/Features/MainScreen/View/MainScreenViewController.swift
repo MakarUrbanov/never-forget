@@ -18,14 +18,14 @@ protocol MainScreenViewProtocol: AnyObject {
 
 final class MainScreenViewController: BaseUIViewController {
 
-  let viewModel: NewMainScreenViewModelProtocol
+  let viewModel: MainScreenViewModelProtocol
 
   private var tableView = PersonsTableView()
   private var diffableDataSource: PersonsTableView.PersonsDiffableDataSource
 
   init(coordinator: MainScreenCoordinator) {
     let fetchRequest = Person.sortedFetchRequest()
-    viewModel = NewMainScreenViewModel(context: CoreDataWrapper.shared.viewContext, fetchRequest: fetchRequest)
+    viewModel = MainScreenViewModel(context: CoreDataWrapper.shared.viewContext, fetchRequest: fetchRequest)
     viewModel.coordinator = coordinator
 
     diffableDataSource = tableView.makeDiffableDataSource()

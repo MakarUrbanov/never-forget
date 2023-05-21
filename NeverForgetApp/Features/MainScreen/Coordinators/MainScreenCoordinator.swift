@@ -14,8 +14,7 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
   var navigationController: UINavigationController = BaseUINavigationController()
 
   func start() {
-    let mainScreen = getNewMainScreenView()
-//    let mainScreen = getMainScreenView()
+    let mainScreen = getMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
   }
 
@@ -73,15 +72,6 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let view = MainScreenView()
-      .environmentObject(self)
-      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
-
-    let listTab = UIHostingController(rootView: view)
-    return listTab
-  }
-
-  private func getNewMainScreenView() -> UIViewController {
     let viewController = MainScreenViewController(coordinator: self)
     viewController.navigationItem.title = Localizable.Tabs.main.toString()
 
