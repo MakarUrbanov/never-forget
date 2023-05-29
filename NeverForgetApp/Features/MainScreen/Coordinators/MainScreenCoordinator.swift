@@ -43,9 +43,7 @@ extension MainScreenCoordinator {
 
   private func fetchPersonAndGoToProfile(personId: String) {
     do {
-      if let person = try Person
-        .fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext)
-      {
+      if let person = try Person.fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext) {
         goToPersonProfile(person: person)
       }
     } catch {
@@ -74,12 +72,10 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let view = MainScreenView()
-      .environmentObject(self)
-      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
+    let viewController = MainScreenViewController(coordinator: self)
+    viewController.navigationItem.title = Localizable.Tabs.main.toString()
 
-    let listTab = UIHostingController(rootView: view)
-    return listTab
+    return viewController
   }
 
 }
