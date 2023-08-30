@@ -5,7 +5,6 @@
  ## Enabled rules
  --enable andOperator
  --enable anyObjectProtocol
- --enable blankLinesAroundMark
  --enable blankLinesBetweenScopes
  --enable braces
  --enable consecutiveSpaces
@@ -97,3 +96,4 @@
  --disable blankLinesAtStartOfScope
  --disable consecutiveBlankLines
  --disable unusedArguments
+ --disable blankLinesAroundMark

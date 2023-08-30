@@ -1,6 +1,7 @@
 disabled_rules:
   - todo
   - opening_brace
+  - unneeded_synthesized_initializer
 
 analyzer_rules:
   - unused_import

@@ -1,5 +1,5 @@
 //
-//  NotificationAttachmentManager.swift
+//  NFLNNotificationAttachmentManager.swift
 //
 //
 //  Created by makar on 4/30/23.

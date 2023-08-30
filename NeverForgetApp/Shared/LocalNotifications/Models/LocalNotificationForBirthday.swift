@@ -91,8 +91,8 @@ extension LocalNotificationForBirthday {
 }
 
 
+// swiftlint:disable force_unwrapping
 // MARK: - NotificationContentGenerator
-
 // TODO: translate texts
 private extension LocalNotificationForBirthday {
   enum NotificationContentGenerator {
@@ -186,8 +186,6 @@ private extension LocalNotificationForBirthday {
     ] }
 
     // MARK: - Generate for the one week before
-
-    // swiftlint:disable force_unwrapping
     static func generateRandomTitleForOneWeekBefore() -> String {
       getOneWeekBeforeTitles().randomElement()!
     }
@@ -197,7 +195,6 @@ private extension LocalNotificationForBirthday {
     }
 
     // MARK: - Generate for the one day before
-
     static func generateRandomTitleForOneDayBefore() -> String {
       getOneDayBeforeTitles().randomElement()!
     }
@@ -207,7 +204,6 @@ private extension LocalNotificationForBirthday {
     }
 
     // MARK: - Generate for the one the birthday date
-
     static func generateRandomTitleForOnEventDate(hour: Int) -> String {
       switch hour {
         case 0...12:
@@ -230,6 +226,7 @@ private extension LocalNotificationForBirthday {
       }
     }
 
-
   }
 }
+
+// swiftlint:enable force_unwrapping

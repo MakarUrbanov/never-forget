@@ -73,6 +73,7 @@
 		358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */; };
 		3588E5692A01995D0066F51C /* NFLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 3588E5682A01995D0066F51C /* NFLogger */; };
 		3588E56E2A01ACFD0066F51C /* LocalNotificationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3588E56D2A01ACFD0066F51C /* LocalNotificationsFactory.swift */; };
+		35906D322A75A285003F12A1 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35906D312A75A285003F12A1 /* TestViewController.swift */; };
 		359749AF2A13BFBA0038DAA3 /* UIFont+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359749AE2A13BFBA0038DAA3 /* UIFont+init.swift */; };
 		359CDD0329D623DD00EDAF2C /* DateFormatter+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359CDD0229D623DD00EDAF2C /* DateFormatter+init.swift */; };
 		359CDD0529D6247C00EDAF2C /* String+uppercasedFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */; };
@@ -80,6 +81,7 @@
 		35A897E72A0D9E1500C1CD94 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A897E62A0D9E1500C1CD94 /* Theme.swift */; };
 		35A897E92A0DA86300C1CD94 /* AsyncImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A897E82A0DA86300C1CD94 /* AsyncImageLoader.swift */; };
 		35A897EE2A0F144500C1CD94 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A897ED2A0F144500C1CD94 /* UserImageView.swift */; };
+		35AC82B92A769EDB0061397D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 35AC82B82A769EDB0061397D /* SnapKit */; };
 		35BD2F4429D794F9000A9801 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BD2F4329D794F9000A9801 /* UnfairLock.swift */; };
 		35CE8C432A0800970070CA13 /* PersonNotificationsPermissionInfoBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE8C422A0800970070CA13 /* PersonNotificationsPermissionInfoBlock.swift */; };
 		35CE8C452A0803B40070CA13 /* ContactNotificationsPermissionInfoBlockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE8C442A0803B40070CA13 /* ContactNotificationsPermissionInfoBlockViewModel.swift */; };
@@ -94,6 +96,8 @@
 		35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */; };
 		35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841692992AFD900BF537E /* UIView+addView.swift */; };
 		35E841722992B0BA00BF537E /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841712992B0BA00BF537E /* UIColor+hex.swift */; };
+		35EE23042A9E7B5C00FFF25E /* NFCalendar in Resources */ = {isa = PBXBuildFile; fileRef = 35EE23032A9E7B5B00FFF25E /* NFCalendar */; };
+		35EE23062A9E7B9900FFF25E /* NFCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 35EE23052A9E7B9900FFF25E /* NFCalendar */; };
 		35F45D862A1A6E8F00161B4B /* PersonAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D852A1A6E8F00161B4B /* PersonAdapter.swift */; };
 		35F45D892A1A7AF100161B4B /* PersonsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D882A1A7AF100161B4B /* PersonsTableView.swift */; };
 		35F45D8B2A1A7BB200161B4B /* PersonsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D8A2A1A7BB200161B4B /* PersonsTableHeaderView.swift */; };
@@ -196,6 +200,7 @@
 		358728FA29FE0BE500148218 /* ContactsListWelcomeMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListWelcomeMessageView.swift; sourceTree = "<group>"; };
 		358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationTimesView.swift; sourceTree = "<group>"; };
 		3588E56D2A01ACFD0066F51C /* LocalNotificationsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsFactory.swift; sourceTree = "<group>"; };
+		35906D312A75A285003F12A1 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		359749AE2A13BFBA0038DAA3 /* UIFont+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+init.swift"; sourceTree = "<group>"; };
 		359CDD0229D623DD00EDAF2C /* DateFormatter+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+init.swift"; sourceTree = "<group>"; };
 		359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+uppercasedFirst.swift"; sourceTree = "<group>"; };
@@ -217,6 +222,7 @@
 		35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableOpacityButtonStyle.swift; sourceTree = "<group>"; };
 		35E841692992AFD900BF537E /* UIView+addView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addView.swift"; sourceTree = "<group>"; };
 		35E841712992B0BA00BF537E /* UIColor+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
+		35EE23032A9E7B5B00FFF25E /* NFCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NFCalendar; path = "../../Tests/test-nf-calendar/NFCalendar"; sourceTree = "<group>"; };
 		35F45D852A1A6E8F00161B4B /* PersonAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAdapter.swift; sourceTree = "<group>"; };
 		35F45D882A1A7AF100161B4B /* PersonsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTableView.swift; sourceTree = "<group>"; };
 		35F45D8A2A1A7BB200161B4B /* PersonsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTableHeaderView.swift; sourceTree = "<group>"; };
@@ -239,6 +245,8 @@
 				357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */,
 				3588E5692A01995D0066F51C /* NFLogger in Frameworks */,
 				358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */,
+				35AC82B92A769EDB0061397D /* SnapKit in Frameworks */,
+				35EE23062A9E7B9900FFF25E /* NFCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,10 +435,12 @@
 			children = (
 				3551F19C299028AE00EBA6A3 /* NeverForgetApp */,
 				354E8BA329BE6B82009BFB6D /* NeverForgetTests */,
-				3551F19B299028AE00EBA6A3 /* Products */,
 				357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */,
 				353A732C29FDF1B00074A409 /* NFLocalNotificationsManager */,
+				35EE23032A9E7B5B00FFF25E /* NFCalendar */,
 				354B839B2A0191E4006AF817 /* NFLogger */,
+				3551F19B299028AE00EBA6A3 /* Products */,
+				35906D342A75A307003F12A1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -452,6 +462,7 @@
 				35E841652992AEC200BF537E /* Features */,
 				35E8415B299299BE00BF537E /* Shared */,
 				3551F1BA29902E2800EBA6A3 /* SupportingFiles */,
+				35906D312A75A285003F12A1 /* TestViewController.swift */,
 			);
 			path = NeverForgetApp;
 			sourceTree = "<group>";
@@ -628,6 +639,13 @@
 			path = MainFlowCoordinator;
 			sourceTree = "<group>";
 		};
+		35906D342A75A307003F12A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		35A897E02A0D363F00C1CD94 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -796,6 +814,8 @@
 				357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */,
 				358728F829FDF7BA00148218 /* NFLocalNotificationsManager */,
 				3588E5682A01995D0066F51C /* NFLogger */,
+				35AC82B82A769EDB0061397D /* SnapKit */,
+				35EE23052A9E7B9900FFF25E /* NFCalendar */,
 			);
 			productName = "never-forget";
 			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
@@ -831,6 +851,7 @@
 			);
 			mainGroup = 3551F191299028AE00EBA6A3;
 			packageReferences = (
+				35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 3551F19B299028AE00EBA6A3 /* Products */;
 			projectDirPath = "";
@@ -858,6 +879,7 @@
 				355E27A529A55C130038F8BA /* Images.xcassets in Resources */,
 				3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */,
 				355E278729A2BDE30038F8BA /* Localizable.strings in Resources */,
+				35EE23042A9E7B5C00FFF25E /* NFCalendar in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,7 +922,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -987,6 +1009,7 @@
 				358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */,
 				35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */,
 				356BD33E2A09A5090099B215 /* CoreDataWrapper.swift in Sources */,
+				35906D322A75A285003F12A1 /* TestViewController.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* ContactsListScreenView.swift in Sources */,
 				356BD3592A0C288C0099B215 /* MainScreenPersonsCoreDataManager.swift in Sources */,
 				35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */,
@@ -1285,6 +1308,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1297,6 +1331,15 @@
 		3588E5682A01995D0066F51C /* NFLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NFLogger;
+		};
+		35AC82B82A769EDB0061397D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		35EE23052A9E7B9900FFF25E /* NFCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NFCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -9,7 +9,7 @@
 import XCTest
 
 final class DateTests: XCTestCase {
-  // swiftlint:disable implicitly_unwrapped_optional
+  // swiftlint:disable:next implicitly_unwrapped_optional
   var sut: Date!
 
   override func setUp() {

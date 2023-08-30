@@ -8,8 +8,6 @@
 import Foundation
 import NFLocalNotificationsManager
 
-// swiftlint:disable force_unwrapping
-// swiftlint:disable force_cast
 class ContactNotificationsManager {
 
   private var appSettingsManager = AppSettingsManager()
@@ -78,7 +76,6 @@ class ContactNotificationsManager {
 }
 
 // MARK: - Rescheduling Actor
-
 extension ContactNotificationsManager {
 
   actor ReschedulingAllPersonsNotificationsActor {
@@ -107,8 +104,9 @@ extension ContactNotificationsManager {
 
 }
 
+// swiftlint:disable force_unwrapping
+// swiftlint:disable force_cast
 // MARK: - Notifications
-
 extension ContactNotificationsManager {
 
   /// Makes array of notifications with settings and times from the app settings
@@ -235,7 +233,6 @@ extension ContactNotificationsManager {
 
 
 // MARK: - Helpers
-
 extension ContactNotificationsManager {
 
   static func getUserIdFromPersonObject(_ person: Person) -> String {
@@ -287,8 +284,11 @@ extension ContactNotificationsManager {
 
 }
 
-// MARK: - Types
+// swiftlint:enable force_unwrapping
+// swiftlint:enable force_cast
 
+
+// MARK: - Types
 extension ContactNotificationsManager {
 
   enum RescheduleNotificationsError: Error {

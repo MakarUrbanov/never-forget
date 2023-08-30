@@ -1,5 +1,5 @@
 //
-//  ValidatedForm.swift
+//  ValidatedValue.swift
 //  never-forget
 //
 //  Created by makar on 3/12/23.

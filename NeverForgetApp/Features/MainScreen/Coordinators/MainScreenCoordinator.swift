@@ -72,7 +72,7 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func getMainScreenView() -> UIViewController {
-    let viewController = MainScreenViewController(coordinator: self)
+    let viewController = TestViewController() // MainScreenViewController(coordinator: self)
     viewController.navigationItem.title = Localizable.Tabs.main.toString()
 
     return viewController

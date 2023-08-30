@@ -1,5 +1,5 @@
 //
-//  String+capitalizeFirst.swift
+//  String+uppercasedFirst.swift
 //  NeverForgetApp
 //
 //  Created by makar on 3/31/23.

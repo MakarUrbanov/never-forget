@@ -1,5 +1,5 @@
 //
-//  ContactNotificationsPermissionInfoBlockView.swift
+//  PersonNotificationsPermissionInfoBlock.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/7/23.

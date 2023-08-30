@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private struct DecodedImageDrawerQueueProvider {
+private enum DecodedImageDrawerQueueProvider {
   static let imageDrawerQueue = DispatchQueue(label: "com.NeverForget.imageDrawerQueue", qos: .userInteractive)
 }
 
