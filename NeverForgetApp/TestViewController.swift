@@ -12,7 +12,7 @@ import UIKit
 
 class TestViewController: UIViewController {
 
-  let calendar: NFCalendar = NFCalendarView()
+  let calendar: INFCalendar = NFCalendarView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,7 +34,7 @@ class TestViewController: UIViewController {
 
 }
 
-extension TestViewController: NFCalendarDataSource {
+extension TestViewController: INFCalendarDataSource {
 
   private static let dateFormatter = DateFormatter(dateFormat: DateFormatter.yearMonthDayFormat)
 
@@ -62,7 +62,7 @@ extension TestViewController: NFCalendarDataSource {
     ]
   }()
 
-  func calendar(_ calendar: NFCalendar, dataFor date: Date) -> NFCalendarDayData {
+  func calendar(_ calendar: INFCalendar, dataFor date: Date) -> NFCalendarDayData {
     if let markedDate = TestViewController.checkAndGetMarkedDate(date) {
       return markedDate
     }
