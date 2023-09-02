@@ -88,6 +88,7 @@
 		35D02D302990485000536AB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D02D2F2990485000536AB8 /* Coordinator.swift */; };
 		35D1F83B29D9DCE400965AB6 /* Color+random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D1F83A29D9DCE400965AB6 /* Color+random.swift */; };
 		35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2836F29F72E48002E7286 /* SettingsViewModel.swift */; };
+		35D2A3982AA3AC7900F76BCF /* UIViewController+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2A3972AA3AC7900F76BCF /* UIViewController+Preview.swift */; };
 		35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D527282A084010008274FB /* LocalNotificationDeepLinks.swift */; };
 		35D5272C2A097471008274FB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5272B2A097471008274FB /* Router.swift */; };
 		35E0479329B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift */; };
@@ -214,6 +215,7 @@
 		35D02D2F2990485000536AB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		35D1F83A29D9DCE400965AB6 /* Color+random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+random.swift"; sourceTree = "<group>"; };
 		35D2836F29F72E48002E7286 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		35D2A3972AA3AC7900F76BCF /* UIViewController+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Preview.swift"; sourceTree = "<group>"; };
 		35D527282A084010008274FB /* LocalNotificationDeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationDeepLinks.swift; sourceTree = "<group>"; };
 		35D5272B2A097471008274FB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		35E0479229B382E9006A2AB3 /* DecodedImageWithPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedImageWithPlaceholderView.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				350BE5B829ABDD5B00A40F17 /* Binding+OptionalInit.swift */,
+				35D1F83A29D9DCE400965AB6 /* Color+random.swift */,
 				355E279F29A555FD0038F8BA /* Color+uiColor.swift */,
 				354E8B9C29BE6713009BFB6D /* Date+randomDate.swift */,
 				359CDD0229D623DD00EDAF2C /* DateFormatter+init.swift */,
@@ -590,15 +593,15 @@
 				355E278E29A2CFDD0038F8BA /* String+localizedString.swift */,
 				3540DEAE29B51BE000154770 /* String+randomString.swift */,
 				3521151129A920CD00559988 /* String+trimmed.swift */,
+				359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */,
 				35E841712992B0BA00BF537E /* UIColor+hex.swift */,
+				359749AE2A13BFBA0038DAA3 /* UIFont+init.swift */,
 				35E0479429B3996B006A2AB3 /* UIImage+resizeImage.swift */,
 				354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */,
 				35E841692992AFD900BF537E /* UIView+addView.swift */,
+				35D2A3972AA3AC7900F76BCF /* UIViewController+Preview.swift */,
 				3540DEAC29B5124200154770 /* View+hideKeyboard.swift */,
 				354E8B9A29BE2139009BFB6D /* View+if.swift */,
-				359CDD0429D6247C00EDAF2C /* String+uppercasedFirst.swift */,
-				35D1F83A29D9DCE400965AB6 /* Color+random.swift */,
-				359749AE2A13BFBA0038DAA3 /* UIFont+init.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				35D2837029F72E48002E7286 /* SettingsViewModel.swift in Sources */,
 				356BD33E2A09A5090099B215 /* CoreDataWrapper.swift in Sources */,
 				35906D322A75A285003F12A1 /* TestViewController.swift in Sources */,
+				35D2A3982AA3AC7900F76BCF /* UIViewController+Preview.swift in Sources */,
 				355E277E29A28FFF0038F8BA /* ContactsListScreenView.swift in Sources */,
 				356BD3592A0C288C0099B215 /* MainScreenPersonsCoreDataManager.swift in Sources */,
 				35D527292A084010008274FB /* LocalNotificationDeepLinks.swift in Sources */,

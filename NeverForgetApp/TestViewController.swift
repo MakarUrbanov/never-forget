@@ -7,6 +7,7 @@
 
 import NFCalendar
 import SnapKit
+import SwiftUI
 import UIKit
 
 class TestViewController: UIViewController {
@@ -25,7 +26,7 @@ class TestViewController: UIViewController {
     calendar.calendarDataSource = self
 
     calendar.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
     }
 
     calendar.renderCalendar()
@@ -70,3 +71,10 @@ extension TestViewController: NFCalendarDataSource {
   }
 
 }
+
+struct TestView_Previews: PreviewProvider {
+  static var previews: some View {
+    TestViewController().makePreview()
+  }
+}
+
