@@ -115,8 +115,8 @@ extension TestViewController: INFCalendarAppearanceDelegate {
 
 }
 
-struct TestView_Previews: PreviewProvider {
-  static var previews: some View {
-    TestViewController().makePreview()
-  }
-}
+//struct TestView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    TestViewController().makePreview()
+//  }
+//}
