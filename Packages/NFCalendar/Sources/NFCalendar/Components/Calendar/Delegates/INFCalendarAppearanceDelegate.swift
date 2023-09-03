@@ -11,7 +11,7 @@ public protocol INFCalendarAppearanceDelegate: AnyObject {
   // MARK: - Calendar
   func calendarView(_ calendar: INFCalendarView, minimumLineSpacingForSectionAt: Int) -> CGFloat?
   // MARK: - Header
-  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: String) -> UILabel?
+  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel?
   func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel?
   // MARK: - Day
   func calendarView(_ calendar: INFCalendarView, dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel?
@@ -29,7 +29,7 @@ public extension INFCalendarAppearanceDelegate {
   func calendarView(
     _ calendar: INFCalendarView,
     header: INFMonthHeader,
-    labelForWeekday weekday: String
+    labelForWeekday weekday: Int
   ) -> UILabel? { nil }
   func calendarView(
     _ calendar: INFCalendarView,

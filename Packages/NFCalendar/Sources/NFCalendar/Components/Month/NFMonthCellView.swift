@@ -32,9 +32,20 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
   )
   private var monthHeaderView: INFMonthHeader = NFMonthHeaderView()
 
-  public func renderMonth(_ date: Date) {
-    setupViews()
+  // MARK: - Init
+  override public init(frame: CGRect) {
+    super.init(frame: frame)
 
+    initialize()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Public properties
+  public func renderMonth(_ date: Date) {
     let days = NFMonthCellView.getMonthDays(of: date)
 
     monthHeaderView.configure(with: date)
@@ -46,9 +57,9 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
 // MARK: - INFMonthCollectionViewDataSource
 extension NFMonthCellView: INFMonthCollectionViewDataSource {
 
-  public func monthCollectionView(_ month: INFMonthCollectionView, dataFor: Date) -> NFCalendarDay {
-    return monthDataSource?.monthCellView(self, dataFor: dataFor) ?? .init(
-      date: dataFor,
+  public func monthCollectionView(_ month: INFMonthCollectionView, dataFor date: Date) -> NFCalendarDay {
+    return monthDataSource?.monthCellView(self, dataFor: date) ?? .init(
+      date: date,
       backgroundImage: nil,
       badgeCount: nil
     )
@@ -58,32 +69,32 @@ extension NFMonthCellView: INFMonthCollectionViewDataSource {
 // MARK: - Private
 extension NFMonthCellView {
 
-  private func setupViews() {
+  private func initialize() {
     setupMonthHeaderView()
     setupMonthView()
   }
 
   private func setupMonthHeaderView() {
+    monthHeaderView.appearanceDelegate = self
+
     addSubview(monthHeaderView)
 
     monthHeaderView.snp.makeConstraints { make in
       make.height.equalTo(NFMonthCellView.headerHeight)
       make.leading.top.trailing.equalToSuperview()
     }
-
-    monthHeaderView.appearanceDelegate = self
   }
 
   private func setupMonthView() {
+    monthCollectionView.appearanceDelegate = self
+    monthCollectionView.monthDataSource = self
+
     addSubview(monthCollectionView)
 
     monthCollectionView.snp.makeConstraints { make in
       make.leading.bottom.trailing.equalToSuperview()
       make.top.equalTo(monthHeaderView.snp.bottom)
     }
-
-    monthCollectionView.appearanceDelegate = self
-    monthCollectionView.monthDataSource = self
   }
 
 }
@@ -123,7 +134,7 @@ extension NFMonthCellView: INFMonthHeaderAppearanceDelegate {
   public func monthHeader(
     _ header: INFMonthHeader,
     weekdaysView: INFMonthWeekdays,
-    labelForWeekday weekday: String
+    labelForWeekday weekday: Int
   ) -> UILabel? {
     monthAppearanceDelegate?.monthCell(self, header: header, labelForWeekday: weekday)
   }

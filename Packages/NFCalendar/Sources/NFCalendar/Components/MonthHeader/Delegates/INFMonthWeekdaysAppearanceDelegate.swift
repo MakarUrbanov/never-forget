@@ -14,5 +14,5 @@ public protocol INFMonthWeekdaysAppearanceDelegate: AnyObject {
   ///   - weekdaysView: Weekday view instance
   ///   - weekday: Weekday short name with 2 characters
   /// - Returns: Label of certain weekday
-  func weekdaysView(_ weekdaysView: INFMonthWeekdays, labelForWeekday weekday: String) -> UILabel?
+  func weekdaysView(_ weekdaysView: INFMonthWeekdays, labelForWeekday weekday: Int) -> UILabel?
 }

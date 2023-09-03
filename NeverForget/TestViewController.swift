@@ -21,14 +21,16 @@ class TestViewController: UIViewController {
   }
 
   private func setupCalendar() {
+    calendar.calendarDataSource = self
+    calendar.calendarAppearanceDelegate = self
+
     view.addSubview(calendar)
 
     calendar.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
     }
 
-    calendar.calendarDataSource = self
-    calendar.calendarAppearanceDelegate = self
+    calendar.showsVerticalScrollIndicator = false
 
     calendar.renderCalendar()
   }
@@ -64,7 +66,7 @@ extension TestViewController: INFCalendarDataSource {
     ]
   }()
 
-  private func calendarView(_ calendar: INFCalendarView, dataFor date: Date) -> NFCalendarDay {
+  func calendarView(_ calendar: NFCalendarView, dataFor date: Date) -> NFCalendarDay? {
     if let markedDate = TestViewController.checkAndGetMarkedDate(date) {
       return markedDate
     }
@@ -77,12 +79,25 @@ extension TestViewController: INFCalendarDataSource {
 // MARK: - INFCalendarAppearanceDelegate
 extension TestViewController: INFCalendarAppearanceDelegate {
 
-  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: String) -> UILabel? {
-    if weekday.lowercased() == "sa" || weekday.lowercased() == "su" {
+  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
+    if weekday == 1 || weekday == 7 {
       return CalendarWeekday.getWeekend()
     } else {
       return CalendarWeekday.getDefault1()
     }
+  }
+
+  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
+    CalendarWeekday.getWeekend()
+  }
+
+  func calendarView(
+    _ calendar: INFCalendarView,
+    dayCell: INFDayCell,
+    badgeLabelFor date: Date,
+    badgeCount: Int?
+  ) -> UILabel? {
+    CalendarWeekday.getWeekend()
   }
 
   private final class CalendarWeekday: UILabel {

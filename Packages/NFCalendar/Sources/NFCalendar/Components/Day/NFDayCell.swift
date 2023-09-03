@@ -37,18 +37,6 @@ public class NFDayCell: UICollectionViewCell, INFDayCell {
   public private(set) var dateLabel: UILabel = BaseDateLabel()
   public private(set) var badgeLabel: UILabel = BaseBadgeLabel()
 
-  // MARK: - Init
-  override public init(frame: CGRect) {
-    super.init(frame: frame)
-
-    initialize()
-  }
-
-  @available(*, unavailable)
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   // MARK: - Public methods
   public func setupView(_ dayData: NFCalendarDay) {
     setupDateLabel(for: dayData.date)
@@ -69,12 +57,6 @@ public class NFDayCell: UICollectionViewCell, INFDayCell {
 
 // MARK: - Private methods
 private extension NFDayCell {
-
-  private func initialize() {
-    setupDateLabel(for: nil)
-    setupBadgeLabel(for: nil, with: nil)
-    setupBackgroundImageView(for: nil, with: nil)
-  }
 
   private func setupDateLabel(for date: Date?) {
     if let date, let dateLabelFromDelegate = dayAppearanceDelegate?.dayCell(self, dateLabelFor: date) {
@@ -101,10 +83,9 @@ private extension NFDayCell {
     addSubview(badgeLabel)
 
     badgeLabel.snp.makeConstraints { make in
-//      make.width.height.equalTo(self.snp.width).dividedBy(2.5)
-//      make.top.equalTo(dateLabel.snp.top)
-//      make.trailing.equalTo(dateLabel.snp.trailing)
-      make.edges.equalToSuperview()
+      make.width.height.equalTo(self.snp.width).dividedBy(2)
+      make.top.equalTo(dateLabel.snp.top)
+      make.trailing.equalTo(dateLabel.snp.trailing)
     }
   }
 
@@ -120,9 +101,8 @@ private extension NFDayCell {
     addSubview(backgroundImageView)
 
     backgroundImageView.snp.makeConstraints { make in
-//      make.edges.equalToSuperview()
-//      make.centerX.centerY.equalToSuperview()
       make.edges.equalToSuperview()
+      make.centerX.centerY.equalToSuperview()
     }
   }
 

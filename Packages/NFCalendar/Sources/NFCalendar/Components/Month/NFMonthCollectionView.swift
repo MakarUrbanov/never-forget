@@ -26,7 +26,7 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
 
   // MARK: - Public properties
   public private(set) var firstMonthsDate: Date?
-  public private(set) var dates: [Date] = [] { didSet { monthDatesDidUpdate() } }
+  public private(set) var dates: [Date] = []
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCollectionViewDataSource?
   public weak var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate?
@@ -59,6 +59,8 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
     }
 
     self.dates = dates
+
+    updateMonthDates()
   }
 
 }
@@ -141,7 +143,7 @@ private extension NFMonthCollectionView {
     diffableDataSource.apply(snapshot, animatingDifferences: false)
   }
 
-  private func monthDatesDidUpdate() {
+  private func updateMonthDates() {
     guard let diffableDataSource else { fatalError("diffableDataSource could be initialised") }
 
     var snapshot = diffableDataSource.snapshot()

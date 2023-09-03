@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 // MARK: - INFMonthHeader
-public protocol INFMonthHeader: UIView {
+public protocol INFMonthHeader: UIStackView {
   var titleLabel: UILabel { get }
   var weekdaysView: INFMonthWeekdays { get }
 
@@ -19,7 +19,7 @@ public protocol INFMonthHeader: UIView {
 }
 
 // MARK: - NFMonthHeaderView
-public class NFMonthHeaderView: UIView, INFMonthHeader {
+public class NFMonthHeaderView: UIStackView, INFMonthHeader {
 
   // MARK: - Public properties
   public private(set) var titleLabel: UILabel = BaseTitleLabel()
@@ -27,49 +27,66 @@ public class NFMonthHeaderView: UIView, INFMonthHeader {
 
   public weak var appearanceDelegate: INFMonthHeaderAppearanceDelegate?
 
+  override public init(frame: CGRect) {
+    super.init(frame: frame)
+
+    axis = .vertical
+    distribution = .fillEqually
+    spacing = 0
+  }
+
+  @available(*, unavailable)
+  required init(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   // MARK: - Public methods
   public func configure(with date: Date) {
-    initialize()
+    setupTitleLabel(with: date)
 
-    if let labelFromDelegate = appearanceDelegate?.monthHeader(self, labelForMonth: date) {
-      titleLabel = labelFromDelegate
-      setupTitleLabel()
-    }
+    weekdaysView.removeFromSuperview()
+    weekdaysView = NFMonthWeekdaysView()
+    setupWeekdaysView()
+    weekdaysView.renderWeekdays()
 
-
-    let title = NFMonthHeaderView.titleDateFormatter.string(from: date)
-    titleLabel.text = title
+    setHeaderTitle(from: date)
   }
 }
 
 // MARK: - Private methods
 private extension NFMonthHeaderView {
 
-  private func initialize() {
-    setupTitleLabel()
-    setupWeekdaysView()
-  }
+  private func setupTitleLabel(with date: Date) {
+    if let labelFromDelegate = appearanceDelegate?.monthHeader(self, labelForMonth: date) {
+      titleLabel.removeFromSuperview()
+      titleLabel = labelFromDelegate
+    }
 
-  private func setupTitleLabel() {
-    addSubview(titleLabel)
+    addArrangedSubview(titleLabel)
 
     titleLabel.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
+      make.width.equalToSuperview()
       make.height.equalToSuperview().dividedBy(2)
     }
   }
 
   private func setupWeekdaysView() {
-    addSubview(weekdaysView)
-
-    weekdaysView.snp.makeConstraints { make in
-      make.top.equalTo(titleLabel.snp.bottom)
-      make.leading.trailing.bottom.equalToSuperview()
-    }
-
+    weekdaysView.removeFromSuperview()
+    weekdaysView = NFMonthWeekdaysView()
     weekdaysView.appearanceDelegate = self
 
+    addArrangedSubview(weekdaysView)
+
+    weekdaysView.snp.makeConstraints { make in
+      make.width.equalToSuperview()
+      make.height.equalToSuperview().dividedBy(2)
+    }
+
     weekdaysView.renderWeekdays()
+  }
+
+  private func setHeaderTitle(from date: Date) {
+    titleLabel.text = NFMonthHeaderView.titleDateFormatter.string(from: date)
   }
 
 }
@@ -85,7 +102,7 @@ extension NFMonthHeaderView {
 // MARK: - NFMonthWeekdaysAppearanceDelegate
 extension NFMonthHeaderView: INFMonthWeekdaysAppearanceDelegate {
 
-  public func weekdaysView(_ weekdaysView: INFMonthWeekdays, labelForWeekday weekday: String) -> UILabel? {
+  public func weekdaysView(_ weekdaysView: INFMonthWeekdays, labelForWeekday weekday: Int) -> UILabel? {
     appearanceDelegate?.monthHeader(self, weekdaysView: weekdaysView, labelForWeekday: weekday)
   }
 

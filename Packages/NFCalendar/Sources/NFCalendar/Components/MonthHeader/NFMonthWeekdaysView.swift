@@ -16,7 +16,7 @@ public protocol INFMonthWeekdays: UIStackView {
 public class NFMonthWeekdaysView: UIStackView, INFMonthWeekdays {
 
   // MARK: - Public properties
-  public var appearanceDelegate: INFMonthWeekdaysAppearanceDelegate?
+  public weak var appearanceDelegate: INFMonthWeekdaysAppearanceDelegate?
 
   // MARK: - Init
   override public init(frame: CGRect) {
@@ -34,24 +34,41 @@ public class NFMonthWeekdaysView: UIStackView, INFMonthWeekdays {
 
   // MARK: - Public methods
   public func renderWeekdays() {
-    let weekdays = NFMonthWeekdaysView.localizedWeekdays()
-    let weekdaysView = weekdays.map { weekday in
-      let labelFromDelegate = appearanceDelegate?.weekdaysView(self, labelForWeekday: weekday)
-      let label = labelFromDelegate ?? NFMonthWeekdaysView.defaultLabel()
-      label.text = weekday
+    removeWeekdays()
 
-      return label
-    }
+    let weekdaysView = generateWeekdays()
 
+    setupWeekdays(weekdaysView)
+  }
+
+}
+
+// MARK: - Private methods
+private extension NFMonthWeekdaysView {
+
+  private func setupWeekdays(_ weekdaysView: [UILabel]) {
     let size = bounds.width / 7
 
     for weekdayView in weekdaysView {
       addArrangedSubview(weekdayView)
-
-      weekdayView.snp.makeConstraints { make in
-        make.width.height.equalTo(size)
-      }
     }
+  }
+
+  private func generateWeekdays() -> [UILabel] {
+    let weekdays = NFMonthWeekdaysView.localizedWeekdays()
+    let weekdaysView = weekdays.map { weekday in
+      let labelFromDelegate = appearanceDelegate?.weekdaysView(self, labelForWeekday: weekday.weekdayNumber)
+      let label = labelFromDelegate ?? NFMonthWeekdaysView.defaultLabel()
+      label.text = weekday.name
+
+      return label
+    }
+
+    return weekdaysView
+  }
+
+  private func removeWeekdays() {
+    arrangedSubviews.forEach { $0.removeFromSuperview() }
   }
 
 }
@@ -67,17 +84,36 @@ extension NFMonthWeekdaysView {
     return label
   }
 
-  private static func localizedWeekdays() -> [String] {
-    //    let calendar = Calendar.current
-    //    let firstWeekday = calendar.firstWeekday
-
+  private static func localizedWeekdays() -> [Weekday] {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale.current
 
-    let weekdays = dateFormatter.shortWeekdaySymbols?.map { String($0.prefix(2)) } ?? []
-    //    let weekdaysSorted = Array(weekdays[(firstWeekday - 1)..<weekdays.count] + weekdays[0..<(firstWeekday - 1)])
+    guard let shortWeekdaySymbols = dateFormatter.shortWeekdaySymbols else {
+      return []
+    }
+
+    let firstWeekdayIndex = Calendar.current.firstWeekday - 1
+
+    let reorderedWeekdays = Array(shortWeekdaySymbols[firstWeekdayIndex...] + shortWeekdaySymbols[..<firstWeekdayIndex])
+
+    var weekdays: [Weekday] = []
+
+    for (index, symbol) in reorderedWeekdays.enumerated() {
+      let weekdayNumber = (firstWeekdayIndex + index) % 7 + 1
+      weekdays.append(Weekday(name: String(symbol.prefix(2)), weekdayNumber: weekdayNumber))
+    }
 
     return weekdays
+  }
+
+}
+
+// MARK: - Models
+private extension NFMonthWeekdaysView {
+
+  private struct Weekday {
+    var name: String
+    var weekdayNumber: Int
   }
 
 }

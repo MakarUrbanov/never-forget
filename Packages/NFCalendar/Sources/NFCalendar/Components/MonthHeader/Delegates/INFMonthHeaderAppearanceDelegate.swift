@@ -8,7 +8,7 @@
 import UIKit
 
 public protocol INFMonthHeaderAppearanceDelegate: AnyObject {
-  func monthHeader(_ header: INFMonthHeader, weekdaysView: INFMonthWeekdays, labelForWeekday weekday: String)
+  func monthHeader(_ header: INFMonthHeader, weekdaysView: INFMonthWeekdays, labelForWeekday weekday: Int)
     -> UILabel?
   func monthHeader(_ header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel?
 }

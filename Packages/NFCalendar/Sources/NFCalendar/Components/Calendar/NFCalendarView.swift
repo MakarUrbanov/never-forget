@@ -1,6 +1,6 @@
 import UIKit
 
-public protocol INFCalendarView: UIView {
+public protocol INFCalendarView: UICollectionView {
   var calendarDataSource: INFCalendarDataSource? { get set }
   var calendarDelegate: INFCalendarDelegate? { get set }
   var calendarAppearanceDelegate: INFCalendarAppearanceDelegate? { get set }
@@ -118,7 +118,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
   }
 
-  public func monthCell(_ month: INFMonthCell, header: INFMonthHeader, labelForWeekday weekday: String) -> UILabel? {
+  public func monthCell(_ month: INFMonthCell, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
     calendarAppearanceDelegate?.calendarView(self, header: header, labelForWeekday: weekday)
   }
 
@@ -132,7 +132,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
 extension NFCalendarView: INFMonthCellDataSource {
 
   public func monthCellView(_ month: NFMonthCellView, dataFor date: Date) -> NFCalendarDay {
-    calendarDataSource?.calendarView(self, dataFor: date) ?? .init(date: date)
+    return calendarDataSource?.calendarView(self, dataFor: date) ?? .init(date: date)
   }
 
 }
