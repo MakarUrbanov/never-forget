@@ -36,6 +36,7 @@
 		3542517B29A78D1F005174DA /* BaseUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3542517A29A78D1F005174DA /* BaseUINavigationController.swift */; };
 		354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */; };
 		354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EC29A7A66F00A99389 /* NavigationSteps.swift */; };
+		354E878E2AA4BC6800F840DD /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 354E878D2AA4BC6800F840DD /* SwiftDate */; };
 		354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9629BE061F009BFB6D /* ValidatedValue.swift */; };
 		354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9A29BE2139009BFB6D /* View+if.swift */; };
 		354E8B9D29BE6713009BFB6D /* Date+randomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9C29BE6713009BFB6D /* Date+randomDate.swift */; };
@@ -246,6 +247,7 @@
 			files = (
 				357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */,
 				3588E5692A01995D0066F51C /* NFLogger in Frameworks */,
+				354E878E2AA4BC6800F840DD /* SwiftDate in Frameworks */,
 				358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */,
 				35AC82B92A769EDB0061397D /* SnapKit in Frameworks */,
 				35EE23062A9E7B9900FFF25E /* NFCalendar in Frameworks */,
@@ -819,6 +821,7 @@
 				3588E5682A01995D0066F51C /* NFLogger */,
 				35AC82B82A769EDB0061397D /* SnapKit */,
 				35EE23052A9E7B9900FFF25E /* NFCalendar */,
+				354E878D2AA4BC6800F840DD /* SwiftDate */,
 			);
 			productName = "never-forget";
 			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
@@ -855,6 +858,7 @@
 			mainGroup = 3551F191299028AE00EBA6A3;
 			packageReferences = (
 				35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				354E878C2AA4BC6800F840DD /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 3551F19B299028AE00EBA6A3 /* Products */;
 			projectDirPath = "";
@@ -1313,6 +1317,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		354E878C2AA4BC6800F840DD /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1324,6 +1336,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		354E878D2AA4BC6800F840DD /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 354E878C2AA4BC6800F840DD /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
+		};
 		357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NeverForgetDatePicker;

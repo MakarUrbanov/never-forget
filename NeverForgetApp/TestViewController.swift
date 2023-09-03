@@ -12,7 +12,7 @@ import UIKit
 
 class TestViewController: UIViewController {
 
-  let calendar: INFCalendar = NFCalendarView()
+  let calendar: INFCalendarView = NFCalendarView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -23,22 +23,24 @@ class TestViewController: UIViewController {
   private func setupCalendar() {
     view.addSubview(calendar)
 
-    calendar.calendarDataSource = self
-
     calendar.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
     }
+
+    calendar.calendarDataSource = self
+    calendar.calendarAppearanceDelegate = self
 
     calendar.renderCalendar()
   }
 
 }
 
+// MARK: - DataSource
 extension TestViewController: INFCalendarDataSource {
 
   private static let dateFormatter = DateFormatter(dateFormat: DateFormatter.yearMonthDayFormat)
 
-  private static func checkAndGetMarkedDate(_ date: Date) -> NFCalendarDayData? {
+  private static func checkAndGetMarkedDate(_ date: Date) -> NFCalendarDay? {
     let dateString = dateFormatter.string(from: date)
     let markedDate = TestViewController.MOCK_DATA.first { markedDate in
       let markedDateString = dateFormatter.string(from: markedDate.date)
@@ -49,7 +51,7 @@ extension TestViewController: INFCalendarDataSource {
     return markedDate
   }
 
-  private static let MOCK_DATA: [NFCalendarDayData] = {
+  private static let MOCK_DATA: [NFCalendarDay] = {
     [
       .init(date: Date.now.addingTimeInterval(-36_000), backgroundImage: nil, badgeCount: 2),
       .init(date: Date.now, backgroundImage: UIImage(systemName: "person"), badgeCount: 1),
@@ -62,7 +64,7 @@ extension TestViewController: INFCalendarDataSource {
     ]
   }()
 
-  func calendar(_ calendar: INFCalendar, dataFor date: Date) -> NFCalendarDayData {
+  private func calendarView(_ calendar: INFCalendarView, dataFor date: Date) -> NFCalendarDay {
     if let markedDate = TestViewController.checkAndGetMarkedDate(date) {
       return markedDate
     }
@@ -72,9 +74,49 @@ extension TestViewController: INFCalendarDataSource {
 
 }
 
+// MARK: - INFCalendarAppearanceDelegate
+extension TestViewController: INFCalendarAppearanceDelegate {
+
+  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: String) -> UILabel? {
+    if weekday.lowercased() == "sa" || weekday.lowercased() == "su" {
+      return CalendarWeekday.getWeekend()
+    } else {
+      return CalendarWeekday.getDefault1()
+    }
+  }
+
+  private final class CalendarWeekday: UILabel {
+
+    static func getDefault1() -> UILabel {
+      let label = UILabel()
+      label.textAlignment = .center
+
+      return label
+    }
+
+    static func getDefault() -> UILabel {
+      let label = UILabel()
+      label.textAlignment = .left
+      label.textColor = .blue
+      label.backgroundColor = .black
+
+      return label
+    }
+
+    static func getWeekend() -> UILabel {
+      let label = UILabel()
+      label.textAlignment = .center
+      label.textColor = .red
+
+      return label
+    }
+
+  }
+
+}
+
 struct TestView_Previews: PreviewProvider {
   static var previews: some View {
     TestViewController().makePreview()
   }
 }
-
