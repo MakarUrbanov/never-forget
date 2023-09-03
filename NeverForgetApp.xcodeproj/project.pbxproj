@@ -25,6 +25,7 @@
 		3525B2EE29FF2CB7001D83CF /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */; };
 		3525B2F72A0048F3001D83CF /* ContactNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2F62A0048F3001D83CF /* ContactNotificationsManager.swift */; };
 		3525B2FB2A004FB6001D83CF /* LocalNotificationForBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3525B2FA2A004FB6001D83CF /* LocalNotificationForBirthday.swift */; };
+		35320D4F2AA4C61700B6A313 /* NFCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 35320D4E2AA4C61700B6A313 /* NFCalendar */; };
 		3533AFF529AA470800BA2F5F /* AppAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF429AA470800BA2F5F /* AppAlertManager.swift */; };
 		3533AFF729AA692B00BA2F5F /* FormPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */; };
 		3533AFFB29AA6DE800BA2F5F /* ContactsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533AFFA29AA6DE800BA2F5F /* ContactsListViewModel.swift */; };
@@ -37,6 +38,11 @@
 		354E42EB29A7A5E100A99389 /* UINavigationController+navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */; };
 		354E42ED29A7A66F00A99389 /* NavigationSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E42EC29A7A66F00A99389 /* NavigationSteps.swift */; };
 		354E878E2AA4BC6800F840DD /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 354E878D2AA4BC6800F840DD /* SwiftDate */; };
+		354E87A02AA4C16B00F840DD /* NFFormValidator in Resources */ = {isa = PBXBuildFile; fileRef = 354E879B2AA4C16B00F840DD /* NFFormValidator */; };
+		354E87A12AA4C16B00F840DD /* NFLocalNotificationsManager in Resources */ = {isa = PBXBuildFile; fileRef = 354E879C2AA4C16B00F840DD /* NFLocalNotificationsManager */; };
+		354E87A22AA4C16B00F840DD /* NFLogger in Resources */ = {isa = PBXBuildFile; fileRef = 354E879D2AA4C16B00F840DD /* NFLogger */; };
+		354E87A82AA4C24100F840DD /* NFLocalNotificationsManager in Frameworks */ = {isa = PBXBuildFile; productRef = 354E87A72AA4C24100F840DD /* NFLocalNotificationsManager */; };
+		354E87AA2AA4C24600F840DD /* NFLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 354E87A92AA4C24600F840DD /* NFLogger */; };
 		354E8B9729BE061F009BFB6D /* ValidatedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9629BE061F009BFB6D /* ValidatedValue.swift */; };
 		354E8B9B29BE2139009BFB6D /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9A29BE2139009BFB6D /* View+if.swift */; };
 		354E8B9D29BE6713009BFB6D /* Date+randomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E8B9C29BE6713009BFB6D /* Date+randomDate.swift */; };
@@ -65,14 +71,11 @@
 		356CD88A29918EBB00EA9D2D /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */; };
 		356CD88B29918EBB00EA9D2D /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356CD88829918EBB00EA9D2D /* BaseUIView.swift */; };
 		3570093529F7117500EAF446 /* AppSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3570093429F7117500EAF446 /* AppSettingsManager.swift */; };
-		357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */; };
 		357950F329CE0C9C009F5988 /* AppPreloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F229CE0C9C009F5988 /* AppPreloader.swift */; };
 		357950F629CE117B009F5988 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357950F529CE117B009F5988 /* Logger.swift */; };
 		3580D7BC29F0701F00EBB33B /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580D7BB29F0701F00EBB33B /* MainFlowCoordinator.swift */; };
-		358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */ = {isa = PBXBuildFile; productRef = 358728F829FDF7BA00148218 /* NFLocalNotificationsManager */; };
 		358728FB29FE0BE500148218 /* ContactsListWelcomeMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358728FA29FE0BE500148218 /* ContactsListWelcomeMessageView.swift */; };
 		358728FD29FEB9D300148218 /* SettingsNotificationTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358728FC29FEB9D300148218 /* SettingsNotificationTimesView.swift */; };
-		3588E5692A01995D0066F51C /* NFLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 3588E5682A01995D0066F51C /* NFLogger */; };
 		3588E56E2A01ACFD0066F51C /* LocalNotificationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3588E56D2A01ACFD0066F51C /* LocalNotificationsFactory.swift */; };
 		35906D322A75A285003F12A1 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35906D312A75A285003F12A1 /* TestViewController.swift */; };
 		359749AF2A13BFBA0038DAA3 /* UIFont+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359749AE2A13BFBA0038DAA3 /* UIFont+init.swift */; };
@@ -98,8 +101,6 @@
 		35E0479B29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */; };
 		35E8416A2992AFD900BF537E /* UIView+addView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841692992AFD900BF537E /* UIView+addView.swift */; };
 		35E841722992B0BA00BF537E /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E841712992B0BA00BF537E /* UIColor+hex.swift */; };
-		35EE23042A9E7B5C00FFF25E /* NFCalendar in Resources */ = {isa = PBXBuildFile; fileRef = 35EE23032A9E7B5B00FFF25E /* NFCalendar */; };
-		35EE23062A9E7B9900FFF25E /* NFCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 35EE23052A9E7B9900FFF25E /* NFCalendar */; };
 		35F45D862A1A6E8F00161B4B /* PersonAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D852A1A6E8F00161B4B /* PersonAdapter.swift */; };
 		35F45D892A1A7AF100161B4B /* PersonsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D882A1A7AF100161B4B /* PersonsTableView.swift */; };
 		35F45D8B2A1A7BB200161B4B /* PersonsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F45D8A2A1A7BB200161B4B /* PersonsTableHeaderView.swift */; };
@@ -149,19 +150,21 @@
 		3525B2ED29FF2CB7001D83CF /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
 		3525B2F62A0048F3001D83CF /* ContactNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNotificationsManager.swift; sourceTree = "<group>"; };
 		3525B2FA2A004FB6001D83CF /* LocalNotificationForBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationForBirthday.swift; sourceTree = "<group>"; };
+		35320D4D2AA4C5FE00B6A313 /* NFCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NFCalendar; sourceTree = "<group>"; };
 		3533AFF429AA470800BA2F5F /* AppAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAlertManager.swift; sourceTree = "<group>"; };
 		3533AFF629AA692B00BA2F5F /* FormPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPhotoPickerView.swift; sourceTree = "<group>"; };
 		3533AFFA29AA6DE800BA2F5F /* ContactsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListViewModel.swift; sourceTree = "<group>"; };
 		3538282829F1B1F3003F19D9 /* SettingsTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabCoordinator.swift; sourceTree = "<group>"; };
 		3538282B29F1B2F3003F19D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		353A732829FDE0870074A409 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
-		353A732C29FDF1B00074A409 /* NFLocalNotificationsManager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NFLocalNotificationsManager; path = Packages/NFLocalNotificationsManager; sourceTree = "<group>"; };
 		3540DEAC29B5124200154770 /* View+hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+hideKeyboard.swift"; sourceTree = "<group>"; };
 		3540DEAE29B51BE000154770 /* String+randomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+randomString.swift"; sourceTree = "<group>"; };
 		3542517A29A78D1F005174DA /* BaseUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUINavigationController.swift; sourceTree = "<group>"; };
-		354B839B2A0191E4006AF817 /* NFLogger */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NFLogger; path = Packages/NFLogger; sourceTree = "<group>"; };
 		354E42EA29A7A5E100A99389 /* UINavigationController+navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+navigate.swift"; sourceTree = "<group>"; };
 		354E42EC29A7A66F00A99389 /* NavigationSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSteps.swift; sourceTree = "<group>"; };
+		354E879B2AA4C16B00F840DD /* NFFormValidator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NFFormValidator; sourceTree = "<group>"; };
+		354E879C2AA4C16B00F840DD /* NFLocalNotificationsManager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NFLocalNotificationsManager; sourceTree = "<group>"; };
+		354E879D2AA4C16B00F840DD /* NFLogger */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NFLogger; sourceTree = "<group>"; };
 		354E8B9629BE061F009BFB6D /* ValidatedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedValue.swift; sourceTree = "<group>"; };
 		354E8B9A29BE2139009BFB6D /* View+if.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+if.swift"; sourceTree = "<group>"; };
 		354E8B9C29BE6713009BFB6D /* Date+randomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+randomDate.swift"; sourceTree = "<group>"; };
@@ -195,7 +198,6 @@
 		356CD88729918EBB00EA9D2D /* BaseUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		356CD88829918EBB00EA9D2D /* BaseUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		3570093429F7117500EAF446 /* AppSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsManager.swift; sourceTree = "<group>"; };
-		357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NeverForgetDatePicker; path = Packages/NeverForgetDatePicker; sourceTree = "<group>"; };
 		357950F229CE0C9C009F5988 /* AppPreloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreloader.swift; sourceTree = "<group>"; };
 		357950F529CE117B009F5988 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3580D7BB29F0701F00EBB33B /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -225,7 +227,6 @@
 		35E0479A29B404D6006A2AB3 /* TouchableOpacityButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableOpacityButtonStyle.swift; sourceTree = "<group>"; };
 		35E841692992AFD900BF537E /* UIView+addView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addView.swift"; sourceTree = "<group>"; };
 		35E841712992B0BA00BF537E /* UIColor+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
-		35EE23032A9E7B5B00FFF25E /* NFCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NFCalendar; path = "../../Tests/test-nf-calendar/NFCalendar"; sourceTree = "<group>"; };
 		35F45D852A1A6E8F00161B4B /* PersonAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAdapter.swift; sourceTree = "<group>"; };
 		35F45D882A1A7AF100161B4B /* PersonsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTableView.swift; sourceTree = "<group>"; };
 		35F45D8A2A1A7BB200161B4B /* PersonsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTableHeaderView.swift; sourceTree = "<group>"; };
@@ -245,12 +246,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				357044AB29D08B9700C6A7C2 /* NeverForgetDatePicker in Frameworks */,
-				3588E5692A01995D0066F51C /* NFLogger in Frameworks */,
+				354E87AA2AA4C24600F840DD /* NFLogger in Frameworks */,
 				354E878E2AA4BC6800F840DD /* SwiftDate in Frameworks */,
-				358728F929FDF7BA00148218 /* NFLocalNotificationsManager in Frameworks */,
 				35AC82B92A769EDB0061397D /* SnapKit in Frameworks */,
-				35EE23062A9E7B9900FFF25E /* NFCalendar in Frameworks */,
+				354E87A82AA4C24100F840DD /* NFLocalNotificationsManager in Frameworks */,
+				35320D4F2AA4C61700B6A313 /* NFCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +426,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		354E87982AA4C16B00F840DD /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				354E879B2AA4C16B00F840DD /* NFFormValidator */,
+				354E879C2AA4C16B00F840DD /* NFLocalNotificationsManager */,
+				354E879D2AA4C16B00F840DD /* NFLogger */,
+				35320D4D2AA4C5FE00B6A313 /* NFCalendar */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		354E87A62AA4C24100F840DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		354E8BA329BE6B82009BFB6D /* NeverForgetTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,14 +455,11 @@
 		3551F191299028AE00EBA6A3 = {
 			isa = PBXGroup;
 			children = (
+				354E87982AA4C16B00F840DD /* Packages */,
 				3551F19C299028AE00EBA6A3 /* NeverForgetApp */,
 				354E8BA329BE6B82009BFB6D /* NeverForgetTests */,
-				357044A829D08A9000C6A7C2 /* NeverForgetDatePicker */,
-				353A732C29FDF1B00074A409 /* NFLocalNotificationsManager */,
-				35EE23032A9E7B5B00FFF25E /* NFCalendar */,
-				354B839B2A0191E4006AF817 /* NFLogger */,
 				3551F19B299028AE00EBA6A3 /* Products */,
-				35906D342A75A307003F12A1 /* Frameworks */,
+				354E87A62AA4C24100F840DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -644,13 +659,6 @@
 			path = MainFlowCoordinator;
 			sourceTree = "<group>";
 		};
-		35906D342A75A307003F12A1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		35A897E02A0D363F00C1CD94 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,12 +824,11 @@
 			);
 			name = NeverForgetApp;
 			packageProductDependencies = (
-				357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */,
-				358728F829FDF7BA00148218 /* NFLocalNotificationsManager */,
-				3588E5682A01995D0066F51C /* NFLogger */,
 				35AC82B82A769EDB0061397D /* SnapKit */,
-				35EE23052A9E7B9900FFF25E /* NFCalendar */,
 				354E878D2AA4BC6800F840DD /* SwiftDate */,
+				354E87A72AA4C24100F840DD /* NFLocalNotificationsManager */,
+				354E87A92AA4C24600F840DD /* NFLogger */,
+				35320D4E2AA4C61700B6A313 /* NFCalendar */,
 			);
 			productName = "never-forget";
 			productReference = 3551F19A299028AE00EBA6A3 /* NeverForgetApp.app */;
@@ -884,9 +891,11 @@
 			files = (
 				355E27A329A55B770038F8BA /* Colors.xcassets in Resources */,
 				355E27A529A55C130038F8BA /* Images.xcassets in Resources */,
+				354E87A02AA4C16B00F840DD /* NFFormValidator in Resources */,
+				354E87A22AA4C16B00F840DD /* NFLogger in Resources */,
 				3551F1AD299028AF00EBA6A3 /* LaunchScreen.storyboard in Resources */,
 				355E278729A2BDE30038F8BA /* Localizable.strings in Resources */,
-				35EE23042A9E7B5C00FFF25E /* NFCalendar in Resources */,
+				354E87A12AA4C16B00F840DD /* NFLocalNotificationsManager in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1336,20 +1345,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		35320D4E2AA4C61700B6A313 /* NFCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NFCalendar;
+		};
 		354E878D2AA4BC6800F840DD /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 354E878C2AA4BC6800F840DD /* XCRemoteSwiftPackageReference "SwiftDate" */;
 			productName = SwiftDate;
 		};
-		357044AA29D08B9700C6A7C2 /* NeverForgetDatePicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NeverForgetDatePicker;
-		};
-		358728F829FDF7BA00148218 /* NFLocalNotificationsManager */ = {
+		354E87A72AA4C24100F840DD /* NFLocalNotificationsManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NFLocalNotificationsManager;
 		};
-		3588E5682A01995D0066F51C /* NFLogger */ = {
+		354E87A92AA4C24600F840DD /* NFLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NFLogger;
 		};
@@ -1357,10 +1366,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35AC82B72A769EA10061397D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		35EE23052A9E7B9900FFF25E /* NFCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NFCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 
