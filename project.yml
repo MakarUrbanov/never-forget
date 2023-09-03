@@ -1,0 +1,79 @@
+name: NeverForget
+options:
+  # Общие настройки
+  minimumVersion: "16.2"
+  minimumXcodeGenVersion: 2.37.0
+  groupSortPosition: top
+  usesTabs: false
+  indentWidth: 2
+  tabWidth: 2
+  xcodeVersion: 14.3.1
+  localPackagesGroup: "Packages"
+  deploymentTarget:
+    iOS: "16.2"
+#  orientations:
+#    iOS: [portrait]
+
+# Список используемых пакетов и их версии
+packages:
+  SnapKit:
+    url: "https://github.com/SnapKit/SnapKit.git"
+    from: "5.6.0"
+  SwiftDate:
+    url: "https://github.com/malcommac/SwiftDate.git"
+    from: "7.0.0"
+  NFLogger:
+    path: "Packages/NFLogger"
+  NFLocalNotificationsManager:
+    path: "Packages/NFLocalNotificationsManager"
+  NFCalendar:
+    path: "Packages/NFCalendar"
+
+# Описание целей сборки
+targets:
+  NeverForget:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.2"
+
+    settings:
+      # Информация о проекте
+      PRODUCT_NAME: NeverForget
+#      INFOPLIST_FILE: "NeverForget/SupportingFiles/Info.plist"
+#       MARKETING_VERSION: 1.0.0
+#       CURRENT_PROJECT_VERSION: 1
+
+      # Команда разработки и подпись кода
+      DEVELOPMENT_TEAM: 3LK6LB7235
+      CODE_SIGNING_REQUIRED: YES
+      CODE_SIGN_STYLE: Automatic
+      PRODUCT_BUNDLE_IDENTIFIER: com.never-forget
+
+      # Дополнительные настройки
+      IPHONEOS_DEPLOYMENT_TARGET: "16.2"
+#      GENERATE_INFOPLIST_FILE: NO
+
+    sources:
+      - "NeverForget"
+
+    # Зависимости
+    dependencies:
+      - package: SnapKit
+      - package: SwiftDate
+      - package: NFLogger
+      - package: NFLocalNotificationsManager
+      - package: NFCalendar
+
+    # Включение возможностей (capabilities)
+#    capabilities:
+#      - type: iCloud
+#        entitlements:
+#          "com.apple.developer.icloud-container-identifiers": ["iCloud.NeverForgetContainer"]
+#      - type: PushNotifications
+
+    # Сценарии после компиляции
+    postCompileScripts:
+      - path: "Scripts/swiftFormat.sh"
+        name: ⚠️ SwiftFormat
+      - path: "Scripts/swiftLint.sh"
+        name: ⚠️ SwiftLint
