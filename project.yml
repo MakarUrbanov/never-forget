@@ -1,6 +1,5 @@
 name: NeverForget
 options:
-  # Общие настройки
   minimumVersion: "16.2"
   minimumXcodeGenVersion: 2.37.0
   groupSortPosition: top
@@ -11,10 +10,10 @@ options:
   localPackagesGroup: "Packages"
   deploymentTarget:
     iOS: "16.2"
-#  orientations:
-#    iOS: [portrait]
 
-# Список используемых пакетов и их версии
+################################################
+# Packages
+################################################
 packages:
   SnapKit:
     url: "https://github.com/SnapKit/SnapKit.git"
@@ -29,7 +28,9 @@ packages:
   NFCalendar:
     path: "Packages/NFCalendar"
 
-# Описание целей сборки
+################################################
+# Targets
+################################################
 targets:
   NeverForget:
     type: application
@@ -37,26 +38,20 @@ targets:
     deploymentTarget: "16.2"
 
     settings:
-      # Информация о проекте
+      TARGETED_DEVICE_FAMILY: 1
       PRODUCT_NAME: NeverForget
-#      INFOPLIST_FILE: "NeverForget/SupportingFiles/Info.plist"
-#       MARKETING_VERSION: 1.0.0
-#       CURRENT_PROJECT_VERSION: 1
-
-      # Команда разработки и подпись кода
+      CODE_SIGN_ENTITLEMENTS: "NeverForget/SupportingFiles/never-forget.entitlements"
       DEVELOPMENT_TEAM: 3LK6LB7235
       CODE_SIGNING_REQUIRED: YES
       CODE_SIGN_STYLE: Automatic
-      PRODUCT_BUNDLE_IDENTIFIER: com.never-forget
-
-      # Дополнительные настройки
-      IPHONEOS_DEPLOYMENT_TARGET: "16.2"
-#      GENERATE_INFOPLIST_FILE: NO
+      PRODUCT_BUNDLE_IDENTIFIER: com.urbans.neverforget
 
     sources:
       - "NeverForget"
 
-    # Зависимости
+################################################
+# DEPENDENCIES
+################################################
     dependencies:
       - package: SnapKit
       - package: SwiftDate
@@ -64,14 +59,9 @@ targets:
       - package: NFLocalNotificationsManager
       - package: NFCalendar
 
-    # Включение возможностей (capabilities)
-#    capabilities:
-#      - type: iCloud
-#        entitlements:
-#          "com.apple.developer.icloud-container-identifiers": ["iCloud.NeverForgetContainer"]
-#      - type: PushNotifications
-
-    # Сценарии после компиляции
+################################################
+# Scripts
+################################################
     postCompileScripts:
       - path: "Scripts/swiftFormat.sh"
         name: ⚠️ SwiftFormat
