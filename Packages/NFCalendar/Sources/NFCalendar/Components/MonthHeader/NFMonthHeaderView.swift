@@ -86,13 +86,20 @@ private extension NFMonthHeaderView {
   }
 
   private func setHeaderTitle(from date: Date) {
-    titleLabel.text = NFMonthHeaderView.titleDateFormatter.string(from: date)
+    let text = NFMonthHeaderView.titleDateFormatter.string(from: date)
+    titleLabel.text = NFMonthHeaderView.capitalizeFirstCharacter(text)
   }
 
 }
 
 // MARK: - Static
 extension NFMonthHeaderView {
+
+  private static func capitalizeFirstCharacter(_ text: String) -> String {
+    let firstLetter = text.prefix(1).capitalized
+    let remainingLetters = text.dropFirst()
+    return firstLetter + remainingLetters
+  }
 
   // MARK: - Static properties
   private static let titleDateFormatter = DateFormatter(dateFormat: "MMMM YYYY")

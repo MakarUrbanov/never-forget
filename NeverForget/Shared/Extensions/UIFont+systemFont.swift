@@ -1,5 +1,5 @@
 //
-//  UIFont+init.swift
+//  UIFont+systemFont.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/16/23.

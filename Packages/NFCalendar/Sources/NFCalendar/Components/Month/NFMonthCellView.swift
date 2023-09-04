@@ -6,6 +6,7 @@
 //
 
 import SnapKit
+import SwiftDate
 import UIKit
 
 // MARK: - INFMonthCell
@@ -102,16 +103,25 @@ extension NFMonthCellView {
 // MARK: - Static
 extension NFMonthCellView {
 
+  // MARK: - Static properties
   public static let headerHeight: CGFloat = 80
+  private static let calendar = DateInRegion().calendar
 
   private static func getDaysInMonth(of date: Date) -> Int {
-    Calendar.current.range(of: .day, in: .month, for: date)!.upperBound - 1
+    guard let daysInMonthRange = calendar.range(of: .day, in: .month, for: date) else {
+      fatalError("Something went wrong")
+    }
+
+    return daysInMonthRange.upperBound - 1
   }
 
   private static func getFirstDateOfMonth(of date: Date) -> Date {
-    let components = Calendar.current.dateComponents([.year, .month], from: date)
+    let components = calendar.dateComponents([.year, .month], from: date)
+    guard let firstDateOfMonth = calendar.date(from: components) else {
+      fatalError("Something went wrong")
+    }
 
-    return Calendar.current.date(from: components)!
+    return firstDateOfMonth
   }
 
   private static func getMonthDays(of date: Date) -> [Date] {
@@ -120,7 +130,9 @@ extension NFMonthCellView {
     var daysList: [Date] = []
 
     for day in 0..<daysInMonth {
-      let newDate = Calendar.current.date(bySetting: .day, value: 1 + day, of: firstDayOfMonth)!
+      guard let newDate = calendar.date(bySetting: .day, value: 1 + day, of: firstDayOfMonth) else {
+        fatalError("Something went wrong")
+      }
       daysList.append(newDate)
     }
 

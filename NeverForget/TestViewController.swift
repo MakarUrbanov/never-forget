@@ -7,6 +7,7 @@
 
 import NFCalendar
 import SnapKit
+import SwiftDate
 import SwiftUI
 import UIKit
 
@@ -17,12 +18,15 @@ class TestViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = UIColor.Theme.darkBackground
     setupCalendar()
   }
 
   private func setupCalendar() {
     calendar.calendarDataSource = self
     calendar.calendarAppearanceDelegate = self
+
+    calendar.backgroundColor = .clear
 
     view.addSubview(calendar)
 
@@ -55,13 +59,25 @@ extension TestViewController: INFCalendarDataSource {
 
   private static let MOCK_DATA: [NFCalendarDay] = {
     [
-      .init(date: Date.now.addingTimeInterval(-36_000), backgroundImage: nil, badgeCount: 2),
-      .init(date: Date.now, backgroundImage: UIImage(systemName: "person"), badgeCount: 1),
-      .init(date: Date.now.addingTimeInterval(36_000), backgroundImage: nil, badgeCount: 3),
       .init(
-        date: Date.now.addingTimeInterval(100_000),
-        backgroundImage: UIImage(systemName: "apple.fill"),
-        badgeCount: 15
+        date: DateInRegion().dateByAdding(2, .day).date,
+        backgroundImage: nil,
+        badgeCount: 3
+      ),
+      .init(
+        date: DateInRegion().dateByAdding(3, .day).date,
+        backgroundImage: UIImage(named: "mockImage2"),
+        badgeCount: 2
+      ),
+      .init(
+        date: DateInRegion().dateByAdding(5, .day).date,
+        backgroundImage: UIImage(named: "MockImage"),
+        badgeCount: 1
+      ),
+      .init(
+        date: DateInRegion().dateByAdding(13, .day).dateByAdding(1, .month).date,
+        backgroundImage: UIImage(named: "mockImage2"),
+        badgeCount: 1
       )
     ]
   }()
@@ -76,19 +92,58 @@ extension TestViewController: INFCalendarDataSource {
 
 }
 
+// MARK: - UI calendar helpers
+private extension TestViewController {
+
+  private static func compareDates(date1: Date, date2: Date) -> Bool {
+    let dateFormat = DateFormatter.yearMonthDayFormat
+    let day1String = DateFormatter.string(dateFormat: dateFormat, from: date1)
+    let day2String = DateFormatter.string(dateFormat: dateFormat, from: date2)
+
+    return day1String == day2String
+  }
+
+  private static func isDateToday(_ date: Date) -> Bool {
+    TestViewController.compareDates(date1: Date.now, date2: date)
+  }
+
+  private static func isDateYesterdayOrEarlier(date: Date) -> Bool {
+    guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else {
+      fatalError("Something went wrong")
+    }
+
+    return date < yesterday
+  }
+
+  private func defineTypeOfDay(_ date: Date) -> DayType {
+    if TestViewController.checkAndGetMarkedDate(date) != nil {
+      return .dateWithEvents
+    }
+
+    let isTodayDate = TestViewController.isDateToday(date)
+    if isTodayDate {
+      return .todayDate
+    }
+
+    let isPastDay = TestViewController.isDateYesterdayOrEarlier(date: date)
+    if isPastDay {
+      return .pastDate
+    }
+
+    return .defaultDate
+  }
+
+}
+
 // MARK: - INFCalendarAppearanceDelegate
 extension TestViewController: INFCalendarAppearanceDelegate {
 
   func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
-    if weekday == 1 || weekday == 7 {
-      return CalendarWeekday.getWeekend()
-    } else {
-      return CalendarWeekday.getDefault1()
-    }
+    CalendarWeekday.getDefault()
   }
 
   func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
-    CalendarWeekday.getWeekend()
+    MonthTitle.getDefault()
   }
 
   func calendarView(
@@ -97,41 +152,291 @@ extension TestViewController: INFCalendarAppearanceDelegate {
     badgeLabelFor date: Date,
     badgeCount: Int?
   ) -> UILabel? {
-    CalendarWeekday.getWeekend()
+    let dayType = defineTypeOfDay(date)
+
+    switch dayType {
+      case .pastDate:
+        return DateBadgeLabel.pastDate()
+      case .todayDate:
+        return DateBadgeLabel.todayDate()
+      default:
+        return DateBadgeLabel.defaultDate()
+    }
   }
 
-  private final class CalendarWeekday: UILabel {
+  func calendarView(_ calendar: INFCalendarView, dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel? {
+    let dayType = defineTypeOfDay(date)
 
-    static func getDefault1() -> UILabel {
-      let label = UILabel()
-      label.textAlignment = .center
-
-      return label
+    switch dayType {
+      case .pastDate:
+        return DateLabel.pastDate()
+      case .todayDate:
+        return DateLabel.todayDate()
+      case .defaultDate:
+        return DateLabel.defaultDate()
+      case .dateWithEvents:
+        return DateLabel.dateWithEvents()
     }
+  }
 
-    static func getDefault() -> UILabel {
-      let label = UILabel()
-      label.textAlignment = .left
-      label.textColor = .blue
-      label.backgroundColor = .black
+  func calendarView(
+    _ calendar: INFCalendarView,
+    dayCell: INFDayCell,
+    backgroundImageFor date: Date,
+    image: UIImage?
+  ) -> UIImageView? {
+    let dayType = defineTypeOfDay(date)
 
-      return label
+    switch dayType {
+      case .pastDate:
+        return DateBackgroundImageView.pastDate()
+      case .todayDate:
+        return DateBackgroundImageView.todayDate()
+      default:
+        return DateBackgroundImageView.defaultDate()
     }
-
-    static func getWeekend() -> UILabel {
-      let label = UILabel()
-      label.textAlignment = .center
-      label.textColor = .red
-
-      return label
-    }
-
   }
 
 }
 
-// struct TestView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    TestViewController().makePreview()
-//  }
-// }
+// MARK: - App UI
+private extension TestViewController {
+
+  // MARK: - MonthTitle
+  private final class MonthTitle: UILabel {
+
+    static func getDefault() -> UILabel {
+      let label = MonthTitle()
+      label.font = UIFont.systemFont(.subheadline, .regular)
+      label.textAlignment = .center
+      label.textColor = UIColor.Theme.textLight100
+
+      return label
+    }
+
+  }
+
+  // MARK: - CalendarWeekday
+  private final class CalendarWeekday: UILabel {
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+
+      textAlignment = .center
+      font = UIFont.systemFont(.body, .bold)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    static func getDefault() -> UILabel {
+      let label = CalendarWeekday()
+      label.textColor = UIColor.Theme.textLight30
+
+      return label
+    }
+
+  }
+
+
+  // MARK: - DateLabel
+  private class DateLabel: UILabel, CustomizableCalendarDateComponent {
+
+    required init() {
+      super.init(frame: .zero)
+
+      font = UIFont.systemFont(.body, .regular)
+      layer.masksToBounds = true
+      textAlignment = .center
+      layer.zPosition = 1
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    static func defaultDate() -> Self {
+      let label = self.init()
+
+      label.textColor = UIColor.Theme.textLight100
+
+      return label
+    }
+
+    static func pastDate() -> Self {
+      let label = self.init()
+
+      label.textColor = UIColor.Theme.textLight30
+
+      return label
+    }
+
+    static func todayDate() -> Self {
+      let label = self.init()
+
+      label.textColor = UIColor.Theme.textLight100
+      label.backgroundColor = UIColor.Theme.main100
+
+      return label
+    }
+
+    static func dateWithEvents() -> Self {
+      let label = self.init()
+
+      label.textColor = UIColor.Theme.textLight100
+      label.layer.borderWidth = 1
+      label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+
+      return label
+    }
+
+    override func layoutSubviews() {
+      super.layoutSubviews()
+      setCornerRadius()
+    }
+
+    private func setCornerRadius() {
+      let radius = bounds.width / 2
+      layer.cornerRadius = radius
+    }
+
+  }
+
+  // MARK: - DateBadgeLabel
+  private class DateBadgeLabel: UILabel, CustomizableCalendarDateComponent {
+
+    required init() {
+      super.init(frame: .zero)
+
+      font = UIFont.systemFont(.footnote, .black)
+      layer.zPosition = 2
+      textAlignment = .center
+      layer.masksToBounds = true
+
+      backgroundColor = UIColor.Theme.textLight100
+      textColor = UIColor.Theme.darkBackground
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    static func defaultDate() -> Self {
+      let label = self.init()
+
+      return label
+    }
+
+    static func pastDate() -> Self {
+      let label = self.init()
+
+      return label
+    }
+
+    static func dateWithEvents() -> Self {
+      let label = self.init()
+
+      return label
+    }
+
+    static func todayDate() -> Self {
+      let label = self.init()
+
+      return label
+    }
+
+    override func layoutSubviews() {
+      super.layoutSubviews()
+      setCornerRadius()
+    }
+
+    private func setCornerRadius() {
+      let radius = bounds.width / 2
+      layer.cornerRadius = radius
+    }
+
+  }
+
+  // MARK: - DateBackgroundImageView
+  private class DateBackgroundImageView: UIImageView, CustomizableCalendarDateComponent {
+
+    required init() {
+      super.init(frame: .zero)
+
+      layer.zPosition = 0
+      layer.masksToBounds = true
+      contentMode = .scaleAspectFill
+      alpha = 0.6
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    static func pastDate() -> Self {
+      let imageView = self.init()
+
+      return imageView
+    }
+
+    static func todayDate() -> Self {
+      let imageView = self.init()
+
+      return imageView
+    }
+
+    static func dateWithEvents() -> Self {
+      let imageView = self.init()
+
+      return imageView
+    }
+
+
+    static func defaultDate() -> Self {
+      let imageView = self.init()
+
+      return imageView
+    }
+
+    override func layoutSubviews() {
+      super.layoutSubviews()
+      setCornerRadius()
+    }
+
+    private func setCornerRadius() {
+      let radius = bounds.width / 2
+      layer.cornerRadius = radius
+    }
+  }
+
+}
+
+// MARK: - Models
+private extension TestViewController {
+
+  private enum DayType {
+    case pastDate
+    case todayDate
+    case defaultDate
+    case dateWithEvents
+  }
+
+}
+
+private protocol CustomizableCalendarDateComponent: UIView {
+  static func pastDate() -> Self
+  static func todayDate() -> Self
+  static func defaultDate() -> Self
+  static func dateWithEvents() -> Self
+}
+
+struct TestView_Previews: PreviewProvider {
+  static var previews: some View {
+    TestViewController().makePreview()
+  }
+}

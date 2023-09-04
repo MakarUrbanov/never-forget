@@ -77,7 +77,12 @@ extension MainScreenViewModel {
       let today = Calendar.current.dateComponents([.day, .weekOfYear, .month, .year], from: Date.now)
       let tomorrow = Calendar.current.dateComponents(
         [.day, .weekOfYear, .month, .year],
-        from: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)! // swiftlint:disable:this force_unwrapping
+        from: Calendar.current.date(
+          byAdding: .day,
+          value: 1,
+          to: Date
+            .now
+        )! // swiftlint:disable:this force_unwrapping
       )
 
       let yearOfNextDateOfBirth = computeNextYearOfDateOfBirth(person.dateOfBirth)

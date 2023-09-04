@@ -13,7 +13,9 @@ final class AsyncImageLoader {
   private init() {}
 
   private static let imageLoaderQueue = DispatchQueue(
-    label: "com.NeverForget.asyncImageLoader", qos: .userInteractive, attributes: .concurrent
+    label: "com.NeverForget.asyncImageLoader",
+    qos: .userInteractive,
+    attributes: .concurrent
   )
 
   func fromData(_ imageData: Data?, completion: @escaping (UIImage) -> Void) {

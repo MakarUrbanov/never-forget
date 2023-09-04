@@ -1,3 +1,4 @@
+import SwiftDate
 import UIKit
 
 public protocol INFCalendarView: UICollectionView {
@@ -20,6 +21,7 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
   // MARK: - Private properties
   private var renderedMonths: [Date] = []
   private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Date>?
+  private let calendar = DateInRegion().calendar
 //  private var viewModel: INFCalendarViewModel
 
   // MARK: - Init
@@ -61,12 +63,16 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 private extension NFCalendarView {
 
   private func generateMonths() -> [Date] {
-    let startFromComponents = Calendar.current.dateComponents([.year, .month], from: NFCalendarView.renderFromDate)
-    let startFrom = Calendar.current.date(from: startFromComponents)!
+    let startFromComponents = calendar.dateComponents([.year, .month], from: NFCalendarView.renderFromDate)
+    guard let startFrom = calendar.date(from: startFromComponents) else {
+      fatalError("Something went wrong")
+    }
     var months: [Date] = []
 
     for monthNumber in 0..<NFCalendarView.numberOfRenderMonths {
-      let monthDate = Calendar.current.date(byAdding: .month, value: monthNumber, to: startFrom)!
+      guard let monthDate = calendar.date(byAdding: .month, value: monthNumber, to: startFrom) else {
+        fatalError("Something went wrong")
+      }
       months.append(monthDate)
     }
 
@@ -91,12 +97,24 @@ private extension NFCalendarView {
     }
   }
 
+  private func numberOfWeeksInMonth(of date: Date) -> Int? {
+    guard let range = calendar.range(of: .weekOfMonth, in: .month, for: date) else {
+      return nil
+    }
+
+    return range.count
+  }
+
 }
 
 // MARK: - INFMonthCellAppearanceDelegate
 extension NFCalendarView: INFMonthCellAppearanceDelegate {
 
-  public func monthCell(_ month: INFMonthCell, dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel? {
+  public func monthCell(
+    _ month: INFMonthCell,
+    dayCell: INFDayCell,
+    dateLabelFor date: Date
+  ) -> UILabel? {
     calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, dateLabelFor: date)
   }
 
@@ -118,11 +136,19 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
   }
 
-  public func monthCell(_ month: INFMonthCell, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
+  public func monthCell(
+    _ month: INFMonthCell,
+    header: INFMonthHeader,
+    labelForWeekday weekday: Int
+  ) -> UILabel? {
     calendarAppearanceDelegate?.calendarView(self, header: header, labelForWeekday: weekday)
   }
 
-  public func monthCell(_ month: INFMonthCell, header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
+  public func monthCell(
+    _ month: INFMonthCell,
+    header: INFMonthHeader,
+    labelForMonth monthDate: Date
+  ) -> UILabel? {
     calendarAppearanceDelegate?.calendarView(self, header: header, labelForMonth: monthDate)
   }
 
@@ -145,15 +171,6 @@ extension NFCalendarView {
   private static let renderFromDate: Date = .now
   private static let numberOfRenderMonths: Int = 12
 
-  // MARK: - Static methods
-  private static func numberOfWeeksInMonth(of date: Date) -> Int? {
-    guard let range = Calendar.current.range(of: .weekOfMonth, in: .month, for: date) else {
-      return nil
-    }
-
-    return range.count
-  }
-
 }
 
 // MARK: - UICollectionViewFlowLayout, UICollectionViewDelegate
@@ -165,7 +182,7 @@ extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDe
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
     let date = renderedMonths[indexPath.item]
-    let weeksInMonth = NFCalendarView.numberOfWeeksInMonth(of: date) ?? 4
+    let weeksInMonth = numberOfWeeksInMonth(of: date) ?? 4
 
     let height = (CGFloat(weeksInMonth) * collectionView.bounds.width / 7) + NFMonthCellView.headerHeight
 

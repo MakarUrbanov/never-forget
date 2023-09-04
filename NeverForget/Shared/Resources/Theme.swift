@@ -26,6 +26,21 @@ extension UIColor {
     static let text4 = UIColor(named: "text4")!
 
     static let error = UIColor(named: "error")!
+
+    // MARK: - NEW THEME
+    // MARK: background
+    static let darkBackground = UIColor(named: "darkBackground")!
+    // MARK: error
+    static let error100 = UIColor(named: "error 100")!
+    // MARK: common
+    static let main100 = UIColor(named: "main 100")!
+    static let secondary100 = UIColor(named: "secondary 100")!
+    // MARK: text
+    static let textDark100 = UIColor(named: "textDark 100")!
+    static let textLight100 = UIColor(named: "textLight 100")!
+    static let textLight30 = UIColor(named: "textLight 30")!
+    static let textLight8 = UIColor(named: "textLight 8")!
+    static let textLight4 = UIColor(named: "textLight 4")!
   }
 
 }

@@ -5,6 +5,7 @@
 //  Created by Makar Mishchenko on 02.09.2023.
 //
 
+import SwiftDate
 import UIKit
 
 public protocol INFMonthWeekdays: UIStackView {
@@ -47,8 +48,6 @@ public class NFMonthWeekdaysView: UIStackView, INFMonthWeekdays {
 private extension NFMonthWeekdaysView {
 
   private func setupWeekdays(_ weekdaysView: [UILabel]) {
-    let size = bounds.width / 7
-
     for weekdayView in weekdaysView {
       addArrangedSubview(weekdayView)
     }
@@ -76,6 +75,9 @@ private extension NFMonthWeekdaysView {
 // MARK: - Static
 extension NFMonthWeekdaysView {
 
+  // MARK: Static properties
+  private static let calendar = DateInRegion().calendar
+
   // MARK: - Static methods
   private static func defaultLabel() -> UILabel {
     let label = UILabel()
@@ -92,7 +94,7 @@ extension NFMonthWeekdaysView {
       return []
     }
 
-    let firstWeekdayIndex = Calendar.current.firstWeekday - 1
+    let firstWeekdayIndex = calendar.firstWeekday - 1
 
     let reorderedWeekdays = Array(shortWeekdaySymbols[firstWeekdayIndex...] + shortWeekdaySymbols[..<firstWeekdayIndex])
 

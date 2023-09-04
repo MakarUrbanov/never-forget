@@ -12,13 +12,11 @@ struct ContactProfileView: View {
   @StateObject private var viewModel: ContactProfileViewModel
 
   init(person: Person, goBack: @escaping () -> Void) {
-    _viewModel = StateObject(
-      wrappedValue: ContactProfileViewModel(
-        person: person,
-        context: CoreDataWrapper.shared.backgroundContext,
-        goBack: goBack
-      )
-    )
+    _viewModel = StateObject(wrappedValue: ContactProfileViewModel(
+      person: person,
+      context: CoreDataWrapper.shared.backgroundContext,
+      goBack: goBack
+    ))
   }
 
   var body: some View {

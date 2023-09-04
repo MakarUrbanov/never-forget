@@ -14,9 +14,7 @@ class ContactNotificationsManager {
   private let notificationsManager = LocalNotificationsManager.shared
   private let reschedulingAllPersonsNotificationsActor = ReschedulingAllPersonsNotificationsActor()
 
-  func rescheduleBirthdayNotifications(
-    for person: Person
-  ) async throws {
+  func rescheduleBirthdayNotifications(for person: Person) async throws {
     if !person.isNotificationsEnabled {
       // delete all scheduled notifications of this user
       let userId = ContactNotificationsManager.getUserIdFromPersonObject(person)
@@ -81,7 +79,8 @@ extension ContactNotificationsManager {
   actor ReschedulingAllPersonsNotificationsActor {
 
     func rescheduleNotificationsToAllPersons(
-      rescheduleBirthdayNotifications: @escaping (Person) async throws -> Void
+      rescheduleBirthdayNotifications: @escaping (Person) async throws
+        -> Void
     ) async throws {
       let fetchRequestPersons = Person.fetchRequest()
 
@@ -153,7 +152,9 @@ extension ContactNotificationsManager {
   private static func generateNotificationForOneWeekBefore(
     person: Person,
     timeOnOneWeekBefore: AppNotificationTime
-  ) -> NFLNScheduledEventNotification {
+  )
+    -> NFLNScheduledEventNotification
+  {
     let dateOfBirth = person.dateOfBirth
     let userId = getUserIdFromPersonObject(person)
     let notificationDate = combineOnEventDayTimesWithBirthdayDate(
@@ -179,7 +180,9 @@ extension ContactNotificationsManager {
   private static func generateNotificationForOneDayBefore(
     person: Person,
     timeOnOneDayBefore: AppNotificationTime
-  ) -> NFLNScheduledEventNotification {
+  )
+    -> NFLNScheduledEventNotification
+  {
     let dateOfBirth = person.dateOfBirth
     let userId = getUserIdFromPersonObject(person)
     let notificationDate = combineOnEventDayTimesWithBirthdayDate(
@@ -210,7 +213,9 @@ extension ContactNotificationsManager {
     let userId = getUserIdFromPersonObject(person)
     let notificationDates = combineOnEventDayTimesWithBirthdayDate(
       birthdayDate: dateOfBirth,
-      onEventDayTimes: onEventDayTimes.allObjects as! [AppNotificationTime],
+      onEventDayTimes: onEventDayTimes.allObjects as! [
+        AppNotificationTime
+      ],
       daysOffset: 0
     )
 

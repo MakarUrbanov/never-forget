@@ -23,4 +23,3 @@ public extension INFCalendarDelegate {
 
   func calendar(_ calendar: NFCalendarView, didSelect date: Date) {}
 }
-

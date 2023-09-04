@@ -33,10 +33,12 @@ extension PersonsTableView {
 
     convenience init(tableView: UITableView) {
       self.init(tableView: tableView) { tableView, indexPath, person in
-        guard let cell = tableView.dequeueReusableCell(
-          withIdentifier: String(describing: PersonsTableViewCell.cellIdentifier),
-          for: indexPath
-        ) as? PersonsTableViewCell else {
+        guard let cell = tableView
+          .dequeueReusableCell(
+            withIdentifier: String(describing: PersonsTableViewCell.cellIdentifier),
+            for: indexPath
+          ) as? PersonsTableViewCell else
+        {
           fatalError("Fail dequeueReusableCell")
         }
 

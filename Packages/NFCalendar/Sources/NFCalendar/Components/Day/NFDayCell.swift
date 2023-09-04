@@ -5,6 +5,7 @@
 //
 
 import SnapKit
+import SwiftDate
 import UIKit
 
 // MARK: - INFDayCell
@@ -83,7 +84,7 @@ private extension NFDayCell {
     addSubview(badgeLabel)
 
     badgeLabel.snp.makeConstraints { make in
-      make.width.height.equalTo(self.snp.width).dividedBy(2)
+      make.width.height.equalTo(16)
       make.top.equalTo(dateLabel.snp.top)
       make.trailing.equalTo(dateLabel.snp.trailing)
     }
@@ -139,48 +140,12 @@ private extension NFDayCell {
 
 // MARK: - Static
 extension NFDayCell {
+  private static let calendar = DateInRegion().calendar
 
   // MARK: - Static methods
   private static func getFormattedDay(of date: Date) -> String {
-    String(Calendar.current.component(.day, from: date))
+    String(calendar.component(.day, from: date))
   }
-
-//  private static func compareDates(date1: Date, date2: Date) -> Bool {
-//    let dateFormat = DateFormatter.yearMonthDayFormat
-//    let day1String = DateFormatter.string(dateFormat: dateFormat, from: date1)
-//    let day2String = DateFormatter.string(dateFormat: dateFormat, from: date2)
-//
-//    return day1String == day2String
-//  }
-//
-//  private static func isDateToday(_ date: Date) -> Bool {
-//    NFDayCollectionViewCell.compareDates(date1: Date.now, date2: date)
-//  }
-//
-//  private static func isDateYesterdayOrEarlier(date: Date) -> Bool {
-//    let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-//    return date < yesterday
-//  }
-//
-//  private static func defineTypeOfDay(_ dayData: NFCalendarDayData, isDateSelected: Bool) -> NFDayType {
-//    let date = dayData.date
-//
-//    if isDateSelected {
-//      return .selectedDay
-//    }
-//
-//    let isTodayDate = NFDayCollectionViewCell.isDateToday(date)
-//    if isTodayDate {
-//      return .todayDay
-//    }
-//
-//    let isPastDay = NFDayCollectionViewCell.isDateYesterdayOrEarlier(date: date)
-//    if isPastDay {
-//      return .pastDay
-//    }
-//
-//    return .defaultDay
-//  }
 
 }
 

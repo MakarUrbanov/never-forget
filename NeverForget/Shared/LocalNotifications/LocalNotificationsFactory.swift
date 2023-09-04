@@ -14,9 +14,7 @@ protocol LocalNotificationProtocol {
 
 enum LocalNotificationsFactory {
 
-  static func makeNotification(
-    for type: NotificationsType
-  ) -> NFLNScheduledEventNotification {
+  static func makeNotification(for type: NotificationsType) -> NFLNScheduledEventNotification {
     switch type {
       case .onBirthday(let birthdayNotificationData):
         return LocalNotificationForBirthday(
@@ -26,7 +24,8 @@ enum LocalNotificationsFactory {
           username: birthdayNotificationData.username,
           date: birthdayNotificationData.date,
           image: birthdayNotificationData.imageData
-        ).makeNFLNScheduledEventNotification()
+        )
+        .makeNFLNScheduledEventNotification()
     }
   }
 

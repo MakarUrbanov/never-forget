@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -11,7 +13,7 @@
 	<key>CFBundleIconName</key>
 	<string>App Icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.never-forget</string>
+	<string>com.urbans.neverforget</string>
 	<key>CFBundleName</key>
 	<string>Never Forget</string>
 	<key>CFBundleShortVersionString</key>

@@ -67,9 +67,7 @@ public extension NFLocalNotificationsManager {
     }
   }
 
-  func scheduleAnnualNotification(
-    _ notification: NFLNScheduledEventNotification
-  ) async throws {
+  func scheduleAnnualNotification(_ notification: NFLNScheduledEventNotification) async throws {
     let content = configureContent(for: notification)
 
     let dateComponents = Calendar.current.dateComponents(

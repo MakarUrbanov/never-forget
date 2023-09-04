@@ -6,6 +6,7 @@
 //
 
 import SnapKit
+import SwiftDate
 import UIKit
 
 // MARK: - INFMonthCollectionView
@@ -71,11 +72,10 @@ extension NFMonthCollectionView {
   // MARK: - Static properties
   private static let dayCellIdentifier = String(describing: NFMonthCollectionView.self)
   public static let dateCellsPadding: CGFloat = 8
+  private static let calendar = DateInRegion().calendar
 
   // MARK: - Static methods
   private static func areDatesInSameMonthAndYear(date1: Date, date2: Date) -> Bool {
-    let calendar = Calendar.current
-
     let componentsOfDate1 = calendar.dateComponents([.year, .month], from: date1)
     let componentsOfDate2 = calendar.dateComponents([.year, .month], from: date2)
 
@@ -83,24 +83,15 @@ extension NFMonthCollectionView {
   }
 
   private static func getListOfPastAndFutureDatesOfMonth(dates: [Date], firstMonthsDate: Date) -> [Date] {
-    guard let lastDateOfMonth = dates.last else {
-      return dates
-    }
+    let systemFirstWeekday = calendar.firstWeekday
 
-    let calendar = Calendar.current
-
-    let firstMonthsDateNumberOfWeekday = calendar.component(.weekday, from: firstMonthsDate) - 1
-    let pastDates: [Date] = (0..<firstMonthsDateNumberOfWeekday).compactMap {
+    let weekdayOfFirstDay = calendar.component(.weekday, from: firstMonthsDate)
+    let pastDatesShift: Int = (weekdayOfFirstDay - systemFirstWeekday + 7) % 7
+    let pastDates: [Date] = (0..<pastDatesShift).reversed().compactMap {
       calendar.date(byAdding: .day, value: -$0 - 1, to: firstMonthsDate)
-    }.reversed()
-
-    let lastMonthsDateNumberOfWeekday = calendar.component(.weekday, from: lastDateOfMonth)
-    let futureDaysToRender = 7 - lastMonthsDateNumberOfWeekday
-    let futureDates: [Date] = (1..<futureDaysToRender + 1).compactMap {
-      calendar.date(byAdding: .day, value: $0, to: lastDateOfMonth)
     }
 
-    return pastDates + dates + futureDates
+    return pastDates + dates
   }
 
 }
@@ -119,12 +110,18 @@ private extension NFMonthCollectionView {
 
       cell.dayAppearanceDelegate = self
 
-      let isEmptyCell = !NFMonthCollectionView.areDatesInSameMonthAndYear(date1: day, date2: self.firstMonthsDate!)
+      guard let firstMonthsDate = self.firstMonthsDate else {
+        fatalError("Something went wrong. firstMonthsDate must be initialized")
+      }
+
+      let isEmptyCell = !NFMonthCollectionView.areDatesInSameMonthAndYear(date1: day, date2: firstMonthsDate)
 
       if isEmptyCell {
         cell.setCellVisibility(isVisible: false)
       } else {
-        guard let data = self.monthDataSource?.monthCollectionView(self, dataFor: day) else { fatalError("Has no day data") }
+        guard let data = self.monthDataSource?.monthCollectionView(self, dataFor: day) else {
+          fatalError("Has no day data")
+        }
 
         cell.setupView(data)
         cell.setCellVisibility(isVisible: true)
@@ -153,9 +150,13 @@ private extension NFMonthCollectionView {
       snapshot.appendSections([.main])
     }
 
+    guard let firstMonthsDate else {
+      fatalError("Something went wrong. firstMonthsDate must be initialized")
+    }
+
     let datesWithEmptyCells = NFMonthCollectionView.getListOfPastAndFutureDatesOfMonth(
       dates: dates,
-      firstMonthsDate: firstMonthsDate!
+      firstMonthsDate: firstMonthsDate
     )
     snapshot.appendItems(datesWithEmptyCells, toSection: .main)
     diffableDataSource.apply(snapshot, animatingDifferences: false)
