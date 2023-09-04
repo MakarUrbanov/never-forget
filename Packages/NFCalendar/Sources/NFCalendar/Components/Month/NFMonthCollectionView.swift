@@ -16,9 +16,11 @@ public protocol INFMonthCollectionView: UICollectionView {
   // MARK: - Properties
   var firstMonthsDate: Date? { get }
   var dates: [Date] { get }
+  var datesWithEmptyCells: [Date] { get }
   // MARK: - Delegates
   var monthDataSource: INFMonthCollectionViewDataSource? { get set }
   var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate? { get set }
+  var monthDelegate: INFMonthCollectionViewDelegate? { get set }
   // MARK: - Methods
   func setupMonthDates(_ dates: [Date])
 }
@@ -28,9 +30,11 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
   // MARK: - Public properties
   public private(set) var firstMonthsDate: Date?
   public private(set) var dates: [Date] = []
+  public private(set) var datesWithEmptyCells: [Date] = []
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCollectionViewDataSource?
   public weak var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate?
+  public weak var monthDelegate: INFMonthCollectionViewDelegate?
 
   // MARK: - Private properties
   private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Date>?
@@ -160,6 +164,8 @@ private extension NFMonthCollectionView {
     )
     snapshot.appendItems(datesWithEmptyCells, toSection: .main)
     diffableDataSource.apply(snapshot, animatingDifferences: false)
+
+    self.datesWithEmptyCells = datesWithEmptyCells
   }
 
 }
@@ -177,6 +183,16 @@ extension NFMonthCollectionView: INFDayCellAppearanceDelegate {
 
   public func dayCell(_ dayCell: INFDayCell, backgroundImageFor date: Date, image: UIImage?) -> UIImageView? {
     appearanceDelegate?.monthCollectionView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  }
+
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension NFMonthCollectionView: UICollectionViewDelegate {
+
+  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let selectedDate = datesWithEmptyCells[indexPath.item]
+    monthDelegate?.monthCollectionView(self, didSelect: selectedDate)
   }
 
 }

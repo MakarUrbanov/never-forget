@@ -15,6 +15,7 @@ public protocol INFMonthCell: UICollectionViewCell {
 
   var monthDataSource: INFMonthCellDataSource? { get set }
   var monthAppearanceDelegate: INFMonthCellAppearanceDelegate? { get set }
+  var monthDelegate: INFMonthCellDelegate? { get set }
 
   func renderMonth(_ date: Date)
 }
@@ -25,6 +26,7 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCellDataSource?
   public weak var monthAppearanceDelegate: INFMonthCellAppearanceDelegate?
+  public weak var monthDelegate: INFMonthCellDelegate?
 
   // MARK: - Private properties
   private var monthCollectionView: INFMonthCollectionView = NFMonthCollectionView(
@@ -89,6 +91,7 @@ extension NFMonthCellView {
   private func setupMonthView() {
     monthCollectionView.appearanceDelegate = self
     monthCollectionView.monthDataSource = self
+    monthCollectionView.monthDelegate = self
 
     addSubview(monthCollectionView)
 
@@ -184,6 +187,15 @@ extension NFMonthCellView: INFMonthCollectionViewAppearanceDelegate {
     image: UIImage?
   ) -> UIImageView? {
     monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  }
+
+}
+
+// MARK: - INFMonthCollectionViewDelegate
+extension NFMonthCellView: INFMonthCollectionViewDelegate {
+
+  public func monthCollectionView(_ month: INFMonthCollectionView, didSelect date: Date) {
+    monthDelegate?.monthCollectionView(self, didSelect: date)
   }
 
 }

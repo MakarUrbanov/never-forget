@@ -25,13 +25,16 @@ class TestViewController: UIViewController {
   private func setupCalendar() {
     calendar.calendarDataSource = self
     calendar.calendarAppearanceDelegate = self
+    calendar.calendarDelegate = self
 
     calendar.backgroundColor = .clear
 
     view.addSubview(calendar)
 
     calendar.snp.makeConstraints { make in
-      make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
+      make.leading.trailing.equalToSuperview().inset(16)
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
 
     calendar.showsVerticalScrollIndicator = false
@@ -195,6 +198,30 @@ extension TestViewController: INFCalendarAppearanceDelegate {
       default:
         return DateBackgroundImageView.defaultDate()
     }
+  }
+
+}
+
+extension TestViewController: INFCalendarDelegate {
+
+  func calendar(_ calendar: NFCalendarView, didSelect date: Date) {
+    // TODO: mmk remove test impl
+    let label = UILabel()
+    label.textAlignment = .center
+    label.numberOfLines = 2
+    let text = "You selected \(date.toFormat("yyyy MM dd"))"
+    let markedDate = TestViewController.checkAndGetMarkedDate(date)
+    let description = "Events: \(markedDate?.badgeCount ?? 0)"
+    label.text = "\(text)\n\(description)"
+
+    let viewController = UIViewController()
+    viewController.view.backgroundColor = .Theme.darkBackground
+    viewController.view.addSubview(label)
+    label.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+
+    navigationController?.present(viewController, animated: true)
   }
 
 }

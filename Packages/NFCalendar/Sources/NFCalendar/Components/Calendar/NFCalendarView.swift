@@ -90,6 +90,7 @@ private extension NFCalendarView {
 
       cell.monthDataSource = self
       cell.monthAppearanceDelegate = self
+      cell.monthDelegate = self
 
       cell.renderMonth(date)
 
@@ -162,6 +163,15 @@ extension NFCalendarView: INFMonthCellDataSource {
   }
 
 }
+
+extension NFCalendarView: INFMonthCellDelegate {
+
+  public func monthCollectionView(_ month: INFMonthCell, didSelect date: Date) {
+    calendarDelegate?.calendar(self, didSelect: date)
+  }
+
+}
+
 
 // MARK: - Static
 extension NFCalendarView {
