@@ -110,32 +110,21 @@ extension NFMonthCellView {
   public static let headerHeight: CGFloat = 80
   private static let calendar = DateInRegion().calendar
 
-  private static func getDaysInMonth(of date: Date) -> Int {
-    guard let daysInMonthRange = calendar.range(of: .day, in: .month, for: date) else {
-      fatalError("Something went wrong")
-    }
-
-    return daysInMonthRange.upperBound - 1
+  private static func getDaysCountInMonth(of date: Date) -> Int {
+    date.in(region: .current).monthDays
   }
 
   private static func getFirstDateOfMonth(of date: Date) -> Date {
-    let components = calendar.dateComponents([.year, .month], from: date)
-    guard let firstDateOfMonth = calendar.date(from: components) else {
-      fatalError("Something went wrong")
-    }
-
-    return firstDateOfMonth
+    date.dateAtStartOf(.month).date
   }
 
   private static func getMonthDays(of date: Date) -> [Date] {
-    let daysInMonth = NFMonthCellView.getDaysInMonth(of: date)
+    let daysInMonth = NFMonthCellView.getDaysCountInMonth(of: date)
     let firstDayOfMonth = NFMonthCellView.getFirstDateOfMonth(of: date)
-    var daysList: [Date] = []
+    var daysList: [Date] = [firstDayOfMonth]
 
-    for day in 0..<daysInMonth {
-      guard let newDate = calendar.date(bySetting: .day, value: 1 + day, of: firstDayOfMonth) else {
-        fatalError("Something went wrong")
-      }
+    for dayNumber in 0..<daysInMonth {
+      let newDate = firstDayOfMonth.dateByAdding(1 + dayNumber, .day).date
       daysList.append(newDate)
     }
 

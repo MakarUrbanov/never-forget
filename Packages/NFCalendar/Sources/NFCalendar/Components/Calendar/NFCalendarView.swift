@@ -21,7 +21,7 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
   // MARK: - Private properties
   private var renderedMonths: [Date] = []
   private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Date>?
-  private let calendar = DateInRegion().calendar
+  private let calendar = DateInRegion(region: .current).calendar
 //  private var viewModel: INFCalendarViewModel
 
   // MARK: - Init
@@ -63,16 +63,11 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 private extension NFCalendarView {
 
   private func generateMonths() -> [Date] {
-    let startFromComponents = calendar.dateComponents([.year, .month], from: NFCalendarView.renderFromDate)
-    guard let startFrom = calendar.date(from: startFromComponents) else {
-      fatalError("Something went wrong")
-    }
+    let startFrom = NFCalendarView.renderFromDate.dateAtStartOf(.month)
     var months: [Date] = []
 
     for monthNumber in 0..<NFCalendarView.numberOfRenderMonths {
-      guard let monthDate = calendar.date(byAdding: .month, value: monthNumber, to: startFrom) else {
-        fatalError("Something went wrong")
-      }
+      let monthDate = startFrom.dateByAdding(monthNumber, .month).date
       months.append(monthDate)
     }
 
@@ -99,11 +94,7 @@ private extension NFCalendarView {
   }
 
   private func numberOfWeeksInMonth(of date: Date) -> Int? {
-    guard let range = calendar.range(of: .weekOfMonth, in: .month, for: date) else {
-      return nil
-    }
-
-    return range.count
+    date.dateAtEndOf(.month).weekOfMonth
   }
 
 }

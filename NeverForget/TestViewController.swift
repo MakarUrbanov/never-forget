@@ -98,24 +98,12 @@ extension TestViewController: INFCalendarDataSource {
 // MARK: - UI calendar helpers
 private extension TestViewController {
 
-  private static func compareDates(date1: Date, date2: Date) -> Bool {
-    let dateFormat = DateFormatter.yearMonthDayFormat
-    let day1String = DateFormatter.string(dateFormat: dateFormat, from: date1)
-    let day2String = DateFormatter.string(dateFormat: dateFormat, from: date2)
-
-    return day1String == day2String
-  }
-
   private static func isDateToday(_ date: Date) -> Bool {
-    TestViewController.compareDates(date1: Date.now, date2: date)
+    date.in(region: .local).compare(.isToday)
   }
 
-  private static func isDateYesterdayOrEarlier(date: Date) -> Bool {
-    guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else {
-      fatalError("Something went wrong")
-    }
-
-    return date < yesterday
+  private static func isDateEarlierToday(date: Date) -> Bool {
+    date.in(region: .local).compare(.isEarlier(than: DateInRegion()))
   }
 
   private func defineTypeOfDay(_ date: Date) -> DayType {
@@ -128,7 +116,7 @@ private extension TestViewController {
       return .todayDate
     }
 
-    let isPastDay = TestViewController.isDateYesterdayOrEarlier(date: date)
+    let isPastDay = TestViewController.isDateEarlierToday(date: date)
     if isPastDay {
       return .pastDate
     }

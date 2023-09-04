@@ -50,6 +50,8 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
     initialiseDiffableDataSource()
     dataSource = diffableDataSource
     delegate = self
+
+    isScrollEnabled = false
   }
 
   @available(*, unavailable)
@@ -80,10 +82,7 @@ extension NFMonthCollectionView {
 
   // MARK: - Static methods
   private static func areDatesInSameMonthAndYear(date1: Date, date2: Date) -> Bool {
-    let componentsOfDate1 = calendar.dateComponents([.year, .month], from: date1)
-    let componentsOfDate2 = calendar.dateComponents([.year, .month], from: date2)
-
-    return componentsOfDate1.year == componentsOfDate2.year && componentsOfDate1.month == componentsOfDate2.month
+    date1.compare(.isSameMonth(date2))
   }
 
   private static func getListOfPastAndFutureDatesOfMonth(dates: [Date], firstMonthsDate: Date) -> [Date] {

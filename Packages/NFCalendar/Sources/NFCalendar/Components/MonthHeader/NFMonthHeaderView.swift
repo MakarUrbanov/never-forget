@@ -6,6 +6,7 @@
 //
 
 import SnapKit
+import SwiftDate
 import UIKit
 
 // MARK: - INFMonthHeader
@@ -86,8 +87,8 @@ private extension NFMonthHeaderView {
   }
 
   private func setHeaderTitle(from date: Date) {
-    let text = NFMonthHeaderView.titleDateFormatter.string(from: date)
-    titleLabel.text = NFMonthHeaderView.capitalizeFirstCharacter(text)
+    let dateFormatted = date.toFormat("MMMM YYYY")
+    titleLabel.text = NFMonthHeaderView.capitalizeFirstCharacter(dateFormatted)
   }
 
 }
@@ -100,9 +101,6 @@ extension NFMonthHeaderView {
     let remainingLetters = text.dropFirst()
     return firstLetter + remainingLetters
   }
-
-  // MARK: - Static properties
-  private static let titleDateFormatter = DateFormatter(dateFormat: "MMMM YYYY")
 
 }
 
