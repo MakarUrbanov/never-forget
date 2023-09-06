@@ -1,14 +1,7 @@
-//
-//  Date+randomDate.swift
-//  never-forget
-//
-//  Created by makar on 3/13/23.
-//
-
 import Foundation
 
-extension Date {
-
+// MARK: - getRandomDate
+public extension Date {
   /// Get random date between 1900-01-01 and Today date
   static func getRandomDate() -> Date {
     let calendar = Calendar.current
@@ -22,5 +15,4 @@ extension Date {
 
     return Calendar.current.date(from: dateComponents) ?? Date()
   }
-
 }

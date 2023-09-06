@@ -9,6 +9,7 @@ public protocol INFCalendarView: UICollectionView {
   init()
 
   func renderCalendar()
+//  func renderCalendar()
 }
 
 public final class NFCalendarView: UICollectionView, INFCalendarView {

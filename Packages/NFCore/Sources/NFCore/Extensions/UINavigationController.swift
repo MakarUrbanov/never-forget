@@ -1,14 +1,14 @@
-//
-//  UINavigationController+navigate.swift
-//  never-forget
-//
-//  Created by makar on 2/23/23.
-//
-
 import UIKit
 
-extension UINavigationController {
+public enum NavigationSteps {
+  case push(UIViewController)
+  case pop
+  case present(UIViewController, UIModalPresentationStyle)
+  case dismiss
+}
 
+// MARK: - navigate
+public extension UINavigationController {
   func navigate(step: NavigationSteps, animated: Bool = true, completion: @escaping () -> Void = {}) {
     switch step {
       case .push(let controller):
@@ -36,5 +36,4 @@ extension UINavigationController {
         }
     }
   }
-
 }

@@ -1,13 +1,7 @@
-//
-//  UIView+addView.swift
-//  never-forget
-//
-//  Created by makar on 2/7/23.
-//
-
 import UIKit
 
-extension UIView {
+// MARK: - addView
+public extension UIView {
   func addView(_ view: UIView) {
     view.translatesAutoresizingMaskIntoConstraints = false
     addSubview(view)

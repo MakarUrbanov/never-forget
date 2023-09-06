@@ -1,13 +1,7 @@
-//
-//  UIColor+hex.swift
-//  never-forget
-//
-//  Created by makar on 2/7/23.
-//
-
 import UIKit
 
-extension UIColor {
+// MARK: - init(hex:)
+public extension UIColor {
   convenience init(hex: String) {
     let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
     var int = UInt64()

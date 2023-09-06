@@ -1,15 +1,8 @@
-//
-//  UIViewController+Preview.swift
-//  NeverForgetApp
-//
-//  Created by Makar Mishchenko on 02.09.2023.
-//
-
 import SwiftUI
 import UIKit
 
-extension UIViewController {
-
+// MARK: - UIKit Preview
+public extension UIViewController {
   private struct Preview: UIViewControllerRepresentable {
     let viewController: UIViewController
 
@@ -23,5 +16,4 @@ extension UIViewController {
   func makePreview() -> some View {
     Preview(viewController: self).ignoresSafeArea()
   }
-
 }

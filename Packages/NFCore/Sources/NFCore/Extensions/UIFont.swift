@@ -1,14 +1,7 @@
-//
-//  UIFont+systemFont.swift
-//  NeverForgetApp
-//
-//  Created by makar on 5/16/23.
-//
-
 import UIKit
 
-extension UIFont {
-
+// MARK: - systemFont(style:fontWeight:)
+public extension UIFont {
   // swiftlint:disable:next cyclomatic_complexity
   static func systemFont(_ style: UIFont.TextStyle, _ fontWeight: UIFont.Weight) -> UIFont {
     switch style {
@@ -38,5 +31,4 @@ extension UIFont {
         return systemFont(ofSize: 14, weight: fontWeight)
     }
   }
-
 }

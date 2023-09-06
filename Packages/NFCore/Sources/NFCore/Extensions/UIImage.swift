@@ -1,14 +1,7 @@
-//
-//  UIImage+resizeImage.swift
-//  never-forget
-//
-//  Created by makar on 3/4/23.
-//
-
 import UIKit
 
-extension UIImage {
-
+// MARK: - resizeImage
+public extension UIImage {
   func resizeImage(maxSize: CGSize) -> UIImage {
     let widthRatio = maxSize.width / size.width
     let heightRatio = maxSize.height / size.height
@@ -26,5 +19,4 @@ extension UIImage {
 
     return newImage
   }
-
 }

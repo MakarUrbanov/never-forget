@@ -1,14 +1,7 @@
-//
-//  Color+random.swift
-//  NeverForgetApp
-//
-//  Created by makar on 4/2/23.
-//
-
 import SwiftUI
 
-extension Color {
-
+// MARK: - random
+public extension Color {
   static var random: Color {
     Color(
       red: .random(in: 0...1),
@@ -16,5 +9,11 @@ extension Color {
       blue: .random(in: 0...1)
     )
   }
+}
 
+// MARK: - uiColor
+public extension Color {
+  var uiColor: UIColor {
+    UIColor(self)
+  }
 }

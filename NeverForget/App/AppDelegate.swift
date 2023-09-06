@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import NFCore
 import UIKit
 
 @main final class AppDelegate: UIResponder, UIApplicationDelegate {
