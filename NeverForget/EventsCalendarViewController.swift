@@ -48,17 +48,29 @@ extension EventsCalendarViewController: INFCalendarDataSource {
 
   private static func checkAndGetMarkedDate(_ date: Date) -> NFCalendarDay? {
     let dateString = dateFormatter.string(from: date)
-    let markedDate = EventsCalendarViewController.MOCK_DATA.first { markedDate in
+    var markedDate = Self.MOCK_DATA.first { markedDate in
       let markedDateString = dateFormatter.string(from: markedDate.date)
 
       return markedDateString == dateString
     }
+
+    markedDate?.date = date
 
     return markedDate
   }
 
   private static let MOCK_DATA: [NFCalendarDay] = {
     [
+      .init(
+        date: DateInRegion().dateByAdding(-2, .day).date,
+        backgroundImage: UIImage(named: "mockImage2"),
+        badgeCount: 1
+      ),
+      .init(
+        date: DateInRegion().date,
+        backgroundImage: UIImage(named: "mockImage2"),
+        badgeCount: 3
+      ),
       .init(
         date: DateInRegion().dateByAdding(2, .day).date,
         backgroundImage: nil,
@@ -83,7 +95,7 @@ extension EventsCalendarViewController: INFCalendarDataSource {
   }()
 
   func calendarView(_ calendar: NFCalendarView, dataFor date: Date) -> NFCalendarDay? {
-    if let markedDate = EventsCalendarViewController.checkAndGetMarkedDate(date) {
+    if let markedDate = Self.checkAndGetMarkedDate(date) {
       return markedDate
     }
 
@@ -103,22 +115,27 @@ private extension EventsCalendarViewController {
     date.in(region: .local).compare(.isEarlier(than: DateInRegion()))
   }
 
-  private func defineTypeOfDay(_ date: Date) -> DayType {
-    if EventsCalendarViewController.checkAndGetMarkedDate(date) != nil {
-      return .dateWithEvents
-    }
-
-    let isTodayDate = EventsCalendarViewController.isDateToday(date)
+  private static func defineWhatTimeTheDate(_ date: Date) -> DayType {
+    let isTodayDate = Self.isDateToday(date)
     if isTodayDate {
       return .todayDate
     }
 
-    let isPastDay = EventsCalendarViewController.isDateEarlierToday(date: date)
+    let isPastDay = Self.isDateEarlierToday(date: date)
     if isPastDay {
       return .pastDate
     }
 
     return .defaultDate
+  }
+
+  private func defineTypeOfDay(_ date: Date) -> DayType {
+    if Self.checkAndGetMarkedDate(date) != nil {
+      let dateTime = Self.defineWhatTimeTheDate(date)
+      return .dateWithEvents(dateTime)
+    }
+
+    return Self.defineWhatTimeTheDate(date)
   }
 
 }
@@ -147,7 +164,9 @@ extension EventsCalendarViewController: INFCalendarAppearanceDelegate {
         return DateBadgeLabel.pastDate()
       case .todayDate:
         return DateBadgeLabel.todayDate()
-      default:
+      case .dateWithEvents(let time):
+        return DateBadgeLabel.dateWithEvents(in: time)
+      case .defaultDate:
         return DateBadgeLabel.defaultDate()
     }
   }
@@ -160,10 +179,10 @@ extension EventsCalendarViewController: INFCalendarAppearanceDelegate {
         return DateLabel.pastDate()
       case .todayDate:
         return DateLabel.todayDate()
+      case .dateWithEvents(let time):
+        return DateLabel.dateWithEvents(in: time)
       case .defaultDate:
         return DateLabel.defaultDate()
-      case .dateWithEvents:
-        return DateLabel.dateWithEvents()
     }
   }
 
@@ -180,13 +199,16 @@ extension EventsCalendarViewController: INFCalendarAppearanceDelegate {
         return DateBackgroundImageView.pastDate()
       case .todayDate:
         return DateBackgroundImageView.todayDate()
-      default:
+      case .dateWithEvents(let time):
+        return DateBackgroundImageView.dateWithEvents(in: time)
+      case .defaultDate:
         return DateBackgroundImageView.defaultDate()
     }
   }
 
 }
 
+// MARK: - INFCalendarDelegate
 extension EventsCalendarViewController: INFCalendarDelegate {
 
   func calendar(_ calendar: NFCalendarView, didSelect date: Date) {
@@ -195,7 +217,7 @@ extension EventsCalendarViewController: INFCalendarDelegate {
     label.textAlignment = .center
     label.numberOfLines = 2
     let text = "You selected \(date.toFormat("yyyy MM dd"))"
-    let markedDate = EventsCalendarViewController.checkAndGetMarkedDate(date)
+    let markedDate = Self.checkAndGetMarkedDate(date)
     let description = "Events: \(markedDate?.badgeCount ?? 0)"
     label.text = "\(text)\n\(description)"
 
@@ -295,12 +317,24 @@ private extension EventsCalendarViewController {
       return label
     }
 
-    static func dateWithEvents() -> Self {
+    static func dateWithEvents(in time: DayType) -> Self {
       let label = self.init()
 
-      label.textColor = UIColor.Theme.textLight100
-      label.layer.borderWidth = 1
-      label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+      if time == .pastDate {
+        label.textColor = UIColor.Theme.textLight30
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.Theme.textLight30.cgColor
+      } else if time == .todayDate {
+        label.textColor = UIColor.Theme.textLight100
+        label.backgroundColor = UIColor.Theme.main100
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+      } else {
+        label.textColor = UIColor.Theme.textLight100
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+      }
+
 
       return label
     }
@@ -345,12 +379,17 @@ private extension EventsCalendarViewController {
 
     static func pastDate() -> Self {
       let label = self.init()
+      label.backgroundColor = UIColor.Theme.textLight30
 
       return label
     }
 
-    static func dateWithEvents() -> Self {
+    static func dateWithEvents(in time: DayType) -> Self {
       let label = self.init()
+
+      if time == .pastDate {
+        label.backgroundColor = UIColor.Theme.textLight30
+      }
 
       return label
     }
@@ -376,13 +415,16 @@ private extension EventsCalendarViewController {
   // MARK: - DateBackgroundImageView
   private class DateBackgroundImageView: UIImageView, CustomizableCalendarDateComponent {
 
+    private let darkLayer: CAShapeLayer = .init()
+
     required init() {
       super.init(frame: .zero)
 
       layer.zPosition = 0
       layer.masksToBounds = true
       contentMode = .scaleAspectFill
-      alpha = 0.6
+
+      darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.6).cgColor
     }
 
     @available(*, unavailable)
@@ -402,8 +444,14 @@ private extension EventsCalendarViewController {
       return imageView
     }
 
-    static func dateWithEvents() -> Self {
+    static func dateWithEvents(in time: DayType) -> Self {
       let imageView = self.init()
+
+      if time == .pastDate {
+        imageView.darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.9).cgColor
+      } else if time == .todayDate {
+        imageView.alpha = 0
+      }
 
       return imageView
     }
@@ -418,33 +466,43 @@ private extension EventsCalendarViewController {
     override func layoutSubviews() {
       super.layoutSubviews()
       setCornerRadius()
+      updateDarkLayer()
     }
 
     private func setCornerRadius() {
       let radius = bounds.width / 2
       layer.cornerRadius = radius
     }
+
+    private func updateDarkLayer() {
+      darkLayer.removeFromSuperlayer()
+      let width = bounds.width
+      let height = bounds.height
+      darkLayer.path = UIBezierPath(
+        roundedRect: .init(x: 0, y: 0, width: width, height: height),
+        cornerRadius: 0
+      ).cgPath
+      darkLayer.zPosition = 1
+      layer.addSublayer(darkLayer)
+      layer.setNeedsDisplay()
+    }
   }
 
 }
 
 // MARK: - Models
-private extension EventsCalendarViewController {
-
-  private enum DayType {
-    case pastDate
-    case todayDate
-    case defaultDate
-    case dateWithEvents
-  }
-
+private indirect enum DayType: Equatable {
+  case pastDate
+  case todayDate
+  case defaultDate
+  case dateWithEvents(DayType)
 }
 
 private protocol CustomizableCalendarDateComponent: UIView {
   static func pastDate() -> Self
   static func todayDate() -> Self
   static func defaultDate() -> Self
-  static func dateWithEvents() -> Self
+  static func dateWithEvents(in time: DayType) -> Self
 }
 
 struct TestView_Previews: PreviewProvider {
