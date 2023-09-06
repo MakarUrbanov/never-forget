@@ -5,6 +5,7 @@
 //  Created by Makar Mishchenko on 06.09.2023.
 //
 
+import NFCore
 import SnapKit
 import UIKit
 
@@ -12,12 +13,14 @@ public protocol INFCalendarViewController: UIViewController {
   var calendarView: INFCalendarView { get }
 }
 
-public class NFCalendarViewController: UIViewController {
-  // MARK: - Private properties
-  private let calendarView: INFCalendarView = NFCalendarView()
+open class NFCalendarViewController: UIViewController, INFCalendarViewController {
 
-  override public func viewDidLoad() {
+  public let calendarView: INFCalendarView = NFCalendarView(viewModel: NFCalendarViewModel())
+
+  override open func viewDidLoad() {
     super.viewDidLoad()
+
+    setupCalendar()
   }
 
 }
@@ -31,6 +34,9 @@ extension NFCalendarViewController {
     calendarView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
+
+    calendarView.backgroundColor = .clear
+    calendarView.renderCalendar()
   }
 
 }

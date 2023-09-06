@@ -1,5 +1,5 @@
 //
-//  TestViewController.swift
+//  EventsCalendarViewController.swift
 //  NeverForgetApp
 //
 //  Created by Makar Mishchenko on 29.07.2023.
@@ -11,9 +11,7 @@ import SwiftDate
 import SwiftUI
 import UIKit
 
-class TestViewController: UIViewController {
-
-  let calendar: INFCalendarView = NFCalendarView()
+final class EventsCalendarViewController: NFCalendarViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -22,36 +20,35 @@ class TestViewController: UIViewController {
     setupCalendar()
   }
 
+}
+
+// MARK: - Private methods
+extension EventsCalendarViewController {
+
   private func setupCalendar() {
-    calendar.calendarDataSource = self
-    calendar.calendarAppearanceDelegate = self
-    calendar.calendarDelegate = self
+    calendarView.viewModel.calendarDataSource = self
+    calendarView.viewModel.calendarAppearanceDelegate = self
+    calendarView.viewModel.calendarDelegate = self
 
-    calendar.backgroundColor = .clear
+    calendarView.showsVerticalScrollIndicator = false
 
-    view.addSubview(calendar)
-
-    calendar.snp.makeConstraints { make in
+    calendarView.snp.remakeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(16)
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
-
-    calendar.showsVerticalScrollIndicator = false
-
-    calendar.renderCalendar()
   }
 
 }
 
 // MARK: - DataSource
-extension TestViewController: INFCalendarDataSource {
+extension EventsCalendarViewController: INFCalendarDataSource {
 
   private static let dateFormatter = DateFormatter(dateFormat: DateFormatter.yearMonthDayFormat)
 
   private static func checkAndGetMarkedDate(_ date: Date) -> NFCalendarDay? {
     let dateString = dateFormatter.string(from: date)
-    let markedDate = TestViewController.MOCK_DATA.first { markedDate in
+    let markedDate = EventsCalendarViewController.MOCK_DATA.first { markedDate in
       let markedDateString = dateFormatter.string(from: markedDate.date)
 
       return markedDateString == dateString
@@ -86,7 +83,7 @@ extension TestViewController: INFCalendarDataSource {
   }()
 
   func calendarView(_ calendar: NFCalendarView, dataFor date: Date) -> NFCalendarDay? {
-    if let markedDate = TestViewController.checkAndGetMarkedDate(date) {
+    if let markedDate = EventsCalendarViewController.checkAndGetMarkedDate(date) {
       return markedDate
     }
 
@@ -96,7 +93,7 @@ extension TestViewController: INFCalendarDataSource {
 }
 
 // MARK: - UI calendar helpers
-private extension TestViewController {
+private extension EventsCalendarViewController {
 
   private static func isDateToday(_ date: Date) -> Bool {
     date.in(region: .local).compare(.isToday)
@@ -107,16 +104,16 @@ private extension TestViewController {
   }
 
   private func defineTypeOfDay(_ date: Date) -> DayType {
-    if TestViewController.checkAndGetMarkedDate(date) != nil {
+    if EventsCalendarViewController.checkAndGetMarkedDate(date) != nil {
       return .dateWithEvents
     }
 
-    let isTodayDate = TestViewController.isDateToday(date)
+    let isTodayDate = EventsCalendarViewController.isDateToday(date)
     if isTodayDate {
       return .todayDate
     }
 
-    let isPastDay = TestViewController.isDateEarlierToday(date: date)
+    let isPastDay = EventsCalendarViewController.isDateEarlierToday(date: date)
     if isPastDay {
       return .pastDate
     }
@@ -127,7 +124,7 @@ private extension TestViewController {
 }
 
 // MARK: - INFCalendarAppearanceDelegate
-extension TestViewController: INFCalendarAppearanceDelegate {
+extension EventsCalendarViewController: INFCalendarAppearanceDelegate {
 
   func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
     CalendarWeekday.getDefault()
@@ -190,7 +187,7 @@ extension TestViewController: INFCalendarAppearanceDelegate {
 
 }
 
-extension TestViewController: INFCalendarDelegate {
+extension EventsCalendarViewController: INFCalendarDelegate {
 
   func calendar(_ calendar: NFCalendarView, didSelect date: Date) {
     // TODO: mmk remove test impl
@@ -198,7 +195,7 @@ extension TestViewController: INFCalendarDelegate {
     label.textAlignment = .center
     label.numberOfLines = 2
     let text = "You selected \(date.toFormat("yyyy MM dd"))"
-    let markedDate = TestViewController.checkAndGetMarkedDate(date)
+    let markedDate = EventsCalendarViewController.checkAndGetMarkedDate(date)
     let description = "Events: \(markedDate?.badgeCount ?? 0)"
     label.text = "\(text)\n\(description)"
 
@@ -215,7 +212,7 @@ extension TestViewController: INFCalendarDelegate {
 }
 
 // MARK: - App UI
-private extension TestViewController {
+private extension EventsCalendarViewController {
 
   // MARK: - MonthTitle
   private final class MonthTitle: UILabel {
@@ -432,7 +429,7 @@ private extension TestViewController {
 }
 
 // MARK: - Models
-private extension TestViewController {
+private extension EventsCalendarViewController {
 
   private enum DayType {
     case pastDate
@@ -452,6 +449,6 @@ private protocol CustomizableCalendarDateComponent: UIView {
 
 struct TestView_Previews: PreviewProvider {
   static var previews: some View {
-    TestViewController().makePreview()
+    EventsCalendarViewController().makePreview()
   }
 }
