@@ -26,9 +26,9 @@ final class EventsCalendarViewController: NFCalendarViewController {
 extension EventsCalendarViewController {
 
   private func setupCalendar() {
-    calendarView.viewModel.calendarDataSource = self
-    calendarView.viewModel.calendarAppearanceDelegate = self
-    calendarView.viewModel.calendarDelegate = self
+    calendarView.calendarDataSource = self
+    calendarView.calendarAppearanceDelegate = self
+    calendarView.calendarDelegate = self
 
     calendarView.showsVerticalScrollIndicator = false
 

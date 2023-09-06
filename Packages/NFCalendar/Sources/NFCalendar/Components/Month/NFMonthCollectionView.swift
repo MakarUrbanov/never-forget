@@ -14,34 +14,35 @@ public protocol INFMonthCollectionView: UICollectionView {
   // MARK: - Static
   static var dateCellsPadding: CGFloat { get }
   // MARK: - Properties
-  var firstMonthsDate: Date? { get }
-  var dates: [Date] { get }
-  var datesWithEmptyCells: [Date] { get }
+  var viewModel: INFMonthCollectionViewModel { get }
   // MARK: - Delegates
   var monthDataSource: INFMonthCollectionViewDataSource? { get set }
   var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate? { get set }
   var monthDelegate: INFMonthCollectionViewDelegate? { get set }
+
+  // MARK: - Init
+  init(viewModel: INFMonthCollectionViewModel)
+
   // MARK: - Methods
   func setupMonthDates(_ dates: [Date])
 }
 
 public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
-
   // MARK: - Public properties
-  public private(set) var firstMonthsDate: Date?
-  public private(set) var dates: [Date] = []
-  public private(set) var datesWithEmptyCells: [Date] = []
+  public var viewModel: INFMonthCollectionViewModel
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCollectionViewDataSource?
   public weak var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate?
   public weak var monthDelegate: INFMonthCollectionViewDelegate?
 
   // MARK: - Private properties
-  private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Date>?
+  private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Date>?
+  private var datesWithEmptyCells: [Date] = []
 
   // MARK: - Init
-  override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-    super.init(frame: frame, collectionViewLayout: layout)
+  public required init(viewModel: INFMonthCollectionViewModel) {
+    self.viewModel = viewModel
+    super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     register(NFDayCell.self, forCellWithReuseIdentifier: NFMonthCollectionView.dayCellIdentifier)
 
@@ -62,39 +63,10 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
   // MARK: - Public methods
   public func setupMonthDates(_ dates: [Date]) {
     if let firstDate = dates.first {
-      firstMonthsDate = firstDate
+      setNewFirstMonthDate(firstDate)
     }
 
-    self.dates = dates
-
-    updateMonthDates()
-  }
-
-}
-
-// MARK: - Static
-extension NFMonthCollectionView {
-
-  // MARK: - Static properties
-  private static let dayCellIdentifier = String(describing: NFMonthCollectionView.self)
-  public static let dateCellsPadding: CGFloat = 8
-  private static let calendar = DateInRegion().calendar
-
-  // MARK: - Static methods
-  private static func areDatesInSameMonthAndYear(date1: Date, date2: Date) -> Bool {
-    date1.compare(.isSameMonth(date2))
-  }
-
-  private static func getListOfPastAndFutureDatesOfMonth(dates: [Date], firstMonthsDate: Date) -> [Date] {
-    let systemFirstWeekday = calendar.firstWeekday
-
-    let weekdayOfFirstDay = calendar.component(.weekday, from: firstMonthsDate)
-    let pastDatesShift: Int = (weekdayOfFirstDay - systemFirstWeekday + 7) % 7
-    let pastDates: [Date] = (0..<pastDatesShift).reversed().compactMap {
-      calendar.date(byAdding: .day, value: -$0 - 1, to: firstMonthsDate)
-    }
-
-    return pastDates + dates
+    setNewDates(dates)
   }
 
 }
@@ -102,27 +74,37 @@ extension NFMonthCollectionView {
 // MARK: - Private methods
 private extension NFMonthCollectionView {
 
-  private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Section, Date> {
-    UICollectionViewDiffableDataSource(collectionView: self) { collectionView, indexPath, day in
-      guard let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: NFMonthCollectionView.dayCellIdentifier,
-        for: indexPath
-      ) as? INFDayCell else {
-        fatalError("Failed dequeueReusableCell")
+  private func setNewDates(_ dates: [Date]) {
+    viewModel.dates = .init(dates, valueChanged: { [self] newDates in
+      updateMonthDates(newDates)
+    })
+  }
+
+  private func setNewFirstMonthDate(_ date: Date) {
+    viewModel.firstMonthDate = .init(date)
+  }
+
+  private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Int, Date> {
+    UICollectionViewDiffableDataSource(collectionView: self) { [self] collectionView, indexPath, day in
+      guard
+        let cell = collectionView.dequeueReusableCell(
+          withReuseIdentifier: NFMonthCollectionView.dayCellIdentifier,
+          for: indexPath
+        ) as? INFDayCell,
+        let firstMonthsDate = viewModel.firstMonthDate?.value else
+      {
+        fatalError("Failed getDiffableDataSource")
       }
 
-      cell.dayAppearanceDelegate = self
-
-      guard let firstMonthsDate = self.firstMonthsDate else {
-        fatalError("Something went wrong. firstMonthsDate must be initialized")
-      }
-
-      let isEmptyCell = !NFMonthCollectionView.areDatesInSameMonthAndYear(date1: day, date2: firstMonthsDate)
+      let isEmptyCell = !viewModel.areDatesInSameMonthAndYear(date1: day, date2: firstMonthsDate)
 
       if isEmptyCell {
         cell.setCellVisibility(isVisible: false)
       } else {
-        guard let data = self.monthDataSource?.monthCollectionView(self, dataFor: day) else {
+        cell.dayAppearanceDelegate = self
+        cell.viewModel = NFDayCellViewModel()
+
+        guard let data = monthDataSource?.monthCollectionView(self, dataFor: day) else {
           fatalError("Has no day data")
         }
 
@@ -138,30 +120,30 @@ private extension NFMonthCollectionView {
     guard let diffableDataSource else { fatalError("diffableDataSource could be initialised") }
 
     var snapshot = diffableDataSource.snapshot()
-    snapshot.appendSections([.main])
-    snapshot.appendItems([], toSection: .main)
+    snapshot.appendSections([0])
+    snapshot.appendItems([], toSection: 0)
     diffableDataSource.apply(snapshot, animatingDifferences: false)
   }
 
-  private func updateMonthDates() {
+  private func updateMonthDates(_ newDates: [Date]) {
     guard let diffableDataSource else { fatalError("diffableDataSource could be initialised") }
 
     var snapshot = diffableDataSource.snapshot()
 
     if snapshot.sectionIdentifiers.count > 0 {
       snapshot.deleteAllItems()
-      snapshot.appendSections([.main])
+      snapshot.appendSections([0])
     }
 
-    guard let firstMonthsDate else {
+    guard let firstMonthDate = viewModel.firstMonthDate?.value else {
       fatalError("Something went wrong. firstMonthsDate must be initialized")
     }
 
-    let datesWithEmptyCells = NFMonthCollectionView.getListOfPastAndFutureDatesOfMonth(
-      dates: dates,
-      firstMonthsDate: firstMonthsDate
+    let datesWithEmptyCells = viewModel.getListOfPastAndFutureDatesOfMonth(
+      dates: newDates,
+      firstMonthsDate: firstMonthDate
     )
-    snapshot.appendItems(datesWithEmptyCells, toSection: .main)
+    snapshot.appendItems(datesWithEmptyCells, toSection: 0)
     diffableDataSource.apply(snapshot, animatingDifferences: false)
 
     self.datesWithEmptyCells = datesWithEmptyCells
@@ -239,11 +221,11 @@ extension NFMonthCollectionView: UICollectionViewDelegateFlowLayout {
 
 }
 
-// MARK: - Models
+// MARK: - Static
 extension NFMonthCollectionView {
 
-  private enum Section {
-    case main
-  }
+  // MARK: - Static properties
+  private static let dayCellIdentifier = String(describing: NFMonthCollectionView.self)
+  public static let dateCellsPadding: CGFloat = 8
 
 }

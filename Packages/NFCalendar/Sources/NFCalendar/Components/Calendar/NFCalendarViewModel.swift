@@ -10,10 +10,6 @@ import UIKit
 
 // MARK: - Protocol
 public protocol INFCalendarViewModel: AnyObject {
-  var calendarDataSource: INFCalendarDataSource? { get set }
-  var calendarDelegate: INFCalendarDelegate? { get set }
-  var calendarAppearanceDelegate: INFCalendarAppearanceDelegate? { get set }
-
   var calendar: Calendar { get }
 
   func generateMonths() -> [Date]
@@ -23,12 +19,6 @@ public protocol INFCalendarViewModel: AnyObject {
 // MARK: - NFCalendarViewModel
 public final class NFCalendarViewModel: INFCalendarViewModel {
   public var calendar: Calendar = DateInRegion(region: .current).calendar
-
-  public var calendarDataSource: INFCalendarDataSource?
-  public var calendarDelegate: INFCalendarDelegate?
-  public var calendarAppearanceDelegate: INFCalendarAppearanceDelegate?
-
-  init() {}
 
   // MARK: - Public methods
   public func generateMonths() -> [Date] {

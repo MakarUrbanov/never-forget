@@ -29,10 +29,8 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
   public weak var monthDelegate: INFMonthCellDelegate?
 
   // MARK: - Private properties
-  private var monthCollectionView: INFMonthCollectionView = NFMonthCollectionView(
-    frame: .zero,
-    collectionViewLayout: UICollectionViewFlowLayout()
-  )
+  private var monthCollectionView: INFMonthCollectionView =
+    NFMonthCollectionView(viewModel: NFMonthCollectionViewModel())
   private var monthHeaderView: INFMonthHeader = NFMonthHeaderView()
 
   // MARK: - Init

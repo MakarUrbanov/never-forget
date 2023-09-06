@@ -4,6 +4,10 @@ import UIKit
 public protocol INFCalendarView: UICollectionView {
   var viewModel: INFCalendarViewModel { get }
 
+  var calendarDataSource: INFCalendarDataSource? { get set }
+  var calendarDelegate: INFCalendarDelegate? { get set }
+  var calendarAppearanceDelegate: INFCalendarAppearanceDelegate? { get set }
+
   init(viewModel: INFCalendarViewModel)
 
   func renderCalendar()
@@ -13,7 +17,10 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 
   // MARK: - Public properties
   public let viewModel: INFCalendarViewModel
-
+  // MARK: - Delegates
+  public weak var calendarDataSource: INFCalendarDataSource?
+  public weak var calendarDelegate: INFCalendarDelegate?
+  public weak var calendarAppearanceDelegate: INFCalendarAppearanceDelegate?
   //  // MARK: - Private properties
   private var renderedMonths: [Date] = []
   private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Date>?
@@ -80,7 +87,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     dayCell: INFDayCell,
     dateLabelFor date: Date
   ) -> UILabel? {
-    viewModel.calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, dateLabelFor: date)
+    calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, dateLabelFor: date)
   }
 
   public func monthCell(
@@ -89,7 +96,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     badgeLabelFor date: Date,
     badgeCount: Int?
   ) -> UILabel? {
-    viewModel.calendarAppearanceDelegate?.calendarView(
+    calendarAppearanceDelegate?.calendarView(
       self,
       dayCell: dayCell,
       badgeLabelFor: date,
@@ -103,7 +110,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     backgroundImageFor date: Date,
     image: UIImage?
   ) -> UIImageView? {
-    viewModel.calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+    calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
   }
 
   public func monthCell(
@@ -111,7 +118,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     header: INFMonthHeader,
     labelForWeekday weekday: Int
   ) -> UILabel? {
-    viewModel.calendarAppearanceDelegate?.calendarView(self, header: header, labelForWeekday: weekday)
+    calendarAppearanceDelegate?.calendarView(self, header: header, labelForWeekday: weekday)
   }
 
   public func monthCell(
@@ -119,7 +126,7 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
     header: INFMonthHeader,
     labelForMonth monthDate: Date
   ) -> UILabel? {
-    viewModel.calendarAppearanceDelegate?.calendarView(self, header: header, labelForMonth: monthDate)
+    calendarAppearanceDelegate?.calendarView(self, header: header, labelForMonth: monthDate)
   }
 
 }
@@ -127,13 +134,13 @@ extension NFCalendarView: INFMonthCellAppearanceDelegate {
 // MARK: - INFMonthCellDataSource
 extension NFCalendarView: INFMonthCellDataSource {
   public func monthCellView(_ month: NFMonthCellView, dataFor date: Date) -> NFCalendarDay {
-    viewModel.calendarDataSource?.calendarView(self, dataFor: date) ?? .init(date: date)
+    calendarDataSource?.calendarView(self, dataFor: date) ?? .init(date: date)
   }
 }
 
 extension NFCalendarView: INFMonthCellDelegate {
   public func monthCollectionView(_ month: INFMonthCell, didSelect date: Date) {
-    viewModel.calendarDelegate?.calendar(self, didSelect: date)
+    calendarDelegate?.calendar(self, didSelect: date)
   }
 }
 
@@ -163,6 +170,6 @@ extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDe
     layout collectionViewLayout: UICollectionViewLayout,
     minimumLineSpacingForSectionAt section: Int
   ) -> CGFloat {
-    viewModel.calendarAppearanceDelegate?.calendarView(self, minimumLineSpacingForSectionAt: section) ?? 20
+    calendarAppearanceDelegate?.calendarView(self, minimumLineSpacingForSectionAt: section) ?? 20
   }
 }

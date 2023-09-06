@@ -10,11 +10,8 @@ import UIKit
 
 // MARK: - INFDayCell
 public protocol INFDayCell: UICollectionViewCell {
-  // MARK: - Properties
-  var date: Date { get }
-  var badgeCount: Int? { get }
-  var backgroundImage: UIImage? { get }
-
+  //  // MARK: - Properties
+  var viewModel: INFDayCellViewModel? { get set }
   var dayAppearanceDelegate: INFDayCellAppearanceDelegate? { get set }
   // MARK: - UI
   var dateLabel: UILabel { get }
@@ -27,10 +24,9 @@ public protocol INFDayCell: UICollectionViewCell {
 
 // MARK: - NFDayCell
 public class NFDayCell: UICollectionViewCell, INFDayCell {
-  // MARK: - Public properties
-  public private(set) var date: Date = .now
-  public private(set) var badgeCount: Int?
-  public private(set) var backgroundImage: UIImage?
+
+//  // MARK: - Public properties
+  public var viewModel: INFDayCellViewModel?
 
   public weak var dayAppearanceDelegate: INFDayCellAppearanceDelegate?
 
@@ -41,13 +37,10 @@ public class NFDayCell: UICollectionViewCell, INFDayCell {
   // MARK: - Public methods
   public func setupView(_ dayData: NFCalendarDay) {
     setupDateLabel(for: dayData.date)
-    setDate(dayData.date)
-
     setupBadgeLabel(for: dayData.date, with: dayData.badgeCount)
-    setBadgeCount(dayData.badgeCount)
-
     setupBackgroundImageView(for: dayData.date, with: dayData.backgroundImage)
-    setBackgroundImage(dayData.backgroundImage)
+
+    setDayData(dayData)
   }
 
   public func setCellVisibility(isVisible: Bool) {
@@ -58,6 +51,22 @@ public class NFDayCell: UICollectionViewCell, INFDayCell {
 
 // MARK: - Private methods
 private extension NFDayCell {
+
+  private func setDayData(_ dayData: NFCalendarDay) {
+    guard let viewModel else { return }
+
+    viewModel.date = .init(dayData.date, valueChanged: { newDate in
+      self.updateDateView(newDate)
+    })
+
+    viewModel.badgeCount = .init(dayData.badgeCount, valueChanged: { newBadgeCount in
+      self.updateBadgeCountView(newBadgeCount)
+    })
+
+    viewModel.backgroundImage = .init(dayData.backgroundImage, valueChanged: { newImage in
+      self.updateBackgroundImageView(newImage)
+    })
+  }
 
   private func setupDateLabel(for date: Date?) {
     if let date, let dateLabelFromDelegate = dayAppearanceDelegate?.dayCell(self, dateLabelFor: date) {
@@ -107,31 +116,26 @@ private extension NFDayCell {
     }
   }
 
-  private func setDate(_ date: Date) {
-    self.date = date
+  private func updateDateView(_ date: Date) {
     dateLabel.text = NFDayCell.getFormattedDay(of: date)
   }
 
-  private func setBadgeCount(_ count: Int?) {
+  private func updateBadgeCountView(_ count: Int?) {
     if let count {
       badgeLabel.isHidden = false
-      badgeCount = count
       badgeLabel.text = count > 9 ? String("9+") : String(count)
     } else {
-      badgeCount = nil
       badgeLabel.text = ""
       badgeLabel.isHidden = true
     }
   }
 
-  private func setBackgroundImage(_ image: UIImage?) {
+  private func updateBackgroundImageView(_ image: UIImage?) {
     if let image {
       backgroundImageView.isHidden = false
-      backgroundImage = image
-      backgroundImageView.image = backgroundImage
+      backgroundImageView.image = image
     } else {
       backgroundImageView.isHidden = true
-      backgroundImage = nil
       backgroundImageView.image = nil
     }
   }
@@ -149,7 +153,7 @@ extension NFDayCell {
 
 }
 
-// MARK: - UI components
+// MARK: - Base UI components
 public extension NFDayCell {
 
   // MARK: - BaseDateLabel
