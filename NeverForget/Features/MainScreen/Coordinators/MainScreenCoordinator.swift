@@ -11,17 +11,16 @@ import UIKit
 
 final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
   var childCoordinators: [Coordinator] = []
-  var navigationController: UINavigationController = BaseUINavigationController()
+  var navigationController: UINavigationController = .init()
 
   func start() {
-    let mainScreen = getMainScreenView()
+    let mainScreen = initializeMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
   }
 
 }
 
 // MARK: - Navigations
-
 extension MainScreenCoordinator {
 
   func goToPersonProfile(person: Person) {
@@ -38,7 +37,6 @@ extension MainScreenCoordinator {
 }
 
 // MARK: - Deep link
-
 extension MainScreenCoordinator {
 
   private func fetchPersonAndGoToProfile(personId: String) {
@@ -68,11 +66,10 @@ extension MainScreenCoordinator {
 }
 
 // MARK: - Utils
-
 extension MainScreenCoordinator {
 
-  private func getMainScreenView() -> UIViewController {
-    let viewController = EventsCalendarViewController() // MainScreenViewController(coordinator: self)
+  private func initializeMainScreenView() -> UIViewController {
+    let viewController: IEventsCalendarViewController = EventsCalendarViewController()
     viewController.navigationItem.title = Localizable.Tabs.main.toString()
 
     return viewController

@@ -20,6 +20,8 @@ public protocol INFCalendarViewModel: AnyObject {
 public final class NFCalendarViewModel: INFCalendarViewModel {
   public var calendar: Calendar = DateInRegion(region: .current).calendar
 
+  public init() {}
+
   // MARK: - Public methods
   public func generateMonths() -> [Date] {
     let startFrom = Self.renderFromDate.dateAtStartOf(.month)

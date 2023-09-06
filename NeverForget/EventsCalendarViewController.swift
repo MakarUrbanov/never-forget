@@ -11,7 +11,13 @@ import SwiftDate
 import SwiftUI
 import UIKit
 
-final class EventsCalendarViewController: NFCalendarViewController {
+protocol IEventsCalendarViewController: UIViewController {
+  var calendarView: INFCalendarView { get }
+}
+
+final class EventsCalendarViewController: UIViewController, IEventsCalendarViewController {
+
+  let calendarView: INFCalendarView = NFCalendarView(viewModel: NFCalendarViewModel())
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,17 +32,22 @@ final class EventsCalendarViewController: NFCalendarViewController {
 extension EventsCalendarViewController {
 
   private func setupCalendar() {
+    calendarView.showsVerticalScrollIndicator = false
+    calendarView.backgroundColor = .clear
+
     calendarView.calendarDataSource = self
     calendarView.calendarAppearanceDelegate = self
     calendarView.calendarDelegate = self
 
-    calendarView.showsVerticalScrollIndicator = false
+    view.addSubview(calendarView)
 
-    calendarView.snp.remakeConstraints { make in
+    calendarView.snp.makeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(16)
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
+
+    calendarView.renderCalendar()
   }
 
 }
