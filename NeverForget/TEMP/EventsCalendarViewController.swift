@@ -17,12 +17,18 @@ protocol IEventsCalendarViewController: UIViewController {
 
 final class EventsCalendarViewController: UIViewController, IEventsCalendarViewController {
 
+  let viewsSwitcher: IViewsSwitcherView = ViewsSwitcherView(buttons: [
+    .init(text: NSLocalizedString("calendar", comment: "Calendar"), index: 0),
+    .init(text: NSLocalizedString("list", comment: "List"), index: 1)
+  ])
+
   let calendarView: INFCalendarView = NFCalendarView(viewModel: NFCalendarViewModel())
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.Theme.darkBackground
+    setupTESTSwitcher()
     setupCalendar()
   }
 
@@ -30,6 +36,20 @@ final class EventsCalendarViewController: UIViewController, IEventsCalendarViewC
 
 // MARK: - Private methods
 extension EventsCalendarViewController {
+
+  private func setupTESTSwitcher() {
+    viewsSwitcher.backgroundColor = UIColor.Theme.textLight100.withAlphaComponent(0.08)
+    viewsSwitcher.layer.cornerRadius = 12
+    viewsSwitcher.delegate = self
+
+    view.addSubview(viewsSwitcher)
+
+    viewsSwitcher.snp.makeConstraints { make in
+      make.leading.trailing.equalToSuperview().inset(16)
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.height.equalTo(40)
+    }
+  }
 
   private func setupCalendar() {
     calendarView.showsVerticalScrollIndicator = false
@@ -41,15 +61,27 @@ extension EventsCalendarViewController {
 
     view.addSubview(calendarView)
 
+    // TODO: mmk remove switcher dependency
     calendarView.snp.makeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(16)
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.top.equalTo(viewsSwitcher.snp.bottom)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
 
     calendarView.renderCalendar()
   }
 
+}
+
+// MARK: - IViewsSwitcherViewDelegate
+extension EventsCalendarViewController: IViewsSwitcherViewDelegate {
+  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButton) {
+    print("mmk SELECTED", button.text)
+  }
+
+  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButton) {
+    print("mmk select already SELECTED", button.text)
+  }
 }
 
 // MARK: - DataSource
