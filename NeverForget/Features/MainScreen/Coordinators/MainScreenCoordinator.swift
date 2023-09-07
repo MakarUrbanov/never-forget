@@ -70,7 +70,6 @@ extension MainScreenCoordinator {
 
   private func initializeMainScreenView() -> UIViewController {
     let viewController = NewMainScreenViewController()
-    viewController.navigationItem.title = String(localized: "Main")
 
     return viewController
   }
