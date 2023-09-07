@@ -14,7 +14,7 @@ final class PersonsTableHeaderView: UITableViewHeaderFooterView {
     super.init(reuseIdentifier: reuseIdentifier)
 
     var backgroundConfig = defaultBackgroundConfiguration()
-    backgroundConfig.backgroundColor = .Theme.background
+    backgroundConfig.backgroundColor = UIColor(resource: .background)
     backgroundConfig.cornerRadius = 0
     backgroundConfiguration = backgroundConfig
   }

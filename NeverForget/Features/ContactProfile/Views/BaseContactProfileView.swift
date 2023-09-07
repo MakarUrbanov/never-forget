@@ -25,11 +25,11 @@ struct BaseContactProfileView: View {
         Section("Information") { // TODO: translate
           TextField("Name *", text: $person.value.name) // TODO: translate
             .listRowSeparator(.hidden, edges: .all)
-            .foregroundColor(isValidUsername ? Color.Theme.text : Color.Theme.error)
+            .foregroundColor(isValidUsername ? Color(.text) : Color(.error100))
             .autocorrectionDisabled(true)
             .overlay(alignment: .bottom) {
               Divider()
-                .background(isValidUsername ? .clear : Color.Theme.error)
+                .background(isValidUsername ? .clear : Color(.error100))
                 .offset(CGSize(width: 0, height: 8))
             }
 
@@ -60,7 +60,7 @@ struct BaseContactProfileView: View {
         .padding(.horizontal)
         .padding(.bottom)
     }
-    .background(Color.Theme.background)
+    .background(Color(.darkBackground))
   }
 }
 

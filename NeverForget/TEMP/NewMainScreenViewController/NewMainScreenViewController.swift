@@ -22,7 +22,7 @@ final class NewMainScreenViewController: UIViewController {
 extension NewMainScreenViewController {
 
   private func initialize() {
-    view.backgroundColor = UIColor.Theme.darkBackground
+    view.backgroundColor = UIColor(resource: .darkBackground)
 
     initializeHeader()
 
@@ -74,7 +74,7 @@ extension NewMainScreenViewController {
     let dateTitle: UILabel = {
       let label = UILabel()
       label.text = TodayDateView.todayDate.toFormat(TodayDateView.todayDateFormat)
-      label.textColor = UIColor.Theme.textLight100
+      label.textColor = UIColor(resource: .textLight100)
       label.font = UIFont.systemFont(.title3, .regular)
 
       return label
@@ -83,7 +83,7 @@ extension NewMainScreenViewController {
     let yearTitle: UILabel = {
       let label = UILabel()
       label.text = TodayDateView.todayDate.toFormat("YYYY")
-      label.textColor = UIColor.Theme.textLight30
+      label.textColor = UIColor(resource: .textLight30)
       label.font = UIFont.systemFont(.title3, .regular)
 
       return label
@@ -103,7 +103,6 @@ extension NewMainScreenViewController {
     required init(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
     }
-
 
     private func initialize() {
       addDateTitle()

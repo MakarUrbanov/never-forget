@@ -27,7 +27,7 @@ final class EventsCalendarViewController: UIViewController, IEventsCalendarViewC
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.Theme.darkBackground
+    view.backgroundColor = UIColor(resource: .darkBackground)
     setupTESTSwitcher()
     setupCalendar()
   }
@@ -38,7 +38,7 @@ final class EventsCalendarViewController: UIViewController, IEventsCalendarViewC
 extension EventsCalendarViewController {
 
   private func setupTESTSwitcher() {
-    viewsSwitcher.backgroundColor = UIColor.Theme.textLight100.withAlphaComponent(0.08)
+    viewsSwitcher.backgroundColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
     viewsSwitcher.layer.cornerRadius = 12
     viewsSwitcher.delegate = self
 
@@ -265,7 +265,7 @@ extension EventsCalendarViewController: INFCalendarDelegate {
     label.text = "\(text)\n\(description)"
 
     let viewController = UIViewController()
-    viewController.view.backgroundColor = .Theme.darkBackground
+    viewController.view.backgroundColor = UIColor(resource: .darkBackground)
     viewController.view.addSubview(label)
     label.snp.makeConstraints { make in
       make.edges.equalToSuperview()
@@ -286,7 +286,7 @@ private extension EventsCalendarViewController {
       let label = MonthTitle()
       label.font = UIFont.systemFont(.subheadline, .regular)
       label.textAlignment = .center
-      label.textColor = UIColor.Theme.textLight100
+      label.textColor = UIColor(resource: .textLight100)
 
       return label
     }
@@ -310,7 +310,7 @@ private extension EventsCalendarViewController {
 
     static func getDefault() -> UILabel {
       let label = CalendarWeekday()
-      label.textColor = UIColor.Theme.textLight30
+      label.textColor = UIColor(resource: .textLight30)
 
       return label
     }
@@ -338,7 +338,7 @@ private extension EventsCalendarViewController {
     static func defaultDate() -> Self {
       let label = self.init()
 
-      label.textColor = UIColor.Theme.textLight100
+      label.textColor = UIColor(resource: .textLight100)
 
       return label
     }
@@ -346,7 +346,7 @@ private extension EventsCalendarViewController {
     static func pastDate() -> Self {
       let label = self.init()
 
-      label.textColor = UIColor.Theme.textLight30
+      label.textColor = UIColor(resource: .textLight30)
 
       return label
     }
@@ -354,8 +354,8 @@ private extension EventsCalendarViewController {
     static func todayDate() -> Self {
       let label = self.init()
 
-      label.textColor = UIColor.Theme.textLight100
-      label.backgroundColor = UIColor.Theme.main100
+      label.textColor = UIColor(resource: .textLight100)
+      label.backgroundColor = UIColor(resource: .main100)
 
       return label
     }
@@ -364,18 +364,18 @@ private extension EventsCalendarViewController {
       let label = self.init()
 
       if time == .pastDate {
-        label.textColor = UIColor.Theme.textLight30
+        label.textColor = UIColor(resource: .textLight30)
         label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight30.cgColor
+        label.layer.borderColor = UIColor(resource: .textLight30).cgColor
       } else if time == .todayDate {
-        label.textColor = UIColor.Theme.textLight100
-        label.backgroundColor = UIColor.Theme.main100
+        label.textColor = UIColor(resource: .textLight100)
+        label.backgroundColor = UIColor(resource: .main100)
         label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+        label.layer.borderColor = UIColor(resource: .textLight100).cgColor
       } else {
-        label.textColor = UIColor.Theme.textLight100
+        label.textColor = UIColor(resource: .textLight100)
         label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+        label.layer.borderColor = UIColor(resource: .textLight100).cgColor
       }
 
 
@@ -405,8 +405,8 @@ private extension EventsCalendarViewController {
       textAlignment = .center
       layer.masksToBounds = true
 
-      backgroundColor = UIColor.Theme.textLight100
-      textColor = UIColor.Theme.darkBackground
+      backgroundColor = UIColor(resource: .textLight100)
+      textColor = UIColor(resource: .darkBackground)
     }
 
     @available(*, unavailable)
@@ -422,7 +422,7 @@ private extension EventsCalendarViewController {
 
     static func pastDate() -> Self {
       let label = self.init()
-      label.backgroundColor = UIColor.Theme.textLight30
+      label.backgroundColor = UIColor(resource: .textLight30)
 
       return label
     }
@@ -431,7 +431,7 @@ private extension EventsCalendarViewController {
       let label = self.init()
 
       if time == .pastDate {
-        label.backgroundColor = UIColor.Theme.textLight30
+        label.backgroundColor = UIColor(resource: .textLight30)
       }
 
       return label
@@ -467,7 +467,7 @@ private extension EventsCalendarViewController {
       layer.masksToBounds = true
       contentMode = .scaleAspectFill
 
-      darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.6).cgColor
+      darkLayer.fillColor = UIColor(resource: .darkBackground).withAlphaComponent(0.6).cgColor
     }
 
     @available(*, unavailable)
@@ -491,7 +491,7 @@ private extension EventsCalendarViewController {
       let imageView = self.init()
 
       if time == .pastDate {
-        imageView.darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.9).cgColor
+        imageView.darkLayer.fillColor = UIColor(resource: .darkBackground).withAlphaComponent(0.9).cgColor
       } else if time == .todayDate {
         imageView.alpha = 0
       }

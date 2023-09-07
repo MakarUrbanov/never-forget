@@ -11,11 +11,11 @@ struct AppPreloader: View {
   var body: some View {
     Rectangle()
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      .foregroundColor(Color.Theme.background)
+      .foregroundColor(Color(.background))
       .overlay {
         ProgressView()
           .scaleEffect(2)
-          .tint(Color.Theme.accentColor)
+          .tint(Color(.accent))
       }
   }
 }

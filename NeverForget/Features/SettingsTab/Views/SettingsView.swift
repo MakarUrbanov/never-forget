@@ -70,7 +70,7 @@ struct SettingsView: View {
     }
     .scrollContentBackground(.hidden)
     .navigationTitle(String(localized: "Settings"))
-    .background(Color.Theme.background)
+    .background(Color(.darkBackground))
   }
 }
 

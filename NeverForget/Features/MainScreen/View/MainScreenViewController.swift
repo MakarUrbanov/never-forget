@@ -54,7 +54,7 @@ extension MainScreenViewController {
   }
 
   private func initializeTableView() {
-    tableView.backgroundColor = .Theme.background
+    tableView.backgroundColor = UIColor(resource: .background)
 
     tableView.register(PersonsTableViewCell.self, forCellReuseIdentifier: PersonsTableViewCell.cellIdentifier)
     tableView.register(

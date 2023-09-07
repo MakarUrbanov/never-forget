@@ -138,7 +138,7 @@ private extension ViewsSwitcherView {
 
   private func initializeSelector() {
     selector.layer.zPosition = 1
-    selector.backgroundColor = UIColor.Theme.main100
+    selector.backgroundColor = UIColor(resource: .main100)
     selector.isUserInteractionEnabled = false
 
     addSubview(selector)
