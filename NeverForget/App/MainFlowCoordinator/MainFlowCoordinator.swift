@@ -10,7 +10,7 @@ import SwiftUI
 
 final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
-  var tabBarController: UITabBarController = BaseUITabBarController()
+  var tabBarController: UITabBarController = .init()
 
   func start() {
     let mainCoordinator = getMainCoordinator()

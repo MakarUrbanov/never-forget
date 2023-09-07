@@ -6,17 +6,16 @@
 //
 
 import CoreData
+import SnapKit
 import UIKit
 
 // MARK: - Protocol
-
 protocol MainScreenViewProtocol: AnyObject {
   var coordinator: MainScreenCoordinator { get }
 }
 
-// MARK: - View MainScreenViewController
-
-final class MainScreenViewController: BaseUIViewController {
+// MARK: - MainScreenViewController
+final class MainScreenViewController: UIViewController {
 
   let viewModel: MainScreenViewModelProtocol
 
@@ -41,6 +40,22 @@ final class MainScreenViewController: BaseUIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    initialize()
+  }
+}
+
+// MARK: - Private methods
+extension MainScreenViewController {
+
+  private func initialize() {
+    initializeTableView()
+    bindViewModel()
+    applySnapshotOfPersonsSection(viewModel.personsSectioned.value)
+  }
+
+  private func initializeTableView() {
+    tableView.backgroundColor = .Theme.background
+
     tableView.register(PersonsTableViewCell.self, forCellReuseIdentifier: PersonsTableViewCell.cellIdentifier)
     tableView.register(
       PersonsTableHeaderView.self,
@@ -48,8 +63,12 @@ final class MainScreenViewController: BaseUIViewController {
     )
     tableView.dataSource = diffableDataSource
     tableView.delegate = self
-    bindViewModel()
-    applySnapshotOfPersonsSection(viewModel.personsSectioned.value)
+
+    view.addSubview(tableView)
+
+    tableView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 
   private func bindViewModel() {
@@ -73,39 +92,10 @@ final class MainScreenViewController: BaseUIViewController {
     diffableDataSource.apply(snapshot, animatingDifferences: true)
   }
 
-}
-
-// MARK: - Configuring
-
-extension MainScreenViewController {
-
-  override func setViews() {
-    super.setViews()
-
-    view.addView(tableView)
-  }
-
-  override func setConstraints() {
-    super.setConstraints()
-
-    NSLayoutConstraint.activate([
-      tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      tableView.topAnchor.constraint(equalTo: view.topAnchor),
-      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ])
-  }
-
-  override func setAppearanceConfiguration() {
-    super.setAppearanceConfiguration()
-
-    tableView.backgroundColor = .Theme.background
-  }
 
 }
 
 // MARK: - UITableViewDelegate
-
 extension MainScreenViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

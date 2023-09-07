@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 class SettingsTabCoordinator: NavigationCoordinator, ObservableObject {
-  var navigationController: UINavigationController = BaseUINavigationController()
+  var navigationController: UINavigationController = .init()
   var childCoordinators: [Coordinator] = []
 
   func start() {

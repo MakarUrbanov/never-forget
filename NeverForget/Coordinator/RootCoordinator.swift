@@ -14,7 +14,7 @@ final class RootCoordinator: Coordinator {
 
   let window: UIWindow
   var childCoordinators: [Coordinator] = []
-  let rootNavigationController = BaseUINavigationController()
+  let rootNavigationController = UINavigationController()
 
   init(window: UIWindow) {
     self.window = window
