@@ -1,0 +1,174 @@
+//
+//  NFMonthCellView.swift
+//
+//
+//  Created by Makar Mishchenko on 14.08.2023.
+//
+
+import SnapKit
+import SwiftDate
+import UIKit
+
+// MARK: - INFMonthCell
+public protocol INFMonthCell: UICollectionViewCell {
+  static var headerHeight: CGFloat { get }
+
+  var monthDataSource: INFMonthCellDataSource? { get set }
+  var monthAppearanceDelegate: INFMonthCellAppearanceDelegate? { get set }
+  var monthDelegate: INFMonthCellDelegate? { get set }
+
+  func renderMonthData(_ date: NFMonthData)
+}
+
+// MARK: - NFMonthCellView
+public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
+
+  // MARK: - Delegates
+  public weak var monthDataSource: INFMonthCellDataSource?
+  public weak var monthAppearanceDelegate: INFMonthCellAppearanceDelegate?
+  public weak var monthDelegate: INFMonthCellDelegate?
+
+  // MARK: - Private properties
+  private var monthCollectionView: INFMonthCollectionView =
+    NFMonthCollectionView(viewModel: NFMonthCollectionViewModel())
+  private var monthHeaderView: INFMonthHeader = NFMonthHeaderView()
+
+  // MARK: - Init
+  override public init(frame: CGRect) {
+    super.init(frame: frame)
+
+    initialize()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Public properties
+  public func renderMonthData(_ monthData: NFMonthData) {
+    monthHeaderView.configure(with: monthData.firstMonthDate)
+    monthCollectionView.setupMonthData(monthData)
+  }
+
+}
+
+// MARK: - INFMonthCollectionViewDataSource
+extension NFMonthCellView: INFMonthCollectionViewDataSource {
+
+  public func monthCollectionView(_ month: INFMonthCollectionView, dataFor date: Date) -> NFCalendarDay {
+    return monthDataSource?.monthCellView(self, dataFor: date) ?? .init(
+      date: date,
+      backgroundImage: nil,
+      badgeCount: nil
+    )
+  }
+}
+
+// MARK: - Private
+extension NFMonthCellView {
+
+  private func initialize() {
+    setupMonthHeaderView()
+    setupMonthView()
+  }
+
+  private func setupMonthHeaderView() {
+    monthHeaderView.appearanceDelegate = self
+
+    addSubview(monthHeaderView)
+
+    monthHeaderView.snp.makeConstraints { make in
+      make.height.equalTo(NFMonthCellView.headerHeight)
+      make.leading.top.trailing.equalToSuperview()
+    }
+  }
+
+  private func setupMonthView() {
+    monthCollectionView.appearanceDelegate = self
+    monthCollectionView.monthDataSource = self
+    monthCollectionView.monthDelegate = self
+
+    addSubview(monthCollectionView)
+
+    monthCollectionView.snp.makeConstraints { make in
+      make.leading.bottom.trailing.equalToSuperview()
+      make.top.equalTo(monthHeaderView.snp.bottom)
+    }
+  }
+
+}
+
+// MARK: - Static
+extension NFMonthCellView {
+
+  // MARK: - Static properties
+  public static let headerHeight: CGFloat = 80
+  private static let calendar = DateInRegion().calendar
+
+  private static func getDaysCountInMonth(of date: Date) -> Int {
+    date.in(region: .current).monthDays
+  }
+
+  private static func getFirstDateOfMonth(of date: Date) -> Date {
+    date.dateAtStartOf(.month).date
+  }
+
+}
+
+// MARK: - INFMonthHeaderAppearanceDelegate
+extension NFMonthCellView: INFMonthHeaderAppearanceDelegate {
+
+  public func monthHeader(
+    _ header: INFMonthHeader,
+    weekdaysView: INFMonthWeekdays,
+    labelForWeekday weekday: Int
+  ) -> UILabel? {
+    monthAppearanceDelegate?.monthCell(self, header: header, labelForWeekday: weekday)
+  }
+
+  public func monthHeader(_ header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
+    monthAppearanceDelegate?.monthCell(self, header: header, labelForMonth: monthDate)
+  }
+
+}
+
+// MARK: - INFMonthCollectionViewAppearanceDelegate
+extension NFMonthCellView: INFMonthCollectionViewAppearanceDelegate {
+
+  public func monthCollectionView(
+    _ month: INFMonthCollectionView,
+    dayCell: INFDayCell,
+    dateLabelFor date: Date
+  ) -> UILabel? {
+    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, dateLabelFor: date)
+  }
+
+  public func monthCollectionView(
+    _ month: INFMonthCollectionView,
+    dayCell: INFDayCell,
+    badgeLabelFor date: Date,
+    badgeCount: Int?
+  ) -> UILabel? {
+    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, badgeLabelFor: date, badgeCount: badgeCount)
+  }
+
+  public func monthCollectionView(
+    _ month: INFMonthCollectionView,
+    dayCell: INFDayCell,
+    backgroundImageFor date: Date,
+    image: UIImage?
+  ) -> UIImageView? {
+    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  }
+
+}
+
+// MARK: - INFMonthCollectionViewDelegate
+extension NFMonthCellView: INFMonthCollectionViewDelegate {
+
+  public func monthCollectionView(_ month: INFMonthCollectionView, didSelect date: Date) {
+    monthDelegate?.monthCollectionView(self, didSelect: date)
+  }
+
+}

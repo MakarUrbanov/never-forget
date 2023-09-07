@@ -1,0 +1,69 @@
+name: NeverForget
+options:
+  minimumVersion: "16.2"
+  minimumXcodeGenVersion: 2.37.0
+  groupSortPosition: top
+  usesTabs: false
+  indentWidth: 2
+  tabWidth: 2
+  xcodeVersion: 14.3.1
+  localPackagesGroup: "Packages"
+  deploymentTarget:
+    iOS: "16.2"
+
+################################################
+# Packages
+################################################
+packages:
+  SnapKit:
+    url: "https://github.com/SnapKit/SnapKit.git"
+    from: "5.6.0"
+  SwiftDate:
+    url: "https://github.com/malcommac/SwiftDate.git"
+    from: "7.0.0"
+  NFLogger:
+    path: "Packages/NFLogger"
+  NFLocalNotificationsManager:
+    path: "Packages/NFLocalNotificationsManager"
+  NFCalendar:
+    path: "Packages/NFCalendar"
+
+################################################
+# Targets
+################################################
+targets:
+  NeverForget:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.2"
+
+    settings:
+      TARGETED_DEVICE_FAMILY: 1
+      PRODUCT_NAME: NeverForget
+      CODE_SIGN_ENTITLEMENTS: "NeverForget/SupportingFiles/never-forget.entitlements"
+      DEVELOPMENT_TEAM: 3LK6LB7235
+      CODE_SIGNING_REQUIRED: YES
+      CODE_SIGN_STYLE: Automatic
+      PRODUCT_BUNDLE_IDENTIFIER: com.urbans.neverforget
+
+    sources:
+      - "NeverForget"
+
+################################################
+# DEPENDENCIES
+################################################
+    dependencies:
+      - package: SnapKit
+      - package: SwiftDate
+      - package: NFLogger
+      - package: NFLocalNotificationsManager
+      - package: NFCalendar
+
+################################################
+# Scripts
+################################################
+    postCompileScripts:
+      - path: "Scripts/swiftFormat.sh"
+        name: ⚠️ SwiftFormat
+      - path: "Scripts/swiftLint.sh"
+        name: ⚠️ SwiftLint
