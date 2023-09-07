@@ -22,8 +22,8 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
   public weak var calendarDelegate: INFCalendarDelegate?
   public weak var calendarAppearanceDelegate: INFCalendarAppearanceDelegate?
   //  // MARK: - Private properties
-  private var renderedMonths: [Date] = []
-  private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Date>?
+  private var renderedMonthsData: [NFMonthData] = []
+  private var diffableDataSource: UICollectionViewDiffableDataSource<Int, NFMonthData>?
 
   // MARK: - Init
   public init(viewModel: INFCalendarViewModel) {
@@ -45,13 +45,13 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
   public func renderCalendar() {
     guard let diffableDataSource else { fatalError("diffableDataSource could be initialised") }
 
-    let months = viewModel.generateMonths()
+    let monthsData = viewModel.generateMonthsData()
     var snapshot = diffableDataSource.snapshot()
 
     snapshot.appendSections([0])
-    snapshot.appendItems(months, toSection: 0)
+    snapshot.appendItems(monthsData, toSection: 0)
 
-    renderedMonths = months
+    renderedMonthsData = monthsData
     diffableDataSource.apply(snapshot, animatingDifferences: false)
   }
 
@@ -59,8 +59,8 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 
 // MARK: - Private methods
 private extension NFCalendarView {
-  private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Int, Date> {
-    UICollectionViewDiffableDataSource(collectionView: self) { collectionView, indexPath, date in
+  private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Int, NFMonthData> {
+    UICollectionViewDiffableDataSource(collectionView: self) { collectionView, indexPath, monthData in
       guard let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: Self.monthCellIdentifier,
         for: indexPath
@@ -72,7 +72,7 @@ private extension NFCalendarView {
       cell.monthAppearanceDelegate = self
       cell.monthDelegate = self
 
-      cell.renderMonth(date)
+      cell.renderMonthData(monthData)
 
       return cell
     }
@@ -157,8 +157,8 @@ extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDe
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    let date = renderedMonths[indexPath.item]
-    let weeksInMonth = viewModel.numberOfWeeksInMonth(of: date)
+    let monthData = renderedMonthsData[indexPath.item]
+    let weeksInMonth = viewModel.numberOfWeeksInMonth(of: monthData.firstMonthDate)
 
     let height = (CGFloat(weeksInMonth) * collectionView.bounds.width / 7) + NFMonthCellView.headerHeight
 

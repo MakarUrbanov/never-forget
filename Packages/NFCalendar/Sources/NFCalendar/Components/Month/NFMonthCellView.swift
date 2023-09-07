@@ -17,7 +17,7 @@ public protocol INFMonthCell: UICollectionViewCell {
   var monthAppearanceDelegate: INFMonthCellAppearanceDelegate? { get set }
   var monthDelegate: INFMonthCellDelegate? { get set }
 
-  func renderMonth(_ date: Date)
+  func renderMonthData(_ date: NFMonthData)
 }
 
 // MARK: - NFMonthCellView
@@ -46,11 +46,9 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
   }
 
   // MARK: - Public properties
-  public func renderMonth(_ date: Date) {
-    let days = NFMonthCellView.getMonthDays(of: date)
-
-    monthHeaderView.configure(with: date)
-    monthCollectionView.setupMonthDates(days)
+  public func renderMonthData(_ monthData: NFMonthData) {
+    monthHeaderView.configure(with: monthData.firstMonthDate)
+    monthCollectionView.setupMonthData(monthData)
   }
 
 }
@@ -116,18 +114,6 @@ extension NFMonthCellView {
     date.dateAtStartOf(.month).date
   }
 
-  private static func getMonthDays(of date: Date) -> [Date] {
-    let daysInMonth = NFMonthCellView.getDaysCountInMonth(of: date)
-    let firstDayOfMonth = NFMonthCellView.getFirstDateOfMonth(of: date)
-    var daysList: [Date] = [firstDayOfMonth]
-
-    for dayNumber in 0..<daysInMonth {
-      let newDate = firstDayOfMonth.dateByAdding(1 + dayNumber, .day).date
-      daysList.append(newDate)
-    }
-
-    return daysList
-  }
 }
 
 // MARK: - INFMonthHeaderAppearanceDelegate
