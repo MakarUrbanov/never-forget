@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Add" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить"
+          }
+        }
+      }
     },
     "Add notification time" : {
 
@@ -13,15 +20,8 @@
     "Add your first contact" : {
 
     },
-    "calendar" : {
-      "extractionState" : "manual",
+    "Calendar" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calendar"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31,20 +31,11 @@
       }
     },
     "Cancel" : {
-
-    },
-    "contacts" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contacts"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Контакты"
+            "value" : "Отменить"
           }
         }
       }
@@ -53,13 +44,27 @@
 
     },
     "Delete" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
+        }
+      }
     },
     "Delete persons" : {
 
     },
     "Description" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Описание"
+          }
+        }
+      }
     },
     "Enabled" : {
 
@@ -67,8 +72,7 @@
     "Information" : {
 
     },
-    "list" : {
-      "comment" : "List",
+    "List" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -84,7 +88,7 @@
         }
       }
     },
-    "main" : {
+    "Main" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -96,22 +100,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Главная"
-          }
-        }
-      }
-    },
-    "name" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Имя"
           }
         }
       }
@@ -140,32 +128,30 @@
     "Notify one week before" : {
 
     },
-    "ok" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        }
-      }
-    },
     "On the event day" : {
 
     },
     "Photo" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фото"
+          }
+        }
+      }
     },
     "Save" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
     },
-    "settings" : {
+    "Settings" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

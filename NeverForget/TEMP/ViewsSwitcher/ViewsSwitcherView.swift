@@ -8,41 +8,21 @@
 import SnapKit
 import UIKit
 
-// MARK: - Protocols
-protocol IViewsSwitcherViewDelegate: AnyObject {
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, willSelect button: SwitcherButton) -> Bool
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButton)
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButton)
-}
-
-extension IViewsSwitcherViewDelegate {
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, willSelect button: SwitcherButton) -> Bool {
-    true
-  }
-
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButton) {}
-}
-
+// MARK: - IViewsSwitcherView
 protocol IViewsSwitcherView: UIView {
-  var buttons: [SwitcherButton] { get }
-  var selectedButton: SwitcherButton { get }
+  var buttons: [SwitcherButtonData] { get }
+  var selectedButton: SwitcherButtonData { get }
   var delegate: IViewsSwitcherViewDelegate? { get set }
 
-  init(buttons: [SwitcherButton], initialButton: SwitcherButton?)
-}
-
-// MARK: - Models
-struct SwitcherButton: Equatable {
-  var text: String
-  var index: Int
+  init(buttons: [SwitcherButtonData], initialButton: SwitcherButtonData?)
 }
 
 // MARK: - ViewsSwitcherView
 class ViewsSwitcherView: UIView, IViewsSwitcherView {
 
   // MARK: - Public properties
-  var buttons: [SwitcherButton]
-  var selectedButton: SwitcherButton {
+  var buttons: [SwitcherButtonData]
+  var selectedButton: SwitcherButtonData {
     buttons[currentSelectedButtonIndex]
   }
 
@@ -57,7 +37,7 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
   private let selector = UIView()
 
   // MARK: - Init
-  required init(buttons: [SwitcherButton], initialButton: SwitcherButton? = nil) {
+  required init(buttons: [SwitcherButtonData], initialButton: SwitcherButtonData? = nil) {
     self.buttons = buttons
 
     if let initialButton, let initialButtonIndex = buttons.firstIndex(of: initialButton) {
@@ -115,7 +95,7 @@ private extension ViewsSwitcherView {
     }
   }
 
-  private func getButton(_ buttonData: SwitcherButton) -> UIButton {
+  private func getButton(_ buttonData: SwitcherButtonData) -> UIButton {
     let buttonView = SwitcherButtonView(data: buttonData)
     buttonView.setTitle(buttonData.text, for: .normal)
     buttonView.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
@@ -173,10 +153,11 @@ private extension ViewsSwitcherView {
 
 // MARK: - SwitcherButtonView
 extension ViewsSwitcherView {
-  final class SwitcherButtonView: UIButton {
-    var providedData: SwitcherButton
 
-    init(data: SwitcherButton) {
+  final class SwitcherButtonView: UIButton {
+    var providedData: SwitcherButtonData
+
+    init(data: SwitcherButtonData) {
       providedData = data
       super.init(frame: .zero)
 
@@ -188,4 +169,5 @@ extension ViewsSwitcherView {
       fatalError("init(coder:) has not been implemented")
     }
   }
+
 }

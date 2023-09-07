@@ -18,8 +18,8 @@ protocol IEventsCalendarViewController: UIViewController {
 final class EventsCalendarViewController: UIViewController, IEventsCalendarViewController {
 
   let viewsSwitcher: IViewsSwitcherView = ViewsSwitcherView(buttons: [
-    .init(text: NSLocalizedString("calendar", comment: "Calendar"), index: 0),
-    .init(text: NSLocalizedString("list", comment: "List"), index: 1)
+    .init(text: String(localized: "Calendar"), index: 0),
+    .init(text: String(localized: "List"), index: 1)
   ])
 
   let calendarView: INFCalendarView = NFCalendarView(viewModel: NFCalendarViewModel())
@@ -75,11 +75,11 @@ extension EventsCalendarViewController {
 
 // MARK: - IViewsSwitcherViewDelegate
 extension EventsCalendarViewController: IViewsSwitcherViewDelegate {
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButton) {
+  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButtonData) {
     print("mmk SELECTED", button.text)
   }
 
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButton) {
+  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButtonData) {
     print("mmk select already SELECTED", button.text)
   }
 }

@@ -41,7 +41,7 @@ extension MainFlowCoordinator {
     mainScreenCoordinator.start()
 
     mainScreenCoordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.main.toString(),
+      title: String(localized: "Main"),
       image: UIImage(systemName: "house"),
       selectedImage: UIImage(systemName: "house")
     )
@@ -56,7 +56,7 @@ extension MainFlowCoordinator {
     peopleListCoordinator.start()
 
     peopleListCoordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.list.toString(),
+      title: String(localized: "List"),
       image: UIImage(systemName: "person"),
       selectedImage: UIImage(systemName: "person")
     )
@@ -71,7 +71,7 @@ extension MainFlowCoordinator {
     coordinator.start()
 
     coordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.settings.toString(),
+      title: String(localized: "Settings"),
       image: UIImage(systemName: "gearshape"),
       selectedImage: UIImage(systemName: "gearshape")
     )

@@ -69,7 +69,7 @@ struct SettingsView: View {
       }
     }
     .scrollContentBackground(.hidden)
-    .navigationTitle(Localizable.Tabs.settings)
+    .navigationTitle(String(localized: "Settings"))
     .background(Color.Theme.background)
   }
 }

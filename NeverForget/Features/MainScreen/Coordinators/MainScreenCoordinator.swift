@@ -69,8 +69,8 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func initializeMainScreenView() -> UIViewController {
-    let viewController: IEventsCalendarViewController = EventsCalendarViewController()
-    viewController.navigationItem.title = Localizable.Tabs.main.toString()
+    let viewController = NewMainScreenViewController()
+    viewController.navigationItem.title = String(localized: "Main")
 
     return viewController
   }
