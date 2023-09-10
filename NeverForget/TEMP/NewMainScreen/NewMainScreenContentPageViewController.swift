@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Protocols
 protocol INewMainScreenContentPageViewControllerDelegate: AnyObject {
   func pageView(_ pageView: INewMainScreenContentPageViewController, page: Int, changePosition: CGFloat)
 }
@@ -16,6 +17,7 @@ protocol INewMainScreenContentPageViewController: UIPageViewController {
   var customDelegate: INewMainScreenContentPageViewControllerDelegate? { get set }
 }
 
+// MARK: - NewMainScreenContentPageViewController
 class NewMainScreenContentPageViewController: UIPageViewController, INewMainScreenContentPageViewController {
 
   var viewControllersList: [UIViewController] = []
@@ -29,29 +31,6 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
     initialize()
   }
 
-}
-
-private extension NewMainScreenContentPageViewController {
-  private func initialize() {
-    initializeViewControllers()
-    initializePageScrollSettings()
-  }
-
-  private func initializeViewControllers() {
-    let eventsCalendar = EventsCalendarViewController()
-
-    viewControllersList = [Self.testViewController, eventsCalendar]
-
-    setViewControllers([eventsCalendar], direction: .forward, animated: false)
-  }
-
-  private func initializePageScrollSettings() {
-    for view in view.subviews {
-      if let scrollView = view as? UIScrollView {
-        scrollView.delegate = self
-      }
-    }
-  }
 }
 
 // MARK: - UIPageViewControllerDataSource
@@ -68,6 +47,7 @@ extension NewMainScreenContentPageViewController: UIPageViewControllerDataSource
     label.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
+
     return view
   }()
 
@@ -95,6 +75,7 @@ extension NewMainScreenContentPageViewController: UIPageViewControllerDataSource
 
 }
 
+// MARK: - UIScrollViewDelegate
 extension NewMainScreenContentPageViewController: UIScrollViewDelegate {
   // TODO: mmk finish logic
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -106,4 +87,30 @@ extension NewMainScreenContentPageViewController: UIScrollViewDelegate {
       print("mmk VER", page)
     }
   }
+}
+
+// MARK: - Private methods
+private extension NewMainScreenContentPageViewController {
+
+  private func initialize() {
+    initializeViewControllers()
+    setupPageScrollDelegate()
+  }
+
+  private func initializeViewControllers() {
+    let eventsCalendar = EventsCalendarViewController()
+
+    viewControllersList = [Self.testViewController, eventsCalendar]
+
+    setViewControllers([eventsCalendar], direction: .forward, animated: false)
+  }
+
+  private func setupPageScrollDelegate() {
+    for view in view.subviews {
+      if let scrollView = view as? UIScrollView {
+        scrollView.delegate = self
+      }
+    }
+  }
+
 }
