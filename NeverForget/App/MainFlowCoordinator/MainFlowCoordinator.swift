@@ -10,7 +10,11 @@ import SwiftUI
 
 final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
-  var tabBarController: UITabBarController = .init()
+  var tabBarController: UITabBarController = MainFlowTabBarController()
+
+  init() {
+
+  }
 
   func start() {
     let mainCoordinator = getMainCoordinator()
@@ -31,25 +35,23 @@ final class MainFlowCoordinator: TabCoordinator {
 }
 
 // MARK: - Navigation
-
 extension MainFlowCoordinator {
 
   // MARK: initialize main tab coordinator
-
   private func getMainCoordinator() -> MainScreenCoordinator {
     let mainScreenCoordinator = MainScreenCoordinator()
     mainScreenCoordinator.start()
 
-    mainScreenCoordinator.navigationController.tabBarItem = UITabBarItem(
+    let icon = UIImage(systemName: "calendar")
+    let tabBarItem = UITabBarItem(
       title: String(localized: "Main"),
-      image: UIImage(systemName: "house"),
-      selectedImage: UIImage(systemName: "house")
+      image: icon,
+      selectedImage: icon?.withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal)
     )
+    mainScreenCoordinator.navigationController.tabBarItem = tabBarItem
 
     return mainScreenCoordinator
   }
-
-  // MARK: initialize people list tab coordinator
 
   private func getPeopleListCoordinator() -> ContactsListCoordinator {
     let peopleListCoordinator = ContactsListCoordinator()
@@ -63,8 +65,6 @@ extension MainFlowCoordinator {
 
     return peopleListCoordinator
   }
-
-  // MARK: initialize settings tab coordinator
 
   private func getSettingsTabCoordinator() -> SettingsTabCoordinator {
     let coordinator = SettingsTabCoordinator()
@@ -83,7 +83,6 @@ extension MainFlowCoordinator {
 
 
 // MARK: - Deep Link
-
 extension MainFlowCoordinator {
 
   func handleDeepLink(_ deepLink: NFLNDeepLink?) {
