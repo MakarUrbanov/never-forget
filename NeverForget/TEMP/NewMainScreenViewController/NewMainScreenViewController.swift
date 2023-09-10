@@ -5,10 +5,24 @@
 //  Created by Makar Mishchenko on 08.09.2023.
 //
 
+import NFCore
 import SwiftDate
 import UIKit
 
-final class NewMainScreenViewController: UIViewController {
+// MARK: - Protocol
+protocol INewMainScreenViewController: UIViewController {
+  var contentPageViewController: INewMainScreenContentPageViewController { get }
+
+}
+
+// MARK: - NewMainScreenViewController
+final class NewMainScreenViewController: UIViewController, INewMainScreenViewController {
+
+  private let pageHeader = PageControllerHeaderView()
+  lazy var contentPageViewController: INewMainScreenContentPageViewController = NewMainScreenContentPageViewController(
+    transitionStyle: .scroll,
+    navigationOrientation: .horizontal
+  )
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,32 +38,21 @@ extension NewMainScreenViewController {
   private func initialize() {
     view.backgroundColor = UIColor(resource: .darkBackground)
 
-    initializeHeader()
-
-    let button = UIButton()
-    button.setTitle("Press", for: .normal)
-    button.addTarget(self, action: #selector(didPressed), for: .touchUpInside)
-
-    view.addSubview(button)
-
-    button.snp.makeConstraints { make in
-      make.center.equalToSuperview()
-    }
-  }
-
-  @objc
-  private func didPressed() {
-    let viewController = UIViewController()
-    viewController.view.backgroundColor = .blue
-    navigationController?.pushViewController(viewController, animated: true)
+    initializeNavigationHeader()
+    initializePageHeader()
+    initializeContentPageViewController()
   }
 
 }
 
-// MARK: - Header
+// MARK: - Private methods
 extension NewMainScreenViewController {
 
-  private func initializeHeader() {
+  enum UIConstants {
+    static let headerOffset = 40
+  }
+
+  private func initializeNavigationHeader() {
     let leftBarItem = UIBarButtonItem(customView: TodayDateView())
     navigationItem.setLeftBarButton(leftBarItem, animated: false)
 
@@ -57,9 +60,71 @@ extension NewMainScreenViewController {
     navigationItem.setRightBarButton(rightBarItem, animated: false)
   }
 
+  private func initializePageHeader() {
+    pageHeader.delegate = self
+
+    view.addSubview(pageHeader)
+
+    pageHeader.snp.makeConstraints { make in
+      make.centerX.equalToSuperview()
+      make.width.equalToSuperview().inset(16)
+      make.height.equalTo(40)
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(UIConstants.headerOffset / 2)
+    }
+  }
+
+  private func initializeContentPageViewController() {
+    contentPageViewController.delegate = self
+
+    addChild(contentPageViewController)
+    view.addSubview(contentPageViewController.view)
+    contentPageViewController.didMove(toParent: self)
+
+    contentPageViewController.view.snp.makeConstraints { make in
+      make.top.equalTo(pageHeader.snp.bottom).offset(UIConstants.headerOffset / 2) // TODO: mmk / 2 is temp
+      make.left.right.bottom.equalToSuperview()
+    }
+  }
+
+}
+
+extension NewMainScreenViewController: IPageControllerHeaderViewDelegate {
+  func pageControllerHeaderView(_ pageController: IPageControllerHeaderView, didSelect button: SwitcherButtonData) {
+    // TODO: mmk hardcode
+    if button.index == 0 {
+      let viewController = contentPageViewController.viewControllersList[1] // TODO: mmk find out why wrong indexes
+      contentPageViewController.setViewControllers([viewController], direction: .reverse, animated: true)
+    } else {
+      let viewController = contentPageViewController.viewControllersList[0]
+      contentPageViewController.setViewControllers([viewController], direction: .forward, animated: true)
+    }
+  }
 }
 
 
+extension NewMainScreenViewController: UIPageViewControllerDelegate {
+  func pageViewController(
+    _ pageViewController: UIPageViewController,
+    didFinishAnimating finished: Bool,
+    previousViewControllers: [UIViewController],
+    transitionCompleted completed: Bool
+  ) {
+    guard let previousViewController = previousViewControllers.first, completed else { return }
+
+
+    // TODO: mmk hardcode
+    if contentPageViewController.viewControllersList[0] == previousViewController {
+      let button = pageHeader.pageSwitcher.buttons[0]
+      pageHeader.pageSwitcher.select(button: button)
+    } else {
+      let button = pageHeader.pageSwitcher.buttons[1]
+      pageHeader.pageSwitcher.select(button: button)
+    }
+  }
+}
+
+
+// TODO; mmk move
 // MARK: - That should be moved
 
 
@@ -169,4 +234,91 @@ extension NewMainScreenViewController {
     }
   }
 
+}
+
+// MARK: - Header switcher protocols
+protocol IPageControllerHeaderViewDelegate: AnyObject {
+  func pageControllerHeaderView(_ pageController: IPageControllerHeaderView, didSelect button: SwitcherButtonData)
+}
+
+protocol IPageControllerHeaderView: UIStackView {
+  var pageSwitcher: IViewsSwitcherView { get }
+  var sortButton: UIButton { get }
+  var delegate: IPageControllerHeaderViewDelegate? { get set }
+}
+
+// MARK: - Header switcher
+class PageControllerHeaderView: UIStackView, IPageControllerHeaderView {
+
+  let pageSwitcher: IViewsSwitcherView = ViewsSwitcherView(buttons: [
+    .init(text: String(localized: "Calendar"), index: 0),
+    .init(text: String(localized: "List"), index: 1)
+  ])
+
+  // TODO: mmk доделать
+  let sortButton = UIButton(frame: .zero)
+
+  weak var delegate: IPageControllerHeaderViewDelegate?
+
+  init() {
+    super.init(frame: .zero)
+
+    axis = .horizontal
+    alignment = .fill
+    spacing = 8
+    distribution = .fillProportionally
+    layer.masksToBounds = true
+
+    initializePageSwitcher()
+    initializeSortButton()
+  }
+
+  @available(*, unavailable)
+  required init(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  private func initializePageSwitcher() {
+    pageSwitcher.layer.cornerRadius = 12
+    pageSwitcher.backgroundColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
+
+    pageSwitcher.delegate = self
+
+    addArrangedSubview(pageSwitcher)
+
+    pageSwitcher.snp.makeConstraints { make in
+      make.height.equalToSuperview()
+    }
+  }
+
+  private func initializeSortButton() {
+    sortButton.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
+    sortButton.imageView?.tintColor = UIColor(resource: .textLight100)
+
+    sortButton.backgroundColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
+    sortButton.layer.cornerRadius = 12
+
+    addArrangedSubview(sortButton)
+
+    sortButton.snp.makeConstraints { make in
+      make.height.equalToSuperview()
+      make.width.height.equalTo(40)
+    }
+  }
+}
+
+extension PageControllerHeaderView: IViewsSwitcherViewDelegate {
+
+  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButtonData) {
+    delegate?.pageControllerHeaderView(self, didSelect: button)
+  }
+
+}
+
+
+import SwiftUI
+
+
+#Preview {
+  NewMainScreenViewController().makePreview()
 }

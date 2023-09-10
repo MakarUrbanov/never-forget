@@ -15,6 +15,8 @@ protocol IViewsSwitcherView: UIView {
   var delegate: IViewsSwitcherViewDelegate? { get set }
 
   init(buttons: [SwitcherButtonData], initialButton: SwitcherButtonData?)
+
+  func select(button: SwitcherButtonData)
 }
 
 // MARK: - ViewsSwitcherView
@@ -59,6 +61,10 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
     super.layoutSubviews()
 
     updateSelectorLayout(animated: false)
+  }
+
+  func select(button: SwitcherButtonData) {
+    selectButton(button)
   }
 
 }
@@ -117,6 +123,10 @@ private extension ViewsSwitcherView {
       return
     }
 
+    selectButton(buttonData)
+  }
+
+  private func selectButton(_ buttonData: SwitcherButtonData) {
     delegate?.viewsSwitcher(self, didSelect: buttonData)
 
     let selectedButtonArrangedSubview = stackView.arrangedSubviews[buttonData.index]
@@ -124,7 +134,7 @@ private extension ViewsSwitcherView {
 
     isAnimating = true
     currentSelectedButtonIndex = buttonData.index
-    UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 3) { [self] in
+    UIView.animate(withDuration: 0.3) { [self] in
       selector.frame = .init(
         origin: .init(x: center.x, y: 0),
         size: CGSize(width: selector.frame.width, height: selector.frame.height)
@@ -134,6 +144,7 @@ private extension ViewsSwitcherView {
         isAnimating = false
       }
     }
+
   }
 
   private func initializeSelector() {
