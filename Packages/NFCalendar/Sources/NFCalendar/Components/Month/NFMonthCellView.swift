@@ -14,7 +14,8 @@ public protocol INFMonthCell: UICollectionViewCell {
   static var headerHeight: CGFloat { get }
 
   var monthDataSource: INFMonthCellDataSource? { get set }
-  var monthAppearanceDelegate: INFMonthCellAppearanceDelegate? { get set }
+  var datesAppearanceDelegate: INFDayCellAppearanceDelegate? { get set }
+  var monthHeaderAppearanceDelegate: INFMonthHeaderAppearanceDelegate? { get set }
   var monthDelegate: INFMonthCellDelegate? { get set }
 
   func renderMonthData(_ date: NFMonthData)
@@ -25,7 +26,8 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
 
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCellDataSource?
-  public weak var monthAppearanceDelegate: INFMonthCellAppearanceDelegate?
+  public weak var datesAppearanceDelegate: INFDayCellAppearanceDelegate?
+  public weak var monthHeaderAppearanceDelegate: INFMonthHeaderAppearanceDelegate?
   public weak var monthDelegate: INFMonthCellDelegate?
 
   // MARK: - Private properties
@@ -65,7 +67,7 @@ extension NFMonthCellView: INFMonthCollectionViewDataSource {
   }
 }
 
-// MARK: - Private
+// MARK: - Private methods
 extension NFMonthCellView {
 
   private func initialize() {
@@ -85,7 +87,7 @@ extension NFMonthCellView {
   }
 
   private func setupMonthView() {
-    monthCollectionView.appearanceDelegate = self
+    monthCollectionView.datesAppearanceDelegate = self
     monthCollectionView.monthDataSource = self
     monthCollectionView.monthDelegate = self
 
@@ -102,7 +104,6 @@ extension NFMonthCellView {
 // MARK: - Static
 extension NFMonthCellView {
 
-  // MARK: - Static properties
   public static let headerHeight: CGFloat = 80
   private static let calendar = DateInRegion().calendar
 
@@ -124,42 +125,42 @@ extension NFMonthCellView: INFMonthHeaderAppearanceDelegate {
     weekdaysView: INFMonthWeekdays,
     labelForWeekday weekday: Int
   ) -> UILabel? {
-    monthAppearanceDelegate?.monthCell(self, header: header, labelForWeekday: weekday)
+    monthHeaderAppearanceDelegate?.monthHeader(header, weekdaysView: weekdaysView, labelForWeekday: weekday)
   }
 
   public func monthHeader(_ header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
-    monthAppearanceDelegate?.monthCell(self, header: header, labelForMonth: monthDate)
+    monthHeaderAppearanceDelegate?.monthHeader(header, labelForMonth: monthDate)
   }
 
 }
 
-// MARK: - INFMonthCollectionViewAppearanceDelegate
-extension NFMonthCellView: INFMonthCollectionViewAppearanceDelegate {
+// MARK: - INFDayCellAppearanceDelegate
+extension NFMonthCellView: INFDayCellAppearanceDelegate {
 
-  public func monthCollectionView(
-    _ month: INFMonthCollectionView,
-    dayCell: INFDayCell,
-    dateLabelFor date: Date
-  ) -> UILabel? {
-    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, dateLabelFor: date)
+  public func dayCellComponents(_ dayCell: INFDayCell) -> NFDayComponents? {
+    datesAppearanceDelegate?.dayCellComponents(dayCell)
   }
 
-  public func monthCollectionView(
-    _ month: INFMonthCollectionView,
-    dayCell: INFDayCell,
-    badgeLabelFor date: Date,
+  public func dayCell(_ dayCell: INFDayCell, setupDateLabel label: INFDayLabel, ofDate date: Date) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupDateLabel: label, ofDate: date)
+  }
+
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBadgeLabel label: INFDayBadgeLabel,
+    ofDate date: Date,
     badgeCount: Int?
-  ) -> UILabel? {
-    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, badgeLabelFor: date, badgeCount: badgeCount)
+  ) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupBadgeLabel: label, ofDate: date, badgeCount: badgeCount)
   }
 
-  public func monthCollectionView(
-    _ month: INFMonthCollectionView,
-    dayCell: INFDayCell,
-    backgroundImageFor date: Date,
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBackgroundImage imageView: INFDayBackgroundImageView,
+    ofDate date: Date,
     image: UIImage?
-  ) -> UIImageView? {
-    monthAppearanceDelegate?.monthCell(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  ) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupBackgroundImage: imageView, ofDate: date, image: image)
   }
 
 }

@@ -8,7 +8,6 @@ analyzer_rules:
   - unused_declaration
 
 opt_in_rules:
-  - unused_capture_list
   - class_delegate_protocol
   - closing_brace
   - closure_end_indentation
@@ -34,7 +33,6 @@ opt_in_rules:
   - function_parameter_count
   - implicit_getter
   - implicitly_unwrapped_optional
-  - inert_defer
   - last_where
   - leading_whitespace
   - legacy_cggeometry_functions

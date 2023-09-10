@@ -42,12 +42,12 @@ struct ContactRowView: View {
         VStack(alignment: .leading, spacing: 0) {
           Text(name)
             .font(.title3.weight(.bold))
-            .foregroundColor(.Theme.text)
+            .foregroundColor(Color(.text))
             .lineLimit(2)
 
           Text(dateOfBirth)
             .font(.subheadline.weight(.medium))
-            .foregroundColor(.Theme.text3)
+            .foregroundColor(Color(.text3))
             .lineLimit(1)
         }
 

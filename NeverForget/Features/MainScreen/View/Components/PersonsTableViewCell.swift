@@ -51,7 +51,7 @@ class PersonsTableViewCell: UITableViewCell {
 
   private let userImageView: UserImageView = {
     let image = UserImageView()
-    image.placeholderImage.tintColor = .Theme.text2
+    image.placeholderImage.tintColor = UIColor(resource: .text2)
     image.layer.cornerRadius = 20
     return image
   }()
@@ -69,7 +69,7 @@ class PersonsTableViewCell: UITableViewCell {
     let label = UILabel()
     label.textAlignment = .left
     label.numberOfLines = 1
-    label.textColor = .Theme.text
+    label.textColor = UIColor(resource: .text)
     label.font = .systemFont(.title3, .bold)
     return label
   }()
@@ -78,7 +78,7 @@ class PersonsTableViewCell: UITableViewCell {
     let label = UILabel()
     label.textAlignment = .left
     label.numberOfLines = 1
-    label.textColor = .Theme.text3
+    label.textColor = UIColor(resource: .text3)
     label.font = .systemFont(.subheadline, .medium)
     return label
   }()
@@ -117,7 +117,7 @@ extension PersonsTableViewCell {
   }
 
   private func setAppearanceConfiguration() {
-    containerStackView.backgroundColor = .Theme.background
+    containerStackView.backgroundColor = UIColor(resource: .background)
     selectionStyle = .none
   }
 

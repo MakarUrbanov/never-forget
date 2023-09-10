@@ -14,7 +14,7 @@ struct ContactsListScreenView: View {
 
   var body: some View {
     ContactsListView()
-      .background(Color.Theme.background)
+      .background(Color(.background))
       .navigationTitle("Your contacts list") // TODO: translate
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {

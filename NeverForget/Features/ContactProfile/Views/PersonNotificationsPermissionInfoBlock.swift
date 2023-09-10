@@ -19,17 +19,17 @@ struct ContactNotificationsPermissionInfoBlockView: View {
     HStack(alignment: .firstTextBaseline) {
       Circle()
         .frame(width: 12, height: 12)
-        .foregroundColor(Color.Theme.accentColor)
+        .foregroundColor(Color(.accent))
 
       Text(viewModel.message)
-        .foregroundColor(Color.Theme.text3)
+        .foregroundColor(Color(.text3))
 
       Spacer()
     }
     .padding()
     .overlay {
       RoundedRectangle(cornerRadius: 8)
-        .strokeBorder(Color.Theme.accentColor, lineWidth: 1)
+        .strokeBorder(Color(.accent), lineWidth: 1)
     }
     .onChange(of: viewModel.person.isNotificationsEnabled, perform: { _ in
       Task {

@@ -10,7 +10,11 @@ import SwiftUI
 
 final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
-  var tabBarController: UITabBarController = BaseUITabBarController()
+  var tabBarController: UITabBarController = MainFlowTabBarController()
+
+  init() {
+
+  }
 
   func start() {
     let mainCoordinator = getMainCoordinator()
@@ -31,32 +35,30 @@ final class MainFlowCoordinator: TabCoordinator {
 }
 
 // MARK: - Navigation
-
 extension MainFlowCoordinator {
 
   // MARK: initialize main tab coordinator
-
   private func getMainCoordinator() -> MainScreenCoordinator {
     let mainScreenCoordinator = MainScreenCoordinator()
     mainScreenCoordinator.start()
 
-    mainScreenCoordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.main.toString(),
-      image: UIImage(systemName: "house"),
-      selectedImage: UIImage(systemName: "house")
+    let icon = UIImage(systemName: "calendar")
+    let tabBarItem = UITabBarItem(
+      title: String(localized: "Main"),
+      image: icon,
+      selectedImage: icon?.withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal)
     )
+    mainScreenCoordinator.navigationController.tabBarItem = tabBarItem
 
     return mainScreenCoordinator
   }
-
-  // MARK: initialize people list tab coordinator
 
   private func getPeopleListCoordinator() -> ContactsListCoordinator {
     let peopleListCoordinator = ContactsListCoordinator()
     peopleListCoordinator.start()
 
     peopleListCoordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.list.toString(),
+      title: String(localized: "List"),
       image: UIImage(systemName: "person"),
       selectedImage: UIImage(systemName: "person")
     )
@@ -64,14 +66,12 @@ extension MainFlowCoordinator {
     return peopleListCoordinator
   }
 
-  // MARK: initialize settings tab coordinator
-
   private func getSettingsTabCoordinator() -> SettingsTabCoordinator {
     let coordinator = SettingsTabCoordinator()
     coordinator.start()
 
     coordinator.navigationController.tabBarItem = UITabBarItem(
-      title: Localizable.Tabs.settings.toString(),
+      title: String(localized: "Settings"),
       image: UIImage(systemName: "gearshape"),
       selectedImage: UIImage(systemName: "gearshape")
     )
@@ -83,7 +83,6 @@ extension MainFlowCoordinator {
 
 
 // MARK: - Deep Link
-
 extension MainFlowCoordinator {
 
   func handleDeepLink(_ deepLink: NFLNDeepLink?) {

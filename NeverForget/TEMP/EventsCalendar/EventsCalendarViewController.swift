@@ -22,7 +22,7 @@ final class EventsCalendarViewController: UIViewController, IEventsCalendarViewC
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.Theme.darkBackground
+    view.backgroundColor = UIColor(resource: .darkBackground)
     setupCalendar()
   }
 
@@ -126,7 +126,7 @@ private extension EventsCalendarViewController {
     date.in(region: .local).compare(.isEarlier(than: DateInRegion()))
   }
 
-  private static func defineWhatTimeTheDate(_ date: Date) -> DayType {
+  private static func defineWhatTimeTheDate(_ date: Date) -> NFDayType {
     let isTodayDate = Self.isDateToday(date)
     if isTodayDate {
       return .todayDate
@@ -140,7 +140,7 @@ private extension EventsCalendarViewController {
     return .defaultDate
   }
 
-  private func defineTypeOfDay(_ date: Date) -> DayType {
+  private func defineTypeOfDay(_ date: Date) -> NFDayType {
     if Self.checkAndGetMarkedDate(date) != nil {
       let dateTime = Self.defineWhatTimeTheDate(date)
       return .dateWithEvents(dateTime)
@@ -154,67 +154,46 @@ private extension EventsCalendarViewController {
 // MARK: - INFCalendarAppearanceDelegate
 extension EventsCalendarViewController: INFCalendarAppearanceDelegate {
 
-  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForWeekday weekday: Int) -> UILabel? {
+  func calendarView(_ calendar: INFCalendarView, minimumLineSpacingForSectionAt: Int) -> CGFloat? {
+    20
+  }
+
+  func dayCellComponents(_ dayCell: INFDayCell) -> NFDayComponents? {
+    NFDayComponents(
+      dateLabel: DateLabel.self,
+      dateBadgeLabel: DateBadgeLabel.self,
+      dateBackgroundImage: DateBackgroundImageView.self
+    )
+  }
+
+  func dayCell(_ dayCell: INFDayCell, setupDateLabel label: INFDayLabel, ofDate date: Date) {
+    let dayType = defineTypeOfDay(date)
+    label.setDayType(dayType)
+  }
+
+  func dayCell(_ dayCell: INFDayCell, setupBadgeLabel label: INFDayBadgeLabel, ofDate date: Date, badgeCount: Int?) {
+    let dayType = defineTypeOfDay(date)
+    label.setDayType(dayType)
+  }
+
+  func dayCell(
+    _ dayCell: INFDayCell,
+    setupBackgroundImage imageView: INFDayBackgroundImageView,
+    ofDate date: Date,
+    image: UIImage?
+  ) {
+    let dayType = defineTypeOfDay(date)
+    imageView.setDayType(dayType)
+  }
+
+  // TODO: mmk rework like dates
+  func monthHeader(_ header: INFMonthHeader, weekdaysView: INFMonthWeekdays, labelForWeekday weekday: Int) -> UILabel? {
     CalendarWeekday.getDefault()
   }
 
-  func calendarView(_ calendar: INFCalendarView, header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
+  // TODO: mmk rework like dates
+  func monthHeader(_ header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
     MonthTitle.getDefault()
-  }
-
-  func calendarView(
-    _ calendar: INFCalendarView,
-    dayCell: INFDayCell,
-    badgeLabelFor date: Date,
-    badgeCount: Int?
-  ) -> UILabel? {
-    let dayType = defineTypeOfDay(date)
-
-    switch dayType {
-      case .pastDate:
-        return DateBadgeLabel.pastDate()
-      case .todayDate:
-        return DateBadgeLabel.todayDate()
-      case .dateWithEvents(let time):
-        return DateBadgeLabel.dateWithEvents(in: time)
-      case .defaultDate:
-        return DateBadgeLabel.defaultDate()
-    }
-  }
-
-  func calendarView(_ calendar: INFCalendarView, dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel? {
-    let dayType = defineTypeOfDay(date)
-
-    switch dayType {
-      case .pastDate:
-        return DateLabel.pastDate()
-      case .todayDate:
-        return DateLabel.todayDate()
-      case .dateWithEvents(let time):
-        return DateLabel.dateWithEvents(in: time)
-      case .defaultDate:
-        return DateLabel.defaultDate()
-    }
-  }
-
-  func calendarView(
-    _ calendar: INFCalendarView,
-    dayCell: INFDayCell,
-    backgroundImageFor date: Date,
-    image: UIImage?
-  ) -> UIImageView? {
-    let dayType = defineTypeOfDay(date)
-
-    switch dayType {
-      case .pastDate:
-        return DateBackgroundImageView.pastDate()
-      case .todayDate:
-        return DateBackgroundImageView.todayDate()
-      case .dateWithEvents(let time):
-        return DateBackgroundImageView.dateWithEvents(in: time)
-      case .defaultDate:
-        return DateBackgroundImageView.defaultDate()
-    }
   }
 
 }
@@ -233,7 +212,7 @@ extension EventsCalendarViewController: INFCalendarDelegate {
     label.text = "\(text)\n\(description)"
 
     let viewController = UIViewController()
-    viewController.view.backgroundColor = .Theme.darkBackground
+    viewController.view.backgroundColor = UIColor(resource: .darkBackground)
     viewController.view.addSubview(label)
     label.snp.makeConstraints { make in
       make.edges.equalToSuperview()
@@ -254,7 +233,7 @@ private extension EventsCalendarViewController {
       let label = MonthTitle()
       label.font = UIFont.systemFont(.subheadline, .regular)
       label.textAlignment = .center
-      label.textColor = UIColor.Theme.textLight100
+      label.textColor = UIColor(resource: .textLight100)
 
       return label
     }
@@ -278,7 +257,7 @@ private extension EventsCalendarViewController {
 
     static func getDefault() -> UILabel {
       let label = CalendarWeekday()
-      label.textColor = UIColor.Theme.textLight30
+      label.textColor = UIColor(resource: .textLight30)
 
       return label
     }
@@ -287,7 +266,9 @@ private extension EventsCalendarViewController {
 
 
   // MARK: - DateLabel
-  private class DateLabel: UILabel, CustomizableCalendarDateComponent {
+  private class DateLabel: UILabel, INFDayLabel {
+
+    var dayType: NFCalendar.NFDayType = .defaultDate
 
     required init() {
       super.init(frame: .zero)
@@ -303,51 +284,63 @@ private extension EventsCalendarViewController {
       fatalError("init(coder:) has not been implemented")
     }
 
-    static func defaultDate() -> Self {
-      let label = self.init()
+    func setDayType(_ dayType: NFCalendar.NFDayType) {
+      self.dayType = dayType
 
-      label.textColor = UIColor.Theme.textLight100
-
-      return label
+      switch dayType {
+        case .pastDate:
+          setPastDate()
+        case .todayDate:
+          setTodayDate()
+        case .defaultDate:
+          setDefaultDate()
+        case .dateWithEvents(let time):
+          setDateWithEvents(in: time)
+      }
     }
 
-    static func pastDate() -> Self {
-      let label = self.init()
-
-      label.textColor = UIColor.Theme.textLight30
-
-      return label
+    private func resetCommonSettings() {
+      layer.borderWidth = 0
+      layer.borderColor = UIColor.clear.cgColor
+      backgroundColor = .clear
     }
 
-    static func todayDate() -> Self {
-      let label = self.init()
+    private func setDefaultDate() {
+      resetCommonSettings()
 
-      label.textColor = UIColor.Theme.textLight100
-      label.backgroundColor = UIColor.Theme.main100
-
-      return label
+      textColor = UIColor(resource: .textLight100)
     }
 
-    static func dateWithEvents(in time: DayType) -> Self {
-      let label = self.init()
+    private func setPastDate() {
+      resetCommonSettings()
+
+      textColor = UIColor(resource: .textLight30)
+    }
+
+    private func setTodayDate() {
+      resetCommonSettings()
+
+      textColor = UIColor(resource: .textLight100)
+      backgroundColor = UIColor(resource: .main100)
+    }
+
+    private func setDateWithEvents(in time: NFDayType) {
+      resetCommonSettings()
 
       if time == .pastDate {
-        label.textColor = UIColor.Theme.textLight30
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight30.cgColor
+        textColor = UIColor(resource: .textLight30)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor(resource: .textLight30).cgColor
       } else if time == .todayDate {
-        label.textColor = UIColor.Theme.textLight100
-        label.backgroundColor = UIColor.Theme.main100
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+        textColor = UIColor(resource: .textLight100)
+        backgroundColor = UIColor(resource: .main100)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor(resource: .textLight100).cgColor
       } else {
-        label.textColor = UIColor.Theme.textLight100
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.Theme.textLight100.cgColor
+        textColor = UIColor(resource: .textLight100)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor(resource: .textLight100).cgColor
       }
-
-
-      return label
     }
 
     override func layoutSubviews() {
@@ -363,7 +356,9 @@ private extension EventsCalendarViewController {
   }
 
   // MARK: - DateBadgeLabel
-  private class DateBadgeLabel: UILabel, CustomizableCalendarDateComponent {
+  private class DateBadgeLabel: UILabel, INFDayBadgeLabel {
+
+    var dayType: NFCalendar.NFDayType = .defaultDate
 
     required init() {
       super.init(frame: .zero)
@@ -373,8 +368,8 @@ private extension EventsCalendarViewController {
       textAlignment = .center
       layer.masksToBounds = true
 
-      backgroundColor = UIColor.Theme.textLight100
-      textColor = UIColor.Theme.darkBackground
+      backgroundColor = UIColor(resource: .textLight100)
+      textColor = UIColor(resource: .darkBackground)
     }
 
     @available(*, unavailable)
@@ -382,33 +377,45 @@ private extension EventsCalendarViewController {
       fatalError("init(coder:) has not been implemented")
     }
 
-    static func defaultDate() -> Self {
-      let label = self.init()
-
-      return label
+    private func resetCommonSettings() {
+      backgroundColor = UIColor(resource: .textLight100)
     }
 
-    static func pastDate() -> Self {
-      let label = self.init()
-      label.backgroundColor = UIColor.Theme.textLight30
+    func setDayType(_ dayType: NFCalendar.NFDayType) {
+      self.dayType = dayType
 
-      return label
+      switch dayType {
+        case .pastDate:
+          setPastDate()
+        case .todayDate:
+          setTodayDate()
+        case .defaultDate:
+          setDefaultDate()
+        case .dateWithEvents(let time):
+          setDateWithEvents(in: time)
+      }
     }
 
-    static func dateWithEvents(in time: DayType) -> Self {
-      let label = self.init()
+    private func setDefaultDate() {
+      resetCommonSettings()
+    }
+
+    private func setPastDate() {
+      resetCommonSettings()
+
+      backgroundColor = UIColor(resource: .textLight30)
+    }
+
+    private func setDateWithEvents(in time: NFDayType) {
+      resetCommonSettings()
 
       if time == .pastDate {
-        label.backgroundColor = UIColor.Theme.textLight30
+        backgroundColor = UIColor(resource: .textLight30)
       }
-
-      return label
     }
 
-    static func todayDate() -> Self {
-      let label = self.init()
-
-      return label
+    private func setTodayDate() {
+      resetCommonSettings()
     }
 
     override func layoutSubviews() {
@@ -424,7 +431,9 @@ private extension EventsCalendarViewController {
   }
 
   // MARK: - DateBackgroundImageView
-  private class DateBackgroundImageView: UIImageView, CustomizableCalendarDateComponent {
+  private class DateBackgroundImageView: UIImageView, INFDayBackgroundImageView {
+
+    var dayType: NFCalendar.NFDayType = .defaultDate
 
     private let darkLayer: CAShapeLayer = .init()
 
@@ -435,7 +444,7 @@ private extension EventsCalendarViewController {
       layer.masksToBounds = true
       contentMode = .scaleAspectFill
 
-      darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.6).cgColor
+      darkLayer.fillColor = UIColor(resource: .darkBackground).withAlphaComponent(0.6).cgColor
     }
 
     @available(*, unavailable)
@@ -443,35 +452,46 @@ private extension EventsCalendarViewController {
       fatalError("init(coder:) has not been implemented")
     }
 
-    static func pastDate() -> Self {
-      let imageView = self.init()
+    func setDayType(_ dayType: NFCalendar.NFDayType) {
+      self.dayType = dayType
 
-      return imageView
+      switch dayType {
+        case .pastDate:
+          setPastDate()
+        case .todayDate:
+          setTodayDate()
+        case .dateWithEvents(let time):
+          setDateWithEvents(in: time)
+        case .defaultDate:
+          setDefaultDate()
+      }
     }
 
-    static func todayDate() -> Self {
-      let imageView = self.init()
-
-      return imageView
+    private func resetCommonSettings() {
+      alpha = 1
+      darkLayer.fillColor = UIColor(resource: .darkBackground).withAlphaComponent(0.6).cgColor
     }
 
-    static func dateWithEvents(in time: DayType) -> Self {
-      let imageView = self.init()
+    private func setDefaultDate() {
+      resetCommonSettings()
+    }
+
+    private func setPastDate() {
+      resetCommonSettings()
+    }
+
+    private func setTodayDate() {
+      resetCommonSettings()
+    }
+
+    private func setDateWithEvents(in time: NFDayType) {
+      resetCommonSettings()
 
       if time == .pastDate {
-        imageView.darkLayer.fillColor = UIColor.Theme.darkBackground.withAlphaComponent(0.9).cgColor
+        darkLayer.fillColor = UIColor(resource: .darkBackground).withAlphaComponent(0.9).cgColor
       } else if time == .todayDate {
-        imageView.alpha = 0
+        alpha = 0
       }
-
-      return imageView
-    }
-
-
-    static func defaultDate() -> Self {
-      let imageView = self.init()
-
-      return imageView
     }
 
     override func layoutSubviews() {
@@ -501,23 +521,6 @@ private extension EventsCalendarViewController {
 
 }
 
-// MARK: - Models
-private indirect enum DayType: Equatable {
-  case pastDate
-  case todayDate
-  case defaultDate
-  case dateWithEvents(DayType)
-}
-
-private protocol CustomizableCalendarDateComponent: UIView {
-  static func pastDate() -> Self
-  static func todayDate() -> Self
-  static func defaultDate() -> Self
-  static func dateWithEvents(in time: DayType) -> Self
-}
-
-struct TestView_Previews: PreviewProvider {
-  static var previews: some View {
-    EventsCalendarViewController().makePreview()
-  }
+#Preview {
+  EventsCalendarViewController().makePreview()
 }

@@ -65,5 +65,7 @@ targets:
     postCompileScripts:
       - path: "Scripts/swiftFormat.sh"
         name: ⚠️ SwiftFormat
+        basedOnDependencyAnalysis: false
       - path: "Scripts/swiftLint.sh"
         name: ⚠️ SwiftLint
+        basedOnDependencyAnalysis: false

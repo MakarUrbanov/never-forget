@@ -33,7 +33,6 @@
  --enable redundanttype
  --enable redundantvoidreturntype
  --enable semicolons
- --enable sortedimports
  --enable spacearoundbraces
  --enable spacearoundbrackets
  --enable spacearoundcomments
@@ -45,6 +44,7 @@
  --enable spaceinsidecomments
  --enable spaceinsidegenerics
  --enable spaceinsideparens
+ --enable sortImports
  --enable trailingclosures
  --enable trailingCommas
  --enable typesugar
@@ -88,6 +88,7 @@
  --indentcase true
  --wrapternary before-operators
  --ranges no-space
+ --importgrouping alpha
 
 
  ## Disabled rules

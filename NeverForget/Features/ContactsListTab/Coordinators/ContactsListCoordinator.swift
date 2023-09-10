@@ -11,7 +11,7 @@ import UIKit
 
 final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
   var childCoordinators: [Coordinator] = []
-  var navigationController: UINavigationController = BaseUINavigationController()
+  var navigationController: UINavigationController = .init()
 
   func start() {
     let peopleListScreen = getPeopleListScreenView()
