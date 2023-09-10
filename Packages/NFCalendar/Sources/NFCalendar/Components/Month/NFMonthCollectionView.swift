@@ -17,7 +17,7 @@ public protocol INFMonthCollectionView: UICollectionView {
   var viewModel: INFMonthCollectionViewModel { get }
   // MARK: - Delegates
   var monthDataSource: INFMonthCollectionViewDataSource? { get set }
-  var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate? { get set }
+  var datesAppearanceDelegate: INFDayCellAppearanceDelegate? { get set }
   var monthDelegate: INFMonthCollectionViewDelegate? { get set }
 
   // MARK: - Init
@@ -32,7 +32,7 @@ public class NFMonthCollectionView: UICollectionView, INFMonthCollectionView {
   public var viewModel: INFMonthCollectionViewModel
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCollectionViewDataSource?
-  public weak var appearanceDelegate: INFMonthCollectionViewAppearanceDelegate?
+  public weak var datesAppearanceDelegate: INFDayCellAppearanceDelegate?
   public weak var monthDelegate: INFMonthCollectionViewDelegate?
 
   // MARK: - Init
@@ -79,6 +79,7 @@ private extension NFMonthCollectionView {
 
 // MARK: - UICollectionViewDataSource
 extension NFMonthCollectionView: UICollectionViewDataSource {
+
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     viewModel.dates.value.count
   }
@@ -103,14 +104,17 @@ extension NFMonthCollectionView: UICollectionViewDataSource {
     if isEmptyCell {
       cell.setCellVisibility(isVisible: false)
     } else {
-      cell.dayAppearanceDelegate = self
+      if cell.dayAppearanceDelegate == nil {
+        cell.dayAppearanceDelegate = self
+      }
+
       cell.viewModel = NFDayCellViewModel()
 
       guard let data = monthDataSource?.monthCollectionView(self, dataFor: day) else {
         fatalError("Has no day data")
       }
 
-      cell.setupView(data)
+      cell.configure(data)
       cell.setCellVisibility(isVisible: true)
     }
 
@@ -121,16 +125,30 @@ extension NFMonthCollectionView: UICollectionViewDataSource {
 // MARK: - INFDayCellAppearanceDelegate
 extension NFMonthCollectionView: INFDayCellAppearanceDelegate {
 
-  public func dayCell(_ dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel? {
-    appearanceDelegate?.monthCollectionView(self, dayCell: dayCell, dateLabelFor: date)
+  public func dayCellComponents(_ dayCell: INFDayCell) -> NFDayComponents? {
+    datesAppearanceDelegate?.dayCellComponents(dayCell)
   }
 
-  public func dayCell(_ dayCell: INFDayCell, badgeLabelFor date: Date, badgeCount: Int?) -> UILabel? {
-    appearanceDelegate?.monthCollectionView(self, dayCell: dayCell, badgeLabelFor: date, badgeCount: badgeCount)
+  public func dayCell(_ dayCell: INFDayCell, setupDateLabel label: INFDayLabel, ofDate date: Date) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupDateLabel: label, ofDate: date)
   }
 
-  public func dayCell(_ dayCell: INFDayCell, backgroundImageFor date: Date, image: UIImage?) -> UIImageView? {
-    appearanceDelegate?.monthCollectionView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBadgeLabel label: INFDayBadgeLabel,
+    ofDate date: Date,
+    badgeCount: Int?
+  ) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupBadgeLabel: label, ofDate: date, badgeCount: badgeCount)
+  }
+
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBackgroundImage imageView: INFDayBackgroundImageView,
+    ofDate date: Date,
+    image: UIImage?
+  ) {
+    datesAppearanceDelegate?.dayCell(dayCell, setupBackgroundImage: imageView, ofDate: date, image: image)
   }
 
 }

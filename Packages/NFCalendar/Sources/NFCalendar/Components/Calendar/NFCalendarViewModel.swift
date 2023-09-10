@@ -10,7 +10,6 @@ import UIKit
 
 // MARK: - Protocol
 public protocol INFCalendarViewModel: AnyObject {
-  func generateMonths() -> [Date]
   func numberOfWeeksInMonth(of date: Date) -> Int
   func generateMonthsData() -> [NFMonthData]
 }
@@ -19,19 +18,6 @@ public protocol INFCalendarViewModel: AnyObject {
 public final class NFCalendarViewModel: INFCalendarViewModel {
   // MARK: - Init
   public init() {}
-
-  // MARK: - Public methods
-  public func generateMonths() -> [Date] {
-    let startFrom = Self.renderFromDate.dateAtStartOf(.month)
-    var months: [Date] = []
-
-    for monthNumber in 0..<Self.numberOfRenderMonths {
-      let monthDate = startFrom.dateByAdding(monthNumber, .month).date
-      months.append(monthDate)
-    }
-
-    return months
-  }
 
   public func generateMonthsData() -> [NFMonthData] {
     let startFrom = Self.renderFromDate.dateAtStartOf(.month)
@@ -49,7 +35,13 @@ public final class NFCalendarViewModel: INFCalendarViewModel {
   }
 
   public func numberOfWeeksInMonth(of date: Date) -> Int {
-    date.dateAtEndOf(.month).weekOfMonth
+    if let range = Self.calendar.range(of: .weekOfMonth, in: .month, for: date) {
+      let numberOfWeeks = range.count
+
+      return numberOfWeeks
+    }
+
+    fatalError("Something went wrong")
   }
 
 }

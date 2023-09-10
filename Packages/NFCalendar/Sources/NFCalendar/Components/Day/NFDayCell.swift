@@ -14,33 +14,61 @@ public protocol INFDayCell: UICollectionViewCell {
   var viewModel: INFDayCellViewModel? { get set }
   var dayAppearanceDelegate: INFDayCellAppearanceDelegate? { get set }
   // MARK: - UI
-  var dateLabel: UILabel { get }
-  var badgeLabel: UILabel { get }
-  var backgroundImageView: UIImageView { get }
+  var dateLabel: INFDayLabel { get }
+  var badgeLabel: INFDayBadgeLabel { get }
+  var backgroundImageView: INFDayBackgroundImageView { get }
   // MARK: - Methods
-  func setupView(_ data: NFCalendarDay)
+  func configure(_ data: NFCalendarDay)
   func setCellVisibility(isVisible: Bool)
 }
 
 // MARK: - NFDayCell
 public class NFDayCell: UICollectionViewCell, INFDayCell {
 
-//  // MARK: - Public properties
-  public var viewModel: INFDayCellViewModel?
+  // MARK: - Public properties
+  public var viewModel: INFDayCellViewModel? { didSet { viewModelDidSet() } }
+  public weak var dayAppearanceDelegate: INFDayCellAppearanceDelegate? { didSet { dayAppearanceDelegateDidSet() } }
 
-  public weak var dayAppearanceDelegate: INFDayCellAppearanceDelegate?
+  public var dateLabel: INFDayLabel = BaseDateLabel()
+  public var badgeLabel: INFDayBadgeLabel = BaseBadgeLabel()
+  public var backgroundImageView: INFDayBackgroundImageView = BaseBackgroundImageView(frame: .zero)
 
-  public private(set) var backgroundImageView = UIImageView(frame: .zero)
-  public private(set) var dateLabel: UILabel = BaseDateLabel()
-  public private(set) var badgeLabel: UILabel = BaseBadgeLabel()
+  // MARK: - Init
+  override public init(frame: CGRect) {
+    super.init(frame: frame)
+
+    initializeUI(dayData: .init(date: .now))
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: - Public methods
-  public func setupView(_ dayData: NFCalendarDay) {
-    setupDateLabel(for: dayData.date)
-    setupBadgeLabel(for: dayData.date, with: dayData.badgeCount)
-    setupBackgroundImageView(for: dayData.date, with: dayData.backgroundImage)
+  public func configure(_ dayData: NFCalendarDay) {
+    viewModel?.date?.value = dayData.date
+    dayAppearanceDelegate?.dayCell(
+      self,
+      setupDateLabel: dateLabel,
+      ofDate: dayData.date
+    )
 
-    setDayData(dayData)
+    viewModel?.badgeCount?.value = dayData.badgeCount
+    dayAppearanceDelegate?.dayCell(
+      self,
+      setupBadgeLabel: badgeLabel,
+      ofDate: dayData.date,
+      badgeCount: dayData.badgeCount
+    )
+
+    viewModel?.backgroundImage?.value = dayData.backgroundImage
+    dayAppearanceDelegate?.dayCell(
+      self,
+      setupBackgroundImage: backgroundImageView,
+      ofDate: dayData.date,
+      image: dayData.backgroundImage
+    )
   }
 
   public func setCellVisibility(isVisible: Bool) {
@@ -49,31 +77,25 @@ public class NFDayCell: UICollectionViewCell, INFDayCell {
 
 }
 
-// MARK: - Private methods
+// MARK: - Private UI methods
 private extension NFDayCell {
 
-  private func setDayData(_ dayData: NFCalendarDay) {
-    guard let viewModel else { return }
-
-    viewModel.date = .init(dayData.date, valueChanged: { newDate in
-      self.updateDateView(newDate)
-    })
-
-    viewModel.badgeCount = .init(dayData.badgeCount, valueChanged: { newBadgeCount in
-      self.updateBadgeCountView(newBadgeCount)
-    })
-
-    viewModel.backgroundImage = .init(dayData.backgroundImage, valueChanged: { newImage in
-      self.updateBackgroundImageView(newImage)
-    })
+  private func initializeUI(dayData: NFCalendarDay) {
+    initDateLabel()
+    initBadgeLabel()
+    initBackgroundImageView()
   }
 
-  private func setupDateLabel(for date: Date?) {
-    if let date, let dateLabelFromDelegate = dayAppearanceDelegate?.dayCell(self, dateLabelFor: date) {
-      dateLabel.removeFromSuperview()
-      dateLabel = dateLabelFromDelegate
-    }
+  private func resetDateLabel(newLabel: INFDayLabel) {
+    dateLabel.removeFromSuperview()
+    dateLabel.snp.removeConstraints()
 
+    dateLabel = newLabel
+
+    initDateLabel()
+  }
+
+  private func initDateLabel() {
     addSubview(dateLabel)
 
     dateLabel.snp.makeConstraints { make in
@@ -81,33 +103,35 @@ private extension NFDayCell {
     }
   }
 
-  private func setupBadgeLabel(for date: Date?, with badgeCount: Int?) {
-    if let date, let badgeLabelFromDelegate = dayAppearanceDelegate?.dayCell(
-      self,
-      badgeLabelFor: date,
-      badgeCount: badgeCount
-    ) {
-      badgeLabel.removeFromSuperview()
-      badgeLabel = badgeLabelFromDelegate
-    }
+  private func resetBadgeLabel(newLabel: INFDayBadgeLabel) {
+    badgeLabel.removeFromSuperview()
+    badgeLabel.snp.removeConstraints()
+
+    badgeLabel = newLabel
+
+    initBadgeLabel()
+  }
+
+  private func initBadgeLabel() {
     addSubview(badgeLabel)
 
     badgeLabel.snp.makeConstraints { make in
-      make.width.height.equalTo(UIConstants.badgeLabelSize)
+      make.width.height.greaterThanOrEqualTo(UIConstants.badgeLabelSize)
       make.top.equalTo(dateLabel.snp.top)
       make.trailing.equalTo(dateLabel.snp.trailing)
     }
   }
 
-  private func setupBackgroundImageView(for date: Date?, with image: UIImage?) {
-    if let date, let backgroundImageFromDelegate = dayAppearanceDelegate?.dayCell(
-      self,
-      backgroundImageFor: date,
-      image: image
-    ) {
-      backgroundImageView.removeFromSuperview()
-      backgroundImageView = backgroundImageFromDelegate
-    }
+  private func resetBackgroundImageView(newImageView: INFDayBackgroundImageView) {
+    backgroundImageView.removeFromSuperview()
+    backgroundImageView.snp.removeConstraints()
+
+    backgroundImageView = newImageView
+
+    initBackgroundImageView()
+  }
+
+  private func initBackgroundImageView() {
     addSubview(backgroundImageView)
 
     backgroundImageView.snp.makeConstraints { make in
@@ -116,11 +140,48 @@ private extension NFDayCell {
     }
   }
 
-  private func updateDateView(_ date: Date) {
+  private func dayAppearanceDelegateDidSet() {
+    if let components = dayAppearanceDelegate?.dayCellComponents(self) {
+      setDayComponents(components: components)
+    }
+  }
+
+  private func setDayComponents(components: NFDayComponents) {
+    resetDateLabel(newLabel: components.dateLabel.init())
+    resetBadgeLabel(newLabel: components.dateBadgeLabel.init())
+    resetBackgroundImageView(newImageView: components.dateBackgroundImage.init())
+  }
+
+}
+
+// MARK: - Private methods
+private extension NFDayCell {
+
+  private func viewModelDidSet() {
+    bindViewModel()
+  }
+
+  private func bindViewModel() {
+    guard let viewModel else { return }
+
+    viewModel.date = .init(viewModel.date?.value ?? .now, valueChanged: { newDate in
+      self.setDate(newDate)
+    })
+
+    viewModel.badgeCount = .init(viewModel.badgeCount?.value, valueChanged: { newBadgeCount in
+      self.setBadgeCount(newBadgeCount)
+    })
+
+    viewModel.backgroundImage = .init(viewModel.backgroundImage?.value, valueChanged: { newImage in
+      self.setBackgroundImage(newImage)
+    })
+  }
+
+  private func setDate(_ date: Date) {
     dateLabel.text = Self.getFormattedDay(of: date)
   }
 
-  private func updateBadgeCountView(_ count: Int?) {
+  private func setBadgeCount(_ count: Int?) {
     if let count {
       badgeLabel.isHidden = false
       badgeLabel.text = count > 9 ? String("9+") : String(count)
@@ -130,7 +191,7 @@ private extension NFDayCell {
     }
   }
 
-  private func updateBackgroundImageView(_ image: UIImage?) {
+  private func setBackgroundImage(_ image: UIImage?) {
     if let image {
       backgroundImageView.isHidden = false
       backgroundImageView.image = image
@@ -161,7 +222,8 @@ extension NFDayCell {
 public extension NFDayCell {
 
   // MARK: - BaseDateLabel
-  final class BaseDateLabel: UILabel {
+  final class BaseDateLabel: UILabel, INFDayLabel {
+    public var dayType: NFDayType = .defaultDate
 
     override init(frame: CGRect) {
       super.init(frame: frame)
@@ -172,6 +234,8 @@ public extension NFDayCell {
     required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
     }
+
+    public func setDayType(_ dayType: NFDayType) {}
 
     func initialize() {
       textAlignment = .center
@@ -183,7 +247,8 @@ public extension NFDayCell {
   }
 
   // MARK: - BaseBadgeLabel
-  final class BaseBadgeLabel: UILabel {
+  final class BaseBadgeLabel: UILabel, INFDayBadgeLabel {
+    public var dayType: NFDayType = .defaultDate
 
     override init(frame: CGRect) {
       super.init(frame: frame)
@@ -195,13 +260,13 @@ public extension NFDayCell {
       fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Overrides
     override public func layoutSubviews() {
       super.layoutSubviews()
       setCornerRadius()
     }
 
-    // MARK: - Public methods
+    public func setDayType(_ dayType: NFDayType) {}
+
     func initialize() {
       textAlignment = .center
       font = .systemFont(ofSize: 10, weight: .black)
@@ -209,12 +274,18 @@ public extension NFDayCell {
       layer.cornerRadius = 12
     }
 
-    // MARK: - Private methods
     private func setCornerRadius() {
       let radius = bounds.width / 2
       layer.cornerRadius = radius
     }
 
+  }
+
+  // MARK: - BaseBackgroundImageView
+  final class BaseBackgroundImageView: UIImageView, INFDayBackgroundImageView {
+    public var dayType: NFDayType = .defaultDate
+
+    public func setDayType(_ dayType: NFDayType) {}
   }
 
 }

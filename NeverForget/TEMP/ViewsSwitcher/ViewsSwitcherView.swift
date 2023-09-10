@@ -14,10 +14,11 @@ protocol IViewsSwitcherView: UIView {
   var currentSelectedButtonIndex: Int { get }
   var selectedButton: SwitcherButtonData { get }
   var delegate: IViewsSwitcherViewDelegate? { get set }
+  var isAnimating: Bool { get }
 
   init(buttons: [SwitcherButtonData], initialButton: SwitcherButtonData?)
 
-  func select(button: SwitcherButtonData)
+  func select(button: SwitcherButtonData, animated: Bool)
   /// 0-1 one item length
   func setSelectAnimated(_ position: CGFloat)
 }
@@ -31,11 +32,9 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
   var selectedButton: SwitcherButtonData {
     buttons[currentSelectedButtonIndex]
   }
+  var isAnimating = false
 
   weak var delegate: IViewsSwitcherViewDelegate?
-
-  // MARK: - Private properties
-  private var isAnimating = false
 
   // MARK: - UI properties
   private let stackView = UIStackView()
@@ -68,8 +67,8 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
   }
 
   // MARK: - Public methods
-  func select(button: SwitcherButtonData) {
-    selectButton(button)
+  func select(button: SwitcherButtonData, animated: Bool) {
+    selectButton(button, animated: animated)
   }
 
   func setSelectAnimated(_ position: CGFloat) {
@@ -141,28 +140,34 @@ private extension ViewsSwitcherView {
       return
     }
 
-    selectButton(buttonData)
+    selectButton(buttonData, animated: true)
   }
 
-  private func selectButton(_ buttonData: SwitcherButtonData) {
+  private func selectButton(_ buttonData: SwitcherButtonData, animated: Bool) {
     delegate?.viewsSwitcher(self, didSelect: buttonData, previousSelectedButton: buttons[currentSelectedButtonIndex])
 
     let selectedButtonArrangedSubview = stackView.arrangedSubviews[buttonData.index]
     let center = selector.convert(selector.frame.origin, from: selectedButtonArrangedSubview)
 
-    isAnimating = true
     currentSelectedButtonIndex = buttonData.index
-    UIView.animate(withDuration: 0.3) { [self] in
+    if animated {
+      isAnimating = true
+      UIView.animate(withDuration: 0.3) { [self] in
+        selector.frame = .init(
+          origin: .init(x: center.x, y: 0),
+          size: CGSize(width: selector.frame.width, height: selector.frame.height)
+        )
+      } completion: { [self] isComplete in
+        if isComplete {
+          isAnimating = false
+        }
+      }
+    } else {
       selector.frame = .init(
         origin: .init(x: center.x, y: 0),
         size: CGSize(width: selector.frame.width, height: selector.frame.height)
       )
-    } completion: { [self] isComplete in
-      if isComplete {
-        isAnimating = false
-      }
     }
-
   }
 
   private func initializeSelector() {

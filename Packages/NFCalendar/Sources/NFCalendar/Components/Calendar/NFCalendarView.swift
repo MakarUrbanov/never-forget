@@ -69,7 +69,8 @@ private extension NFCalendarView {
       }
 
       cell.monthDataSource = self
-      cell.monthAppearanceDelegate = self
+      cell.datesAppearanceDelegate = self
+      cell.monthHeaderAppearanceDelegate = self
       cell.monthDelegate = self
 
       cell.renderMonthData(monthData)
@@ -80,53 +81,48 @@ private extension NFCalendarView {
 }
 
 // MARK: - INFMonthCellAppearanceDelegate
-extension NFCalendarView: INFMonthCellAppearanceDelegate {
+extension NFCalendarView: INFDayCellAppearanceDelegate {
 
-  public func monthCell(
-    _ month: INFMonthCell,
-    dayCell: INFDayCell,
-    dateLabelFor date: Date
-  ) -> UILabel? {
-    calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, dateLabelFor: date)
+  public func dayCellComponents(_ dayCell: INFDayCell) -> NFDayComponents? {
+    calendarAppearanceDelegate?.dayCellComponents(dayCell)
   }
 
-  public func monthCell(
-    _ month: INFMonthCell,
-    dayCell: INFDayCell,
-    badgeLabelFor date: Date,
+  public func dayCell(_ dayCell: INFDayCell, setupDateLabel label: INFDayLabel, ofDate date: Date) {
+    calendarAppearanceDelegate?.dayCell(dayCell, setupDateLabel: label, ofDate: date)
+  }
+
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBadgeLabel label: INFDayBadgeLabel,
+    ofDate date: Date,
     badgeCount: Int?
-  ) -> UILabel? {
-    calendarAppearanceDelegate?.calendarView(
-      self,
-      dayCell: dayCell,
-      badgeLabelFor: date,
-      badgeCount: badgeCount
-    )
+  ) {
+    calendarAppearanceDelegate?.dayCell(dayCell, setupBadgeLabel: label, ofDate: date, badgeCount: badgeCount)
   }
 
-  public func monthCell(
-    _ month: INFMonthCell,
-    dayCell: INFDayCell,
-    backgroundImageFor date: Date,
+  public func dayCell(
+    _ dayCell: INFDayCell,
+    setupBackgroundImage imageView: INFDayBackgroundImageView,
+    ofDate date: Date,
     image: UIImage?
-  ) -> UIImageView? {
-    calendarAppearanceDelegate?.calendarView(self, dayCell: dayCell, backgroundImageFor: date, image: image)
+  ) {
+    calendarAppearanceDelegate?.dayCell(dayCell, setupBackgroundImage: imageView, ofDate: date, image: image)
   }
 
-  public func monthCell(
-    _ month: INFMonthCell,
-    header: INFMonthHeader,
+}
+
+extension NFCalendarView: INFMonthHeaderAppearanceDelegate {
+
+  public func monthHeader(
+    _ header: INFMonthHeader,
+    weekdaysView: INFMonthWeekdays,
     labelForWeekday weekday: Int
   ) -> UILabel? {
-    calendarAppearanceDelegate?.calendarView(self, header: header, labelForWeekday: weekday)
+    calendarAppearanceDelegate?.monthHeader(header, weekdaysView: weekdaysView, labelForWeekday: weekday)
   }
 
-  public func monthCell(
-    _ month: INFMonthCell,
-    header: INFMonthHeader,
-    labelForMonth monthDate: Date
-  ) -> UILabel? {
-    calendarAppearanceDelegate?.calendarView(self, header: header, labelForMonth: monthDate)
+  public func monthHeader(_ header: INFMonthHeader, labelForMonth monthDate: Date) -> UILabel? {
+    calendarAppearanceDelegate?.monthHeader(header, labelForMonth: monthDate)
   }
 
 }

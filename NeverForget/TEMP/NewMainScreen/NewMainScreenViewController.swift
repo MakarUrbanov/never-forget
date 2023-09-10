@@ -55,11 +55,10 @@ extension NewMainScreenViewController: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let currentSelectedViewIndex = CGFloat(pageHeader.pageSwitcher.currentSelectedButtonIndex)
     let pageOffset = scrollView.contentOffset.x / scrollView.frame.width - 1 + currentSelectedViewIndex
-    let buttonsCount = CGFloat(pageHeader.pageSwitcher.buttons.count)
-    let lastButtonIndex = buttonsCount - 1
-    let correctPageOffset = pageOffset < 0 ? 0 : pageOffset > lastButtonIndex ? lastButtonIndex : pageOffset
 
-    pageHeader.pageSwitcher.setSelectAnimated(correctPageOffset)
+    if !pageHeader.pageSwitcher.isAnimating {
+      pageHeader.pageSwitcher.setSelectAnimated(pageOffset)
+    }
   }
 }
 
@@ -76,13 +75,13 @@ extension NewMainScreenViewController: UIPageViewControllerDelegate {
       let currentViewController = contentPageViewController.viewControllers?.last,
       completed,
       finished,
-      let newViewControllerIndex = contentPageViewController.viewControllersList.firstIndex(of: currentViewController)
-    else {
+      let newViewControllerIndex = contentPageViewController.viewControllersList
+        .firstIndex(of: currentViewController) else {
       return
     }
 
     let button = pageHeader.pageSwitcher.buttons[newViewControllerIndex]
-    pageHeader.pageSwitcher.select(button: button)
+    pageHeader.pageSwitcher.select(button: button, animated: false)
   }
 
 }

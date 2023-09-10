@@ -7,9 +7,15 @@
 
 import UIKit
 
-// MARK: - INFDayCellAppearanceDelegate
 public protocol INFDayCellAppearanceDelegate: AnyObject {
-  func dayCell(_ dayCell: INFDayCell, dateLabelFor date: Date) -> UILabel?
-  func dayCell(_ dayCell: INFDayCell, badgeLabelFor date: Date, badgeCount: Int?) -> UILabel?
-  func dayCell(_ dayCell: INFDayCell, backgroundImageFor date: Date, image: UIImage?) -> UIImageView?
+  func dayCellComponents(_ dayCell: INFDayCell) -> NFDayComponents?
+
+  func dayCell(_ dayCell: INFDayCell, setupDateLabel label: INFDayLabel, ofDate date: Date)
+  func dayCell(_ dayCell: INFDayCell, setupBadgeLabel label: INFDayBadgeLabel, ofDate date: Date, badgeCount: Int?)
+  func dayCell(
+    _ dayCell: INFDayCell,
+    setupBackgroundImage imageView: INFDayBackgroundImageView,
+    ofDate date: Date,
+    image: UIImage?
+  )
 }
