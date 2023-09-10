@@ -11,12 +11,15 @@ import UIKit
 // MARK: - IViewsSwitcherView
 protocol IViewsSwitcherView: UIView {
   var buttons: [SwitcherButtonData] { get }
+  var currentSelectedButtonIndex: Int { get }
   var selectedButton: SwitcherButtonData { get }
   var delegate: IViewsSwitcherViewDelegate? { get set }
 
   init(buttons: [SwitcherButtonData], initialButton: SwitcherButtonData?)
 
   func select(button: SwitcherButtonData)
+  /// 0-1 one item length
+  func setSelectAnimated(_ position: CGFloat)
 }
 
 // MARK: - ViewsSwitcherView
@@ -24,6 +27,7 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
 
   // MARK: - Public properties
   var buttons: [SwitcherButtonData]
+  var currentSelectedButtonIndex: Int
   var selectedButton: SwitcherButtonData {
     buttons[currentSelectedButtonIndex]
   }
@@ -32,7 +36,6 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
 
   // MARK: - Private properties
   private var isAnimating = false
-  private var currentSelectedButtonIndex: Int
 
   // MARK: - UI properties
   private let stackView = UIStackView()
@@ -57,20 +60,35 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Overrides
   override func layoutSubviews() {
     super.layoutSubviews()
 
     updateSelectorLayout(animated: false)
   }
 
+  // MARK: - Public methods
   func select(button: SwitcherButtonData) {
     selectButton(button)
+  }
+
+  func setSelectAnimated(_ position: CGFloat) {
+    let pageWidth = bounds.width
+    let itemWidth = pageWidth / CGFloat(buttons.count)
+    let newOffset: CGFloat = position * itemWidth
+    selector.frame = .init(
+      x: newOffset,
+      y: selector.frame.minY,
+      width: selector.frame.width,
+      height: selector.frame.height
+    )
   }
 
 }
 
 // MARK: - Private methods
 private extension ViewsSwitcherView {
+
   private func initialize() {
     layer.masksToBounds = true
 
@@ -127,7 +145,7 @@ private extension ViewsSwitcherView {
   }
 
   private func selectButton(_ buttonData: SwitcherButtonData) {
-    delegate?.viewsSwitcher(self, didSelect: buttonData)
+    delegate?.viewsSwitcher(self, didSelect: buttonData, previousSelectedButton: buttons[currentSelectedButtonIndex])
 
     let selectedButtonArrangedSubview = stackView.arrangedSubviews[buttonData.index]
     let center = selector.convert(selector.frame.origin, from: selectedButtonArrangedSubview)
@@ -160,6 +178,7 @@ private extension ViewsSwitcherView {
     selector.frame = .init(x: 0, y: 0, width: selectorWidth, height: bounds.height)
     selector.layer.cornerRadius = layer.cornerRadius
   }
+
 }
 
 // MARK: - SwitcherButtonView

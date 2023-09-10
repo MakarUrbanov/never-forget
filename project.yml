@@ -65,7 +65,7 @@ targets:
     postCompileScripts:
       - path: "Scripts/swiftFormat.sh"
         name: ⚠️ SwiftFormat
-        outputFiles: ["$(DERIVED_FILE_DIR)/swiftformat_output"]
+        basedOnDependencyAnalysis: false
       - path: "Scripts/swiftLint.sh"
         name: ⚠️ SwiftLint
-        outputFiles: ["$(DERIVED_FILE_DIR)/swiftlint_output"]
+        basedOnDependencyAnalysis: false

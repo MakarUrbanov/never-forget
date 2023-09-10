@@ -93,7 +93,7 @@ private extension NFDayCell {
     addSubview(badgeLabel)
 
     badgeLabel.snp.makeConstraints { make in
-      make.width.height.equalTo(16)
+      make.width.height.equalTo(UIConstants.badgeLabelSize)
       make.top.equalTo(dateLabel.snp.top)
       make.trailing.equalTo(dateLabel.snp.trailing)
     }
@@ -117,7 +117,7 @@ private extension NFDayCell {
   }
 
   private func updateDateView(_ date: Date) {
-    dateLabel.text = NFDayCell.getFormattedDay(of: date)
+    dateLabel.text = Self.getFormattedDay(of: date)
   }
 
   private func updateBadgeCountView(_ count: Int?) {
@@ -144,11 +144,15 @@ private extension NFDayCell {
 
 // MARK: - Static
 extension NFDayCell {
+
+  enum UIConstants {
+    static let badgeLabelSize = 16
+  }
+
   private static let calendar = DateInRegion().calendar
 
-  // MARK: - Static methods
   private static func getFormattedDay(of date: Date) -> String {
-    String(calendar.component(.day, from: date))
+    date.toFormat("d")
   }
 
 }

@@ -10,7 +10,11 @@ import UIKit
 // MARK: - IViewsSwitcherViewDelegate
 protocol IViewsSwitcherViewDelegate: AnyObject {
   func viewsSwitcher(_ switcher: IViewsSwitcherView, willSelect button: SwitcherButtonData) -> Bool
-  func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelect button: SwitcherButtonData)
+  func viewsSwitcher(
+    _ switcher: IViewsSwitcherView,
+    didSelect button: SwitcherButtonData,
+    previousSelectedButton: SwitcherButtonData
+  )
   func viewsSwitcher(_ switcher: IViewsSwitcherView, didSelectSelected button: SwitcherButtonData)
 }
 

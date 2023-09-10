@@ -6,6 +6,7 @@
 
 import UIKit
 
+@MainActor
 public protocol INFCalendarDataSource: AnyObject {
   func calendarView(_ calendar: NFCalendarView, dataFor date: Date) -> NFCalendarDay?
 }
