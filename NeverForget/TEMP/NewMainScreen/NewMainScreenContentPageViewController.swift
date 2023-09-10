@@ -19,6 +19,7 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
 
   // MARK: - Public properties
   let eventsCalendar: IEventsCalendarViewController = EventsCalendarViewController()
+  let eventsList: IEventsListTableViewController = EventsListTableViewController(viewModel: EventsListTableViewModel())
   var viewControllersList: [UIViewController] = []
   var scrollView: UIScrollView? {
     for view in view.subviews {
@@ -34,7 +35,7 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
 
   // MARK: - Public methods
   override func viewDidLoad() {
-    viewControllersList = [eventsCalendar, Self.testViewController]
+    viewControllersList = [eventsCalendar, eventsList]
     super.viewDidLoad()
 
     dataSource = self
@@ -46,21 +47,6 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
 
 // MARK: - UIPageViewControllerDataSource
 extension NewMainScreenContentPageViewController: UIPageViewControllerDataSource {
-
-  // TODO: mmk remove
-  private static let testViewController: UIViewController = {
-    let view = UIViewController()
-    view.view.backgroundColor = UIColor(resource: .darkBackground)
-    let label = UILabel()
-    label.text = "Second VC"
-    view.view.addSubview(label)
-    label.textAlignment = .center
-    label.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
-    }
-
-    return view
-  }()
 
   func pageViewController(
     _ pageViewController: UIPageViewController,

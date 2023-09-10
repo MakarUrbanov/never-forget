@@ -8,6 +8,7 @@
 import Foundation
 import NFLocalNotificationsManager
 
+// TODO: mmk rework. so bad....
 enum LocalNotificationDeepLinks {
 
   enum Components: String {
