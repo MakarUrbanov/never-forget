@@ -1,5 +1,5 @@
 //
-//  Event+CoreDataClass.swift
+//  Event+CoreData.swift
 //  NeverForget
 //
 //  Created by Makar Mishchenko on 12.09.2023.
@@ -13,10 +13,9 @@ import SwiftDate
 public class Event: NSManagedObject, Identifiable {
 
   // MARK: - Public Properties
-  @NSManaged public var id: EventId
+  @NSManaged public var id: String
   @NSManaged public var date: Date
   @NSManaged public var name: String
-  @NSManaged public var contactsIds: Set<Contact.ContactId>
 
   @NSManaged private var notificationScheduleRuleRaw: EventNotificationsSchedulingRule.RawValue
   var notificationScheduleRule: EventNotificationsSchedulingRule {
@@ -27,7 +26,9 @@ public class Event: NSManagedObject, Identifiable {
       notificationScheduleRuleRaw = newValue.rawValue
     }
   }
-  @NSManaged public var notifications: Set<Date>
+
+  @NSManaged public var notifications: Set<Notification>?
+  @NSManaged public var contacts: Set<Contact>
 
   // MARK: - Overrides
   override public func awakeFromInsert() {
@@ -35,18 +36,14 @@ public class Event: NSManagedObject, Identifiable {
     id = UUID().uuidString
     date = Self.todayRoundedDate
     name = ""
-    contactsIds = []
     notificationScheduleRuleRaw = EventNotificationsSchedulingRule.globalSettings.rawValue
-    notifications = []
+    contacts = []
   }
 
 }
 
 // MARK: - Static
 extension Event {
-
-  // MARK: - Types
-  public typealias EventId = String
 
   // MARK: - Static properties
   private static let todayRoundedDate: Date = DateInRegion(region: .UTC).dateAtStartOf(.day).date

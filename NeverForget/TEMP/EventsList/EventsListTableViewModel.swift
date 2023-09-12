@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol IEventsListTableViewModel: AnyObject {
+protocol IEventsListTableViewModel: AnyObject {}
 
-}
-
-class EventsListTableViewModel: IEventsListTableViewModel {
-
-}
+class EventsListTableViewModel: IEventsListTableViewModel {}

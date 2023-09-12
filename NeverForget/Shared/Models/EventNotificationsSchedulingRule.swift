@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum EventNotificationsSchedulingRule: Int {
+public enum EventNotificationsSchedulingRule: Int16 {
   /// Notifications disabled on this event
   case disabled = 1
   /// Notifications follows global app settings notification rules

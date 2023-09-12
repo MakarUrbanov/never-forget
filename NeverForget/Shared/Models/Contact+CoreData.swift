@@ -1,5 +1,5 @@
 //
-//  Contact+CoreDataClass.swift
+//  Contact+CoreData.swift
 //  NeverForget
 //
 //  Created by Makar Mishchenko on 12.09.2023.
@@ -13,14 +13,14 @@ import CoreData
 public class Contact: NSManagedObject, Identifiable {
 
   // MARK: - Public Properties
-  @NSManaged public var id: ContactId
+  @NSManaged public var id: String
   @NSManaged public var firstName: String
-  @NSManaged public var events: Set<Event>
-//  @NSManaged var groups: Set<Group>
 
   @NSManaged public var lastName: String?
   @NSManaged public var middleName: String?
   @NSManaged public var photoData: Data?
+
+  @NSManaged public var events: Set<Event>
 
   // MARK: - Overrides
   override public func awakeFromInsert() {
@@ -29,6 +29,11 @@ public class Contact: NSManagedObject, Identifiable {
     id = UUID().uuidString
     firstName = ""
     events = []
+  }
+
+  override public func prepareForDeletion() {
+    super.prepareForDeletion()
+    checkEventsForDeletion()
   }
 
   // MARK: - Public methods
@@ -40,21 +45,29 @@ public class Contact: NSManagedObject, Identifiable {
     return fetchedPersons.first
   }
 
-  func addAndLinkEvent(_ event: Event) {
-    event.contactsIds.insert(self.id)
-    events.insert(event)
+}
+
+// MARK: - Private
+extension Contact {
+
+  private func checkEventsForDeletion() {
+    events.forEach { event in
+      let isContainsSelf = event.contacts.contains(self)
+      let isLastContact = event.contacts.count == 1
+
+      if isContainsSelf, isLastContact {
+        managedObjectContext?.delete(event)
+      }
+    }
   }
 
 }
 
 // MARK: - Static
-extension Contact {
-
-  // MARK: - Types
-  public typealias ContactId = String
+public extension Contact {
 
   // MARK: - Static Methods
-  public static func fetchRequest() -> NSFetchRequest<Contact> {
+  static func fetchRequest() -> NSFetchRequest<Contact> {
     return NSFetchRequest<Contact>(entityName: "Contact")
   }
 

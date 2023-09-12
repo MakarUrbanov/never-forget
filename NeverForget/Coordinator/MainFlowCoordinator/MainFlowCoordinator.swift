@@ -12,9 +12,7 @@ final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
   var tabBarController: UITabBarController = MainFlowTabBarController()
 
-  init() {
-
-  }
+  init() {}
 
   func start() {
     let mainCoordinator = getMainCoordinator()
