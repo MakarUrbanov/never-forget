@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22221.1" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="AppNotificationRules" representedClassName="AppNotificationRules" syncable="YES" codeGenerationType="class">
         <attribute name="isNotificationOneDayBeforeEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="isNotificationOnEventDayEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -19,6 +19,8 @@
     <entity name="AppSettings" representedClassName="AppSettings" syncable="YES" codeGenerationType="class">
         <relationship name="appNotificationRules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppNotificationRules" inverseName="appSettings" inverseEntity="AppNotificationRules"/>
     </entity>
+    <entity name="Contact" representedClassName="Contact" syncable="YES"/>
+    <entity name="Event" representedClassName="Event" syncable="YES"/>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
