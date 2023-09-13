@@ -28,7 +28,7 @@ public class Contact: NSManagedObject, Identifiable {
 
     id = UUID().uuidString
     firstName = ""
-    events = []
+    events = getInitializedEventsSet()
   }
 
   override public func prepareForDeletion() {
@@ -59,6 +59,17 @@ extension Contact {
         managedObjectContext?.delete(event)
       }
     }
+  }
+
+  private func getInitializedEventsSet() -> Set<Event> {
+    guard let context = managedObjectContext else {
+      fatalError("Model without context")
+    }
+
+    let dateOfBirthEvent = Event(context: context)
+    dateOfBirthEvent.type = .systemGenerated
+
+    return [dateOfBirthEvent]
   }
 
 }

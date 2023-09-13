@@ -19,7 +19,7 @@ final class ContactProfileViewModel: ObservableObject {
   init(person: Person, context: NSManagedObjectContext, goBack: @escaping () -> Void) {
     self.goBack = goBack
     // swiftlint:disable:next force_unwrapping
-    let personInNewContext = CoreDataWrapper.shared.existingObject(person, in: context)!
+    let personInNewContext = CoreDataStack.shared.existingObject(person, in: context)!
     self.person = ValidatedValue(
       value: personInNewContext,
       isValidateOnInit: true,

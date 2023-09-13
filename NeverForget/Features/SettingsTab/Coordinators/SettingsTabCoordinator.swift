@@ -27,7 +27,7 @@ extension SettingsTabCoordinator {
   private func getConfiguredSettingsView() -> UIHostingController<some View> {
     let view = SettingsView()
       .environmentObject(self)
-      .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
+      .environment(\.managedObjectContext, CoreDataStack.shared.viewContext)
 
     return UIHostingController(rootView: view)
   }

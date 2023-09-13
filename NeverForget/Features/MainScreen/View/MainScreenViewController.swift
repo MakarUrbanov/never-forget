@@ -24,7 +24,7 @@ final class MainScreenViewController: UIViewController {
 
   init(coordinator: MainScreenCoordinator) {
     let fetchRequest = Person.sortedFetchRequest()
-    viewModel = MainScreenViewModel(context: CoreDataWrapper.shared.viewContext, fetchRequest: fetchRequest)
+    viewModel = MainScreenViewModel(context: CoreDataStack.shared.viewContext, fetchRequest: fetchRequest)
     viewModel.coordinator = coordinator
 
     diffableDataSource = tableView.makeDiffableDataSource()

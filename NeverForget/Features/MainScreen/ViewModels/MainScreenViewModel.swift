@@ -32,7 +32,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
   }
 
   func goToPersonProfile(person: PersonAdapter) {
-    guard let person = try? CoreDataWrapper.shared.backgroundContext
+    guard let person = try? CoreDataStack.shared.backgroundContext
       .existingObject(with: person.objectId) as? Person else
     {
       return

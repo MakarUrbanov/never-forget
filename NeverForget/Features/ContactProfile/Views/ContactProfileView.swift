@@ -14,7 +14,7 @@ struct ContactProfileView: View {
   init(person: Person, goBack: @escaping () -> Void) {
     _viewModel = StateObject(wrappedValue: ContactProfileViewModel(
       person: person,
-      context: CoreDataWrapper.shared.backgroundContext,
+      context: CoreDataStack.shared.backgroundContext,
       goBack: goBack
     ))
   }
@@ -36,6 +36,6 @@ struct ContactProfileView: View {
 
 struct PersonProfileView_Previews: PreviewProvider {
   static var previews: some View {
-    ContactProfileView(person: Person(context: CoreDataWrapper.shared.viewContext), goBack: {})
+    ContactProfileView(person: Person(context: CoreDataStack.shared.viewContext), goBack: {})
   }
 }

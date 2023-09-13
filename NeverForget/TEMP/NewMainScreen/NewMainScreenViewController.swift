@@ -76,7 +76,8 @@ extension NewMainScreenViewController: UIPageViewControllerDelegate {
       completed,
       finished,
       let newViewControllerIndex = contentPageViewController.viewControllersList
-        .firstIndex(of: currentViewController) else {
+      .firstIndex(of: currentViewController) else
+    {
       return
     }
 

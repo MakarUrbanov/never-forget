@@ -16,7 +16,7 @@ class CreateNewContactViewModel: ObservableObject {
 
   init(goBack: @escaping () -> Void) {
     self.goBack = goBack
-    let person = Person(context: CoreDataWrapper.shared.backgroundContext)
+    let person = Person(context: CoreDataStack.shared.backgroundContext)
     self.person = ValidatedValue(
       value: person,
       isValidateOnInit: true,

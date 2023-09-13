@@ -48,7 +48,7 @@ struct ContactsListView: View {
 
 struct PeopleListView_Previews: PreviewProvider {
 
-  private static let context = CoreDataWrapper.shared.viewContext
+  private static let context = CoreDataStack.shared.viewContext
 
   private static func addPerson() {
     let newPerson = Person(context: context)
