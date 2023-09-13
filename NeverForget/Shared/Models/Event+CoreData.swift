@@ -52,6 +52,14 @@ public class Event: NSManagedObject, Identifiable {
     contacts = []
   }
 
+  // MARK: - Public methods
+  static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Event> {
+    let request = fetchRequest()
+    request.sortDescriptors = descriptors
+
+    return request
+  }
+
 }
 
 // MARK: - Static

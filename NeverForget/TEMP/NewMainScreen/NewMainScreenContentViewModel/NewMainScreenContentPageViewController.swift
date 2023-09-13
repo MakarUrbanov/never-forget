@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - Protocols
 protocol INewMainScreenContentPageViewController: UIPageViewController {
+  var viewModel: INewMainScreenContentViewModel { get }
   var eventsCalendar: IEventsCalendarViewController { get }
   var viewControllersList: [UIViewController] { get }
   var scrollView: UIScrollView? { get }
@@ -18,6 +19,8 @@ protocol INewMainScreenContentPageViewController: UIPageViewController {
 class NewMainScreenContentPageViewController: UIPageViewController, INewMainScreenContentPageViewController {
 
   // MARK: - Public properties
+  var viewModel: INewMainScreenContentViewModel
+
   let eventsCalendar: IEventsCalendarViewController = EventsCalendarViewController()
   let eventsList: IEventsListTableViewController = EventsListTableViewController(viewModel: EventsListTableViewModel())
   var viewControllersList: [UIViewController] = []
@@ -33,6 +36,16 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
     return nil
   }
 
+  // MARK: - Init
+  init(viewModel: INewMainScreenContentViewModel) {
+    self.viewModel = viewModel
+    super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   // MARK: - Public methods
   override func viewDidLoad() {
     viewControllersList = [eventsCalendar, eventsList]
@@ -41,6 +54,7 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
     dataSource = self
 
     initialize()
+    bindViewModel()
   }
 
 }
@@ -81,6 +95,11 @@ private extension NewMainScreenContentPageViewController {
 
   private func initializeViewControllers() {
     setViewControllers([viewControllersList[0]], direction: .forward, animated: false)
+  }
+
+  private func bindViewModel() {
+    viewModel.events.bind { newEvents in
+    }
   }
 
 }

@@ -69,7 +69,7 @@ extension MainScreenCoordinator {
 extension MainScreenCoordinator {
 
   private func initializeMainScreenView() -> UIViewController {
-    let viewController = NewMainScreenViewController(viewModel: NewMainScreenViewModel())
+    let viewController = NewMainScreenViewController()
 
     return viewController
   }

@@ -68,17 +68,22 @@ class EventsCoreDataService: NSObject, IEventsCoreDataService {
     fetchedResultController.delegate = self
   }
 
-  func fetchEvents() throws -> [Event] {
-    try fetchedResultController.performFetch()
+  @discardableResult
+  func fetchEvents() -> [Event] {
+    do {
+      try fetchedResultController.performFetch()
+    } catch {
+      Logger.error("Fetch events error", error.localizedDescription)
+    }
 
     return events
   }
 
-  func saveEvent(_ event: Event) throws {
+  func saveEvent(_ event: Event) {
     context.saveChanges()
   }
 
-  func deleteEvent(_ event: Event) throws {
+  func deleteEvent(_ event: Event) {
     context.delete(event)
   }
 
@@ -90,5 +95,10 @@ extension EventsCoreDataService: NSFetchedResultsControllerDelegate {
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     delegate?.eventsChanged(events)
   }
+
+}
+
+// MARK: - Private methods
+private extension EventsCoreDataService {
 
 }

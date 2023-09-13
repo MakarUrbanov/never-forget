@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CloudKit
 
 // MARK: - Protocol
 protocol ICoreDataStack: AnyObject {
@@ -49,6 +50,17 @@ final class CoreDataStack: ICoreDataStack {
     context.parent = viewContext
     context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     return context
+  }
+
+  // TODO: mmk add implementation
+  func checkCloudStatus(completion: @escaping (CKAccountStatus) -> Void) {
+    let container = CKContainer.default()
+    container.accountStatus { (status, error) in
+      if let error = error {
+        Logger.error(message: "Failed to get iCloud account status", error)
+      }
+      completion(status)
+    }
   }
 
 }

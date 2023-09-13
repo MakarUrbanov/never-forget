@@ -10,7 +10,8 @@ import Foundation
 protocol IEventsService {
   var events: [Event] { get }
 
-  func fetchEvents() throws -> [Event]
-  func saveEvent(_ event: Event) throws
-  func deleteEvent(_ event: Event) throws
+  @discardableResult
+  func fetchEvents() -> [Event]
+  func saveEvent(_ event: Event)
+  func deleteEvent(_ event: Event)
 }

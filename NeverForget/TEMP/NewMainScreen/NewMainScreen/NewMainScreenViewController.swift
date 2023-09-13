@@ -5,31 +5,35 @@
 //  Created by Makar Mishchenko on 08.09.2023.
 //
 
+import CoreData
 import NFCore
 import SwiftDate
 import UIKit
 
 // MARK: - Protocol
 protocol INewMainScreenViewController: UIViewController {
-  var viewModel: INewMainScreenViewModel { get }
   var pageHeader: IMainScreenHeaderView { get }
   var contentPageViewController: INewMainScreenContentPageViewController { get }
+
+  init(context: NSManagedObjectContext)
 }
 
 // MARK: - NewMainScreenViewController
 final class NewMainScreenViewController: UIViewController, INewMainScreenViewController {
 
   // MARK: - Public properties
-  var viewModel: INewMainScreenViewModel
   let pageHeader: IMainScreenHeaderView = MainScreenHeaderView()
-  lazy var contentPageViewController: INewMainScreenContentPageViewController = NewMainScreenContentPageViewController(
-    transitionStyle: .scroll,
-    navigationOrientation: .horizontal
-  )
+  var contentPageViewController: INewMainScreenContentPageViewController
 
   // MARK: - Init
-  init(viewModel: INewMainScreenViewModel) {
-    self.viewModel = viewModel
+  init(
+    context: NSManagedObjectContext = DEFAULT_CONTEXT
+  ) {
+    let contentPageViewController = NewMainScreenContentPageViewController(
+      viewModel: NewMainScreenContentViewModel(context: context)
+    )
+    self.contentPageViewController = contentPageViewController
+
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -112,6 +116,8 @@ extension NewMainScreenViewController {
     static let dividerHeight = UIConstants.headerOffset
   }
 
+  private static let DEFAULT_CONTEXT = CoreDataStack.shared.viewContext
+
 }
 
 // MARK: - Private methods
@@ -169,5 +175,5 @@ import SwiftUI
 
 
 #Preview {
-  NewMainScreenViewController(viewModel: NewMainScreenViewModel()).makePreview()
+  NewMainScreenViewController().makePreview()
 }
