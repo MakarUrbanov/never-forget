@@ -1,38 +1,24 @@
 //
-//  NewMainScreenViewController.swift
+//  MainScreenViewController.swift
 //  NeverForget
 //
-//  Created by Makar Mishchenko on 08.09.2023.
+//  Created by Makar Mishchenko on 14.09.2023
 //
 
-import CoreData
-import NFCore
-import SwiftDate
 import UIKit
 
-// MARK: - Protocol
-protocol INewMainScreenViewController: UIViewController {
-  var pageHeader: IMainScreenHeaderView { get }
-  var contentPageViewController: INewMainScreenContentPageViewController { get }
+protocol IMainScreenView: UIViewController {}
 
-  init(context: NSManagedObjectContext)
-}
+class MainScreenViewController: UIViewController, IMainScreenView {
 
-// MARK: - NewMainScreenViewController
-final class NewMainScreenViewController: UIViewController, INewMainScreenViewController {
+  var presenter: IMainScreenPresenter?
 
-  // MARK: - Public properties
-  let pageHeader: IMainScreenHeaderView = MainScreenHeaderView()
-  var contentPageViewController: INewMainScreenContentPageViewController
+  let pageHeader: IMainScreenHeaderView
+  var contentPageViewController: IMainScreenContentView
 
-  // MARK: - Init
-  init(
-    context: NSManagedObjectContext = DEFAULT_CONTEXT
-  ) {
-    let contentPageViewController = NewMainScreenContentPageViewController(
-      viewModel: NewMainScreenContentViewModel(context: context)
-    )
-    self.contentPageViewController = contentPageViewController
+  init() {
+    pageHeader = MainScreenHeaderView()
+    contentPageViewController = Self.initializeContentPageViewController()
 
     super.init(nibName: nil, bundle: nil)
   }
@@ -42,19 +28,15 @@ final class NewMainScreenViewController: UIViewController, INewMainScreenViewCon
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Public methods
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.backgroundColor = UIColor(resource: .darkBackground)
-
+    presenter?.viewDidLoad()
     initialize()
   }
-
 }
 
 // MARK: - UIScrollViewDelegate
-extension NewMainScreenViewController: UIScrollViewDelegate {
+extension MainScreenViewController: UIScrollViewDelegate {
   // TODO: mmk finish logic
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let currentSelectedViewIndex = CGFloat(pageHeader.pageSwitcher.currentSelectedButtonIndex)
@@ -67,7 +49,7 @@ extension NewMainScreenViewController: UIScrollViewDelegate {
 }
 
 // MARK: - UIPageViewControllerDelegate
-extension NewMainScreenViewController: UIPageViewControllerDelegate {
+extension MainScreenViewController: UIPageViewControllerDelegate {
 
   func pageViewController(
     _ pageViewController: UIPageViewController,
@@ -92,7 +74,7 @@ extension NewMainScreenViewController: UIPageViewControllerDelegate {
 }
 
 // MARK: - IPageControllerHeaderViewDelegate
-extension NewMainScreenViewController: IViewsSwitcherViewDelegate {
+extension MainScreenViewController: IViewsSwitcherViewDelegate {
 
   func viewsSwitcher(
     _ switcher: IViewsSwitcherView,
@@ -106,22 +88,8 @@ extension NewMainScreenViewController: IViewsSwitcherViewDelegate {
 
 }
 
-// MARK: - Static
-extension NewMainScreenViewController {
-
-  enum UIConstants {
-    static let pageHorizontalInset = 16
-    static let headerOffset = 20
-    static let pageHeaderHeight = 60
-    static let dividerHeight = UIConstants.headerOffset
-  }
-
-  private static let DEFAULT_CONTEXT = CoreDataStack.shared.viewContext
-
-}
-
 // MARK: - Private methods
-private extension NewMainScreenViewController {
+private extension MainScreenViewController {
 
   private func initialize() {
     initializeNavigationHeader()
@@ -170,10 +138,33 @@ private extension NewMainScreenViewController {
 
 }
 
+// MARK: - Static
+extension MainScreenViewController {
+
+  enum UIConstants {
+    static let pageHorizontalInset = 16
+    static let headerOffset = 20
+    static let pageHeaderHeight = 60
+    static let dividerHeight = UIConstants.headerOffset
+  }
+
+  private static func initializeContentPageViewController() -> IMainScreenContentView {
+    let context = CoreDataStack.shared.viewContext
+    let eventsFetchRequest = Event.fetchRequestWithSorting(descriptors: [
+      NSSortDescriptor(keyPath: \Event.date, ascending: true)
+    ])
+    let eventsService = EventsCoreDataService(context: context, fetchRequest: eventsFetchRequest)
+
+    let contentView = MainScreenContentModuleBuilder.build(eventsService: eventsService)
+
+    return contentView
+  }
+
+}
 
 import SwiftUI
 
 
 #Preview {
-  NewMainScreenViewController().makePreview()
+  MainScreenViewController().makePreview()
 }

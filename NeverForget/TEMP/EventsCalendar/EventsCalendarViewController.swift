@@ -1,35 +1,37 @@
 //
 //  EventsCalendarViewController.swift
-//  NeverForgetApp
+//  NeverForget
 //
-//  Created by Makar Mishchenko on 29.07.2023.
+//  Created by Makar Mishchenko on 15.09.2023
 //
 
 import NFCalendar
-import SnapKit
 import SwiftDate
-import SwiftUI
 import UIKit
 
-protocol IEventsCalendarViewController: UIViewController {
-  var calendarView: INFCalendarView { get }
-}
+protocol IEventsCalendarView: UIViewController {}
 
-final class EventsCalendarViewController: UIViewController, IEventsCalendarViewController {
+class EventsCalendarViewController: UIViewController, IEventsCalendarView {
+
+  var presenter: IEventsCalendarPresenter?
 
   let calendarView: INFCalendarView = NFCalendarView(viewModel: NFCalendarViewModel())
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    presenter?.viewDidLoad()
 
     view.backgroundColor = UIColor(resource: .darkBackground)
-    setupCalendar()
+    initialize()
   }
-
 }
 
 // MARK: - Private methods
-extension EventsCalendarViewController {
+private extension EventsCalendarViewController {
+
+  private func initialize() {
+    setupCalendar()
+  }
 
   private func setupCalendar() {
     calendarView.showsVerticalScrollIndicator = false
@@ -520,6 +522,8 @@ private extension EventsCalendarViewController {
   }
 
 }
+
+import SwiftUI
 
 #Preview {
   EventsCalendarViewController().makePreview()

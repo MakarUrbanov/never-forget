@@ -9,7 +9,13 @@ import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
-final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
+// MARK: - Protocol
+protocol IMainScreenCoordinator: NavigationCoordinator {
+  func handleDeepLink(_ deepLink: NFLNDeepLink?)
+}
+
+// MARK: - Coordinator
+final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = .init()
 
@@ -68,8 +74,8 @@ extension MainScreenCoordinator {
 // MARK: - Utils
 extension MainScreenCoordinator {
 
-  private func initializeMainScreenView() -> UIViewController {
-    let viewController = NewMainScreenViewController()
+  private func initializeMainScreenView() -> IMainScreenView {
+    let viewController = MainScreenModuleBuilder.build()
 
     return viewController
   }

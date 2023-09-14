@@ -97,8 +97,3 @@ extension EventsCoreDataService: NSFetchedResultsControllerDelegate {
   }
 
 }
-
-// MARK: - Private methods
-private extension EventsCoreDataService {
-
-}

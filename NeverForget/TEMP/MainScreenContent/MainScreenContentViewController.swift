@@ -1,29 +1,26 @@
 //
-//  NewMainScreenContentPageViewController.swift
+//  MainScreenContentViewController.swift
 //  NeverForget
 //
-//  Created by Makar Mishchenko on 08.09.2023.
+//  Created by Makar Mishchenko on 15.09.2023
 //
 
 import UIKit
 
-// MARK: - Protocols
-protocol INewMainScreenContentPageViewController: UIPageViewController {
-  var viewModel: INewMainScreenContentViewModel { get }
-  var eventsCalendar: IEventsCalendarViewController { get }
+protocol IMainScreenContentView: UIPageViewController {
   var viewControllersList: [UIViewController] { get }
   var scrollView: UIScrollView? { get }
+
+  func showEvents(_ events: [Event])
 }
 
-// MARK: - NewMainScreenContentPageViewController
-class NewMainScreenContentPageViewController: UIPageViewController, INewMainScreenContentPageViewController {
+class MainScreenContentViewController: UIPageViewController, IMainScreenContentView {
 
-  // MARK: - Public properties
-  var viewModel: INewMainScreenContentViewModel
+  var presenter: IMainScreenContentPresenter?
 
-  let eventsCalendar: IEventsCalendarViewController = EventsCalendarViewController()
-  let eventsList: IEventsListTableViewController = EventsListTableViewController(viewModel: EventsListTableViewModel())
-  var viewControllersList: [UIViewController] = []
+  let eventsCalendar: IEventsCalendarView
+  let eventsList: UIViewController // TODO: mmk finish
+  var viewControllersList: [UIViewController]
   var scrollView: UIScrollView? {
     for view in view.subviews {
       if let scrollView = view as? UIScrollView {
@@ -37,30 +34,35 @@ class NewMainScreenContentPageViewController: UIPageViewController, INewMainScre
   }
 
   // MARK: - Init
-  init(viewModel: INewMainScreenContentViewModel) {
-    self.viewModel = viewModel
+  init() {
+    eventsCalendar = EventsCalendarViewController()
+    eventsList = UIViewController()
+    viewControllersList = [eventsCalendar, eventsList]
+
     super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Public methods
+  // MARK: - Overrides
   override func viewDidLoad() {
-    viewControllersList = [eventsCalendar, eventsList]
     super.viewDidLoad()
 
     dataSource = self
-
+    presenter?.viewDidLoad()
     initialize()
-    bindViewModel()
   }
+
+  // MARK: - Public methods
+  func showEvents(_ events: [Event]) {}
 
 }
 
 // MARK: - UIPageViewControllerDataSource
-extension NewMainScreenContentPageViewController: UIPageViewControllerDataSource {
+extension MainScreenContentViewController: UIPageViewControllerDataSource {
 
   func pageViewController(
     _ pageViewController: UIPageViewController,
@@ -87,7 +89,7 @@ extension NewMainScreenContentPageViewController: UIPageViewControllerDataSource
 }
 
 // MARK: - Private methods
-private extension NewMainScreenContentPageViewController {
+private extension MainScreenContentViewController {
 
   private func initialize() {
     initializeViewControllers()
@@ -97,9 +99,5 @@ private extension NewMainScreenContentPageViewController {
     setViewControllers([viewControllersList[0]], direction: .forward, animated: false)
   }
 
-  private func bindViewModel() {
-    viewModel.events.bind { newEvents in
-    }
-  }
-
 }
+

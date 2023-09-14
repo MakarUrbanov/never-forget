@@ -5,8 +5,8 @@
 //  Created by makar on 5/9/23.
 //
 
-import CoreData
 import CloudKit
+import CoreData
 
 // MARK: - Protocol
 protocol ICoreDataStack: AnyObject {
@@ -55,8 +55,8 @@ final class CoreDataStack: ICoreDataStack {
   // TODO: mmk add implementation
   func checkCloudStatus(completion: @escaping (CKAccountStatus) -> Void) {
     let container = CKContainer.default()
-    container.accountStatus { (status, error) in
-      if let error = error {
+    container.accountStatus { status, error in
+      if let error {
         Logger.error(message: "Failed to get iCloud account status", error)
       }
       completion(status)
