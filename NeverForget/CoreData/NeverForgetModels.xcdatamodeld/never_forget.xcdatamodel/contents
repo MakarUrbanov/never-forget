@@ -26,6 +26,7 @@
         <attribute name="middleName" optional="YES" attributeType="String"/>
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="contacts" inverseEntity="Event"/>
+        <relationship name="ownedEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="owner" inverseEntity="Event"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES">
         <attribute name="date" attributeType="Date" defaultDateTimeInterval="716239320" usesScalarValueType="NO"/>
@@ -35,6 +36,7 @@
         <attribute name="typeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="events" inverseEntity="Contact"/>
         <relationship name="notifications" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Notification" inverseName="events" inverseEntity="Notification"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="ownedEvents" inverseEntity="Contact"/>
     </entity>
     <entity name="Notification" representedClassName="Notification" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

@@ -21,6 +21,7 @@ public class Contact: NSManagedObject, Identifiable {
   @NSManaged public var photoData: Data?
 
   @NSManaged public var events: Set<Event>
+  @NSManaged public var ownedEvents: Set<Event>
 
   // MARK: - Overrides
   override public func awakeFromInsert() {
@@ -28,21 +29,27 @@ public class Contact: NSManagedObject, Identifiable {
 
     id = UUID().uuidString
     firstName = ""
-    events = getInitializedEventsSet()
+    events = [] // getInitializedEventsSet()
   }
 
   override public func prepareForDeletion() {
     super.prepareForDeletion()
-    checkEventsForDeletion()
+//    checkEventsForDeletion()
   }
 
   // MARK: - Public methods
-  static func fetchById(_ id: String, context: NSManagedObjectContext) throws -> Contact? {
-    let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+  public func createLinkedEvent() -> Event {
+    guard let context = managedObjectContext else {
+      fatalError("Model without context")
+    }
 
-    let fetchedPersons = try context.fetch(fetchRequest)
-    return fetchedPersons.first
+    let event = Event(context: context)
+    event.type = .userCreated
+    event.owner = self
+
+    events.insert(event)
+
+    return event
   }
 
 }
@@ -50,27 +57,28 @@ public class Contact: NSManagedObject, Identifiable {
 // MARK: - Private
 extension Contact {
 
-  private func checkEventsForDeletion() {
-    events.forEach { event in
-      let isContainsSelf = event.contacts.contains(self)
-      let isLastContact = event.contacts.count == 1
+//  private func checkEventsForDeletion() {
+//    events.forEach { event in
+//      let isContainsSelf = event.contacts.contains(self)
+//      let isLastContact = event.contacts.count == 1
+//
+//      if isContainsSelf, isLastContact {
+//        managedObjectContext?.delete(event)
+//      }
+//    }
+//  }
 
-      if isContainsSelf, isLastContact {
-        managedObjectContext?.delete(event)
-      }
-    }
-  }
-
-  private func getInitializedEventsSet() -> Set<Event> {
-    guard let context = managedObjectContext else {
-      fatalError("Model without context")
-    }
-
-    let dateOfBirthEvent = Event(context: context)
-    dateOfBirthEvent.type = .systemGenerated
-
-    return [dateOfBirthEvent]
-  }
+//  private func getInitializedEventsSet() -> Set<Event> {
+//    guard let context = managedObjectContext else {
+//      fatalError("Model without context")
+//    }
+//
+//    let dateOfBirthEvent = Event(context: context)
+//    dateOfBirthEvent.type = .systemGenerated
+//    dateOfBirthEvent.owner = self
+//
+//    return [dateOfBirthEvent]
+//  }
 
 }
 
@@ -80,6 +88,14 @@ public extension Contact {
   // MARK: - Static Methods
   static func fetchRequest() -> NSFetchRequest<Contact> {
     return NSFetchRequest<Contact>(entityName: "Contact")
+  }
+
+  static func fetchById(_ id: String, context: NSManagedObjectContext) throws -> Contact? {
+    let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+    let fetchedPersons = try context.fetch(fetchRequest)
+    return fetchedPersons.first
   }
 
 }

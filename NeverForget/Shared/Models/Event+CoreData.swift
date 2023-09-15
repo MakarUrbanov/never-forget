@@ -40,6 +40,8 @@ public class Event: NSManagedObject, Identifiable {
   @NSManaged public var notifications: Set<Notification>
   @NSManaged public var contacts: Set<Contact>
 
+  @NSManaged public var owner: Contact?
+
   // MARK: - Overrides
   override public func awakeFromInsert() {
     super.awakeFromInsert()
@@ -50,14 +52,6 @@ public class Event: NSManagedObject, Identifiable {
     typeRaw = EventType.userCreated.rawValue
     notifications = []
     contacts = []
-  }
-
-  // MARK: - Public methods
-  static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Event> {
-    let request = fetchRequest()
-    request.sortDescriptors = descriptors
-
-    return request
   }
 
 }
@@ -71,6 +65,13 @@ extension Event {
   // MARK: - Static methods
   public static func fetchRequest() -> NSFetchRequest<Event> {
     return NSFetchRequest<Event>(entityName: "Event")
+  }
+
+  public static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Event> {
+    let request = fetchRequest()
+    request.sortDescriptors = descriptors
+
+    return request
   }
 
 }

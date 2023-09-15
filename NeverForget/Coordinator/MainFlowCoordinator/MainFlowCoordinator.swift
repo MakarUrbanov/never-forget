@@ -18,7 +18,7 @@ final class MainFlowCoordinator: TabCoordinator {
     let coordinators = initializeCoordinators()
     childCoordinators = coordinators
 
-    let navigationControllers = coordinators.map { $0.navigationController }
+    let navigationControllers = coordinators.map(\.navigationController)
     tabBarController.setViewControllers(navigationControllers, animated: false)
   }
 

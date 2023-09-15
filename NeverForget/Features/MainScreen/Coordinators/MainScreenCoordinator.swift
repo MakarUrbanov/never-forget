@@ -31,8 +31,7 @@ final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
 extension MainScreenCoordinator {
 
   // TODO: mmk remove
-  func goToPersonProfile(person: Person) {
-  }
+  func goToPersonProfile(person: Person) {}
 
 }
 
