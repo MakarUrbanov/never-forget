@@ -36,6 +36,7 @@ private extension EventsCalendarViewController {
   private func setupCalendar() {
     calendarView.showsVerticalScrollIndicator = false
     calendarView.backgroundColor = .clear
+    calendarView.separatorColor = UIColor(resource: .textLight100).withAlphaComponent(0.04)
 
     calendarView.calendarDataSource = self
     calendarView.calendarAppearanceDelegate = self

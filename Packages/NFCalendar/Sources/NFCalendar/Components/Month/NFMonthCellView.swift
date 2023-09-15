@@ -13,6 +13,9 @@ import UIKit
 public protocol INFMonthCell: UICollectionViewCell {
   static var headerHeight: CGFloat { get }
 
+  var separatorColor: UIColor { get set }
+  var separator: UIView { get }
+
   var monthDataSource: INFMonthCellDataSource? { get set }
   var datesAppearanceDelegate: INFDayCellAppearanceDelegate? { get set }
   var monthHeaderAppearanceDelegate: INFMonthHeaderAppearanceDelegate? { get set }
@@ -23,6 +26,10 @@ public protocol INFMonthCell: UICollectionViewCell {
 
 // MARK: - NFMonthCellView
 public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
+
+  // MARK: - Public properties
+  public var separatorColor: UIColor = .clear
+  public var separator = UIView()
 
   // MARK: - Delegates
   public weak var monthDataSource: INFMonthCellDataSource?
@@ -51,6 +58,7 @@ public class NFMonthCellView: UICollectionViewCell, INFMonthCell {
   public func renderMonthData(_ monthData: NFMonthData) {
     monthHeaderView.configure(with: monthData.firstMonthDate)
     monthCollectionView.setupMonthData(monthData)
+    separator.backgroundColor = separatorColor
   }
 
 }
@@ -67,15 +75,16 @@ extension NFMonthCellView: INFMonthCollectionViewDataSource {
   }
 }
 
-// MARK: - Private methods
+// MARK: - Initialize UI
 extension NFMonthCellView {
 
   private func initialize() {
-    setupMonthHeaderView()
-    setupMonthView()
+    initializeMonthHeaderView()
+    initializeMonthView()
+    initializeSeparator()
   }
 
-  private func setupMonthHeaderView() {
+  private func initializeMonthHeaderView() {
     monthHeaderView.appearanceDelegate = self
 
     addSubview(monthHeaderView)
@@ -86,7 +95,7 @@ extension NFMonthCellView {
     }
   }
 
-  private func setupMonthView() {
+  private func initializeMonthView() {
     monthCollectionView.datesAppearanceDelegate = self
     monthCollectionView.monthDataSource = self
     monthCollectionView.monthDelegate = self
@@ -96,6 +105,15 @@ extension NFMonthCellView {
     monthCollectionView.snp.makeConstraints { make in
       make.leading.bottom.trailing.equalToSuperview()
       make.top.equalTo(monthHeaderView.snp.bottom)
+    }
+  }
+
+  private func initializeSeparator() {
+    separator.backgroundColor = separatorColor
+    addSubview(separator)
+    separator.snp.makeConstraints { make in
+      make.leading.trailing.bottom.equalToSuperview()
+      make.height.equalTo(1)
     }
   }
 
