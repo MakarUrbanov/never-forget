@@ -16,7 +16,7 @@ protocol IMainScreenContentView: UIPageViewController {
 
 class MainScreenContentViewController: UIPageViewController, IMainScreenContentView {
 
-  var presenter: IMainScreenContentPresenter?
+  var presenter: IMainScreenContentPresenter
 
   let eventsCalendar: IEventsCalendarView
   let eventsList: IEventsListView
@@ -34,9 +34,10 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
   }
 
   // MARK: - Init
-  init() {
-    eventsCalendar = EventsCalendarModuleBuilder.build()
-    eventsList = EventsListModuleBuilder.build()
+  init(presenter: IMainScreenContentPresenter, eventsService: IEventsCoreDataService) {
+    self.presenter = presenter
+    eventsCalendar = EventsCalendarModuleBuilder.build(eventsService: eventsService)
+    eventsList = EventsListModuleBuilder.build(eventsService: eventsService)
     viewControllersList = [eventsCalendar, eventsList]
 
     super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -54,8 +55,9 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
     view.backgroundColor = .clear
 
     dataSource = self
-    presenter?.viewDidLoad()
     initialize()
+
+    presenter.viewDidLoad()
   }
 
   // MARK: - Public methods

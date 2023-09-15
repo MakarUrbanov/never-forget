@@ -9,13 +9,12 @@ import UIKit
 
 enum EventsListModuleBuilder {
 
-  static func build() -> IEventsListView {
-    let interactor = EventsListInteractor()
+  static func build(eventsService: IEventsCoreDataService) -> IEventsListView {
+    let interactor = EventsListInteractor(eventsService: eventsService)
     let router = EventsListRouter()
     let presenter = EventsListPresenter(interactor: interactor, router: router)
-    let viewController = EventsListViewController()
+    let viewController = EventsListTableViewController(presenter: presenter)
     presenter.view = viewController
-    viewController.presenter = presenter
     interactor.presenter = presenter
     router.viewController = viewController
 

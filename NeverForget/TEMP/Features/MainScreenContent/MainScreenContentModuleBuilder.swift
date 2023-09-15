@@ -12,9 +12,8 @@ enum MainScreenContentModuleBuilder {
     let interactor = MainScreenContentInteractor(eventsService: eventsService)
     let router = MainScreenContentRouter()
     let presenter = MainScreenContentPresenter(interactor: interactor, router: router)
-    let viewController = MainScreenContentViewController()
+    let viewController = MainScreenContentViewController(presenter: presenter, eventsService: eventsService)
     presenter.view = viewController
-    viewController.presenter = presenter
     interactor.presenter = presenter
     router.viewController = viewController
 

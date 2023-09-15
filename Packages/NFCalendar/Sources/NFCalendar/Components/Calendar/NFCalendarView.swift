@@ -61,12 +61,10 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 private extension NFCalendarView {
   private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Int, NFMonthData> {
     UICollectionViewDiffableDataSource(collectionView: self) { collectionView, indexPath, monthData in
-      guard let cell = collectionView.dequeueReusableCell(
+      let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: Self.monthCellIdentifier,
         for: indexPath
-      ) as? INFMonthCell else {
-        fatalError("Failed dequeueReusableCell")
-      }
+      ) as! INFMonthCell
 
       cell.monthDataSource = self
       cell.datesAppearanceDelegate = self

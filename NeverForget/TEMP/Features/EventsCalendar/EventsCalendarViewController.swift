@@ -26,7 +26,7 @@ class EventsCalendarViewController: UIViewController, IEventsCalendarView {
   }
 }
 
-// MARK: - Private methods
+// MARK: - Initialize UI
 private extension EventsCalendarViewController {
 
   private func initialize() {

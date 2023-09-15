@@ -57,17 +57,17 @@ public class Event: NSManagedObject, Identifiable {
 }
 
 // MARK: - Static
-extension Event {
+public extension Event {
 
   // MARK: - Static properties
   private static let todayRoundedDate: Date = DateInRegion(region: .UTC).dateAtStartOf(.day).date
 
   // MARK: - Static methods
-  public static func fetchRequest() -> NSFetchRequest<Event> {
+  static func fetchRequest() -> NSFetchRequest<Event> {
     return NSFetchRequest<Event>(entityName: "Event")
   }
 
-  public static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Event> {
+  static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Event> {
     let request = fetchRequest()
     request.sortDescriptors = descriptors
 

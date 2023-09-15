@@ -16,7 +16,7 @@ protocol IEventsCoreDataServiceDelegate: AnyObject {
 }
 
 // MARK: - Protocol
-protocol IEventsCoreDataService: NSObjectProtocol, IEventsService {
+protocol IEventsCoreDataService: IEventsService {
   var context: NSManagedObjectContext { get }
   var fetchRequest: NSFetchRequest<Event> { get }
   var fetchedResultController: NSFetchedResultsController<Event> { get }

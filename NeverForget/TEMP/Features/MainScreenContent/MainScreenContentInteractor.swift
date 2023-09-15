@@ -17,8 +17,8 @@ class MainScreenContentInteractor: IMainScreenContentInteractor {
 
   init(eventsService: IEventsCoreDataService) {
     self.eventsService = eventsService
-    eventsService.delegate = self
-    eventsService.fetchEvents()
+    self.eventsService.delegate = self
+    self.eventsService.fetchEvents()
   }
 
 }
