@@ -16,13 +16,18 @@ class MainFlowTabBarController: UITabBarController {
   // MARK: - Init
   init() {
     super.init(nibName: nil, bundle: nil)
-
-    initialize()
   }
 
   @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Overrides
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    initialize()
   }
 
 }
@@ -31,12 +36,22 @@ class MainFlowTabBarController: UITabBarController {
 private extension MainFlowTabBarController {
 
   private func initialize() {
+    configureTabBar()
+    initializeDivider()
+  }
+
+  private func configureTabBar() {
+    view.backgroundColor = UIColor(resource: .darkBackground)
+
+    let appearance = UITabBarAppearance()
+    appearance.backgroundColor = UIColor(resource: .darkBackground)
+
+    tabBar.standardAppearance = appearance
+    tabBar.scrollEdgeAppearance = appearance
+
+    tabBar.isTranslucent = false
     tabBar.tintColor = UIColor(resource: .main100)
     tabBar.unselectedItemTintColor = UIColor(resource: .secondary100)
-    tabBar.backgroundColor = UIColor(resource: .darkBackground)
-    tabBar.isTranslucent = false
-
-    initializeDivider()
   }
 
   private func initializeDivider() {

@@ -21,7 +21,7 @@ class EventsCalendarViewController: UIViewController, IEventsCalendarView {
     super.viewDidLoad()
     presenter?.viewDidLoad()
 
-    view.backgroundColor = UIColor(resource: .darkBackground)
+    view.backgroundColor = .clear
     initialize()
   }
 }

@@ -19,7 +19,7 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
   var presenter: IMainScreenContentPresenter?
 
   let eventsCalendar: IEventsCalendarView
-  let eventsList: UIViewController // TODO: mmk finish
+  let eventsList: IEventsListView
   var viewControllersList: [UIViewController]
   var scrollView: UIScrollView? {
     for view in view.subviews {
@@ -35,8 +35,8 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
 
   // MARK: - Init
   init() {
-    eventsCalendar = EventsCalendarViewController()
-    eventsList = UIViewController()
+    eventsCalendar = EventsCalendarModuleBuilder.build()
+    eventsList = EventsListModuleBuilder.build()
     viewControllersList = [eventsCalendar, eventsList]
 
     super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -50,6 +50,8 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
   // MARK: - Overrides
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    view.backgroundColor = .clear
 
     dataSource = self
     presenter?.viewDidLoad()
@@ -100,4 +102,3 @@ private extension MainScreenContentViewController {
   }
 
 }
-

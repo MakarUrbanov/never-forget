@@ -16,11 +16,12 @@ protocol IMainScreenCoordinator: NavigationCoordinator {
 
 // MARK: - Coordinator
 final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
+
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = .init()
 
   func start() {
-    let mainScreen = initializeMainScreenView()
+    let mainScreen = Self.initializeMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
   }
 
@@ -29,15 +30,8 @@ final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
 // MARK: - Navigations
 extension MainScreenCoordinator {
 
+  // TODO: mmk remove
   func goToPersonProfile(person: Person) {
-    let view = ContactProfileView(person: person, goBack: {
-      self.navigationController.navigate(step: .pop)
-    })
-    .environmentObject(self)
-    .environment(\.managedObjectContext, CoreDataStack.shared.viewContext)
-
-    let addNewPersonView = UIHostingController(rootView: view)
-    navigationController.navigate(step: .push(addNewPersonView))
   }
 
 }
@@ -71,10 +65,10 @@ extension MainScreenCoordinator {
 
 }
 
-// MARK: - Utils
+// MARK: - Static
 extension MainScreenCoordinator {
 
-  private func initializeMainScreenView() -> IMainScreenView {
+  private static func initializeMainScreenView() -> IMainScreenView {
     let viewController = MainScreenModuleBuilder.build()
 
     return viewController

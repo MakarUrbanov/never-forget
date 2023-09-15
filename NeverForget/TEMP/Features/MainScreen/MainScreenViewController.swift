@@ -30,6 +30,9 @@ class MainScreenViewController: UIViewController, IMainScreenView {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    view.backgroundColor = .clear
+
     presenter?.viewDidLoad()
     initialize()
   }
@@ -73,7 +76,7 @@ extension MainScreenViewController: UIPageViewControllerDelegate {
 
 }
 
-// MARK: - IPageControllerHeaderViewDelegate
+// MARK: - IViewsSwitcherViewDelegate
 extension MainScreenViewController: IViewsSwitcherViewDelegate {
 
   func viewsSwitcher(
@@ -128,7 +131,8 @@ private extension MainScreenViewController {
 
     contentPageViewController.view.snp.makeConstraints { make in
       make.top.equalTo(pageHeader.snp.bottom)
-      make.left.right.bottom.equalToSuperview()
+      make.left.right.equalToSuperview()
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
   }
 
