@@ -33,9 +33,16 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
 
 }
 
-// MARK: - Private methods
+// MARK: - Private UI methods
 private extension ContactsScreenViewController {
 
-  private func initialize() {}
+  private func initialize() {
+    initializeNavigationBar()
+  }
+
+  private func initializeNavigationBar() {
+    let leftBarButtonItem = UIBarButtonItem(customView: ContactsCountView())
+    navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
+  }
 
 }

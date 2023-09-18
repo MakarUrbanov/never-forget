@@ -14,7 +14,7 @@ final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
   var navigationController: UINavigationController = .init()
 
   func start() {
-    let peopleListScreen = getContactsScreenView()
+    let peopleListScreen = getContactsListView()
     navigationController.setViewControllers([peopleListScreen], animated: false)
   }
 
@@ -23,7 +23,7 @@ final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
 // MARK: - Navigation
 extension ContactsListCoordinator {
 
-  private func getContactsScreenView() -> IContactsScreenView {
+  private func getContactsListView() -> IContactsScreenView {
     let view = ContactsScreenModuleBuilder.build()
 
     return view

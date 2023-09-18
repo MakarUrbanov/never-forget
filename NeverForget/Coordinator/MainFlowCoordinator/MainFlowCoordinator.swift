@@ -55,10 +55,11 @@ private extension MainFlowCoordinator {
 
   private func initializeCoordinators() -> [NavigationCoordinator] {
     let mainCoordinator = Self.getMainCoordinator()
-    let peopleListCoordinator = Self.getPeopleListCoordinator()
+    let contactsListCoordinator = Self.getContactsListCoordinator()
     let settingsCoordinator = Self.getSettingsTabCoordinator()
 
-    return [mainCoordinator, peopleListCoordinator, settingsCoordinator]
+    // TODO: mmk temp order
+    return [contactsListCoordinator, mainCoordinator, settingsCoordinator]
   }
 
 }
@@ -80,18 +81,18 @@ extension MainFlowCoordinator {
     return mainScreenCoordinator
   }
 
-  private static func getPeopleListCoordinator() -> ContactsListCoordinator {
-    let peopleListCoordinator = ContactsListCoordinator()
-    peopleListCoordinator.start()
+  private static func getContactsListCoordinator() -> ContactsListCoordinator {
+    let contactsListCoordinator = ContactsListCoordinator()
+    contactsListCoordinator.start()
 
     let tabBarItem = UITabBarItem(
       title: String(localized: "List"),
       image: UIImage(systemName: "person"),
       selectedImage: UIImage(systemName: "person")
     )
-    peopleListCoordinator.navigationController.tabBarItem = tabBarItem
+    contactsListCoordinator.navigationController.tabBarItem = tabBarItem
 
-    return peopleListCoordinator
+    return contactsListCoordinator
   }
 
   private static func getSettingsTabCoordinator() -> SettingsTabCoordinator {
