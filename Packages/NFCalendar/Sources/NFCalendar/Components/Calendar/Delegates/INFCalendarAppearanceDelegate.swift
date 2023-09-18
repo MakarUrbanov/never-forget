@@ -9,8 +9,9 @@ import UIKit
 
 @MainActor
 public protocol INFCalendarAppearanceDelegate: AnyObject,
-                                               INFDayCellAppearanceDelegate,
-                                               INFMonthHeaderAppearanceDelegate {
+  INFDayCellAppearanceDelegate,
+  INFMonthHeaderAppearanceDelegate
+{
   func calendarView(_ calendar: INFCalendarView, minimumLineSpacingForSectionAt: Int) -> CGFloat?
 }
 
