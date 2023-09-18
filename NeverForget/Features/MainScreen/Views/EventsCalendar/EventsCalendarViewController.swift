@@ -28,7 +28,6 @@ class EventsCalendarViewController: UIViewController, IEventsCalendarView {
   }
 
   func didChangeEvents() {
-    print("mmk CALENDAR. Events changed")
   }
 
 }

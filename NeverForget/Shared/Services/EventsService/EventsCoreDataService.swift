@@ -102,7 +102,6 @@ class EventsCoreDataService: NSObject, IEventsCoreDataService {
 extension EventsCoreDataService: NSFetchedResultsControllerDelegate {
 
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-    print("mmk controller changed")
     notificationCenter.post(name: notificationName, object: events)
   }
 

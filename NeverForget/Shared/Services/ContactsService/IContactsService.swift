@@ -11,7 +11,9 @@ protocol IContactsService: AnyObject {
   var contacts: [Contact] { get }
 
   @discardableResult
-  func fetchContacts() -> [Event]
+  func fetchContacts() -> [Contact]
   func saveChanges()
-  func deleteEvent(_ event: Event)
+  func revertChanges()
+  func deleteContact(_ contact: Contact)
+
 }
