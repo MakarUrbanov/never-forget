@@ -33,8 +33,8 @@ class MainScreenViewController: UIViewController, IMainScreenView {
 
     view.backgroundColor = .clear
 
-    presenter?.viewDidLoad()
     initialize()
+    presenter?.viewDidLoad()
   }
 }
 

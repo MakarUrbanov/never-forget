@@ -28,12 +28,28 @@ class EventsListInteractor: IEventsListInteractor {
   var listDates: [Date]
 
   init(eventsService: IEventsCoreDataService) {
-    self.eventsService = eventsService
     listDates = Self.generateListDates(startFrom: DateInRegion(region: .current).date)
+
+    self.eventsService = eventsService
+    self.eventsService.addObserver(target: self, selector: #selector(eventsDidChangeFromObserver(_:)))
   }
 
   func fetchEvents() {
     eventsService.fetchEvents()
+  }
+
+  deinit {
+    eventsService.removeObserver(from: self)
+  }
+
+}
+
+// MARK: - Private methods
+extension EventsListInteractor {
+
+  @objc
+  private func eventsDidChangeFromObserver(_ notification: Notification) {
+    presenter?.didFetchEvents()
   }
 
 }

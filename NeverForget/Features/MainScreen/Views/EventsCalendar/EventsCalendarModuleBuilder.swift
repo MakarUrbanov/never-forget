@@ -9,7 +9,7 @@ import UIKit
 
 enum EventsCalendarModuleBuilder {
   static func build(eventsService: IEventsCoreDataService) -> IEventsCalendarView {
-    let interactor = EventsCalendarInteractor()
+    let interactor = EventsCalendarInteractor(eventsService: eventsService)
     let router = EventsCalendarRouter()
     let presenter = EventsCalendarPresenter(interactor: interactor, router: router)
     let viewController = EventsCalendarViewController()

@@ -9,7 +9,7 @@ import UIKit
 
 enum MainScreenContentModuleBuilder {
   static func build(eventsService: IEventsCoreDataService) -> IMainScreenContentView {
-    let interactor = MainScreenContentInteractor(eventsService: eventsService)
+    let interactor = MainScreenContentInteractor()
     let router = MainScreenContentRouter()
     let presenter = MainScreenContentPresenter(interactor: interactor, router: router)
     let viewController = MainScreenContentViewController(presenter: presenter, eventsService: eventsService)

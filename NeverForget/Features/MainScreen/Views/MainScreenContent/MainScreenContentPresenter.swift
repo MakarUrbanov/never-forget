@@ -25,7 +25,7 @@ class MainScreenContentPresenter: IMainScreenContentPresenter {
   func viewDidLoad() {}
 
   func didChangeEvents(_ events: [Event]) {
-    view?.showEvents(events)
+    view?.didChangeEvents(events)
   }
 
 }

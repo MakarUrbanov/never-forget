@@ -46,7 +46,7 @@ class EventsListPresenter: IEventsListPresenter {
     let isMock = Double.random(in: 0...1) > 0.9
 
     if isMock {
-      let contact = Contact(context: CoreDataStack.shared.viewContext)
+      let contact = Contact(context: CoreDataStack.shared.backgroundContext)
       contact.firstName = "Makar"
       contact.lastName = "Mishchenko"
       contact.photoData = UIImage(resource: .mock).pngData()
@@ -63,9 +63,8 @@ class EventsListPresenter: IEventsListPresenter {
     return []
   }
 
-
   func didFetchEvents() {
-    view?.didFetchEvents()
+    view?.didChangeEvents()
   }
 
 }

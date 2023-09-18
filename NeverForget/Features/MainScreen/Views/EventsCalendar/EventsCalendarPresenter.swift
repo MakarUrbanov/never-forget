@@ -7,6 +7,7 @@
 
 protocol IEventsCalendarPresenter: AnyObject {
   func viewDidLoad()
+  func didChangeEvents()
 }
 
 class EventsCalendarPresenter: IEventsCalendarPresenter {
@@ -22,5 +23,9 @@ class EventsCalendarPresenter: IEventsCalendarPresenter {
 
   // MARK: - Public methods
   func viewDidLoad() {}
+
+  func didChangeEvents() {
+    view?.didChangeEvents()
+  }
 
 }

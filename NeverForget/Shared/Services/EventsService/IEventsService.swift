@@ -12,6 +12,7 @@ protocol IEventsService {
 
   @discardableResult
   func fetchEvents() -> [Event]
-  func saveEvent(_ event: Event)
+  func saveChanges()
+  func revertChanges()
   func deleteEvent(_ event: Event)
 }

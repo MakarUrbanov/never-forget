@@ -9,7 +9,9 @@ import NFCalendar
 import SwiftDate
 import UIKit
 
-protocol IEventsCalendarView: UIViewController {}
+protocol IEventsCalendarView: UIViewController {
+  func didChangeEvents()
+}
 
 class EventsCalendarViewController: UIViewController, IEventsCalendarView {
 
@@ -24,6 +26,11 @@ class EventsCalendarViewController: UIViewController, IEventsCalendarView {
     view.backgroundColor = .clear
     initialize()
   }
+
+  func didChangeEvents() {
+    print("mmk CALENDAR. Events changed")
+  }
+
 }
 
 // MARK: - Initialize UI

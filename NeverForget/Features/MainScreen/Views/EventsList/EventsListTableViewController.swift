@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 protocol IEventsListView: UIViewController {
-  func didFetchEvents()
+  func didChangeEvents()
 }
 
 class EventsListTableViewController: UIViewController, IEventsListView {
@@ -37,7 +37,7 @@ class EventsListTableViewController: UIViewController, IEventsListView {
     presenter.viewDidLoad()
   }
 
-  func didFetchEvents() {
+  func didChangeEvents() {
     tableView.reloadData()
   }
 

@@ -10,18 +10,11 @@ import Foundation
 import SwiftData
 import UIKit
 
-// MARK: - Delegate
-protocol IEventsCoreDataServiceDelegate: AnyObject {
-  func eventsChanged(_ events: [Event])
-}
-
 // MARK: - Protocol
-protocol IEventsCoreDataService: IEventsService {
+protocol IEventsCoreDataService: IEventsService, IObservableObject {
   var context: NSManagedObjectContext { get }
   var fetchRequest: NSFetchRequest<Event> { get }
   var fetchedResultController: NSFetchedResultsController<Event> { get }
-
-  var delegate: IEventsCoreDataServiceDelegate? { get set }
 
   init(context: NSManagedObjectContext, fetchRequest: NSFetchRequest<Event>)
 
@@ -31,16 +24,20 @@ protocol IEventsCoreDataService: IEventsService {
 // MARK: - EventsCoreDataService
 class EventsCoreDataService: NSObject, IEventsCoreDataService {
 
+  // MARK: - Public properties
   var context: NSManagedObjectContext
   var fetchRequest: NSFetchRequest<Event>
   var fetchedResultController: NSFetchedResultsController<Event>
+  var notificationName: NSNotification.Name = .init("EventsCoreDataDidChange")
 
   var events: [Event] {
     fetchedResultController.fetchedObjects ?? []
   }
 
-  weak var delegate: IEventsCoreDataServiceDelegate?
+  // MARK: - Private properties
+  private let notificationCenter = NotificationCenter.default
 
+  // MARK: - Init
   required init(context: NSManagedObjectContext, fetchRequest: NSFetchRequest<Event>) {
     self.context = context
     self.fetchRequest = fetchRequest
@@ -79,12 +76,24 @@ class EventsCoreDataService: NSObject, IEventsCoreDataService {
     return events
   }
 
-  func saveEvent(_ event: Event) {
+  func saveChanges() {
     context.saveChanges()
+  }
+
+  func revertChanges() {
+    context.rollback()
   }
 
   func deleteEvent(_ event: Event) {
     context.delete(event)
+  }
+
+  func addObserver(target: Any, selector: Selector) {
+    notificationCenter.addObserver(target, selector: selector, name: notificationName, object: nil)
+  }
+
+  func removeObserver(from target: Any) {
+    notificationCenter.removeObserver(target, name: notificationName, object: nil)
   }
 
 }
@@ -93,7 +102,8 @@ class EventsCoreDataService: NSObject, IEventsCoreDataService {
 extension EventsCoreDataService: NSFetchedResultsControllerDelegate {
 
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-    delegate?.eventsChanged(events)
+    print("mmk controller changed")
+    notificationCenter.post(name: notificationName, object: events)
   }
 
 }

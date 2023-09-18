@@ -11,7 +11,7 @@ protocol IMainScreenContentView: UIPageViewController {
   var viewControllersList: [UIViewController] { get }
   var scrollView: UIScrollView? { get }
 
-  func showEvents(_ events: [Event])
+  func didChangeEvents(_ events: [Event])
 }
 
 class MainScreenContentViewController: UIPageViewController, IMainScreenContentView {
@@ -61,7 +61,10 @@ class MainScreenContentViewController: UIPageViewController, IMainScreenContentV
   }
 
   // MARK: - Public methods
-  func showEvents(_ events: [Event]) {}
+  func didChangeEvents(_ events: [Event]) {
+    eventsCalendar.didChangeEvents()
+    eventsList.didChangeEvents()
+  }
 
 }
 

@@ -26,10 +26,11 @@ class PhotosOfEventsOwnersCollectionView: UICollectionView, IEventsOwnersPhotosV
     register(EventOwnerPhotoView.self, forCellWithReuseIdentifier: Constants.photoCellIdentifier)
     isScrollEnabled = false
     delegate = self
-    self.diffableDataSource = getDiffableDataSource()
+    diffableDataSource = getDiffableDataSource()
     dataSource = diffableDataSource
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -53,13 +54,21 @@ class PhotosOfEventsOwnersCollectionView: UICollectionView, IEventsOwnersPhotosV
 // MARK: - UICollectionViewDelegate
 extension PhotosOfEventsOwnersCollectionView: UICollectionViewDelegateFlowLayout {
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
     let collectionViewHeight = collectionView.bounds.height
 
     return CGSize(width: collectionViewHeight, height: collectionViewHeight)
   }
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumLineSpacingForSectionAt section: Int
+  ) -> CGFloat {
     UIConstants.offsetBetweenPhotos
   }
 
@@ -123,7 +132,7 @@ extension PhotosOfEventsOwnersCollectionView {
   }
 
   private static func prepareImages(from events: [Event]) -> [EventImageData] {
-    var eventsImageData = events.map {  event in
+    var eventsImageData = events.map { event in
       let owner = event.owner
       let ownersFirstName = (owner?.lastName ?? "")
       let ownersLastName = (owner?.firstName ?? "")
@@ -148,7 +157,7 @@ extension PhotosOfEventsOwnersCollectionView {
   }
 
   struct EventImageData: Hashable {
-    let id: UUID = UUID()
+    let id: UUID = .init()
     var image: Data?
     var letter: String?
   }

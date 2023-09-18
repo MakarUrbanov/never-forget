@@ -5,8 +5,8 @@
 //  Created by Makar Mishchenko on 15.09.2023.
 //
 
-import UIKit
 import SwiftDate
+import UIKit
 
 // MARK: - Protocol
 protocol IEventTableCell: UITableViewCell {
@@ -20,7 +20,7 @@ protocol IEventTableCell: UITableViewCell {
 class EventTableViewCell: UITableViewCell, IEventTableCell {
 
   // MARK: - Public properties
-  var date: Date = Date.now
+  var date: Date = .now
   var events: [Event] = []
 
   // MARK: - Private properties
@@ -39,6 +39,7 @@ class EventTableViewCell: UITableViewCell, IEventTableCell {
     initialize()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
