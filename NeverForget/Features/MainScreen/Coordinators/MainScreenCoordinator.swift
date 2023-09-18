@@ -9,12 +9,19 @@ import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
-final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
+// MARK: - Protocol
+protocol IMainScreenCoordinator: NavigationCoordinator {
+  func handleDeepLink(_ deepLink: NFLNDeepLink?)
+}
+
+// MARK: - Coordinator
+final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
+
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = .init()
 
   func start() {
-    let mainScreen = initializeMainScreenView()
+    let mainScreen = Self.initializeMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
   }
 
@@ -23,16 +30,8 @@ final class MainScreenCoordinator: NavigationCoordinator, ObservableObject {
 // MARK: - Navigations
 extension MainScreenCoordinator {
 
-  func goToPersonProfile(person: Person) {
-    let view = ContactProfileView(person: person, goBack: {
-      self.navigationController.navigate(step: .pop)
-    })
-    .environmentObject(self)
-    .environment(\.managedObjectContext, CoreDataWrapper.shared.viewContext)
-
-    let addNewPersonView = UIHostingController(rootView: view)
-    navigationController.navigate(step: .push(addNewPersonView))
-  }
+  // TODO: mmk remove
+  func goToPersonProfile(person: Person) {}
 
 }
 
@@ -41,7 +40,7 @@ extension MainScreenCoordinator {
 
   private func fetchPersonAndGoToProfile(personId: String) {
     do {
-      if let person = try Person.fetchPerson(withId: personId, context: CoreDataWrapper.shared.viewContext) {
+      if let person = try Person.fetchPerson(withId: personId, context: CoreDataStack.shared.viewContext) {
         goToPersonProfile(person: person)
       }
     } catch {
@@ -65,11 +64,11 @@ extension MainScreenCoordinator {
 
 }
 
-// MARK: - Utils
+// MARK: - Static
 extension MainScreenCoordinator {
 
-  private func initializeMainScreenView() -> UIViewController {
-    let viewController = NewMainScreenViewController(viewModel: NewMainScreenViewModel())
+  private static func initializeMainScreenView() -> IMainScreenView {
+    let viewController = MainScreenModuleBuilder.build()
 
     return viewController
   }

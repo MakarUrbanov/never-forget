@@ -12,75 +12,17 @@ final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
   var tabBarController: UITabBarController = MainFlowTabBarController()
 
-  init() {
-
-  }
+  init() {}
 
   func start() {
-    let mainCoordinator = getMainCoordinator()
-    let peopleListCoordinator = getPeopleListCoordinator()
-    let settingsCoordinator = getSettingsTabCoordinator()
+    let coordinators = initializeCoordinators()
+    childCoordinators = coordinators
 
-    childCoordinators = [mainCoordinator, peopleListCoordinator, settingsCoordinator]
-    tabBarController.setViewControllers(
-      [
-        mainCoordinator.navigationController,
-        peopleListCoordinator.navigationController,
-        settingsCoordinator.navigationController
-      ],
-      animated: false
-    )
+    let navigationControllers = coordinators.map(\.navigationController)
+    tabBarController.setViewControllers(navigationControllers, animated: false)
   }
 
 }
-
-// MARK: - Navigation
-extension MainFlowCoordinator {
-
-  // MARK: initialize main tab coordinator
-  private func getMainCoordinator() -> MainScreenCoordinator {
-    let mainScreenCoordinator = MainScreenCoordinator()
-    mainScreenCoordinator.start()
-
-    let icon = UIImage(systemName: "calendar")
-    let tabBarItem = UITabBarItem(
-      title: String(localized: "Main"),
-      image: icon,
-      selectedImage: icon?.withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal)
-    )
-    mainScreenCoordinator.navigationController.tabBarItem = tabBarItem
-
-    return mainScreenCoordinator
-  }
-
-  private func getPeopleListCoordinator() -> ContactsListCoordinator {
-    let peopleListCoordinator = ContactsListCoordinator()
-    peopleListCoordinator.start()
-
-    peopleListCoordinator.navigationController.tabBarItem = UITabBarItem(
-      title: String(localized: "List"),
-      image: UIImage(systemName: "person"),
-      selectedImage: UIImage(systemName: "person")
-    )
-
-    return peopleListCoordinator
-  }
-
-  private func getSettingsTabCoordinator() -> SettingsTabCoordinator {
-    let coordinator = SettingsTabCoordinator()
-    coordinator.start()
-
-    coordinator.navigationController.tabBarItem = UITabBarItem(
-      title: String(localized: "Settings"),
-      image: UIImage(systemName: "gearshape"),
-      selectedImage: UIImage(systemName: "gearshape")
-    )
-
-    return coordinator
-  }
-
-}
-
 
 // MARK: - Deep Link
 extension MainFlowCoordinator {
@@ -104,6 +46,66 @@ extension MainFlowCoordinator {
       default:
         break
     }
+  }
+
+}
+
+// MARK: - Private methods
+private extension MainFlowCoordinator {
+
+  private func initializeCoordinators() -> [NavigationCoordinator] {
+    let mainCoordinator = Self.getMainCoordinator()
+    let peopleListCoordinator = Self.getPeopleListCoordinator()
+    let settingsCoordinator = Self.getSettingsTabCoordinator()
+
+    return [mainCoordinator, peopleListCoordinator, settingsCoordinator]
+  }
+
+}
+
+// MARK: - Static
+extension MainFlowCoordinator {
+
+  private static func getMainCoordinator() -> MainScreenCoordinator {
+    let mainScreenCoordinator = MainScreenCoordinator()
+    mainScreenCoordinator.start()
+
+    let tabBarItem = UITabBarItem(
+      title: String(localized: "Main"),
+      image: UIImage(systemName: "calendar"),
+      selectedImage: UIImage(systemName: "calendar")
+    )
+    mainScreenCoordinator.navigationController.tabBarItem = tabBarItem
+
+    return mainScreenCoordinator
+  }
+
+  private static func getPeopleListCoordinator() -> ContactsListCoordinator {
+    let peopleListCoordinator = ContactsListCoordinator()
+    peopleListCoordinator.start()
+
+    let tabBarItem = UITabBarItem(
+      title: String(localized: "List"),
+      image: UIImage(systemName: "person"),
+      selectedImage: UIImage(systemName: "person")
+    )
+    peopleListCoordinator.navigationController.tabBarItem = tabBarItem
+
+    return peopleListCoordinator
+  }
+
+  private static func getSettingsTabCoordinator() -> SettingsTabCoordinator {
+    let coordinator = SettingsTabCoordinator()
+    coordinator.start()
+
+    let tabBarItem = UITabBarItem(
+      title: String(localized: "Settings"),
+      image: UIImage(systemName: "gearshape"),
+      selectedImage: UIImage(systemName: "gearshape")
+    )
+    coordinator.navigationController.tabBarItem = tabBarItem
+
+    return coordinator
   }
 
 }

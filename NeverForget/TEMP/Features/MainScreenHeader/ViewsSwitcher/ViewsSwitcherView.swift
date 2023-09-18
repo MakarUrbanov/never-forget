@@ -32,6 +32,7 @@ class ViewsSwitcherView: UIView, IViewsSwitcherView {
   var selectedButton: SwitcherButtonData {
     buttons[currentSelectedButtonIndex]
   }
+
   var isAnimating = false
 
   weak var delegate: IViewsSwitcherViewDelegate?

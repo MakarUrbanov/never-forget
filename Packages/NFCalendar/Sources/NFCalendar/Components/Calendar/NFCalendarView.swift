@@ -2,7 +2,9 @@ import SwiftDate
 import UIKit
 
 public protocol INFCalendarView: UICollectionView {
+
   var viewModel: INFCalendarViewModel { get }
+  var separatorColor: UIColor { get set }
 
   var calendarDataSource: INFCalendarDataSource? { get set }
   var calendarDelegate: INFCalendarDelegate? { get set }
@@ -17,10 +19,13 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 
   // MARK: - Public properties
   public let viewModel: INFCalendarViewModel
+  public var separatorColor: UIColor = .clear
+
   // MARK: - Delegates
   public weak var calendarDataSource: INFCalendarDataSource?
   public weak var calendarDelegate: INFCalendarDelegate?
   public weak var calendarAppearanceDelegate: INFCalendarAppearanceDelegate?
+
   //  // MARK: - Private properties
   private var renderedMonthsData: [NFMonthData] = []
   private var diffableDataSource: UICollectionViewDiffableDataSource<Int, NFMonthData>?
@@ -61,17 +66,20 @@ public final class NFCalendarView: UICollectionView, INFCalendarView {
 private extension NFCalendarView {
   private func getDiffableDataSource() -> UICollectionViewDiffableDataSource<Int, NFMonthData> {
     UICollectionViewDiffableDataSource(collectionView: self) { collectionView, indexPath, monthData in
-      guard let cell = collectionView.dequeueReusableCell(
+      let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: Self.monthCellIdentifier,
         for: indexPath
-      ) as? INFMonthCell else {
-        fatalError("Failed dequeueReusableCell")
-      }
+      ) as! INFMonthCell
+
 
       cell.monthDataSource = self
       cell.datesAppearanceDelegate = self
       cell.monthHeaderAppearanceDelegate = self
       cell.monthDelegate = self
+
+      let isLastItem = (self.diffableDataSource?.snapshot().itemIdentifiers.count ?? 0) - 1 == indexPath.item
+      cell.separatorColor = self.separatorColor
+      cell.separator.isHidden = isLastItem
 
       cell.renderMonthData(monthData)
 
@@ -129,6 +137,7 @@ extension NFCalendarView: INFMonthHeaderAppearanceDelegate {
 
 // MARK: - INFMonthCellDataSource
 extension NFCalendarView: INFMonthCellDataSource {
+
   public func monthCellView(_ month: NFMonthCellView, dataFor date: Date) -> NFCalendarDay {
     calendarDataSource?.calendarView(self, dataFor: date) ?? .init(date: date)
   }
@@ -138,16 +147,19 @@ extension NFCalendarView: INFMonthCellDelegate {
   public func monthCollectionView(_ month: INFMonthCell, didSelect date: Date) {
     calendarDelegate?.calendar(self, didSelect: date)
   }
+
 }
 
 // MARK: - Static
 extension NFCalendarView {
-  // MARK: - Static properties
+
   private static let monthCellIdentifier = String(describing: NFCalendarView.self)
+
 }
 
 // MARK: - UICollectionViewFlowLayout, UICollectionViewDelegate
 extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+
   public func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -156,9 +168,10 @@ extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDe
     let monthData = renderedMonthsData[indexPath.item]
     let weeksInMonth = viewModel.numberOfWeeksInMonth(of: monthData.firstMonthDate)
 
+    let additionalOffset: CGFloat = 12
     let height = (CGFloat(weeksInMonth) * collectionView.bounds.width / 7) + NFMonthCellView.headerHeight
 
-    return .init(width: collectionView.bounds.width, height: height)
+    return .init(width: collectionView.bounds.width, height: height + additionalOffset)
   }
 
   public func collectionView(
@@ -168,4 +181,5 @@ extension NFCalendarView: UICollectionViewDelegateFlowLayout, UICollectionViewDe
   ) -> CGFloat {
     calendarAppearanceDelegate?.calendarView(self, minimumLineSpacingForSectionAt: section) ?? 20
   }
+
 }

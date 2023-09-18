@@ -1,22 +1,34 @@
 //
-//  CoreDataWrapper.swift
+//  CoreDataStack.swift
 //  NeverForgetApp
 //
 //  Created by makar on 5/9/23.
 //
 
+import CloudKit
 import CoreData
 
-final class CoreDataWrapper {
-  static let shared = CoreDataWrapper()
+// MARK: - Protocol
+protocol ICoreDataStack: AnyObject {
+  static var shared: Self { get }
+  static var modelName: String { get }
+
+  var persistentContainer: NSPersistentCloudKitContainer { get }
+  var viewContext: NSManagedObjectContext { get }
+  var backgroundContext: NSManagedObjectContext { get }
+}
+
+// MARK: - CoreDataWrapper
+final class CoreDataStack: ICoreDataStack {
+  static let shared = CoreDataStack()
   static let modelName = "NeverForgetModels"
 
   let persistentContainer: NSPersistentCloudKitContainer
   let viewContext: NSManagedObjectContext
-  var backgroundContext: NSManagedObjectContext
+  let backgroundContext: NSManagedObjectContext
 
   private init() {
-    persistentContainer = CoreDataWrapper.getInitialContainer()
+    persistentContainer = CoreDataStack.getInitialContainer()
     viewContext = persistentContainer.viewContext
 
     backgroundContext = persistentContainer.newBackgroundContext()
@@ -40,14 +52,24 @@ final class CoreDataWrapper {
     return context
   }
 
+  // TODO: mmk add implementation
+  func checkCloudStatus(completion: @escaping (CKAccountStatus) -> Void) {
+    let container = CKContainer.default()
+    container.accountStatus { status, error in
+      if let error {
+        Logger.error(message: "Failed to get iCloud account status", error)
+      }
+      completion(status)
+    }
+  }
+
 }
 
-// MARK: - Helpers
-
-extension CoreDataWrapper {
+// MARK: - Static
+extension CoreDataStack {
 
   private static func getInitialContainer() -> NSPersistentCloudKitContainer {
-    let container = NSPersistentCloudKitContainer(name: CoreDataWrapper.modelName)
+    let container = NSPersistentCloudKitContainer(name: CoreDataStack.modelName)
 
     container.loadPersistentStores { _, error in
       if let error = error as NSError? {
@@ -60,25 +82,6 @@ extension CoreDataWrapper {
     container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
     return container
-  }
-
-
-}
-
-// MARK: - NSManagedObjectContext
-
-extension NSManagedObjectContext {
-
-  func saveChanges() {
-    if hasChanges {
-      do {
-        try save()
-      } catch {
-        let nserror = error as NSError
-        Logger.error(message: "Core Data unresolved error when saving context", nserror.localizedDescription, nserror)
-        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-      }
-    }
   }
 
 }

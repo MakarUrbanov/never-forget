@@ -17,7 +17,7 @@ protocol AppSettingsManagerDelegate: AnyObject {
 
 final class AppSettingsManager: ObservableObject {
 
-  static let context = CoreDataWrapper.shared.viewContext
+  static let context = CoreDataStack.shared.viewContext
 
   weak var delegate: AppSettingsManagerDelegate?
 

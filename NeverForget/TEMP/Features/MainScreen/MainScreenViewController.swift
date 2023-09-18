@@ -1,35 +1,25 @@
 //
-//  NewMainScreenViewController.swift
+//  MainScreenViewController.swift
 //  NeverForget
 //
-//  Created by Makar Mishchenko on 08.09.2023.
+//  Created by Makar Mishchenko on 14.09.2023
 //
 
-import NFCore
-import SwiftDate
 import UIKit
 
-// MARK: - Protocol
-protocol INewMainScreenViewController: UIViewController {
-  var viewModel: INewMainScreenViewModel { get }
-  var pageHeader: IMainScreenHeaderView { get }
-  var contentPageViewController: INewMainScreenContentPageViewController { get }
-}
+protocol IMainScreenView: UIViewController {}
 
-// MARK: - NewMainScreenViewController
-final class NewMainScreenViewController: UIViewController, INewMainScreenViewController {
+class MainScreenViewController: UIViewController, IMainScreenView {
 
-  // MARK: - Public properties
-  var viewModel: INewMainScreenViewModel
-  let pageHeader: IMainScreenHeaderView = MainScreenHeaderView()
-  lazy var contentPageViewController: INewMainScreenContentPageViewController = NewMainScreenContentPageViewController(
-    transitionStyle: .scroll,
-    navigationOrientation: .horizontal
-  )
+  var presenter: IMainScreenPresenter?
 
-  // MARK: - Init
-  init(viewModel: INewMainScreenViewModel) {
-    self.viewModel = viewModel
+  let pageHeader: IMainScreenHeaderView
+  var contentPageViewController: IMainScreenContentView
+
+  init() {
+    pageHeader = MainScreenHeaderView()
+    contentPageViewController = Self.initializeContentPageViewController()
+
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -38,19 +28,18 @@ final class NewMainScreenViewController: UIViewController, INewMainScreenViewCon
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Public methods
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(resource: .darkBackground)
+    view.backgroundColor = .clear
 
+    presenter?.viewDidLoad()
     initialize()
   }
-
 }
 
 // MARK: - UIScrollViewDelegate
-extension NewMainScreenViewController: UIScrollViewDelegate {
+extension MainScreenViewController: UIScrollViewDelegate {
   // TODO: mmk finish logic
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let currentSelectedViewIndex = CGFloat(pageHeader.pageSwitcher.currentSelectedButtonIndex)
@@ -63,7 +52,7 @@ extension NewMainScreenViewController: UIScrollViewDelegate {
 }
 
 // MARK: - UIPageViewControllerDelegate
-extension NewMainScreenViewController: UIPageViewControllerDelegate {
+extension MainScreenViewController: UIPageViewControllerDelegate {
 
   func pageViewController(
     _ pageViewController: UIPageViewController,
@@ -76,7 +65,8 @@ extension NewMainScreenViewController: UIPageViewControllerDelegate {
       completed,
       finished,
       let newViewControllerIndex = contentPageViewController.viewControllersList
-        .firstIndex(of: currentViewController) else {
+      .firstIndex(of: currentViewController) else
+    {
       return
     }
 
@@ -86,8 +76,8 @@ extension NewMainScreenViewController: UIPageViewControllerDelegate {
 
 }
 
-// MARK: - IPageControllerHeaderViewDelegate
-extension NewMainScreenViewController: IViewsSwitcherViewDelegate {
+// MARK: - IViewsSwitcherViewDelegate
+extension MainScreenViewController: IViewsSwitcherViewDelegate {
 
   func viewsSwitcher(
     _ switcher: IViewsSwitcherView,
@@ -101,20 +91,8 @@ extension NewMainScreenViewController: IViewsSwitcherViewDelegate {
 
 }
 
-// MARK: - Static
-extension NewMainScreenViewController {
-
-  enum UIConstants {
-    static let pageHorizontalInset = 16
-    static let headerOffset = 20
-    static let pageHeaderHeight = 60
-    static let dividerHeight = UIConstants.headerOffset
-  }
-
-}
-
 // MARK: - Private methods
-private extension NewMainScreenViewController {
+private extension MainScreenViewController {
 
   private func initialize() {
     initializeNavigationHeader()
@@ -153,7 +131,8 @@ private extension NewMainScreenViewController {
 
     contentPageViewController.view.snp.makeConstraints { make in
       make.top.equalTo(pageHeader.snp.bottom)
-      make.left.right.bottom.equalToSuperview()
+      make.left.right.equalToSuperview()
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
   }
 
@@ -163,10 +142,33 @@ private extension NewMainScreenViewController {
 
 }
 
+// MARK: - Static
+extension MainScreenViewController {
+
+  enum UIConstants {
+    static let pageHorizontalInset = 16
+    static let headerOffset = 20
+    static let pageHeaderHeight = 60
+    static let dividerHeight = UIConstants.headerOffset
+  }
+
+  private static func initializeContentPageViewController() -> IMainScreenContentView {
+    let context = CoreDataStack.shared.viewContext
+    let eventsFetchRequest = Event.fetchRequestWithSorting(descriptors: [
+      NSSortDescriptor(keyPath: \Event.date, ascending: true)
+    ])
+    let eventsService = EventsCoreDataService(context: context, fetchRequest: eventsFetchRequest)
+
+    let contentView = MainScreenContentModuleBuilder.build(eventsService: eventsService)
+
+    return contentView
+  }
+
+}
 
 import SwiftUI
 
 
 #Preview {
-  NewMainScreenViewController(viewModel: NewMainScreenViewModel()).makePreview()
+  MainScreenViewController().makePreview()
 }
