@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftDate
 import UIKit
 
 protocol IContactsScreenInteractor: AnyObject {
@@ -31,20 +32,27 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     contactsService.fetchContacts()
     contactsService.contacts.forEach { contactsService.context.delete($0) }
 
+    // ******** TODO: mmk delete
+    let contactTodayEvent = Contact(context: self.contactsService.context)
+    contactTodayEvent.firstName = "Event"
+    contactTodayEvent.lastName = "Next year"
+    let eventToday = contactTodayEvent.createLinkedEvent(of: .systemGenerated)
+    eventToday.date = (eventToday.date - 10.days)
+
     let contactWithImage = Contact(context: self.contactsService.context)
     contactWithImage.firstName = "Makar"
     contactWithImage.lastName = "Urbanov"
     contactWithImage.photoData = UIImage(resource: .mock).pngData()
     let eventImagedContact = contactWithImage.createLinkedEvent(of: .systemGenerated)
-    eventImagedContact.name = "Birthday"
 
     let contactNoImage = Contact(context: self.contactsService.context)
     contactNoImage.firstName = "Test"
     contactNoImage.lastName = "No image"
     let eventNoImageContact = contactNoImage.createLinkedEvent(of: .systemGenerated)
-    eventNoImageContact.name = "Birthday"
+    eventNoImageContact.date = (eventNoImageContact.date + 10.days)
 
     self.contactsService.context.saveChanges()
+    // ******** TODO: mmk delete
   }
 
   deinit {
@@ -57,7 +65,6 @@ private extension ContactsScreenInteractor {
 
   @objc
   private func contactsDidChange(_ notification: Notification) {
-    print("mmk contacts changed")
     presenter?.contactsChanged()
   }
 
