@@ -11,7 +11,7 @@ import SwiftDate
 protocol IEventsListInteractor: AnyObject {
   var eventsService: IEventsCoreDataService { get }
   var events: [Event] { get }
-  var listDates: [Date] { get }
+  var renderDatesList: [Date] { get }
 
   func fetchEvents()
 }
@@ -25,10 +25,10 @@ class EventsListInteractor: IEventsListInteractor {
     eventsService.events
   }
 
-  var listDates: [Date]
+  var renderDatesList: [Date]
 
   init(eventsService: IEventsCoreDataService) {
-    listDates = Self.generateListDates(startFrom: DateInRegion(region: .current).date)
+    renderDatesList = Self.generateListDates(startFrom: DateInRegion(region: .current).date)
 
     self.eventsService = eventsService
     self.eventsService.addObserver(target: self, selector: #selector(eventsDidChangeFromObserver(_:)))

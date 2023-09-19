@@ -19,13 +19,14 @@ class FilterContactsButton: UIControl, IFilterContactsButton {
   init() {
     super.init(frame: .zero)
 
-    self.snp.makeConstraints { make in
+    snp.makeConstraints { make in
       make.width.height.greaterThanOrEqualTo(36)
     }
 
     initialize()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -33,13 +34,13 @@ class FilterContactsButton: UIControl, IFilterContactsButton {
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     super.touchesBegan(touches, with: event)
 
-    self.alpha = highlightedAlpha
+    alpha = highlightedAlpha
   }
 
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     super.touchesEnded(touches, with: event)
 
-    self.alpha = 1
+    alpha = 1
   }
 
 }

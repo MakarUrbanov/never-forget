@@ -7,8 +7,7 @@
 
 import UIKit
 
-protocol IMainScreenNavigationController: UINavigationController {
-}
+protocol IMainScreenNavigationController: UINavigationController {}
 
 class MainScreenNavigationController: UINavigationController, IMainScreenNavigationController {
 
@@ -22,7 +21,6 @@ class MainScreenNavigationController: UINavigationController, IMainScreenNavigat
 // MARK: - Private methods
 extension MainScreenNavigationController {
 
-  private func initialize() {
-  }
+  private func initialize() {}
 
 }

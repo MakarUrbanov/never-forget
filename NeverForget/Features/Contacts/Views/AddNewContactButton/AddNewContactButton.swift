@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol IAddNewContactButton: UIButton {
-
-}
+protocol IAddNewContactButton: UIButton {}
 
 class AddNewContactButton: UIButton, IAddNewContactButton {
 
@@ -22,6 +20,7 @@ class AddNewContactButton: UIButton, IAddNewContactButton {
     initialize()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -46,7 +45,7 @@ private extension AddNewContactButton {
       renderingMode: .alwaysOriginal
     )
 
-    self.setImage(image, for: .normal)
+    setImage(image, for: .normal)
   }
 
   private func makeCircle() {

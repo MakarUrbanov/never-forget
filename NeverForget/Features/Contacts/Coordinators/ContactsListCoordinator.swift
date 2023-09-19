@@ -5,6 +5,7 @@
 //  Created by makar on 2/24/23.
 //
 
+import CoreData
 import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
@@ -24,7 +25,12 @@ final class ContactsListCoordinator: NavigationCoordinator, ObservableObject {
 extension ContactsListCoordinator {
 
   private func getContactsListView() -> IContactsScreenView {
-    let view = ContactsScreenModuleBuilder.build()
+    let context = CoreDataStack.shared.viewContext // TODO: mmk edit
+    let fetchRequest = Contact.fetchRequestWithSorting(descriptors: [
+      .init(keyPath: \Contact.firstName, ascending: true)
+    ])
+    let contactsService = ContactsCoreDataService(context: context, fetchRequest: fetchRequest)
+    let view = ContactsScreenModuleBuilder.build(contactsService: contactsService)
 
     return view
   }

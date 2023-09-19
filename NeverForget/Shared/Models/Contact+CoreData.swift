@@ -38,18 +38,22 @@ public class Contact: NSManagedObject, Identifiable {
   }
 
   // MARK: - Public methods
-  public func createLinkedEvent() -> Event {
+  public func createLinkedEvent(of type: Event.EventType = .userCreated) -> Event {
     guard let context = managedObjectContext else {
       fatalError("Model without context")
     }
 
     let event = Event(context: context)
-    event.type = .userCreated
+    event.type = type
     event.owner = self
 
     events.insert(event)
 
     return event
+  }
+
+  public func generateFullName() -> String {
+    return [lastName, firstName, middleName].compactMap { $0 }.joined(separator: " ")
   }
 
 }
@@ -88,6 +92,13 @@ public extension Contact {
   // MARK: - Static Methods
   static func fetchRequest() -> NSFetchRequest<Contact> {
     return NSFetchRequest<Contact>(entityName: "Contact")
+  }
+
+  static func fetchRequestWithSorting(descriptors: [NSSortDescriptor]) -> NSFetchRequest<Contact> {
+    let request = fetchRequest()
+    request.sortDescriptors = descriptors
+
+    return request
   }
 
   static func fetchById(_ id: String, context: NSManagedObjectContext) throws -> Contact? {

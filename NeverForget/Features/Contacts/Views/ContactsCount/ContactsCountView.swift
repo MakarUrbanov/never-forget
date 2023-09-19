@@ -29,6 +29,7 @@ class ContactsCountView: UIStackView, IContactsCountView {
     initialize()
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -56,7 +57,7 @@ private extension ContactsCountView {
   }
 
   private func initializeContactsCountLabel() {
-    contactsCountLabel.text = "\(self.contactsCount)"
+    contactsCountLabel.text = "\(contactsCount)"
     contactsCountLabel.font = .systemFont(ofSize: 20, weight: .regular)
     contactsCountLabel.textColor = UIColor(resource: .textLight100).withAlphaComponent(0.3)
 

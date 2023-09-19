@@ -34,11 +34,11 @@ class EventsListPresenter: IEventsListPresenter {
   }
 
   func getDatesCount() -> Int {
-    interactor.listDates.count
+    interactor.renderDatesList.count
   }
 
   func getDate(at index: IndexPath) -> Date {
-    interactor.listDates[index.item]
+    interactor.renderDatesList[index.item]
   }
 
   func getEvents(for date: Date) -> [Event] {

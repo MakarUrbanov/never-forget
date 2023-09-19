@@ -27,8 +27,7 @@ class EventsCalendarViewController: UIViewController, IEventsCalendarView {
     initialize()
   }
 
-  func didChangeEvents() {
-  }
+  func didChangeEvents() {}
 
 }
 
