@@ -18,6 +18,7 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
   var presenter: IContactsScreenPresenter
 
   // MARK: - Private properties
+  let contactsCount: IContactsCountView = ContactsCountView()
   let contactsTableView = UITableView(frame: .zero, style: .plain)
 
   init(presenter: IContactsScreenPresenter) {
@@ -40,6 +41,7 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
 
   // MARK: - Public methods
   func contactsChanged() {
+    contactsCount.setContactsCount(presenter.getContactsCount())
     contactsTableView.reloadData()
   }
 
@@ -54,12 +56,13 @@ private extension ContactsScreenViewController {
   }
 
   private func initializeNavigationBar() {
-    let leftBarButtonItem = UIBarButtonItem(customView: ContactsCountView())
+    let leftBarButtonItem = UIBarButtonItem(customView: contactsCount)
     navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
 
-    let filterContactsButton = UIBarButtonItem(customView: FilterContactsButton())
+    // TODO: mmk impl in the future
+    //    let filterContactsButton = UIBarButtonItem(customView: FilterContactsButton())
     let addNewContactButton = UIBarButtonItem(customView: AddNewContactButton())
-    navigationItem.setRightBarButtonItems([addNewContactButton, filterContactsButton], animated: false)
+    navigationItem.setRightBarButtonItems([addNewContactButton], animated: false)
   }
 
   private func initializeTableView() {
@@ -68,6 +71,7 @@ private extension ContactsScreenViewController {
     contactsTableView.dataSource = self
     contactsTableView.delegate = self
     contactsTableView.separatorColor = .clear
+    contactsTableView.showsVerticalScrollIndicator = false
 
     view.addSubview(contactsTableView)
 
@@ -100,7 +104,8 @@ extension ContactsScreenViewController: UITableViewDelegate {
     guard
       let cell = tableView.dequeueReusableCell(
         withIdentifier: Self.contactCellIdentifier, for: indexPath
-      ) as? ContactCellView else {
+      ) as? ContactCellView else
+    {
       fatalError()
     }
 

@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import UIKit
 
 enum AppUIConstants {
-  static let highlightedAlpha = 0.6
+  static let highlightedAlpha: CGFloat = 0.6
 }

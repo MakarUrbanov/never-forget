@@ -13,7 +13,7 @@ protocol IContactCellView: UITableViewCell {
   func configureSeparatorVisibility(_ isVisible: Bool)
 }
 
-class ContactCellView: UITableViewCell, IContactCellView {
+class ContactCellView: PressableTableViewCell, IContactCellView {
 
   private let contactImageView = ContactImageView()
   private let contentStackView: UIStackView
@@ -25,17 +25,15 @@ class ContactCellView: UITableViewCell, IContactCellView {
   private let separator = UIView()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    self.contentStackView = UIStackView(arrangedSubviews: [contactImageView])
-    self.mainInfoStackView = UIStackView(arrangedSubviews: [contactNameLabel, eventCountdownLabel])
+    contentStackView = UIStackView(arrangedSubviews: [contactImageView])
+    mainInfoStackView = UIStackView(arrangedSubviews: [contactNameLabel, eventCountdownLabel])
 
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-    backgroundColor = .clear
-    selectionStyle = .none
 
     initialize()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -178,7 +176,7 @@ extension ContactCellView {
 // MARK: - Static
 extension ContactCellView {
 
-  static private let calendar = Calendar.current
+  private static let calendar = Calendar.current
 
   enum UIConstants {
     static let verticalInset = 20

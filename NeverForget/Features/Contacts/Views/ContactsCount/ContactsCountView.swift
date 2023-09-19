@@ -17,7 +17,7 @@ class ContactsCountView: UIStackView, IContactsCountView {
 
   let contactsTitleLabel = UILabel()
   let contactsCountLabel = UILabel()
-  var contactsCount = 0
+  private(set) var contactsCount = 0
 
   init() {
     super.init(frame: .zero)
@@ -36,6 +36,7 @@ class ContactsCountView: UIStackView, IContactsCountView {
 
   func setContactsCount(_ count: Int) {
     contactsCount = count
+    contactsCountLabel.text = String(count)
   }
 
 }

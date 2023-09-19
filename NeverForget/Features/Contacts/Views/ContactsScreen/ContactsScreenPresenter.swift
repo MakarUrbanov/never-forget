@@ -28,7 +28,9 @@ class ContactsScreenPresenter: IContactsScreenPresenter {
   }
 
   // MARK: - Public methods
-  func viewDidLoad() {}
+  func viewDidLoad() {
+    interactor.initialFetchContacts()
+  }
 
   func getContactsCount() -> Int {
     interactor.contacts.count

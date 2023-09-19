@@ -17,7 +17,7 @@ protocol IEventTableCell: UITableViewCell {
 }
 
 // MARK: - EventTableViewCell
-class EventTableViewCell: UITableViewCell, IEventTableCell {
+class EventTableViewCell: PressableTableViewCell, IEventTableCell {
 
   // MARK: - Public properties
   var date: Date = .now
@@ -33,8 +33,6 @@ class EventTableViewCell: UITableViewCell, IEventTableCell {
   // MARK: - Init
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    backgroundColor = .clear
-    selectionStyle = .none
 
     initialize()
   }
@@ -48,11 +46,6 @@ class EventTableViewCell: UITableViewCell, IEventTableCell {
   override func prepareForReuse() {
     super.prepareForReuse()
     resetCell()
-  }
-
-  override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-    super.setHighlighted(highlighted, animated: animated)
-    setAlpha(by: highlighted)
   }
 
   // MARK: - Public methods
@@ -89,15 +82,8 @@ private extension EventTableViewCell {
 
   private func resetCell() {
     ownersPhotos.clearPhotos()
-    alpha = 1
     dateLabel.text = ""
     eventsDescriptionLabel.text = ""
-  }
-
-  private func setAlpha(by highlighted: Bool) {
-    UIView.animate(withDuration: 0.2, delay: 0, options: .allowUserInteraction) {
-      self.alpha = highlighted ? UIConstants.highlightedAlpha : 1
-    }
   }
 
 }
@@ -170,7 +156,6 @@ extension EventTableViewCell {
 
   enum UIConstants {
     static let verticalInset = 20
-    static let highlightedAlpha: CGFloat = AppUIConstants.highlightedAlpha
   }
 
   private static let DATE_FORMAT = "dd MMMM"

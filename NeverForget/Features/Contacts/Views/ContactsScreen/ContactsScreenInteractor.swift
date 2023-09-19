@@ -11,8 +11,9 @@ import UIKit
 
 protocol IContactsScreenInteractor: AnyObject {
   var contacts: [Contact] { get }
-
   var contactsService: IContactsCoreDataService { get }
+
+  func initialFetchContacts()
 }
 
 class ContactsScreenInteractor: IContactsScreenInteractor {
@@ -29,10 +30,10 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
 
     self.contactsService.addObserver(target: self, selector: #selector(contactsDidChange))
 
+    // ******** TODO: mmk delete
     contactsService.fetchContacts()
     contactsService.contacts.forEach { contactsService.context.delete($0) }
 
-    // ******** TODO: mmk delete
     let contactTodayEvent = Contact(context: self.contactsService.context)
     contactTodayEvent.firstName = "Event"
     contactTodayEvent.lastName = "Next year"
@@ -53,6 +54,11 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
 
     self.contactsService.context.saveChanges()
     // ******** TODO: mmk delete
+  }
+
+  func initialFetchContacts() {
+    contactsService.fetchContacts()
+    presenter?.contactsChanged()
   }
 
   deinit {
