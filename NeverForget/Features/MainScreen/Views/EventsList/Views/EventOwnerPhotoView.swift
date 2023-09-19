@@ -17,17 +17,13 @@ protocol IEventOwnerPhotoView: UICollectionViewCell {
 class EventOwnerPhotoView: UICollectionViewCell, IEventOwnerPhotoView {
 
   // MARK: - Private properties
-  private let imageView = UIImageView()
-  private let letterLabel = UILabel()
+  private let contactImageView = ContactImageView()
 
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
 
     backgroundColor = .clear
-    clipsToBounds = true
-    layer.borderWidth = 1
-    layer.borderColor = UIColor(resource: .textLight100).cgColor
 
     initialize()
   }
@@ -43,14 +39,9 @@ class EventOwnerPhotoView: UICollectionViewCell, IEventOwnerPhotoView {
     resetView()
   }
 
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    setCornerRadius()
-  }
-
   // MARK: - Public methods
   func setImage(_ image: UIImage) {
-    imageView.image = image
+    contactImageView.setImage(image)
   }
 
   func setImage(_ data: Data) {
@@ -60,15 +51,11 @@ class EventOwnerPhotoView: UICollectionViewCell, IEventOwnerPhotoView {
   }
 
   func setText(_ text: String) {
-    letterLabel.text = text
-    letterLabel.isHidden = false
+    contactImageView.setText(text)
   }
 
   func resetView() {
-    letterLabel.isHidden = true
-    letterLabel.text = ""
-
-    imageView.image = nil
+    contactImageView.resetView()
   }
 
 }
@@ -77,43 +64,15 @@ class EventOwnerPhotoView: UICollectionViewCell, IEventOwnerPhotoView {
 private extension EventOwnerPhotoView {
 
   private func initialize() {
-    initializeImageView()
-    initializeLetterLabel()
+    initializeContactImageView()
   }
 
-  private func initializeImageView() {
-    imageView.contentMode = .scaleAspectFill
+  private func initializeContactImageView() {
+    contentView.addSubview(contactImageView)
 
-    contentView.addSubview(imageView)
-
-    imageView.snp.makeConstraints { make in
+    contactImageView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-  }
-
-  private func initializeLetterLabel() {
-    letterLabel.layer.zPosition = 1
-    letterLabel.font = .systemFont(ofSize: 16, weight: .regular)
-    letterLabel.numberOfLines = 0
-    letterLabel.isHidden = true
-    letterLabel.textAlignment = .center
-    letterLabel.backgroundColor = UIColor(resource: .darkBackground)
-
-    contentView.addSubview(letterLabel)
-
-    letterLabel.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
-    }
-  }
-
-}
-
-// MARK: - Private methods
-extension EventOwnerPhotoView {
-
-  private func setCornerRadius() {
-    let radius = bounds.width / 2
-    layer.cornerRadius = radius
   }
 
 }
