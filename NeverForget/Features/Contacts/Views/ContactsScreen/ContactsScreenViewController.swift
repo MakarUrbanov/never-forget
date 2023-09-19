@@ -43,6 +43,10 @@ private extension ContactsScreenViewController {
   private func initializeNavigationBar() {
     let leftBarButtonItem = UIBarButtonItem(customView: ContactsCountView())
     navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
+
+    let filterContactsButton = UIBarButtonItem(customView: FilterContactsButton())
+    let addNewContactButton = UIBarButtonItem(customView: AddNewContactButton())
+    navigationItem.setRightBarButtonItems([addNewContactButton, filterContactsButton], animated: false)
   }
 
 }

@@ -78,7 +78,9 @@ private extension MainScreenHeaderView {
   }
 
   private func initializeSortButton() {
-    sortButton.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
+    let imageSvg = UIImage(named: "filterIcon")
+    sortButton.setImage(imageSvg, for: .normal)
+    sortButton.contentMode = .scaleAspectFit
     sortButton.imageView?.tintColor = UIColor(resource: .textLight100)
     sortButton.backgroundColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
     sortButton.layer.cornerRadius = 12

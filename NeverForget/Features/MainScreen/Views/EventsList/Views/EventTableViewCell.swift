@@ -151,8 +151,6 @@ private extension EventTableViewCell {
       make.trailing.equalToSuperview()
       make.verticalEdges.equalToSuperview().inset(UIConstants.verticalInset)
       make.width.equalTo(self.snp.width).dividedBy(2)
-//      make.width.greaterThanOrEqualTo(ownersPhotos.snp.width)
-//      make.width.lessThanOrEqualTo(self.snp.width).dividedBy(2)
     }
   }
 
@@ -172,7 +170,7 @@ extension EventTableViewCell {
 
   enum UIConstants {
     static let verticalInset = 20
-    static let highlightedAlpha: CGFloat = 0.8
+    static let highlightedAlpha: CGFloat = AppUIConstants.highlightedAlpha
   }
 
   private static let DATE_FORMAT = "dd MMMM"
