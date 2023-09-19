@@ -60,7 +60,7 @@ struct SettingsView: View {
               SettingsNotificationTimesView()
                 .environmentObject(viewModel)
             } label: {
-              Text("Notification times (\(notificationRules.onEventDayTimes.count))") // TODO: translate
+              Text("Notifications (\(notificationRules.onEventDayTimes.count))", comment: "Count of notifications")
             }
 
           }
@@ -69,7 +69,7 @@ struct SettingsView: View {
       }
     }
     .scrollContentBackground(.hidden)
-    .navigationTitle(String(localized: "Settings"))
+    .navigationTitle(Text("Settings"))
     .background(Color(.darkBackground))
   }
 }

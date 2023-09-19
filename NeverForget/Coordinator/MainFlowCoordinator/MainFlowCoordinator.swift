@@ -72,7 +72,7 @@ extension MainFlowCoordinator {
     mainScreenCoordinator.start()
 
     let tabBarItem = UITabBarItem(
-      title: String(localized: "Main"),
+      title: NSLocalizedString("Main", comment: "tab name"),
       image: UIImage(systemName: "calendar"),
       selectedImage: UIImage(systemName: "calendar")
     )
@@ -86,7 +86,7 @@ extension MainFlowCoordinator {
     contactsListCoordinator.start()
 
     let tabBarItem = UITabBarItem(
-      title: String(localized: "List"),
+      title: NSLocalizedString("Contacts", comment: "tab name"),
       image: UIImage(systemName: "person"),
       selectedImage: UIImage(systemName: "person")
     )
@@ -100,7 +100,7 @@ extension MainFlowCoordinator {
     coordinator.start()
 
     let tabBarItem = UITabBarItem(
-      title: String(localized: "Settings"),
+      title: NSLocalizedString("Settings", comment: ""),
       image: UIImage(systemName: "gearshape"),
       selectedImage: UIImage(systemName: "gearshape")
     )

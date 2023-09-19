@@ -48,7 +48,7 @@ private extension ContactsCountView {
   }
 
   private func initializeContactsTitleLabel() {
-    contactsTitleLabel.text = String(localized: "Contacts")
+    contactsTitleLabel.text = NSLocalizedString("Contacts", comment: "contacts count label")
     contactsTitleLabel.font = .systemFont(ofSize: 20, weight: .regular)
     contactsTitleLabel.textColor = UIColor(resource: .textLight100)
 

@@ -178,12 +178,12 @@ extension EventTableViewCell {
   private static func getFormattedDate(_ date: Date) -> String {
     switch true {
       case date.isToday:
-        let prefix = String(localized: "Today")
+        let prefix = NSLocalizedString("Today", comment: "today label")
         let formattedDate = date.toFormat(DATE_FORMAT)
         return "\(prefix), \(formattedDate)"
 
       case date.isTomorrow:
-        let prefix = String(localized: "Tomorrow")
+        let prefix = NSLocalizedString("Tomorrow", comment: "tomorrow label")
         let formattedDate = date.toFormat(DATE_FORMAT)
         return "\(prefix), \(formattedDate)"
 

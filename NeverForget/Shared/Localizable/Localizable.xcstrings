@@ -1,32 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Add" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Добавить"
-          }
-        }
-      }
-    },
     "Calendar" : {
-      "extractionState" : "stale",
+      "comment" : "switcher item. view name",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calendar"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35,69 +12,20 @@
         }
       }
     },
-    "Cancel" : {
-      "extractionState" : "stale",
+    "Contacts" : {
+      "comment" : "tab name\ncontacts count label",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отменить"
-          }
-        }
-      }
-    },
-    "Date of birth: *" : {
-
-    },
-    "Delete" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить"
-          }
-        }
-      }
-    },
-    "Description" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Description"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Описание"
+            "value" : "Контакты"
           }
         }
       }
     },
     "List" : {
-      "extractionState" : "stale",
+      "comment" : "switcher item. view name",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "List"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,14 +35,8 @@
       }
     },
     "Main" : {
-      "extractionState" : "stale",
+      "comment" : "tab name",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Main"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -123,50 +45,37 @@
         }
       }
     },
-    "Notification times (%@)" : {
-
-    },
-    "Photo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Фото"
-          }
-        }
-      }
-    },
-    "Save" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сохранить"
-          }
-        }
-      }
+    "Notifications (%@)" : {
+      "comment" : "Count of notifications"
     },
     "Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "comment" : "today label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
+        }
+      }
+    },
+    "Tomorrow" : {
+      "comment" : "tomorrow label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра"
           }
         }
       }
