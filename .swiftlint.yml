@@ -9,6 +9,7 @@ analyzer_rules:
   - unused_declaration
 
 opt_in_rules:
+  - nesting
   - class_delegate_protocol
   - closing_brace
   - closure_end_indentation
@@ -137,6 +138,10 @@ enum_case_associated_values_count:
 cyclomatic_complexity:
   warning: 10
   error: 20
+
+nesting:
+  type_level:
+    warning: 2
 
 line_length:
   warning: 120

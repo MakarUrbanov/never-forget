@@ -45,6 +45,39 @@
         }
       }
     },
+    "Event in %@ days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Event in %11d day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Event in %@ daysss"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Event today" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Событие сегодня"
+          }
+        }
+      }
+    },
     "List" : {
       "comment" : "switcher item. view name",
       "localizations" : {

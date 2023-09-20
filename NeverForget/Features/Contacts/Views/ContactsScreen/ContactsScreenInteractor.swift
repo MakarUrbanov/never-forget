@@ -34,23 +34,30 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     contactsService.fetchContacts()
     contactsService.contacts.forEach { contactsService.context.delete($0) }
 
-    let contactTodayEvent = Contact(context: self.contactsService.context)
-    contactTodayEvent.firstName = "Event"
-    contactTodayEvent.lastName = "Next year"
-    let eventToday = contactTodayEvent.createLinkedEvent(of: .systemGenerated)
-    eventToday.date = (eventToday.date - 10.days)
+    let contactNextYearEvent = Contact(context: self.contactsService.context)
+    contactNextYearEvent.firstName = "User1"
+    contactNextYearEvent.lastName = "first"
+    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
+      .setOriginDate(.now.dateByAdding(300, .day).date)
+    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
+      .setOriginDate(.now.dateByAdding(-300, .day).date)
 
     let contactWithImage = Contact(context: self.contactsService.context)
     contactWithImage.firstName = "Makar"
     contactWithImage.lastName = "Urbanov"
     contactWithImage.photoData = UIImage(resource: .mock).pngData()
-    let eventImagedContact = contactWithImage.createLinkedEvent(of: .systemGenerated)
+    contactWithImage.createLinkedEvent(of: .systemGenerated)
+      .setOriginDate(Date.nowAt(.startOfDay))
+    contactWithImage.createLinkedEvent(of: .userCreated)
+      .setOriginDate(DateInRegion().convertTo(region: .UTC).date + 100.days)
 
     let contactNoImage = Contact(context: self.contactsService.context)
-    contactNoImage.firstName = "Test"
-    contactNoImage.lastName = "No image"
-    let eventNoImageContact = contactNoImage.createLinkedEvent(of: .systemGenerated)
-    eventNoImageContact.date = (eventNoImageContact.date + 10.days)
+    contactNoImage.firstName = "User2"
+    contactNoImage.lastName = "Second"
+    contactNoImage.createLinkedEvent(of: .systemGenerated)
+      .setOriginDate(.now.dateByAdding(10, .day).date)
+    contactNoImage.createLinkedEvent(of: .systemGenerated)
+      .setOriginDate(.now.dateByAdding(-364, .day).date)
 
     self.contactsService.context.saveChanges()
     // ******** TODO: mmk delete

@@ -155,7 +155,7 @@ extension MainScreenViewController {
   private static func initializeContentPageViewController() -> IMainScreenContentView {
     let context = CoreDataStack.shared.backgroundContext // TODO: mmk edit
     let eventsFetchRequest = Event.fetchRequestWithSorting(descriptors: [
-      NSSortDescriptor(keyPath: \Event.date, ascending: true)
+      NSSortDescriptor(keyPath: \Event.nextEventDate, ascending: true)
     ])
     let eventsService = EventsCoreDataService(context: context, fetchRequest: eventsFetchRequest)
 

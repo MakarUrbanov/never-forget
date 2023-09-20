@@ -14,7 +14,8 @@ public class Event: NSManagedObject, Identifiable {
 
   // MARK: - Public Properties
   @NSManaged public var id: String
-  @NSManaged public var date: Date
+  @NSManaged public private(set) var originDate: Date
+  @NSManaged public private(set) var nextEventDate: Date
   @NSManaged public var name: String
 
   @NSManaged private var notificationScheduleRuleRaw: NotificationsSchedulingRule.RawValue
@@ -46,7 +47,8 @@ public class Event: NSManagedObject, Identifiable {
   override public func awakeFromInsert() {
     super.awakeFromInsert()
     id = UUID().uuidString
-    date = Self.todayRoundedDate
+    originDate = Self.todayRoundedDate
+    nextEventDate = Self.todayRoundedDate
     name = ""
     notificationScheduleRuleRaw = NotificationsSchedulingRule.globalSettings.rawValue
     typeRaw = EventType.userCreated.rawValue
@@ -54,10 +56,42 @@ public class Event: NSManagedObject, Identifiable {
     contacts = []
   }
 
+  public func setOriginDate(_ date: Date) {
+    originDate = date
+    updateNextEventDateByOriginDate()
+  }
+
+}
+
+// MARK: - Private
+public extension Event {
+
+  private func updateNextEventDateByOriginDate() {
+    if originDate.isToday {
+      nextEventDate = originDate
+
+      return
+    }
+
+    let dateComponents = Self.calendar.dateComponents([.day, .month], from: originDate)
+    guard let newNextEventDate = Self.calendar.nextDate(
+      after: Date.now.dateAtStartOf(.day),
+      matching: dateComponents,
+      matchingPolicy: .nextTime
+    ) else {
+      Logger.error("Failed to create new next event date")
+      return
+    }
+
+    nextEventDate = newNextEventDate
+  }
+
 }
 
 // MARK: - Static
 public extension Event {
+
+  private static let calendar = Calendar.current
 
   // MARK: - Static properties
   private static let todayRoundedDate: Date = DateInRegion(region: .UTC).dateAtStartOf(.day).date
