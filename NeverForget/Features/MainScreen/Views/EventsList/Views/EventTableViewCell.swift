@@ -17,7 +17,7 @@ protocol IEventTableCell: UITableViewCell {
 }
 
 // MARK: - EventTableViewCell
-class EventTableViewCell: PressableTableViewCell, IEventTableCell {
+class EventTableViewCell: TouchableTableViewCell, IEventTableCell {
 
   // MARK: - Public properties
   var date: Date = .now

@@ -18,11 +18,14 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
   var presenter: IContactsScreenPresenter
 
   // MARK: - Private properties
-  let contactsCount: IContactsCountView = ContactsCountView()
-  let contactsTableView = UITableView(frame: .zero, style: .plain)
+  private let contactsCount: IContactsCountView = ContactsCountView()
+  private let contactsTableView = UITableView(frame: .zero, style: .plain)
+  private var sortingHeaderMenu: ISortHeaderMenu
 
   init(presenter: IContactsScreenPresenter) {
     self.presenter = presenter
+    sortingHeaderMenu = SortHeaderMenu(selectedItem: .alphabetically)
+
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -47,11 +50,14 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
 
 }
 
+extension ContactsScreenViewController: UIEditMenuInteractionDelegate {}
+
 // MARK: - Private UI methods
 private extension ContactsScreenViewController {
 
   private func initialize() {
     initializeNavigationBar()
+    initializeSortingHeaderMenu()
     initializeTableView()
   }
 
@@ -63,6 +69,18 @@ private extension ContactsScreenViewController {
     //    let filterContactsButton = UIBarButtonItem(customView: FilterContactsButton())
     let addNewContactButton = UIBarButtonItem(customView: AddNewContactButton())
     navigationItem.setRightBarButtonItems([addNewContactButton], animated: false)
+  }
+
+  private func initializeSortingHeaderMenu() {
+    view.addSubview(sortingHeaderMenu)
+
+    sortingHeaderMenu.snp.makeConstraints { make in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.height.equalTo(50)
+//      make.leading.equalToSuperview().offset(UIConstants.horizontalInset)
+//      make.trailing.equalTo(sortingHeaderMenu.snp.trailing)
+      make.horizontalEdges.equalToSuperview().inset(UIConstants.horizontalInset)
+    }
   }
 
   private func initializeTableView() {
@@ -77,7 +95,7 @@ private extension ContactsScreenViewController {
 
     contactsTableView.snp.makeConstraints { make in
       make.horizontalEdges.equalToSuperview().inset(UIConstants.horizontalInset)
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.top.equalTo(sortingHeaderMenu.snp.bottom)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
   }

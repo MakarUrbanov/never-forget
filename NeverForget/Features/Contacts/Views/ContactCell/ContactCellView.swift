@@ -13,7 +13,7 @@ protocol IContactCellView: UITableViewCell {
   func configureSeparatorVisibility(_ isVisible: Bool)
 }
 
-class ContactCellView: PressableTableViewCell, IContactCellView {
+class ContactCellView: TouchableTableViewCell, IContactCellView {
 
   private let contactImageView = ContactImageView()
   private let contentStackView: UIStackView

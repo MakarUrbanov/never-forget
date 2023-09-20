@@ -1,5 +1,5 @@
 //
-//  PressableTableViewCell.swift
+//  TouchableTableViewCell.swift
 //  NeverForget
 //
 //  Created by Makar Mishchenko on 19.09.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PressableTableViewCell: UITableViewCell {
+class TouchableTableViewCell: UITableViewCell {
 
   var highlightedAlpha = AppUIConstants.highlightedAlpha
   var highlightAnimationDuration: CGFloat = 0.15
