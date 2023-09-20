@@ -13,11 +13,15 @@ protocol IContactsScreenInteractor: AnyObject {
   var contacts: [Contact] { get }
   var contactsService: IContactsCoreDataService { get }
 
+  func setSortingByNearestEvents()
+  func setSortingAlphabetically()
   func initialFetchContacts()
+  func fetchContacts()
 }
 
 class ContactsScreenInteractor: IContactsScreenInteractor {
 
+  // MARK: - Public properties
   weak var presenter: IContactsScreenPresenter?
 
   var contactsService: IContactsCoreDataService
@@ -35,29 +39,26 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     contactsService.contacts.forEach { contactsService.context.delete($0) }
 
     let contactNextYearEvent = Contact(context: self.contactsService.context)
-    contactNextYearEvent.firstName = "User1"
-    contactNextYearEvent.lastName = "first"
+    contactNextYearEvent.firstName = "Makar"
+    contactNextYearEvent.lastName = "Urbanov"
+    contactNextYearEvent.photoData = UIImage(resource: .mock).pngData()
     contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(.now.dateByAdding(300, .day).date)
-    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(.now.dateByAdding(-300, .day).date)
+      .setOriginDate(DateInRegion("2000-09-14T14:00:00+00:00")!.dateAt(.startOfDay).date)
+//    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
+//      .setOriginDate(.now.dateByAdding(-300, .day).date)
 
     let contactWithImage = Contact(context: self.contactsService.context)
-    contactWithImage.firstName = "Makar"
-    contactWithImage.lastName = "Urbanov"
-    contactWithImage.photoData = UIImage(resource: .mock).pngData()
+    contactWithImage.firstName = "Denis"
+    contactWithImage.lastName = "Kalugin"
     contactWithImage.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(Date.nowAt(.startOfDay))
-    contactWithImage.createLinkedEvent(of: .userCreated)
-      .setOriginDate(DateInRegion().convertTo(region: .UTC).date + 100.days)
+      .setOriginDate(DateInRegion("2000-04-24T14:00:00+00:00")!.dateAt(.startOfDay).date)
+//    contactWithImage.createLinkedEvent(of: .userCreated)
 
     let contactNoImage = Contact(context: self.contactsService.context)
-    contactNoImage.firstName = "User2"
-    contactNoImage.lastName = "Second"
+    contactNoImage.firstName = "Boris"
+    contactNoImage.lastName = "ТудейБездыч"
     contactNoImage.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(.now.dateByAdding(10, .day).date)
-    contactNoImage.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(.now.dateByAdding(-364, .day).date)
+      .setOriginDate(.now.dateAt(.startOfDay))
 
     self.contactsService.context.saveChanges()
     // ******** TODO: mmk delete
@@ -68,17 +69,44 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     presenter?.contactsChanged()
   }
 
+  func setSortingByNearestEvents() {
+    contactsService.updateFetchRequest(Self.fetchRequestSortByNearestEvents)
+  }
+
+  func setSortingAlphabetically() {
+    contactsService.updateFetchRequest(Self.fetchRequestSortAlphabetically)
+  }
+
+  func fetchContacts() {
+    contactsService.fetchContacts()
+  }
+
   deinit {
     contactsService.removeObserver(from: self)
   }
 
 }
 
+// MARK: - Private methods
 private extension ContactsScreenInteractor {
 
   @objc
   private func contactsDidChange(_ notification: Notification) {
     presenter?.contactsChanged()
   }
+
+}
+
+// MARK: - Static
+extension ContactsScreenInteractor {
+
+  private static let fetchRequestSortByNearestEvents = Contact.fetchRequestWithSorting(descriptors: [
+    .init(keyPath: \Contact.nearestEventDate, ascending: true)
+  ])
+
+  private static let fetchRequestSortAlphabetically = Contact.fetchRequestWithSorting(descriptors: [
+    .init(keyPath: \Contact.lastName, ascending: true),
+    .init(keyPath: \Contact.firstName, ascending: true)
+  ])
 
 }

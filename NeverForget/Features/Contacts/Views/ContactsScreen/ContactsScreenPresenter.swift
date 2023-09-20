@@ -11,7 +11,10 @@ protocol IContactsScreenPresenter: AnyObject {
   func viewDidLoad()
   func getContactsCount() -> Int
   func getContact(at indexPath: IndexPath) -> Contact
+  func getContacts() -> [Contact]
   func checkIsContactLastInTheList(_ contact: Contact) -> Bool
+  func setSortingByNearestEvents()
+  func setSortingAlphabetically()
 
   func contactsChanged()
 }
@@ -32,6 +35,10 @@ class ContactsScreenPresenter: IContactsScreenPresenter {
     interactor.initialFetchContacts()
   }
 
+  func getContacts() -> [Contact] {
+    interactor.contacts
+  }
+
   func getContactsCount() -> Int {
     interactor.contacts.count
   }
@@ -46,6 +53,18 @@ class ContactsScreenPresenter: IContactsScreenPresenter {
     }
 
     return contact.id == lastContact.id
+  }
+
+  func setSortingByNearestEvents() {
+    interactor.setSortingByNearestEvents()
+    interactor.fetchContacts()
+    contactsChanged()
+  }
+
+  func setSortingAlphabetically() {
+    interactor.setSortingAlphabetically()
+    interactor.fetchContacts()
+    contactsChanged()
   }
 
   func contactsChanged() {

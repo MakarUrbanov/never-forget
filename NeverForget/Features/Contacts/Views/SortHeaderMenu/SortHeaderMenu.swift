@@ -18,14 +18,13 @@ typealias OptionalCallback<T> = T?
 protocol ISortHeaderMenu: UIView {
   var selectedItem: SortingMenuItem { get }
 
-  var selectedItemDidChange: ((_ selectedItem: SortingMenuItem) -> Void)? { get set }
+  var delegate: ISortHeaderMenuDelegate? { get set }
 
   func setSelectedItem(_ item: SortingMenuItem)
 }
 
 // MARK: - SortHeaderMenu
 class SortHeaderMenu: UIControl, ISortHeaderMenu {
-  var selectedItemDidChange: ((SortingMenuItem) -> Void)?
 
   var selectedItem: SortingMenuItem
 
@@ -136,14 +135,18 @@ private extension SortHeaderMenu {
       title: NSLocalizedString("Alphabetically", comment: "Sorting type"),
       state: selectedItem == .alphabetically ? .on : .off
     ) { _ in
-      self.setSelectedItem(.alphabetically)
+      if self.selectedItem != .alphabetically {
+        self.setSelectedItem(.alphabetically)
+      }
     }
 
     let byNearestEvent = UIAction(
       title: NSLocalizedString("By nearest event", comment: "Sorting type"),
       state: selectedItem == .byNearestEvents ? .on : .off
     ) { _ in
-      self.setSelectedItem(.byNearestEvents)
+      if self.selectedItem != .byNearestEvents {
+        self.setSelectedItem(.byNearestEvents)
+      }
     }
 
     let menu = UIMenu(

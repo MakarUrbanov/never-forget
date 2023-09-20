@@ -119,7 +119,7 @@ extension ContactCellView {
   private func configureContentStackView() {
     contentStackView.axis = .horizontal
     contentStackView.spacing = 0
-    contentStackView.distribution = .fillProportionally
+    contentStackView.distribution = .fill
     contentStackView.alignment = .center
 
     contentView.addSubview(contentStackView)
@@ -134,7 +134,7 @@ extension ContactCellView {
     contentStackView.addArrangedSubview(contactImageView)
 
     contactImageView.snp.makeConstraints { make in
-      make.width.greaterThanOrEqualTo(1)
+      make.width.equalTo(44)
       make.height.equalTo(contactImageView.snp.width)
     }
   }

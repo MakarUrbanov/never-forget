@@ -18,15 +18,18 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
   var presenter: IContactsScreenPresenter
 
   // MARK: - Private properties
-  private let contactsCount: IContactsCountView = ContactsCountView()
+  private let contactsCountView: IContactsCountView = ContactsCountView()
+  private var sortingHeaderMenu: ISortHeaderMenu = SortHeaderMenu(selectedItem: .byNearestEvents)
+
   private let contactsTableView = UITableView(frame: .zero, style: .plain)
-  private var sortingHeaderMenu: ISortHeaderMenu
+  private var diffableDataSource: UITableViewDiffableDataSource<Int, Contact>!
 
   init(presenter: IContactsScreenPresenter) {
     self.presenter = presenter
-    sortingHeaderMenu = SortHeaderMenu(selectedItem: .alphabetically)
 
     super.init(nibName: nil, bundle: nil)
+
+    diffableDataSource = getDiffableDataSource()
   }
 
   @available(*, unavailable)
@@ -44,13 +47,64 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
 
   // MARK: - Public methods
   func contactsChanged() {
-    contactsCount.setContactsCount(presenter.getContactsCount())
-    contactsTableView.reloadData()
+    let newContacts = presenter.getContacts()
+    let contactsCount = presenter.getContactsCount()
+
+    contactsCountView.setContactsCount(contactsCount)
+    configureContactsSnapshot(with: newContacts, animated: true)
   }
 
 }
 
-extension ContactsScreenViewController: UIEditMenuInteractionDelegate {}
+// MARK: - Private methods
+private extension ContactsScreenViewController {
+
+  private func setSortingByNearestEvents() {
+    presenter.setSortingByNearestEvents()
+  }
+
+  private func setSortingAlphabetically() {
+    presenter.setSortingAlphabetically()
+  }
+
+  private func configureContactsSnapshot(with contacts: [Contact], animated: Bool = false) {
+    var snapshot = diffableDataSource.snapshot()
+    if snapshot.numberOfSections == 0 {
+      snapshot.appendSections([0])
+    }
+
+    snapshot.appendItems(contacts)
+
+    diffableDataSource.apply(snapshot, animatingDifferences: animated)
+  }
+
+  private func getDiffableDataSource() -> UITableViewDiffableDataSource<Int, Contact> {
+    let dataSource: UITableViewDiffableDataSource<Int, Contact> = UITableViewDiffableDataSource(
+      tableView: contactsTableView
+    ) { tableView, indexPath, contact in
+      guard
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: Self.contactCellIdentifier, for: indexPath
+        ) as? ContactCellView else
+      {
+        fatalError()
+      }
+
+      let contact = self.presenter.getContact(at: indexPath)
+      let isVisibleSeparator = !self.presenter.checkIsContactLastInTheList(contact)
+
+      cell.configure(contact)
+      cell.configureSeparatorVisibility(isVisibleSeparator)
+
+      return cell
+    }
+
+    dataSource.defaultRowAnimation = .fade
+
+    return dataSource
+  }
+
+}
 
 // MARK: - Private UI methods
 private extension ContactsScreenViewController {
@@ -62,7 +116,7 @@ private extension ContactsScreenViewController {
   }
 
   private func initializeNavigationBar() {
-    let leftBarButtonItem = UIBarButtonItem(customView: contactsCount)
+    let leftBarButtonItem = UIBarButtonItem(customView: contactsCountView)
     navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
 
     // TODO: mmk impl in the future
@@ -72,13 +126,13 @@ private extension ContactsScreenViewController {
   }
 
   private func initializeSortingHeaderMenu() {
+    sortingHeaderMenu.delegate = self
+
     view.addSubview(sortingHeaderMenu)
 
     sortingHeaderMenu.snp.makeConstraints { make in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.height.equalTo(50)
-//      make.leading.equalToSuperview().offset(UIConstants.horizontalInset)
-//      make.trailing.equalTo(sortingHeaderMenu.snp.trailing)
       make.horizontalEdges.equalToSuperview().inset(UIConstants.horizontalInset)
     }
   }
@@ -86,8 +140,8 @@ private extension ContactsScreenViewController {
   private func initializeTableView() {
     contactsTableView.register(ContactCellView.self, forCellReuseIdentifier: Self.contactCellIdentifier)
     contactsTableView.backgroundColor = .clear
-    contactsTableView.dataSource = self
-    contactsTableView.delegate = self
+    contactsTableView.dataSource = diffableDataSource
+//    contactsTableView.delegate = self
     contactsTableView.separatorColor = .clear
     contactsTableView.showsVerticalScrollIndicator = false
 
@@ -102,40 +156,17 @@ private extension ContactsScreenViewController {
 
 }
 
-// MARK: - UITableViewDataSource
-extension ContactsScreenViewController: UITableViewDataSource {
+// MARK: - ISortHeaderMenuDelegate
+extension ContactsScreenViewController: ISortHeaderMenuDelegate {
 
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    UIConstants.cellHeight
-  }
-
-}
-
-// MARK: - UITableViewDelegate
-extension ContactsScreenViewController: UITableViewDelegate {
-
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    presenter.getContactsCount()
-  }
-
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier: Self.contactCellIdentifier, for: indexPath
-      ) as? ContactCellView else
-    {
-      fatalError()
+  func selectedItemDidChange(_ selectedItem: SortingMenuItem) {
+    switch selectedItem {
+      case .alphabetically:
+        setSortingAlphabetically()
+      case .byNearestEvents:
+        setSortingByNearestEvents()
     }
-
-    let contact = presenter.getContact(at: indexPath)
-    let isVisibleSeparator = !presenter.checkIsContactLastInTheList(contact)
-
-    cell.configure(contact)
-    cell.configureSeparatorVisibility(isVisibleSeparator)
-
-    return cell
   }
-
 
 }
 
