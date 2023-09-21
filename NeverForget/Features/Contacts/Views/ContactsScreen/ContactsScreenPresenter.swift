@@ -15,7 +15,8 @@ protocol IContactsScreenPresenter: AnyObject {
   func checkIsContactLastInTheList(_ contact: Contact) -> Bool
   func setSortingByNearestEvents()
   func setSortingAlphabetically()
-
+  func openContactProfile(_ contact: Contact)
+  func presentCreateNewProfile()
   func contactsChanged()
 }
 
@@ -65,6 +66,15 @@ class ContactsScreenPresenter: IContactsScreenPresenter {
     interactor.setSortingAlphabetically()
     interactor.fetchContacts()
     contactsChanged()
+  }
+
+  func openContactProfile(_ contact: Contact) {
+    let contactId = contact.objectID
+    router.presentContactProfile(contactId)
+  }
+
+  func presentCreateNewProfile() {
+    router.presentCreateNewContact()
   }
 
   func contactsChanged() {

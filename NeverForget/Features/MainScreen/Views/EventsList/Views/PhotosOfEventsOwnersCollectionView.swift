@@ -160,6 +160,10 @@ extension PhotosOfEventsOwnersCollectionView {
     let id: UUID = .init()
     var image: Data?
     var letter: String?
+
+    func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
   }
 
 }

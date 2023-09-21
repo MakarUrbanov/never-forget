@@ -6,12 +6,18 @@
 //
 
 import CoreData
+import IQKeyboardManagerSwift
 import NFCore
 import UIKit
 
 @main final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    IQKeyboardManager.shared.enable = true
+    IQKeyboardManager.shared.toolbarTintColor = UIColor(resource: .main100)
+//    IQKeyboardManager.shared.enableAutoToolbar = false
+    IQKeyboardManager.shared.keyboardDistanceFromTextField = 40
+
     return true
   }
 

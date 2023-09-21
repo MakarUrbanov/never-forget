@@ -131,6 +131,8 @@ private extension EventTableViewCell {
   }
 
   private func initializeOwnersPhotos() {
+    ownersPhotos.isUserInteractionEnabled = false
+
     contentView.addSubview(ownersPhotos)
 
     ownersPhotos.snp.makeConstraints { make in

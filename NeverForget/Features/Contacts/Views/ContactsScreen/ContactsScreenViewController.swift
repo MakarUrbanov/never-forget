@@ -121,7 +121,11 @@ private extension ContactsScreenViewController {
 
     // TODO: mmk impl in the future
     //    let filterContactsButton = UIBarButtonItem(customView: FilterContactsButton())
-    let addNewContactButton = UIBarButtonItem(customView: AddNewContactButton())
+    let addNewContactButton = UIBarButtonItem(
+      customView: AddNewContactButton(presentCreateNewProfile: { [weak self] in
+        self?.presenter.presentCreateNewProfile()
+      })
+    )
     navigationItem.setRightBarButtonItems([addNewContactButton], animated: false)
   }
 
@@ -141,7 +145,7 @@ private extension ContactsScreenViewController {
     contactsTableView.register(ContactCellView.self, forCellReuseIdentifier: Self.contactCellIdentifier)
     contactsTableView.backgroundColor = .clear
     contactsTableView.dataSource = diffableDataSource
-//    contactsTableView.delegate = self
+    contactsTableView.delegate = self
     contactsTableView.separatorColor = .clear
     contactsTableView.showsVerticalScrollIndicator = false
 
@@ -152,6 +156,16 @@ private extension ContactsScreenViewController {
       make.top.equalTo(sortingHeaderMenu.snp.bottom)
       make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
+  }
+
+}
+
+// MARK: - UITableViewDelegate
+extension ContactsScreenViewController: UITableViewDelegate {
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let selectedContact = presenter.getContact(at: indexPath)
+    presenter.openContactProfile(selectedContact)
   }
 
 }

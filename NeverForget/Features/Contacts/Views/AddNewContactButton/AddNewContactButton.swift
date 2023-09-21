@@ -11,8 +11,14 @@ protocol IAddNewContactButton: UIButton {}
 
 class AddNewContactButton: UIButton, IAddNewContactButton {
 
-  init() {
+  private var presentCreateNewProfile: () -> Void
+
+  init(presentCreateNewProfile: @escaping () -> Void) {
+    self.presentCreateNewProfile = presentCreateNewProfile
+
     super.init(frame: .init(x: 0, y: 0, width: 36, height: 36))
+
+    addTarget(self, action: #selector(didTap), for: .touchUpInside)
 
     clipsToBounds = true
     backgroundColor = UIColor(resource: .main100)
@@ -28,6 +34,16 @@ class AddNewContactButton: UIButton, IAddNewContactButton {
   override func layoutSubviews() {
     super.layoutSubviews()
     makeCircle()
+  }
+
+}
+
+// MARK: - Private methods
+private extension AddNewContactButton {
+
+  @objc
+  func didTap() {
+    presentCreateNewProfile()
   }
 
 }

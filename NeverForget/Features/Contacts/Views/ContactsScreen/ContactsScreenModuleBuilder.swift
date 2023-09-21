@@ -9,9 +9,9 @@ import UIKit
 
 enum ContactsScreenModuleBuilder {
 
-  static func build(contactsService: IContactsCoreDataService) -> IContactsScreenView {
+  static func build(coordinator: IContactsListCoordinator, contactsService: IContactsCoreDataService) -> IContactsScreenView {
     let interactor = ContactsScreenInteractor(contactsService: contactsService)
-    let router = ContactsScreenRouter()
+    let router = ContactsScreenRouter(coordinator: coordinator)
     let presenter = ContactsScreenPresenter(interactor: interactor, router: router)
     let viewController = ContactsScreenViewController(presenter: presenter)
 

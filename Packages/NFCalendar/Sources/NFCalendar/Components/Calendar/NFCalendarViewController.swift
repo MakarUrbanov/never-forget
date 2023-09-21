@@ -5,7 +5,6 @@
 //  Created by Makar Mishchenko on 06.09.2023.
 //
 
-import NFCore
 import SnapKit
 import UIKit
 
