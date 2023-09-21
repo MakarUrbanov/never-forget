@@ -1,22 +1,30 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Add" : {
-      "extractionState" : "stale",
+    "Alphabetically" : {
+      "comment" : "Sorting type",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добавить"
+            "value" : "По алфавиту"
           }
         }
       }
     },
-    "Add your first contact" : {
-
+    "By nearest event" : {
+      "comment" : "Sorting type",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По ближайшему событию"
+          }
+        }
+      }
     },
     "Calendar" : {
-      "extractionState" : "stale",
+      "comment" : "switcher item. view name",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -26,51 +34,53 @@
         }
       }
     },
-    "Cancel" : {
-      "extractionState" : "stale",
+    "Contacts" : {
+      "comment" : "tab name\ncontacts count label",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отменить"
+            "value" : "Контакты"
           }
         }
       }
     },
-    "Date of birth: *" : {
-
-    },
-    "Delete" : {
-      "extractionState" : "stale",
+    "Event in %@ days" : {
+      "extractionState" : "manual",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить"
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Event in %11d day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Event in %@ daysss"
+                }
+              }
+            }
           }
         }
       }
     },
-    "Description" : {
-      "extractionState" : "stale",
+    "Event today" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Описание"
+            "value" : "Событие сегодня"
           }
         }
       }
     },
     "List" : {
-      "extractionState" : "stale",
+      "comment" : "switcher item. view name",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "List"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -80,14 +90,8 @@
       }
     },
     "Main" : {
-      "extractionState" : "stale",
+      "comment" : "tab name",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Main"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -96,44 +100,48 @@
         }
       }
     },
-    "Notification times (%@)" : {
-
-    },
-    "Photo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Фото"
-          }
-        }
-      }
-    },
-    "Save" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сохранить"
-          }
-        }
-      }
+    "Notifications (%@)" : {
+      "comment" : "Count of notifications"
     },
     "Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "Sorting" : {
+      "comment" : "Sorting by rule",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сортировка"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "comment" : "today label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
+        }
+      }
+    },
+    "Tomorrow" : {
+      "comment" : "tomorrow label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра"
           }
         }
       }

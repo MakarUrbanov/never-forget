@@ -11,14 +11,14 @@ import UIKit
 
 // MARK: - Protocol
 protocol IMainScreenCoordinator: NavigationCoordinator {
-  func handleDeepLink(_ deepLink: NFLNDeepLink?)
+  func handleDeepLink(_ deepLink: NFLNDeepLink?) // TODO: mmk temp solution
 }
 
 // MARK: - Coordinator
 final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
 
   var childCoordinators: [Coordinator] = []
-  var navigationController: UINavigationController = .init()
+  var navigationController: UINavigationController = MainScreenNavigationController()
 
   func start() {
     let mainScreen = Self.initializeMainScreenView()
