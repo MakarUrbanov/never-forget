@@ -13,16 +13,12 @@ import UIKit
 @main final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    IQKeyboardManager.shared.enable = true
-    IQKeyboardManager.shared.toolbarTintColor = UIColor(resource: .main100)
-//    IQKeyboardManager.shared.enableAutoToolbar = false
-    IQKeyboardManager.shared.keyboardDistanceFromTextField = 40
+    configureIQKeyboardManager()
 
     return true
   }
 
   // MARK: UISceneSession Lifecycle
-
   func application(
     _: UIApplication,
     configurationForConnecting connectingSceneSession: UISceneSession,
@@ -32,4 +28,15 @@ import UIKit
   }
 
   func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {}
+}
+
+// MARK: - Configure IQKeyboardManager
+extension AppDelegate {
+
+  private func configureIQKeyboardManager() {
+    IQKeyboardManager.shared.enable = true
+    IQKeyboardManager.shared.toolbarTintColor = UIColor(resource: .main100)
+    IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
+  }
+
 }

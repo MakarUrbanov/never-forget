@@ -5,8 +5,7 @@
 //  Created by Makar Mishchenko on 21.09.2023
 //
 
-protocol IContactProfileInteractor: AnyObject {
-}
+protocol IContactProfileInteractor: AnyObject {}
 
 class ContactProfileInteractor: IContactProfileInteractor {
 

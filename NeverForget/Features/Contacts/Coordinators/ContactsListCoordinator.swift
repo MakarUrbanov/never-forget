@@ -13,10 +13,10 @@ import UIKit
 protocol IContactsListCoordinator: NavigationCoordinator {
   func presentContactProfile(contactId: NSManagedObjectID)
   func presentCreateNewContact()
-  func dismissContactProfile()
 }
 
 final class ContactsListCoordinator: NavigationCoordinator, ObservableObject, IContactsListCoordinator {
+
   var childCoordinators: [Coordinator] = []
   var navigationController: UINavigationController = .init()
 
@@ -32,9 +32,14 @@ extension ContactsListCoordinator {
 
   static let contactProfileContext = CoreDataStack.shared.backgroundContext
 
-  private func presentContactProfile(_ contact: Contact) {
-    let viewController = ContactProfileModuleBuilder.build(contact: contact, coordinator: self)
-    navigationController.navigate(step: .present(viewController, .pageSheet), animated: true)
+  private func presentContactProfileCoordinator(_ contact: Contact) {
+    let coordinator = ContactProfileCoordinator()
+    coordinator.start()
+    coordinator.delegate = self
+    childCoordinators.append(coordinator)
+    coordinator.showContactProfile(for: contact)
+
+    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
   }
 
   func presentContactProfile(contactId: NSManagedObjectID) {
@@ -45,20 +50,24 @@ extension ContactsListCoordinator {
       fatalError()
     }
 
-    presentContactProfile(contact)
+    presentContactProfileCoordinator(contact)
   }
 
   func presentCreateNewContact() {
     let context = Self.contactProfileContext
     let newContact = Contact(context: context)
 
-    presentContactProfile(newContact)
+    presentContactProfileCoordinator(newContact)
   }
 
-  func dismissContactProfile() {
-    if (navigationController.topViewController as? IContactProfileView) != nil {
-      navigationController.popViewController(animated: true)
-    }
+}
+
+// MARK: - IContactProfileCoordinatorDelegate
+extension ContactsListCoordinator: IContactProfileCoordinatorDelegate {
+
+  func closeProfileCoordinator(_ coordinator: IContactProfileCoordinator) {
+    navigationController.navigate(step: .dismiss)
+    childCoordinators.removeAll(where: { $0 === coordinator })
   }
 
 }

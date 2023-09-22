@@ -95,9 +95,6 @@ force_try: warning
 
 legacy_hashing: error
 
-collection_alignment:
-  align_colons: true
-
 force_unwrapping:
   severity: warning
 

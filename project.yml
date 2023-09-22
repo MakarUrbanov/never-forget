@@ -1,15 +1,23 @@
 name: NeverForget
 options:
-  minimumVersion: "16.2"
   minimumXcodeGenVersion: 2.37.0
   groupSortPosition: top
   usesTabs: false
+  generateEmptyDirectories: true
   indentWidth: 2
   tabWidth: 2
-  xcodeVersion: 14.3.1
+  xcodeVersion: 15.0
   localPackagesGroup: "Packages"
   deploymentTarget:
-    iOS: "16.2"
+    iOS: "16.0"
+
+################################################
+# Settings
+################################################
+settings:
+  IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+  MARKETING_VERSION: "1.0.0"
+  CURRENT_PROJECT_VERSION: 1
 
 ################################################
 # Packages
@@ -21,6 +29,12 @@ packages:
   SwiftDate:
     url: "https://github.com/malcommac/SwiftDate.git"
     from: "7.0.0"
+  IQKeyboardManagerSwift:
+    url: "https://github.com/hackiftekhar/IQKeyboardManager.git"
+    from: "6.5.0"
+
+  NFCore:
+    path: "Packages/NFCore"
   NFLogger:
     path: "Packages/NFLogger"
   NFLocalNotificationsManager:
@@ -35,7 +49,7 @@ targets:
   NeverForget:
     type: application
     platform: iOS
-    deploymentTarget: "16.2"
+    deploymentTarget: "16.0"
 
     settings:
       TARGETED_DEVICE_FAMILY: 1
@@ -49,19 +63,16 @@ targets:
     sources:
       - "NeverForget"
 
-################################################
-# DEPENDENCIES
-################################################
     dependencies:
       - package: SnapKit
       - package: SwiftDate
+      - package: IQKeyboardManagerSwift
+
+      - package: NFCore
       - package: NFLogger
       - package: NFLocalNotificationsManager
       - package: NFCalendar
 
-################################################
-# Scripts
-################################################
     postCompileScripts:
       - path: "Scripts/swiftFormat.sh"
         name: ⚠️ SwiftFormat

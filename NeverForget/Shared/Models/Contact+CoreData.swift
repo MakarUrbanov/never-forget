@@ -42,7 +42,7 @@ public class Contact: NSManagedObject, Identifiable {
     startUpdatingNearestEventDate()
   }
 
-  public override func didSave() {
+  override public func didSave() {
     super.didSave()
     finishUpdatingNearestEventDate()
   }
@@ -108,7 +108,7 @@ extension Contact {
     }
 
     if let newNearestEventDate {
-      self.nearestEventDate = newNearestEventDate
+      nearestEventDate = newNearestEventDate
     }
   }
 
