@@ -80,3 +80,6 @@ targets:
       - path: "Scripts/swiftLint.sh"
         name: ⚠️ SwiftLint
         basedOnDependencyAnalysis: false
+      - path: "Scripts/unused.sh"
+        name: ⚠️ Unused
+        basedOnDependencyAnalysis: false
