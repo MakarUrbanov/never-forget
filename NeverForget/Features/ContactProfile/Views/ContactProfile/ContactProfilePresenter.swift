@@ -6,7 +6,6 @@
 //
 
 protocol IContactProfilePresenter: AnyObject {
-  func viewDidLoad()
   func closeProfile()
 }
 
@@ -23,8 +22,6 @@ class ContactProfilePresenter: IContactProfilePresenter {
   }
 
   // MARK: - Public methods
-  func viewDidLoad() {}
-
   func closeProfile() {
     router.closeProfile()
   }

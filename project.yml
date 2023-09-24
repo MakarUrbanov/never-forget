@@ -41,6 +41,8 @@ packages:
     path: "Packages/NFLocalNotificationsManager"
   NFCalendar:
     path: "Packages/NFCalendar"
+  NFFormValidator:
+    path: "Packages/NFFormValidator"
 
 ################################################
 # Targets
@@ -72,6 +74,7 @@ targets:
       - package: NFLogger
       - package: NFLocalNotificationsManager
       - package: NFCalendar
+      - package: NFFormValidator
 
     postCompileScripts:
       - path: "Scripts/swiftFormat.sh"
@@ -79,7 +82,4 @@ targets:
         basedOnDependencyAnalysis: false
       - path: "Scripts/swiftLint.sh"
         name: ⚠️ SwiftLint
-        basedOnDependencyAnalysis: false
-      - path: "Scripts/unused.sh"
-        name: ⚠️ Unused
         basedOnDependencyAnalysis: false

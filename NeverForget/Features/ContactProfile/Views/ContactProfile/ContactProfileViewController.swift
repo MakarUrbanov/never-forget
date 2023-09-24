@@ -44,13 +44,27 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
     view.backgroundColor = UIColor(resource: .darkBackground)
 
     initialize()
-
-    presenter.viewDidLoad()
   }
 
   @objc func handleSwipeDown() {
     view.endEditing(true)
   }
+}
+
+// MARK: - Private methods
+private extension ContactProfileViewController {
+
+  @objc
+  private func didPressCreateContactButton() {
+    let viewController = UIViewController()
+    viewController.view.backgroundColor = .red
+    navigationController?.navigate(step: .push(viewController))
+  }
+
+  private func setFocus(from textField: UITextField, to tagOfTextField: TextFieldTag) {
+    textField.superview?.viewWithTag(tagOfTextField.rawValue)?.becomeFirstResponder()
+  }
+
 }
 
 // MARK: - Setup UI methods
@@ -216,23 +230,6 @@ private extension ContactProfileViewController {
       make.bottom.equalToSuperview().inset(40)
       make.height.equalTo(UIConstants.textFieldHeight)
     }
-  }
-
-}
-
-// MARK: - Private methods
-private extension ContactProfileViewController {
-
-  @objc
-  private func didPressCreateContactButton() {
-    print("mmk navigation", navigationController == nil ? "NIL" : "WOW!!!!!!")
-    let viewController = UIViewController()
-    viewController.view.backgroundColor = .red
-    navigationController?.navigate(step: .push(viewController))
-  }
-
-  private func setFocus(from textField: UITextField, to tagOfTextField: TextFieldTag) {
-    textField.superview?.viewWithTag(tagOfTextField.rawValue)?.becomeFirstResponder()
   }
 
 }
