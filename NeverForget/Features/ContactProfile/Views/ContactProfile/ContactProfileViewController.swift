@@ -46,9 +46,6 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
     initialize()
   }
 
-  @objc func handleSwipeDown() {
-    view.endEditing(true)
-  }
 }
 
 // MARK: - Private methods
@@ -56,13 +53,10 @@ private extension ContactProfileViewController {
 
   @objc
   private func didPressCreateContactButton() {
-    let viewController = UIViewController()
-    viewController.view.backgroundColor = .red
-    navigationController?.navigate(step: .push(viewController))
-  }
-
-  private func setFocus(from textField: UITextField, to tagOfTextField: TextFieldTag) {
-    textField.superview?.viewWithTag(tagOfTextField.rawValue)?.becomeFirstResponder()
+//    let viewController = UIViewController()
+//    viewController.view.backgroundColor = .red
+//    navigationController?.navigate(step: .push(viewController))
+    presenter.createContactDidPress()
   }
 
 }
@@ -178,10 +172,10 @@ private extension ContactProfileViewController {
     lastNameTextField.setPlaceholder(String(localized: "Enter last name"))
     lastNameTextField.isRequiredField = true
     lastNameTextField.setTitle(String(localized: "Last name"))
+    presenter.setupLastNameValidation(lastNameTextField)
 
-    lastNameTextField.tag = TextFieldTag.firstName.rawValue
-    lastNameTextField.textField.didPressedKeyboardReturn = { [weak self] textField in
-      self?.setFocus(from: textField, to: .secondName)
+    lastNameTextField.textField.didPressedKeyboardReturn = { [weak self] _ in
+      self?.firstNameTextField.textField.becomeFirstResponder()
     }
 
     contentContainerView.addSubview(lastNameTextField)
@@ -198,10 +192,10 @@ private extension ContactProfileViewController {
     firstNameTextField.setPlaceholder(String(localized: "Enter name"))
     firstNameTextField.isRequiredField = true
     firstNameTextField.setTitle(String(localized: "Name"))
+    presenter.setupFirstNameValidation(firstNameTextField)
 
-    firstNameTextField.tag = TextFieldTag.secondName.rawValue
-    firstNameTextField.textField.didPressedKeyboardReturn = { [weak self] textField in
-      self?.setFocus(from: textField, to: .middleName)
+    firstNameTextField.textField.didPressedKeyboardReturn = { [weak self] _ in
+      self?.middleNameTextField.textField.becomeFirstResponder()
     }
 
     contentContainerView.addSubview(firstNameTextField)
@@ -217,7 +211,6 @@ private extension ContactProfileViewController {
     middleNameTextField.setPlaceholder(String(localized: "Enter middle name"))
     middleNameTextField.setTitle(String(localized: "Middle name"))
 
-    middleNameTextField.tag = TextFieldTag.middleName.rawValue
     middleNameTextField.textField.didPressedKeyboardReturn = { textField in
       textField.resignFirstResponder()
     }
@@ -239,8 +232,8 @@ extension ContactProfileViewController {
 
   enum UIConstants {
     static let verticalInset: CGFloat = 16
-    static let textFieldHeight: CGFloat = 72
-    static let spacingAmongTextFields: CGFloat = 20
+    static let textFieldHeight: CGFloat = 88
+    static let spacingAmongTextFields: CGFloat = 6
   }
 
   enum TextFieldTag: Int {

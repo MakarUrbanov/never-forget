@@ -7,6 +7,9 @@
 
 protocol IContactProfilePresenter: AnyObject {
   func closeProfile()
+  func createContactDidPress()
+  func setupLastNameValidation(_ textField: TitledTextField)
+  func setupFirstNameValidation(_ textField: TitledTextField)
 }
 
 class ContactProfilePresenter: IContactProfilePresenter {
@@ -24,6 +27,30 @@ class ContactProfilePresenter: IContactProfilePresenter {
   // MARK: - Public methods
   func closeProfile() {
     router.closeProfile()
+  }
+
+  func createContactDidPress() {
+    interactor.startValidating()
+    let isValid = interactor.validate()
+
+    if !isValid {
+      return
+    }
+
+    // TODO: mmk impl next
+  }
+
+}
+
+// MARK: - Configure fields
+extension ContactProfilePresenter {
+
+  func setupLastNameValidation(_ textField: TitledTextField) {
+    interactor.setupLastNameValidation(textField)
+  }
+
+  func setupFirstNameValidation(_ textField: TitledTextField) {
+    interactor.setupFirstNameValidation(textField)
   }
 
 }

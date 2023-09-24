@@ -29,7 +29,7 @@ class TitledTextField: UIStackView, ITitledTextField {
     super.init(frame: .zero)
 
     axis = .vertical
-    alignment = .fill
+    alignment = .leading
 
     initialize()
   }
@@ -62,7 +62,7 @@ class TitledTextField: UIStackView, ITitledTextField {
   }
 
   func hideError() {
-    errorLabel.text = ""
+    errorLabel.text = " "
     textField.layer.borderColor = UIConstants.borderColor.cgColor
   }
 
@@ -94,6 +94,10 @@ private extension TitledTextField {
     titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
     addArrangedSubview(titleLabel)
+
+    titleLabel.snp.makeConstraints { make in
+      make.horizontalEdges.equalToSuperview()
+    }
   }
 
   private func configureTextField() {
@@ -106,17 +110,27 @@ private extension TitledTextField {
 
     addArrangedSubview(textField)
     setCustomSpacing(12, after: titleLabel)
+
+    textField.snp.makeConstraints { make in
+      make.horizontalEdges.equalToSuperview()
+    }
   }
 
   private func configureErrorLabel() {
     errorLabel.font = .systemFont(ofSize: 10, weight: .regular)
     errorLabel.textColor = UIColor(resource: .error100)
+    errorLabel.text = " "
+
     errorLabel.numberOfLines = 1
     errorLabel.textAlignment = .left
-    errorLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+    errorLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 
     addArrangedSubview(errorLabel)
-    setCustomSpacing(8, after: textField)
+    setCustomSpacing(4, after: textField)
+
+    errorLabel.snp.makeConstraints { make in
+      make.horizontalEdges.equalToSuperview()
+    }
   }
 
 }
@@ -148,7 +162,7 @@ import SwiftUI
   textField.snp.makeConstraints { make in
     make.center.equalToSuperview()
     make.width.equalToSuperview().multipliedBy(0.8)
-    make.height.equalTo(80)
+    make.height.equalTo(84)
   }
 
   return viewController.makePreview()
