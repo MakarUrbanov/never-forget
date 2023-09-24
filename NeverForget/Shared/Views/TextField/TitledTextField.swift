@@ -7,29 +7,35 @@
 
 import UIKit
 
-protocol ITitledTextField: UIView {
+protocol ITitledTextField: UIStackView {
   var textField: EnhancedTextField { get }
   var isRequiredField: Bool { get set }
   func setPlaceholder(_ placeholder: String)
   func setTitle(_ title: String)
+  func setError(_ errorText: String)
+  func hideError()
 }
 
-class TitledTextField: UIView, ITitledTextField {
+class TitledTextField: UIStackView, ITitledTextField {
 
   var isRequiredField: Bool = false
 
-  var textField: EnhancedTextField = .init()
+  lazy var textField: EnhancedTextField = .init()
 
   private lazy var titleLabel = UILabel()
+  private lazy var errorLabel = UILabel()
 
   override init(frame: CGRect) {
     super.init(frame: .zero)
+
+    axis = .vertical
+    alignment = .fill
 
     initialize()
   }
 
   @available(*, unavailable)
-  required init?(coder: NSCoder) {
+  required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -50,6 +56,16 @@ class TitledTextField: UIView, ITitledTextField {
     titleLabel.text = configureStringByIsRequiredFieldValue(title)
   }
 
+  func setError(_ errorText: String) {
+    errorLabel.text = errorText
+    textField.layer.borderColor = UIConstants.borderErrorColor.cgColor
+  }
+
+  func hideError() {
+    errorLabel.text = ""
+    textField.layer.borderColor = UIConstants.borderColor.cgColor
+  }
+
 }
 
 // MARK: - Private methods
@@ -67,6 +83,7 @@ private extension TitledTextField {
   private func initialize() {
     setupTitle()
     configureTextField()
+    configureErrorLabel()
   }
 
   private func setupTitle() {
@@ -74,27 +91,65 @@ private extension TitledTextField {
     titleLabel.textColor = UIColor(resource: .textLight100)
     titleLabel.numberOfLines = 1
     titleLabel.textAlignment = .left
+    titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
-    addSubview(titleLabel)
-
-    titleLabel.snp.makeConstraints { make in
-      make.leading.top.trailing.equalToSuperview()
-    }
+    addArrangedSubview(titleLabel)
   }
 
   private func configureTextField() {
     textField.layer.cornerRadius = 8
     textField.leftView = UIView(frame: .init(origin: .zero, size: .init(width: 16, height: 0)))
     textField.leftViewMode = .always
-    textField.layer.borderColor = UIColor(resource: .textLight100).withAlphaComponent(0.08).cgColor
+    textField.layer.borderColor = UIConstants.borderColor.cgColor
     textField.layer.borderWidth = 1
+    textField.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-    addSubview(textField)
-
-    textField.snp.makeConstraints { make in
-      make.leading.trailing.bottom.equalToSuperview()
-      make.top.equalTo(titleLabel.snp.bottom).offset(12)
-    }
+    addArrangedSubview(textField)
+    setCustomSpacing(12, after: titleLabel)
   }
 
+  private func configureErrorLabel() {
+    errorLabel.font = .systemFont(ofSize: 10, weight: .regular)
+    errorLabel.textColor = UIColor(resource: .error100)
+    errorLabel.numberOfLines = 1
+    errorLabel.textAlignment = .left
+    errorLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
+    addArrangedSubview(errorLabel)
+    setCustomSpacing(8, after: textField)
+  }
+
+}
+
+// MARK: - Static
+extension TitledTextField {
+
+  enum UIConstants {
+    static let borderColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
+    static let borderErrorColor = UIColor(resource: .error).withAlphaComponent(0.3)
+  }
+
+}
+
+// MARK: - Preview
+import SwiftUI
+
+#Preview {
+  let viewController = UIViewController()
+  viewController.view.backgroundColor = UIColor(resource: .darkBackground)
+  let textField = TitledTextField()
+  textField.isRequiredField = true
+  textField.setTitle("Title")
+  textField.setPlaceholder("Placeholder...")
+  textField.setError("Test error message...")
+
+  viewController.view.addSubview(textField)
+
+  textField.snp.makeConstraints { make in
+    make.center.equalToSuperview()
+    make.width.equalToSuperview().multipliedBy(0.8)
+    make.height.equalTo(80)
+  }
+
+  return viewController.makePreview()
 }

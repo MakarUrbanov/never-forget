@@ -5,9 +5,7 @@
 //  Created by makar on 2/5/23.
 //
 
-import CoreData
 import IQKeyboardManagerSwift
-import NFCore
 import UIKit
 
 @main final class AppDelegate: UIResponder, UIApplicationDelegate {
