@@ -13,7 +13,8 @@ protocol IContactProfileCoordinatorDelegate: AnyObject {
 }
 
 protocol IContactProfileCoordinator: NavigationCoordinator {
-  func showContactProfile(for contact: Contact)
+  func presentContactProfile(for contact: Contact)
+  func presentCreateContact()
   func closeContactCoordinator()
 }
 
@@ -28,8 +29,14 @@ class ContactProfileCoordinator: NavigationCoordinator, IContactProfileCoordinat
     setupNavigationController()
   }
 
-  func showContactProfile(for contact: Contact) {
-    let viewController = ContactProfileModuleBuilder.build(contact: contact, coordinator: self)
+  func presentContactProfile(for contact: Contact) {
+    let viewController = ContactProfileModuleBuilder.buildEditContact(contact: contact, coordinator: self)
+    navigationController.setViewControllers([viewController], animated: false)
+  }
+
+  func presentCreateContact() {
+    let contact = Contact(context: CoreDataStack.shared.backgroundContext)
+    let viewController = ContactProfileModuleBuilder.buildCreateContact(contact: contact, coordinator: self)
     navigationController.setViewControllers([viewController], animated: false)
   }
 

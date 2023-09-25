@@ -8,12 +8,19 @@
 import IQKeyboardManagerSwift
 import UIKit
 
-protocol IContactProfileView: UIViewController {}
+protocol IContactProfileView: UIViewController {
+  func setupInitialLastName(_ lastName: String)
+  func setupInitialFirstName(_ firstName: String)
+  func setupInitialMiddleName(_ middleName: String)
+}
 
 class ContactProfileViewController: UIViewController, IContactProfileView {
 
   // MARK: - Public properties
   var presenter: IContactProfilePresenter
+
+  // MARK: - Private properties
+  private let primaryButtonType: PrimaryButtonType
 
   // MARK: - Ui
   private lazy var scrollView = UIScrollView()
@@ -26,8 +33,9 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
   private lazy var createContactButton = UIButton()
 
   // MARK: - Init
-  init(presenter: IContactProfilePresenter) {
+  init(presenter: IContactProfilePresenter, primaryButtonType: PrimaryButtonType) {
     self.presenter = presenter
+    self.primaryButtonType = primaryButtonType
 
     super.init(nibName: nil, bundle: nil)
   }
@@ -44,6 +52,8 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
     view.backgroundColor = UIColor(resource: .darkBackground)
 
     initialize()
+
+    presenter.viewDidLoad()
   }
 
 }
@@ -55,6 +65,24 @@ private extension ContactProfileViewController {
   private func didPressCreateContactButton() {
     presenter.createContactDidPress()
   }
+
+}
+
+// MARK: - Setup initial values
+extension ContactProfileViewController {
+
+  func setupInitialLastName(_ lastName: String) {
+    lastNameTextField.textField.text = lastName
+  }
+
+  func setupInitialFirstName(_ firstName: String) {
+    firstNameTextField.textField.text = firstName
+  }
+
+  func setupInitialMiddleName(_ middleName: String) {
+    middleNameTextField.textField.text = middleName
+  }
+
 
 }
 
@@ -237,6 +265,11 @@ extension ContactProfileViewController {
     case firstName = 0
     case secondName = 1
     case middleName = 2
+  }
+
+  enum PrimaryButtonType {
+    case save
+    case create
   }
 
 }

@@ -9,6 +9,8 @@ import NFFormValidator
 import UIKit
 
 protocol IContactProfileInteractor: AnyObject {
+  var contact: Contact { get }
+
   func setupLastNameValidation(_ textField: TitledTextField)
   func setupFirstNameValidation(_ textField: TitledTextField)
   func validate() -> Bool

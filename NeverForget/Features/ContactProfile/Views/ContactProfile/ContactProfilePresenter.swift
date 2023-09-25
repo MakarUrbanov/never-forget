@@ -6,10 +6,12 @@
 //
 
 protocol IContactProfilePresenter: AnyObject {
+  func viewDidLoad()
   func closeProfile()
   func createContactDidPress()
   func setupLastNameValidation(_ textField: TitledTextField)
   func setupFirstNameValidation(_ textField: TitledTextField)
+  func setInitialContactsFields(_ contact: Contact)
 }
 
 class ContactProfilePresenter: IContactProfilePresenter {
@@ -24,7 +26,10 @@ class ContactProfilePresenter: IContactProfilePresenter {
     self.router = router
   }
 
-  // MARK: - Public methods
+  func viewDidLoad() {
+    setInitialContactsFields(interactor.contact)
+  }
+
   func closeProfile() {
     router.closeProfile()
   }
@@ -39,6 +44,12 @@ class ContactProfilePresenter: IContactProfilePresenter {
 
     // TODO: mmk edit
     closeProfile()
+  }
+
+  func setInitialContactsFields(_ contact: Contact) {
+    view?.setupInitialFirstName(contact.firstName)
+    view?.setupInitialLastName(contact.lastName ?? "")
+    view?.setupInitialMiddleName(contact.middleName ?? "")
   }
 
 }

@@ -32,14 +32,13 @@ extension ContactsListCoordinator {
 
   static let contactProfileContext = CoreDataStack.shared.backgroundContext
 
-  private func presentContactProfileCoordinator(_ contact: Contact) {
+  private func initializeContactProfileCoordinator() -> ContactProfileCoordinator {
     let coordinator = ContactProfileCoordinator()
     coordinator.start()
     coordinator.delegate = self
     childCoordinators.append(coordinator)
-    coordinator.showContactProfile(for: contact)
 
-    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
+    return coordinator
   }
 
   func presentContactProfile(contactId: NSManagedObjectID) {
@@ -50,14 +49,17 @@ extension ContactsListCoordinator {
       fatalError()
     }
 
-    presentContactProfileCoordinator(contact)
+    let coordinator = initializeContactProfileCoordinator()
+    coordinator.presentContactProfile(for: contact)
+
+    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
   }
 
   func presentCreateNewContact() {
-    let context = Self.contactProfileContext
-    let newContact = Contact(context: context)
+    let coordinator = initializeContactProfileCoordinator()
+    coordinator.presentCreateContact()
 
-    presentContactProfileCoordinator(newContact)
+    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
   }
 
 }
