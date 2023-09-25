@@ -63,8 +63,10 @@ final class UserImageView: UIImageView {
 
 extension UserImageView {
   func setViews() {
-    addView(activityIndicator)
-    addView(placeholderImage)
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(activityIndicator)
+    placeholderImage.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(placeholderImage)
   }
 
   func setConstraints() {

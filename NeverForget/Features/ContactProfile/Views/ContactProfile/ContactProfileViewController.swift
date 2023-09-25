@@ -12,6 +12,7 @@ protocol IContactProfileView: UIViewController {
   func setupInitialLastName(_ lastName: String)
   func setupInitialFirstName(_ firstName: String)
   func setupInitialMiddleName(_ middleName: String)
+  func setupInitialUsersImage(_ image: UIImage)
 }
 
 class ContactProfileViewController: UIViewController, IContactProfileView {
@@ -26,7 +27,7 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
   private lazy var scrollView = UIScrollView()
   private lazy var contentContainerView = IQPreviousNextView()
 
-  private lazy var photoPickerView = UIImageView() // TODO: mmk should be implemented
+  private lazy var usersImageView: IUsersPhotoView = UsersPhotoView()
   private lazy var lastNameTextField = TitledTextField()
   private lazy var firstNameTextField = TitledTextField()
   private lazy var middleNameTextField = TitledTextField()
@@ -83,6 +84,26 @@ extension ContactProfileViewController {
     middleNameTextField.textField.text = middleName
   }
 
+  func setupInitialUsersImage(_ image: UIImage) {
+    usersImageView.setImage(image)
+  }
+
+}
+
+// MARK: - IUsersPhotoViewDelegate
+extension ContactProfileViewController: IUsersPhotoViewDelegate {
+
+  func didPressDeleteImage() {
+    usersImageView.reset()
+  }
+
+  func didPressAddImage() {
+    // TODO: mmk picker
+  }
+
+  func didPressOnBodyWith(image: UIImage?) {
+    // TODO: mmk picker
+  }
 
 }
 
@@ -96,7 +117,7 @@ private extension ContactProfileViewController {
     setupScrollView()
     setupContentContainerView()
 
-    setupPhotoPickerView()
+    setupUsersImageView()
     setupLastNameTextField()
     setupFirstNameTextField()
     setupMiddleNameTextField()
@@ -158,38 +179,15 @@ private extension ContactProfileViewController {
     }
   }
 
-  private func setupPhotoPickerView() {
-    let size: CGFloat = 120
-    photoPickerView.layer.cornerRadius = size / 2
-    photoPickerView.layer.borderWidth = 1
-    photoPickerView.layer.borderColor = UIColor(resource: .textLight100).withAlphaComponent(0.08).cgColor
-    photoPickerView.contentMode = .center
-    photoPickerView.image = UIImage(systemName: "camera")?.withTintColor(
-      .init(resource: .textLight100),
-      renderingMode: .alwaysOriginal
-    )
+  private func setupUsersImageView() {
+    usersImageView.delegate = self
 
-    contentContainerView.addSubview(photoPickerView)
+    contentContainerView.addSubview(usersImageView)
 
-    photoPickerView.snp.makeConstraints { make in
+    usersImageView.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(24)
       make.centerX.equalToSuperview()
-      make.height.width.equalTo(size)
-    }
-
-    let addPhotoImageView = UIImageView(
-      image: UIImage(systemName: "plus")?
-        .withTintColor(.white, renderingMode: .alwaysOriginal)
-    )
-    addPhotoImageView.backgroundColor = UIColor(resource: .main100)
-    addPhotoImageView.layer.cornerRadius = 16
-    addPhotoImageView.contentMode = .center
-
-    photoPickerView.addSubview(addPhotoImageView)
-
-    addPhotoImageView.snp.makeConstraints { make in
-      make.top.trailing.equalToSuperview()
-      make.width.height.equalTo(32)
+      make.height.width.equalTo(120)
     }
   }
 
@@ -206,7 +204,7 @@ private extension ContactProfileViewController {
     contentContainerView.addSubview(lastNameTextField)
 
     lastNameTextField.snp.makeConstraints { make in
-      make.top.equalTo(photoPickerView.snp.bottom).offset(UIConstants.spacingAmongTextFields)
+      make.top.equalTo(usersImageView.snp.bottom).offset(UIConstants.spacingAmongTextFields)
       make.horizontalEdges.equalToSuperview()
       make.width.equalToSuperview()
       make.height.equalTo(UIConstants.textFieldHeight)

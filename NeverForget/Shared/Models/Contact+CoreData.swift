@@ -7,7 +7,9 @@
 //
 
 import CoreData
+import NFCore
 import SwiftDate
+import UIKit
 
 // MARK: - Class
 @objc(Contact)
@@ -20,7 +22,7 @@ public class Contact: NSManagedObject, Identifiable {
 
   @NSManaged public var lastName: String?
   @NSManaged public var middleName: String?
-  @NSManaged public var photoData: Data?
+  @NSManaged public private(set) var photoData: Data?
 
   @NSManaged public var events: Set<Event>
   @NSManaged public var ownedEvents: Set<Event>
@@ -72,6 +74,34 @@ public class Contact: NSManagedObject, Identifiable {
 
 }
 
+// MARK: - Photo
+public extension Contact {
+
+  internal static let maxImageSize = CGSize(width: 1_500, height: 1_500)
+
+  func setPhotoAndResize(_ photo: UIImage, completion: @escaping () -> Void) {
+    guard let context = managedObjectContext else {
+      Logger.error("Can't set photo and resize. Contact has no context")
+      return
+    }
+
+    context.perform {
+      let resizedImage = photo.resized(maxSize: Self.maxImageSize)
+      self.photoData = resizedImage.pngData()
+      completion()
+    }
+  }
+
+  func setPhotoData(_ photoData: Data?) {
+    self.photoData = photoData
+  }
+
+  func clearPhotoData() {
+    photoData = nil
+  }
+
+}
+
 // MARK: - Private
 extension Contact {
 
@@ -114,10 +144,9 @@ extension Contact {
 
 }
 
-// MARK: - Static
+// MARK: - Fetch
 public extension Contact {
 
-  // MARK: - Static Methods
   static func fetchRequest() -> NSFetchRequest<Contact> {
     return NSFetchRequest<Contact>(entityName: "Contact")
   }

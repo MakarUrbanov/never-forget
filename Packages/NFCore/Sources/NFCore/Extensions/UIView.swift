@@ -1,9 +1,11 @@
 import UIKit
 
-// MARK: - addView
+// MARK: - setCircleRadius
 public extension UIView {
-  func addView(_ view: UIView) {
-    view.translatesAutoresizingMaskIntoConstraints = false
-    addSubview(view)
+
+  func setCircleRadius() {
+    let radius = bounds.width / 2
+    layer.cornerRadius = radius
   }
+
 }

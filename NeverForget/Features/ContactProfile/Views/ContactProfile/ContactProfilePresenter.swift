@@ -5,6 +5,8 @@
 //  Created by Makar Mishchenko on 21.09.2023
 //
 
+import UIKit
+
 protocol IContactProfilePresenter: AnyObject {
   func viewDidLoad()
   func closeProfile()
@@ -12,6 +14,8 @@ protocol IContactProfilePresenter: AnyObject {
   func setupLastNameValidation(_ textField: TitledTextField)
   func setupFirstNameValidation(_ textField: TitledTextField)
   func setInitialContactsFields(_ contact: Contact)
+  func setContactImage(_ image: UIImage)
+  func deleteContactImage()
 }
 
 class ContactProfilePresenter: IContactProfilePresenter {
@@ -50,7 +54,17 @@ class ContactProfilePresenter: IContactProfilePresenter {
     view?.setupInitialFirstName(contact.firstName)
     view?.setupInitialLastName(contact.lastName ?? "")
     view?.setupInitialMiddleName(contact.middleName ?? "")
+
+    if let photoData = contact.photoData, let contactImage = UIImage(data: photoData) {
+      view?.setupInitialUsersImage(contactImage)
+    }
   }
+
+  func setContactImage(_ image: UIImage) {
+    interactor.setContactImage(image)
+  }
+
+  func deleteContactImage() {}
 
 }
 

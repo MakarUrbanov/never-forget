@@ -5,8 +5,8 @@
 //  Created by Makar Mishchenko on 25.09.2023.
 //
 
-import UIKit
 import PhotosUI
+import UIKit
 
 protocol IImagePickerDelegate: AnyObject {
   func didSelectImages(_ images: [UIImage])

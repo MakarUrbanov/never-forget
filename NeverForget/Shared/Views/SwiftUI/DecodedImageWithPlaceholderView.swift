@@ -88,7 +88,7 @@ extension DecodedImageWithPlaceholderView {
         return
       }
 
-      let resizableImage = decodedImage.resizeImage(maxSize: frame)
+      let resizableImage = decodedImage.resized(maxSize: frame)
       let image = Image(uiImage: resizableImage)
 
       DispatchQueue.main.async {

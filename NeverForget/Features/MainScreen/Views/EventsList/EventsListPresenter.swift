@@ -49,7 +49,7 @@ class EventsListPresenter: IEventsListPresenter {
       let contact = Contact(context: CoreDataStack.shared.backgroundContext)
       contact.firstName = "Makar"
       contact.lastName = "Mishchenko"
-      contact.photoData = UIImage(resource: .mock).pngData()
+      contact.setPhotoData(UIImage(resource: .mock).pngData())
       let event = contact.createLinkedEvent()
       event.name = "Date of birth"
       let event2 = contact.createLinkedEvent()

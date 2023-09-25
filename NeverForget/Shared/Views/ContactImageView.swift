@@ -5,6 +5,7 @@
 //  Created by Makar Mishchenko on 19.09.2023.
 //
 
+import NFCore
 import UIKit
 
 protocol IContactImageView: UIImageView {
@@ -68,16 +69,6 @@ class ContactImageView: UIImageView, IContactImageView {
     letterLabel.text = ""
 
     image = nil
-  }
-
-}
-
-// MARK: - Private methods
-private extension ContactImageView {
-
-  private func setCircleRadius() {
-    let radius = bounds.width / 2
-    layer.cornerRadius = radius
   }
 
 }

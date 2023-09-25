@@ -41,7 +41,7 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     let contactNextYearEvent = Contact(context: self.contactsService.context)
     contactNextYearEvent.firstName = "Makar"
     contactNextYearEvent.lastName = "Urbanov"
-    contactNextYearEvent.photoData = UIImage(resource: .mock).pngData()
+    contactNextYearEvent.setPhotoData(UIImage(resource: .mock).pngData())
     contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
       .setOriginDate(DateInRegion("2000-09-14T14:00:00+00:00")!.dateAt(.startOfDay).date)
 //    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
