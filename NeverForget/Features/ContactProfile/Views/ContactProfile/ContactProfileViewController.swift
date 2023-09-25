@@ -53,9 +53,6 @@ private extension ContactProfileViewController {
 
   @objc
   private func didPressCreateContactButton() {
-//    let viewController = UIViewController()
-//    viewController.view.backgroundColor = .red
-//    navigationController?.navigate(step: .push(viewController))
     presenter.createContactDidPress()
   }
 
@@ -232,8 +229,8 @@ extension ContactProfileViewController {
 
   enum UIConstants {
     static let verticalInset: CGFloat = 16
-    static let textFieldHeight: CGFloat = 88
-    static let spacingAmongTextFields: CGFloat = 6
+    static let textFieldHeight: CGFloat = 72
+    static let spacingAmongTextFields: CGFloat = 20
   }
 
   enum TextFieldTag: Int {

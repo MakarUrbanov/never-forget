@@ -37,7 +37,8 @@ class ContactProfilePresenter: IContactProfilePresenter {
       return
     }
 
-    // TODO: mmk impl next
+    // TODO: mmk edit
+    closeProfile()
   }
 
 }
