@@ -10,7 +10,7 @@ import PhotosUI
 import SwiftUI
 import UIKit
 
-struct ImagePickerRepresentable: UIViewControllerRepresentable { // TODO: expand usability to use not only one photo
+struct ImagePickerRepresentable: UIViewControllerRepresentable {
   typealias UIViewControllerType = PHPickerViewController
 
   @Binding var selectedImage: Data?
