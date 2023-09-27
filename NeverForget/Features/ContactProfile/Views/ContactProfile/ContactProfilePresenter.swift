@@ -24,8 +24,8 @@ protocol IContactProfilePresenter: AnyObject {
 
 class ContactProfilePresenter: IContactProfilePresenter {
 
-  var router: IContactProfileRouter
-  var interactor: IContactProfileInteractor
+  private var router: IContactProfileRouter
+  private var interactor: IContactProfileInteractor
 
   weak var view: IContactProfileView?
 

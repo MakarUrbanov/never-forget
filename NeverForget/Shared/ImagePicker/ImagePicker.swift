@@ -40,7 +40,10 @@ extension ImagePicker {
 
   private func deselectSelectedAssets(pickerResult: [PHPickerResult]) {
     let selectedAssetsIdentifiers = pickerResult.compactMap(\.assetIdentifier)
-    pickerViewController.deselectAssets(withIdentifiers: selectedAssetsIdentifiers)
+
+    if !selectedAssetsIdentifiers.isEmpty {
+      pickerViewController.deselectAssets(withIdentifiers: selectedAssetsIdentifiers)
+    }
   }
 
 }

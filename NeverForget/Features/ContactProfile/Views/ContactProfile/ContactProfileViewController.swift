@@ -19,7 +19,7 @@ protocol IContactProfileView: UIViewController {
 class ContactProfileViewController: UIViewController, IContactProfileView {
 
   // MARK: - Public properties
-  var presenter: IContactProfilePresenter
+  private var presenter: IContactProfilePresenter
 
   // MARK: - Private properties
   private let primaryButtonType: PrimaryButtonType
@@ -33,6 +33,11 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
   private lazy var firstNameTextField = TitledTextField()
   private lazy var middleNameTextField = TitledTextField()
   private lazy var createContactButton = UIButton()
+
+  private lazy var cameraImagePicker = CameraImagePicker()
+  private lazy var libraryImagePicker: IImagePicker = ImagePicker(
+    configuration: ImagePicker.Configurations.OnePhotoConfiguration
+  )
 
   // MARK: - Init
   init(presenter: IContactProfilePresenter, primaryButtonType: PrimaryButtonType) {
@@ -103,19 +108,15 @@ private extension ContactProfileViewController {
       guard await CameraImagePicker.requestAccess() else { return }
 
       DispatchQueue.main.async {
-        let cameraImagePicker = CameraImagePicker()
-        cameraImagePicker.delegate = self
-        cameraImagePicker.cameraController.modalPresentationStyle = .overFullScreen
-        self.present(cameraImagePicker.cameraController, animated: true)
+        let picker = self.cameraImagePicker
+        picker.delegate = self
+        picker.cameraController.modalPresentationStyle = .overFullScreen
+        self.present(picker.cameraController, animated: true)
       }
     }
   }
 
   private func openLibraryImagePicker() {
-    let libraryImagePicker: IImagePicker = ImagePicker(
-      configuration: ImagePicker.Configurations.OnePhotoConfiguration
-    )
-
     libraryImagePicker.delegate = self
     present(libraryImagePicker.pickerViewController, animated: true)
   }
