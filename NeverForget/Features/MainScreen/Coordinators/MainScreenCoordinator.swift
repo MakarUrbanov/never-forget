@@ -18,11 +18,19 @@ protocol IMainScreenCoordinator: NavigationCoordinator {
 final class MainScreenCoordinator: IMainScreenCoordinator, ObservableObject {
 
   var childCoordinators: [Coordinator] = []
-  var navigationController: UINavigationController = MainScreenNavigationController()
+  var navigationController: UINavigationController
+
+  init(navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
 
   func start() {
     let mainScreen = Self.initializeMainScreenView()
     navigationController.setViewControllers([mainScreen], animated: false)
+  }
+
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
   }
 
 }

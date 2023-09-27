@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add" : {
+
+    },
+    "Add notification time" : {
+
+    },
+    "Adding a contact" : {
+
+    },
     "Alphabetically" : {
       "comment" : "Sorting type",
       "localizations" : {
@@ -34,6 +43,12 @@
         }
       }
     },
+    "Camera" : {
+
+    },
+    "Cancel" : {
+
+    },
     "Contacts" : {
       "comment" : "tab name\ncontacts count label",
       "localizations" : {
@@ -45,28 +60,26 @@
         }
       }
     },
-    "Event in %@ days" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Event in %11d day"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Event in %@ daysss"
-                }
-              }
-            }
-          }
-        }
-      }
+    "Create" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Enabled" : {
+
+    },
+    "Enter last name" : {
+
+    },
+    "Enter middle name" : {
+
+    },
+    "Enter name" : {
+
+    },
+    "Event in %lld days" : {
+
     },
     "Event today" : {
       "localizations" : {
@@ -77,6 +90,9 @@
           }
         }
       }
+    },
+    "Last name" : {
+
     },
     "List" : {
       "comment" : "switcher item. view name",
@@ -100,8 +116,41 @@
         }
       }
     },
-    "Notifications (%@)" : {
+    "Middle name" : {
+
+    },
+    "Name" : {
+
+    },
+    "Notification times" : {
+
+    },
+    "Notifications (%lld)" : {
       "comment" : "Count of notifications"
+    },
+    "Notify at:" : {
+
+    },
+    "Notify on the event day" : {
+
+    },
+    "Notify one day before" : {
+
+    },
+    "Notify one week before" : {
+
+    },
+    "On the event day" : {
+
+    },
+    "Photo Library" : {
+
+    },
+    "Required field" : {
+
+    },
+    "Select photo source" : {
+
     },
     "Settings" : {
       "localizations" : {

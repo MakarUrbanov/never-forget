@@ -1,0 +1,12 @@
+//
+//  NeverForget-Release.xcconfig
+//  NeverForget
+//
+//  Created by Makar Mishchenko on 27.09.2023.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+SWIFT_EMIT_LOC_STRINGS = YES
+LOCALIZATION_PREFERS_STRING_CATALOGS = YES

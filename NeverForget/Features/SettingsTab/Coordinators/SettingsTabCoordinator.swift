@@ -10,12 +10,21 @@ import SwiftUI
 import UIKit
 
 class SettingsTabCoordinator: NavigationCoordinator, ObservableObject {
-  var navigationController: UINavigationController = .init()
+
+  var navigationController: UINavigationController
   var childCoordinators: [Coordinator] = []
+
+  init(navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
 
   func start() {
     let settingsView = getConfiguredSettingsView()
     navigationController.pushViewController(settingsView, animated: false)
+  }
+
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
   }
 
 }

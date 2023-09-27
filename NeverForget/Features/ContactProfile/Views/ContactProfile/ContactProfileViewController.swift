@@ -5,6 +5,7 @@
 //  Created by Makar Mishchenko on 21.09.2023
 //
 
+import AVFoundation
 import IQKeyboardManagerSwift
 import UIKit
 
@@ -13,6 +14,9 @@ protocol IContactProfileView: UIViewController {
   func setupInitialFirstName(_ firstName: String)
   func setupInitialMiddleName(_ middleName: String)
   func setupInitialUsersImage(_ image: UIImage)
+
+  func openCameraImagePicker()
+  func openLibraryImagePicker()
 }
 
 class ContactProfileViewController: UIViewController, IContactProfileView {
@@ -57,6 +61,34 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
     presenter.viewDidLoad()
   }
 
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    presenter.viewDidDisappear()
+  }
+
+  // MARK: - Public methods
+  func openCameraImagePicker() {
+    Task(priority: .high) {
+      guard await CameraImagePicker.requestAccess() else { return }
+
+      DispatchQueue.main.async {
+        let cameraImagePicker = CameraImagePicker()
+        cameraImagePicker.delegate = self
+        cameraImagePicker.cameraController.modalPresentationStyle = .overFullScreen
+        self.present(cameraImagePicker.cameraController, animated: true)
+      }
+    }
+  }
+
+  func openLibraryImagePicker() {
+    let libraryImagePicker: IImagePicker = ImagePicker(
+      configuration: ImagePicker.Configurations.OnePhotoConfiguration
+    )
+
+    libraryImagePicker.delegate = self
+    present(libraryImagePicker.pickerViewController, animated: true)
+  }
+
 }
 
 // MARK: - Private methods
@@ -65,6 +97,54 @@ private extension ContactProfileViewController {
   @objc
   private func didPressCreateContactButton() {
     presenter.createContactDidPress()
+  }
+
+  private func setNewContactsPhoto(_ image: UIImage) {
+    presenter.setContactImage(image)
+    usersImageView.setImage(image)
+  }
+
+  private func showImagePickerActionSheet() {
+    let actionSheet = UIAlertController(
+      title: String(localized: "Select photo source"),
+      message: nil,
+      preferredStyle: .actionSheet
+    )
+
+    actionSheet.addAction(UIAlertAction(title: String(localized: "Camera"), style: .default, handler: { _ in
+      self.openCameraImagePicker()
+    }))
+
+    actionSheet.addAction(UIAlertAction(title: String(localized: "Photo Library"), style: .default, handler: { _ in
+      self.openLibraryImagePicker()
+    }))
+
+    actionSheet.addAction(UIAlertAction(title: String(localized: "Cancel"), style: .cancel, handler: nil))
+
+    present(actionSheet, animated: true)
+  }
+
+}
+
+// MARK: - CameraPicker UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension ContactProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+
+  func imagePickerController(
+    _ picker: UIImagePickerController,
+    didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+  ) {
+    let editedImage = info[.editedImage] as? UIImage
+    let originalImage = info[.originalImage] as? UIImage
+
+    if let image = editedImage ?? originalImage {
+      setNewContactsPhoto(image)
+    }
+
+    picker.dismiss(animated: true)
+  }
+
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    picker.dismiss(animated: true)
   }
 
 }
@@ -95,14 +175,25 @@ extension ContactProfileViewController: IUsersPhotoViewDelegate {
 
   func didPressDeleteImage() {
     usersImageView.reset()
+    presenter.deleteContactImage()
   }
 
   func didPressAddImage() {
-    // TODO: mmk picker
+    showImagePickerActionSheet()
   }
 
   func didPressOnBodyWith(image: UIImage?) {
-    // TODO: mmk picker
+    showImagePickerActionSheet()
+  }
+
+}
+
+// MARK: - IImagePickerDelegate
+extension ContactProfileViewController: IImagePickerDelegate {
+
+  func didSelectImages(_ images: [UIImage]) {
+    guard let image = images.first else { return }
+    setNewContactsPhoto(image)
   }
 
 }
@@ -130,8 +221,8 @@ private extension ContactProfileViewController {
       .withAlphaComponent(0.3), renderingMode: .alwaysOriginal)
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: closeImage,
-      primaryAction: UIAction(handler: { _ in
-        self.presenter.closeProfile()
+      primaryAction: UIAction(handler: { [weak self] _ in
+        self?.presenter.closeProfile()
       })
     )
   }
@@ -257,12 +348,6 @@ extension ContactProfileViewController {
     static let verticalInset: CGFloat = 16
     static let textFieldHeight: CGFloat = 72
     static let spacingAmongTextFields: CGFloat = 20
-  }
-
-  enum TextFieldTag: Int {
-    case firstName = 0
-    case secondName = 1
-    case middleName = 2
   }
 
   enum PrimaryButtonType {

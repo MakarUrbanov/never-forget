@@ -8,40 +8,50 @@
 import NFLocalNotificationsManager
 import UIKit
 
-protocol IContactProfileCoordinatorDelegate: AnyObject {
-  func closeProfileCoordinator(_ coordinator: IContactProfileCoordinator)
-}
-
 protocol IContactProfileCoordinator: NavigationCoordinator {
-  func presentContactProfile(for contact: Contact)
-  func presentCreateContact()
-  func closeContactCoordinator()
+  var parentCoordinator: IContactsScreenCoordinator? { get set }
+
+  func setContactProfileController(for contact: Contact)
+  func setCreateContactProfileController()
+  func close()
 }
 
 class ContactProfileCoordinator: NavigationCoordinator, IContactProfileCoordinator {
 
-  var navigationController: UINavigationController = .init()
+  var navigationController: UINavigationController
   var childCoordinators: [Coordinator] = []
 
-  weak var delegate: IContactProfileCoordinatorDelegate?
+  weak var parentCoordinator: IContactsScreenCoordinator?
+
+  init(navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
 
   func start() {
     setupNavigationController()
   }
 
-  func presentContactProfile(for contact: Contact) {
+  func setContactProfileController(for contact: Contact) {
     let viewController = ContactProfileModuleBuilder.buildEditContact(contact: contact, coordinator: self)
-    navigationController.setViewControllers([viewController], animated: false)
+    navigationController.viewControllers = [viewController]
   }
 
-  func presentCreateContact() {
+  func setCreateContactProfileController() {
     let contact = Contact(context: CoreDataStack.shared.backgroundContext)
     let viewController = ContactProfileModuleBuilder.buildCreateContact(contact: contact, coordinator: self)
-    navigationController.setViewControllers([viewController], animated: false)
+    navigationController.viewControllers = [viewController]
   }
 
-  func closeContactCoordinator() {
-    delegate?.closeProfileCoordinator(self)
+  func close() {
+    navigationController.dismiss(animated: true) { [weak self] in
+      guard let self else { return }
+
+      self.parentCoordinator?.removeChildCoordinator(self)
+    }
+  }
+
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
   }
 
 }
@@ -50,7 +60,6 @@ class ContactProfileCoordinator: NavigationCoordinator, IContactProfileCoordinat
 private extension ContactProfileCoordinator {
 
   private func setupNavigationController() {
-    navigationController.isModalInPresentation = true
     navigationController.navigationBar.titleTextAttributes = [
       .font: UIFont.systemFont(ofSize: 16, weight: .bold),
       .foregroundColor: UIColor(resource: .textLight100)

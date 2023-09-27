@@ -8,26 +8,39 @@
 import PhotosUI
 import UIKit
 
+// MARK: - Delegate
 protocol IImagePickerDelegate: AnyObject {
   func didSelectImages(_ images: [UIImage])
 }
 
-protocol IImagePicker {
+// MARK: - Protocol
+protocol IImagePicker: AnyObject {
   var pickerViewController: PHPickerViewController { get }
   var delegate: IImagePickerDelegate? { get set }
 
   init(configuration: PHPickerConfiguration)
 }
 
-class ImagePicker {
+// MARK: - ImagePicker
+class ImagePicker: IImagePicker {
 
   let pickerViewController: PHPickerViewController
 
   weak var delegate: IImagePickerDelegate?
 
-  init(configuration: PHPickerConfiguration) {
+  required init(configuration: PHPickerConfiguration) {
     pickerViewController = PHPickerViewController(configuration: configuration)
     pickerViewController.delegate = self
+  }
+
+}
+
+// MARK: - Private methods
+extension ImagePicker {
+
+  private func deselectSelectedAssets(pickerResult: [PHPickerResult]) {
+    let selectedAssetsIdentifiers = pickerResult.compactMap(\.assetIdentifier)
+    pickerViewController.deselectAssets(withIdentifiers: selectedAssetsIdentifiers)
   }
 
 }
@@ -62,9 +75,14 @@ extension ImagePicker: PHPickerViewControllerDelegate {
       }
     }
 
-    group.notify(queue: .main) {
+    group.notify(queue: .main) { [weak self] in
+      guard let self else { return }
+
+      deselectSelectedAssets(pickerResult: results)
+
       let nonOptionalImages = images.compactMap { $0 }
       self.delegate?.didSelectImages(nonOptionalImages)
+      self.pickerViewController.dismiss(animated: true)
     }
   }
 
@@ -76,11 +94,11 @@ extension ImagePicker {
   enum Configurations {
     static let OnePhotoConfiguration: PHPickerConfiguration = {
       var configuration = PHPickerConfiguration(photoLibrary: .shared())
-      configuration.filter = .not(.videos)
+      configuration.filter = .images
 
       configuration.selectionLimit = 1
       configuration.preferredAssetRepresentationMode = .current
-      configuration.selection = .ordered
+//      configuration.selection = .ordered
 
       return configuration
     }()

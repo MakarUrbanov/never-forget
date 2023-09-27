@@ -10,9 +10,11 @@ import SwiftUI
 
 final class MainFlowCoordinator: TabCoordinator {
   var childCoordinators: [Coordinator] = []
-  var tabBarController: UITabBarController = MainFlowTabBarController()
+  var tabBarController: UITabBarController
 
-  init() {}
+  init(tabBarController: UITabBarController) {
+    self.tabBarController = tabBarController
+  }
 
   func start() {
     let coordinators = initializeCoordinators()
@@ -20,6 +22,10 @@ final class MainFlowCoordinator: TabCoordinator {
 
     let navigationControllers = coordinators.map(\.navigationController)
     tabBarController.setViewControllers(navigationControllers, animated: false)
+  }
+
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
   }
 
 }
@@ -68,7 +74,7 @@ private extension MainFlowCoordinator {
 extension MainFlowCoordinator {
 
   private static func getMainCoordinator() -> MainScreenCoordinator {
-    let mainScreenCoordinator = MainScreenCoordinator()
+    let mainScreenCoordinator = MainScreenCoordinator(navigationController: MainScreenNavigationController())
     mainScreenCoordinator.start()
 
     let tabBarItem = UITabBarItem(
@@ -81,8 +87,8 @@ extension MainFlowCoordinator {
     return mainScreenCoordinator
   }
 
-  private static func getContactsListCoordinator() -> ContactsListCoordinator {
-    let contactsListCoordinator = ContactsListCoordinator()
+  private static func getContactsListCoordinator() -> ContactsScreenCoordinator {
+    let contactsListCoordinator = ContactsScreenCoordinator(navigationController: UINavigationController())
     contactsListCoordinator.start()
 
     let tabBarItem = UITabBarItem(
@@ -96,7 +102,7 @@ extension MainFlowCoordinator {
   }
 
   private static func getSettingsTabCoordinator() -> SettingsTabCoordinator {
-    let coordinator = SettingsTabCoordinator()
+    let coordinator = SettingsTabCoordinator(navigationController: UINavigationController())
     coordinator.start()
 
     let tabBarItem = UITabBarItem(

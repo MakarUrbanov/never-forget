@@ -9,6 +9,7 @@ import UIKit
 
 protocol IContactProfilePresenter: AnyObject {
   func viewDidLoad()
+  func viewDidDisappear()
   func closeProfile()
   func createContactDidPress()
   func setupLastNameValidation(_ textField: TitledTextField)
@@ -34,8 +35,13 @@ class ContactProfilePresenter: IContactProfilePresenter {
     setInitialContactsFields(interactor.contact)
   }
 
+  func viewDidDisappear() {
+    closeProfile()
+  }
+
   func closeProfile() {
     router.closeProfile()
+    interactor.rollbackChanges()
   }
 
   func createContactDidPress() {
@@ -46,7 +52,7 @@ class ContactProfilePresenter: IContactProfilePresenter {
       return
     }
 
-    // TODO: mmk edit
+    interactor.saveChanges()
     closeProfile()
   }
 
@@ -64,7 +70,9 @@ class ContactProfilePresenter: IContactProfilePresenter {
     interactor.setContactImage(image)
   }
 
-  func deleteContactImage() {}
+  func deleteContactImage() {
+    interactor.deleteContactImage()
+  }
 
 }
 

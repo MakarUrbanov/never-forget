@@ -28,6 +28,10 @@ final class RootCoordinator: Coordinator {
     setRootCoordinator()
   }
 
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
+  }
+
 }
 
 // MARK: - Navigation
@@ -43,7 +47,7 @@ extension RootCoordinator {
   }
 
   private func setRootCoordinator() {
-    let mainCoordinator = MainFlowCoordinator()
+    let mainCoordinator = MainFlowCoordinator(tabBarController: MainFlowTabBarController())
     mainCoordinator.start()
 
     rootNavigationController.setViewControllers([mainCoordinator.tabBarController], animated: false)

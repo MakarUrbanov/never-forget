@@ -15,9 +15,9 @@ protocol IContactsScreenRouter: AnyObject {
 class ContactsScreenRouter: IContactsScreenRouter {
 
   weak var viewController: IContactsScreenView?
-  weak var coordinator: IContactsListCoordinator?
+  weak var coordinator: IContactsScreenCoordinator?
 
-  init(coordinator: IContactsListCoordinator) {
+  init(coordinator: IContactsScreenCoordinator) {
     self.coordinator = coordinator
   }
 

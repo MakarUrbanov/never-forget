@@ -12,5 +12,6 @@ protocol Coordinator: AnyObject {
   var childCoordinators: [Coordinator] { get set }
   func start()
 
+  func removeChildCoordinator(_ coordinator: Coordinator)
   func handleDeepLink(_ deepLink: NFLNDeepLink?)
 }

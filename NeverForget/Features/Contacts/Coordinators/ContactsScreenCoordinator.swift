@@ -1,5 +1,5 @@
 //
-//  ContactsListCoordinator.swift
+//  ContactsScreenCoordinator.swift
 //  never-forget
 //
 //  Created by makar on 2/24/23.
@@ -10,33 +10,42 @@ import NFLocalNotificationsManager
 import SwiftUI
 import UIKit
 
-protocol IContactsListCoordinator: NavigationCoordinator {
+protocol IContactsScreenCoordinator: NavigationCoordinator {
   func presentContactProfile(contactId: NSManagedObjectID)
   func presentCreateNewContact()
+  func removeChildCoordinator(_ coordinator: Coordinator)
 }
 
-final class ContactsListCoordinator: NavigationCoordinator, ObservableObject, IContactsListCoordinator {
+final class ContactsScreenCoordinator: NavigationCoordinator, ObservableObject, IContactsScreenCoordinator {
 
   var childCoordinators: [Coordinator] = []
-  var navigationController: UINavigationController = .init()
+  var navigationController: UINavigationController
+
+  init(navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
 
   func start() {
     let peopleListScreen = getContactsListView()
     navigationController.setViewControllers([peopleListScreen], animated: false)
   }
 
+  func removeChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.removeAll(where: { $0 === coordinator })
+  }
+
 }
 
 // MARK: - Navigate to the Contact profile screen
-extension ContactsListCoordinator {
+extension ContactsScreenCoordinator {
 
   static let contactProfileContext = CoreDataStack.shared.backgroundContext
 
   private func initializeContactProfileCoordinator() -> ContactProfileCoordinator {
-    let coordinator = ContactProfileCoordinator()
-    coordinator.start()
-    coordinator.delegate = self
+    let coordinator = ContactProfileCoordinator(navigationController: .init())
+    coordinator.parentCoordinator = self
     childCoordinators.append(coordinator)
+    coordinator.start()
 
     return coordinator
   }
@@ -49,33 +58,25 @@ extension ContactsListCoordinator {
       fatalError()
     }
 
-    let coordinator = initializeContactProfileCoordinator()
-    coordinator.presentContactProfile(for: contact)
+    let contactProfileCoordinator = initializeContactProfileCoordinator()
+    contactProfileCoordinator.setContactProfileController(for: contact)
 
-    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
+    contactProfileCoordinator.navigationController.modalPresentationStyle = .formSheet
+    navigationController.present(contactProfileCoordinator.navigationController, animated: true)
   }
 
   func presentCreateNewContact() {
-    let coordinator = initializeContactProfileCoordinator()
-    coordinator.presentCreateContact()
+    let contactProfileCoordinator = initializeContactProfileCoordinator()
+    contactProfileCoordinator.setCreateContactProfileController()
 
-    navigationController.navigate(step: .present(coordinator.navigationController, .formSheet), animated: true)
-  }
-
-}
-
-// MARK: - IContactProfileCoordinatorDelegate
-extension ContactsListCoordinator: IContactProfileCoordinatorDelegate {
-
-  func closeProfileCoordinator(_ coordinator: IContactProfileCoordinator) {
-    navigationController.navigate(step: .dismiss)
-    childCoordinators.removeAll(where: { $0 === coordinator })
+    contactProfileCoordinator.navigationController.modalPresentationStyle = .formSheet
+    navigationController.present(contactProfileCoordinator.navigationController, animated: true)
   }
 
 }
 
 // MARK: - Private methods
-private extension ContactsListCoordinator {
+private extension ContactsScreenCoordinator {
 
   private func getContactsListView() -> IContactsScreenView {
     let context = CoreDataStack.shared.viewContext // TODO: mmk edit
@@ -91,7 +92,7 @@ private extension ContactsListCoordinator {
 }
 
 // MARK: - Deep link
-extension ContactsListCoordinator {
+extension ContactsScreenCoordinator {
 
   func handleDeepLink(_ deepLink: NFLNDeepLink?) {} // TODO: rework
 

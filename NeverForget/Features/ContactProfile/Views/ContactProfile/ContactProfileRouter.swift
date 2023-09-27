@@ -20,7 +20,7 @@ class ContactProfileRouter: IContactProfileRouter {
 
   // MARK: - Public methods
   func closeProfile() {
-    coordinator?.closeContactCoordinator()
+    coordinator?.close()
   }
 
 }

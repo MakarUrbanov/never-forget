@@ -10,7 +10,7 @@ import UIKit
 enum ContactsScreenModuleBuilder {
 
   static func build(
-    coordinator: IContactsListCoordinator,
+    coordinator: IContactsScreenCoordinator,
     contactsService: IContactsCoreDataService
   ) -> IContactsScreenView {
     let interactor = ContactsScreenInteractor(contactsService: contactsService)

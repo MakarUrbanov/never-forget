@@ -15,9 +15,11 @@ protocol IContactProfileInteractor: AnyObject {
   func setupFirstNameValidation(_ textField: TitledTextField)
   func validate() -> Bool
   func startValidating()
+  func rollbackChanges()
+  func saveChanges()
 
   func setContactImage(_ image: UIImage)
-  func clearContactImage()
+  func deleteContactImage()
 }
 
 class ContactProfileInteractor: IContactProfileInteractor {
@@ -31,19 +33,27 @@ class ContactProfileInteractor: IContactProfileInteractor {
     self.contact = contact
   }
 
+  func validate() -> Bool {
+    formValidator.validate()
+  }
+
   func startValidating() {
     formValidator.startValidating()
   }
 
-  func validate() -> Bool {
-    formValidator.validate()
+  func rollbackChanges() {
+    contact.managedObjectContext?.rollback()
+  }
+
+  func saveChanges() {
+    contact.managedObjectContext?.saveChanges()
   }
 
   func setContactImage(_ image: UIImage) {
     contact.setPhotoAndResize(image) {}
   }
 
-  func clearContactImage() {
+  func deleteContactImage() {
     contact.clearPhotoData()
   }
 
