@@ -13,11 +13,11 @@ protocol IContactsScreenPresenter: AnyObject {
   func getContact(at indexPath: IndexPath) -> Contact
   func getContacts() -> [Contact]
   func checkIsContactLastInTheList(_ contact: Contact) -> Bool
-  func setSortingByNearestEvents()
-  func setSortingAlphabetically()
-  func openContactProfile(_ contact: Contact)
+//  func openContactProfile(_ contact: Contact)
   func presentCreateNewProfile()
   func contactsChanged()
+  func sortingOptionDidChange(_ selectedItem: SortingMenuItem)
+  func didSelectRowAt(indexPath: IndexPath)
 }
 
 class ContactsScreenPresenter: IContactsScreenPresenter {
@@ -56,29 +56,49 @@ class ContactsScreenPresenter: IContactsScreenPresenter {
     return contact.id == lastContact.id
   }
 
-  func setSortingByNearestEvents() {
-    interactor.setSortingByNearestEvents()
-    interactor.fetchContacts()
-    contactsChanged()
-  }
-
-  func setSortingAlphabetically() {
-    interactor.setSortingAlphabetically()
-    interactor.fetchContacts()
-    contactsChanged()
-  }
-
-  func openContactProfile(_ contact: Contact) {
-    let contactId = contact.objectID
-    router.presentContactProfile(contactId)
-  }
-
   func presentCreateNewProfile() {
     router.presentCreateNewContact()
   }
 
   func contactsChanged() {
-    view?.contactsChanged()
+    let contacts = interactor.contacts
+    view?.updateContactsList(contacts)
+  }
+
+  func sortingOptionDidChange(_ selectedItem: SortingMenuItem) {
+    switch selectedItem {
+      case .alphabetically:
+        setSortingAlphabetically()
+      case .byNearestEvents:
+        setSortingByNearestEvents()
+    }
+  }
+
+  func didSelectRowAt(indexPath: IndexPath) {
+    let selectedContact = getContact(at: indexPath)
+    openContactProfile(selectedContact)
+  }
+
+}
+
+// MARK: - Private methods
+private extension ContactsScreenPresenter {
+
+  private func setSortingByNearestEvents() {
+    interactor.setSortingByNearestEvents()
+    interactor.fetchContacts()
+    contactsChanged()
+  }
+
+  private func setSortingAlphabetically() {
+    interactor.setSortingAlphabetically()
+    interactor.fetchContacts()
+    contactsChanged()
+  }
+
+  private func openContactProfile(_ contact: Contact) {
+    let contactId = contact.objectID
+    router.presentContactProfile(contactId)
   }
 
 }

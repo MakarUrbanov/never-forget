@@ -9,27 +9,21 @@ import UIKit
 
 // MARK: - Protocol
 protocol IContactsScreenView: UIViewController {
-  func contactsChanged()
+  func updateContactsList(_ contacts: [Contact])
+  func openCreateNewProfileScreen()
 }
 
 // MARK: - ViewController
 class ContactsScreenViewController: UIViewController, IContactsScreenView {
+  
 
-  var presenter: IContactsScreenPresenter
+  // MARK: - Public properties
+  private var presenter: IContactsScreenPresenter
 
-  // MARK: - Private properties
-  private let contactsCountView: IContactsCountView = ContactsCountView()
-  private var sortingHeaderMenu: ISortHeaderMenu = SortHeaderMenu(selectedItem: .byNearestEvents)
-
+  private lazy var sortingHeaderMenu: ISortHeaderMenu = SortHeaderMenu(selectedItem: .byNearestEvents)
   private lazy var contactsTableView = UITableView(frame: .zero, style: .plain)
+  private lazy var contactsCountView: IContactsCountView = ContactsCountView()
   private var diffableDataSource: UITableViewDiffableDataSource<Int, Contact>!
-  private lazy var noContactsPlaceholderLabel: UILabel = {
-    let label = UILabel()
-    label.text = String(localized: "No contacts")
-    label.textAlignment = .center
-    label.textColor = UIColor(resource: .textLight100).withAlphaComponent(0.3)
-    return label
-  }()
 
   init(presenter: IContactsScreenPresenter) {
     self.presenter = presenter
@@ -53,26 +47,20 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
   }
 
   // MARK: - Public methods
-  func contactsChanged() {
-    let newContacts = presenter.getContacts()
-    let contactsCount = presenter.getContactsCount()
-
+  func updateContactsList(_ contacts: [Contact]) {
+    let contactsCount = contacts.count
     contactsCountView.setContactsCount(contactsCount)
-    applyContactsSnapshot(with: newContacts, animated: true)
+    applyContactsSnapshot(with: contacts, animated: true)
+  }
+
+  func openCreateNewProfileScreen() {
+    presenter.presentCreateNewProfile()
   }
 
 }
 
 // MARK: - Private methods
 private extension ContactsScreenViewController {
-
-  private func setSortingByNearestEvents() {
-    presenter.setSortingByNearestEvents()
-  }
-
-  private func setSortingAlphabetically() {
-    presenter.setSortingAlphabetically()
-  }
 
   private func applyContactsSnapshot(with contacts: [Contact], animated: Bool = false) {
     var snapshot = diffableDataSource.snapshot()
@@ -114,7 +102,7 @@ private extension ContactsScreenViewController {
 
   private func updateContactsTableBackgroundView(_ itemsCount: Int) {
     if itemsCount == 0 {
-      contactsTableView.backgroundView = noContactsPlaceholderLabel
+      contactsTableView.backgroundView = Self.noContactsPlaceholderLabel
     } else {
       contactsTableView.backgroundView = nil
     }
@@ -126,12 +114,12 @@ private extension ContactsScreenViewController {
 private extension ContactsScreenViewController {
 
   private func initialize() {
-    initializeNavigationBar()
-    initializeSortingHeaderMenu()
-    initializeTableView()
+    setupNavigationBar()
+    setupSortingHeaderMenu()
+    setupTableView()
   }
 
-  private func initializeNavigationBar() {
+  private func setupNavigationBar() {
     let leftBarButtonItem = UIBarButtonItem(customView: contactsCountView)
     navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
 
@@ -145,7 +133,7 @@ private extension ContactsScreenViewController {
     navigationItem.setRightBarButtonItems([addNewContactButton], animated: false)
   }
 
-  private func initializeSortingHeaderMenu() {
+  private func setupSortingHeaderMenu() {
     sortingHeaderMenu.delegate = self
 
     view.addSubview(sortingHeaderMenu)
@@ -157,7 +145,7 @@ private extension ContactsScreenViewController {
     }
   }
 
-  private func initializeTableView() {
+  private func setupTableView() {
     contactsTableView.register(ContactCellView.self, forCellReuseIdentifier: Self.contactCellIdentifier)
     contactsTableView.backgroundColor = .clear
     contactsTableView.dataSource = diffableDataSource
@@ -180,8 +168,7 @@ private extension ContactsScreenViewController {
 extension ContactsScreenViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let selectedContact = presenter.getContact(at: indexPath)
-    presenter.openContactProfile(selectedContact)
+    presenter.didSelectRowAt(indexPath: indexPath)
   }
 
 }
@@ -190,12 +177,7 @@ extension ContactsScreenViewController: UITableViewDelegate {
 extension ContactsScreenViewController: ISortHeaderMenuDelegate {
 
   func selectedItemDidChange(_ selectedItem: SortingMenuItem) {
-    switch selectedItem {
-      case .alphabetically:
-        setSortingAlphabetically()
-      case .byNearestEvents:
-        setSortingByNearestEvents()
-    }
+    presenter.sortingOptionDidChange(selectedItem)
   }
 
 }
@@ -203,11 +185,19 @@ extension ContactsScreenViewController: ISortHeaderMenuDelegate {
 // MARK: - Static
 extension ContactsScreenViewController {
 
+  private static let contactCellIdentifier = String(describing: ContactCellView.self)
+
+  private static var noContactsPlaceholderLabel: UILabel = {
+    let label = UILabel()
+    label.text = String(localized: "No contacts")
+    label.textAlignment = .center
+    label.textColor = UIColor(resource: .textLight100).withAlphaComponent(0.3)
+    return label
+  }()
+
   enum UIConstants {
     static let cellHeight: CGFloat = 85
     static let horizontalInset: CGFloat = 16
   }
-
-  private static let contactCellIdentifier = String(describing: ContactCellView.self)
 
 }
