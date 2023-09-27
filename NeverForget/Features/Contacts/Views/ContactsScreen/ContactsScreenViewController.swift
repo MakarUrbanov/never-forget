@@ -21,8 +21,15 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
   private let contactsCountView: IContactsCountView = ContactsCountView()
   private var sortingHeaderMenu: ISortHeaderMenu = SortHeaderMenu(selectedItem: .byNearestEvents)
 
-  private let contactsTableView = UITableView(frame: .zero, style: .plain)
+  private lazy var contactsTableView = UITableView(frame: .zero, style: .plain)
   private var diffableDataSource: UITableViewDiffableDataSource<Int, Contact>!
+  private lazy var noContactsPlaceholderLabel: UILabel = {
+    let label = UILabel()
+    label.text = String(localized: "No contacts")
+    label.textAlignment = .center
+    label.textColor = UIColor(resource: .textLight100).withAlphaComponent(0.3)
+    return label
+  }()
 
   init(presenter: IContactsScreenPresenter) {
     self.presenter = presenter
@@ -51,7 +58,7 @@ class ContactsScreenViewController: UIViewController, IContactsScreenView {
     let contactsCount = presenter.getContactsCount()
 
     contactsCountView.setContactsCount(contactsCount)
-    configureContactsSnapshot(with: newContacts, animated: true)
+    applyContactsSnapshot(with: newContacts, animated: true)
   }
 
 }
@@ -67,13 +74,14 @@ private extension ContactsScreenViewController {
     presenter.setSortingAlphabetically()
   }
 
-  private func configureContactsSnapshot(with contacts: [Contact], animated: Bool = false) {
+  private func applyContactsSnapshot(with contacts: [Contact], animated: Bool = false) {
     var snapshot = diffableDataSource.snapshot()
     if snapshot.numberOfSections == 0 {
       snapshot.appendSections([0])
     }
 
     snapshot.appendItems(contacts)
+    updateContactsTableBackgroundView(contacts.count)
 
     diffableDataSource.apply(snapshot, animatingDifferences: animated)
   }
@@ -102,6 +110,14 @@ private extension ContactsScreenViewController {
     dataSource.defaultRowAnimation = .fade
 
     return dataSource
+  }
+
+  private func updateContactsTableBackgroundView(_ itemsCount: Int) {
+    if itemsCount == 0 {
+      contactsTableView.backgroundView = noContactsPlaceholderLabel
+    } else {
+      contactsTableView.backgroundView = nil
+    }
   }
 
 }

@@ -69,8 +69,8 @@ extension ContactCellView {
     if let contactPhotoData = contact.photoData, let contactImage = UIImage(data: contactPhotoData) {
       contactImageView.setImage(contactImage)
     } else {
-      let firstLetter = contact.firstName.first ?? String.Element("")
-      contactImageView.setText(String(firstLetter))
+      let firstLetters = contact.generateInitials()
+      contactImageView.setText(firstLetters)
     }
   }
 

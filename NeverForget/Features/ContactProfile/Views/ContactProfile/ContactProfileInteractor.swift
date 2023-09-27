@@ -13,6 +13,7 @@ protocol IContactProfileInteractor: AnyObject {
 
   func setupLastNameValidation(_ textField: TitledTextField)
   func setupFirstNameValidation(_ textField: TitledTextField)
+  func setupMiddleNameValidation(_ textField: TitledTextField)
   func validate() -> Bool
   func startValidating()
   func rollbackChanges()
@@ -72,8 +73,12 @@ extension ContactProfileInteractor {
 
         textField?.setError(error)
       }
-      .setupValidation { lastName in
-        guard let lastName, !lastName.isEmpty else { return (false, String(localized: "Required field")) }
+      .setupValidation { [weak self] lastName in
+        guard let self, let lastName = lastName?.trim(), !lastName.isEmpty else {
+          return (false, String(localized: "Required field"))
+        }
+
+        self.contact.lastName = lastName
 
         return (true, nil)
       }
@@ -91,8 +96,35 @@ extension ContactProfileInteractor {
 
         textField?.setError(error)
       }
-      .setupValidation { firstName in
-        guard let firstName, !firstName.isEmpty else { return (false, String(localized: "Required field")) }
+      .setupValidation { [weak self] firstName in
+        guard let self, let firstName = firstName?.trim(), !firstName.isEmpty else {
+          return (false, String(localized: "Required field"))
+        }
+
+        self.contact.firstName = firstName
+
+        return (true, nil)
+      }
+
+    formValidator.addField(field)
+  }
+
+  func setupMiddleNameValidation(_ textField: TitledTextField) {
+    let field = NFObservableTextField(textField: textField.textField)
+      .setupOnValid { [weak textField] in
+        textField?.hideError()
+      }
+      .setupOnInvalid { [weak textField] error in
+        guard let error else { return }
+
+        textField?.setError(error)
+      }
+      .setupValidation { [weak self] middleName in
+        guard let self, let middleName = middleName?.trim() else {
+          return (true, nil)
+        }
+
+        self.contact.middleName = middleName
 
         return (true, nil)
       }

@@ -33,35 +33,6 @@ class ContactsScreenInteractor: IContactsScreenInteractor {
     self.contactsService = contactsService
 
     self.contactsService.addObserver(target: self, selector: #selector(contactsDidChange))
-
-    // ******** TODO: mmk delete
-    contactsService.fetchContacts()
-    contactsService.contacts.forEach { contactsService.context.delete($0) }
-
-    let contactNextYearEvent = Contact(context: self.contactsService.context)
-    contactNextYearEvent.firstName = "Makar"
-    contactNextYearEvent.lastName = "Urbanov"
-    contactNextYearEvent.setPhotoData(UIImage(resource: .mock).pngData())
-    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(DateInRegion("2000-09-14T14:00:00+00:00")!.dateAt(.startOfDay).date)
-//    contactNextYearEvent.createLinkedEvent(of: .systemGenerated)
-//      .setOriginDate(.now.dateByAdding(-300, .day).date)
-
-    let contactWithImage = Contact(context: self.contactsService.context)
-    contactWithImage.firstName = "Denis"
-    contactWithImage.lastName = "Kalugin"
-    contactWithImage.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(DateInRegion("2000-04-24T14:00:00+00:00")!.dateAt(.startOfDay).date)
-//    contactWithImage.createLinkedEvent(of: .userCreated)
-
-    let contactNoImage = Contact(context: self.contactsService.context)
-    contactNoImage.firstName = "Boris"
-    contactNoImage.lastName = "ТудейБездыч"
-    contactNoImage.createLinkedEvent(of: .systemGenerated)
-      .setOriginDate(.now.dateAt(.startOfDay))
-
-    self.contactsService.context.saveChanges()
-    // ******** TODO: mmk delete
   }
 
   func initialFetchContacts() {

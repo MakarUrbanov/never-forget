@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
-final class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCenterDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
   var rootCoordinator: RootCoordinator?
@@ -26,6 +26,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificatio
 
     notificationCenter.delegate = self
     window?.makeKeyAndVisible()
+
+    preLoadKeyboard()
   }
 
   func sceneDidDisconnect(_: UIScene) {}
@@ -36,11 +38,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificatio
 
   func sceneWillEnterForeground(_: UIScene) {}
 
-  func sceneDidEnterBackground(_: UIScene) {
-    CoreDataStack.shared.viewContext.saveChanges()
-  }
+  func sceneDidEnterBackground(_: UIScene) {}
 
-  // MARK: - Notifications
+}
+
+// MARK: - Notifications
+extension SceneDelegate: UNUserNotificationCenterDelegate {
 
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
@@ -56,6 +59,19 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificatio
     }
 
     completionHandler()
+  }
+
+}
+
+// MARK: - Helpers
+extension SceneDelegate {
+
+  private func preLoadKeyboard() {
+    let lagFreeField = UITextField()
+    window?.addSubview(lagFreeField)
+    lagFreeField.becomeFirstResponder()
+    lagFreeField.resignFirstResponder()
+    lagFreeField.removeFromSuperview()
   }
 
 }

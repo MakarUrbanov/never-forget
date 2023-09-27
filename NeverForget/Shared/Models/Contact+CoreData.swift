@@ -72,6 +72,17 @@ public class Contact: NSManagedObject, Identifiable {
     return [lastName, firstName, middleName].compactMap { $0 }.joined(separator: " ")
   }
 
+  public func generateInitials() -> String {
+    [lastName?.first, firstName.first].compactMap { character in
+      if let character {
+        return String(character)
+      }
+
+      return nil
+    }
+    .joined(separator: "")
+  }
+
 }
 
 // MARK: - Photo

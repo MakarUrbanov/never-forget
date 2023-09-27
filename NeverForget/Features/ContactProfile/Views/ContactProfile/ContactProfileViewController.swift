@@ -14,9 +14,6 @@ protocol IContactProfileView: UIViewController {
   func setupInitialFirstName(_ firstName: String)
   func setupInitialMiddleName(_ middleName: String)
   func setupInitialUsersImage(_ image: UIImage)
-
-  func openCameraImagePicker()
-  func openLibraryImagePicker()
 }
 
 class ContactProfileViewController: UIViewController, IContactProfileView {
@@ -66,29 +63,6 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
     presenter.viewDidDisappear()
   }
 
-  // MARK: - Public methods
-  func openCameraImagePicker() {
-    Task(priority: .high) {
-      guard await CameraImagePicker.requestAccess() else { return }
-
-      DispatchQueue.main.async {
-        let cameraImagePicker = CameraImagePicker()
-        cameraImagePicker.delegate = self
-        cameraImagePicker.cameraController.modalPresentationStyle = .overFullScreen
-        self.present(cameraImagePicker.cameraController, animated: true)
-      }
-    }
-  }
-
-  func openLibraryImagePicker() {
-    let libraryImagePicker: IImagePicker = ImagePicker(
-      configuration: ImagePicker.Configurations.OnePhotoConfiguration
-    )
-
-    libraryImagePicker.delegate = self
-    present(libraryImagePicker.pickerViewController, animated: true)
-  }
-
 }
 
 // MARK: - Private methods
@@ -122,6 +96,28 @@ private extension ContactProfileViewController {
     actionSheet.addAction(UIAlertAction(title: String(localized: "Cancel"), style: .cancel, handler: nil))
 
     present(actionSheet, animated: true)
+  }
+
+  private func openCameraImagePicker() {
+    Task(priority: .high) {
+      guard await CameraImagePicker.requestAccess() else { return }
+
+      DispatchQueue.main.async {
+        let cameraImagePicker = CameraImagePicker()
+        cameraImagePicker.delegate = self
+        cameraImagePicker.cameraController.modalPresentationStyle = .overFullScreen
+        self.present(cameraImagePicker.cameraController, animated: true)
+      }
+    }
+  }
+
+  private func openLibraryImagePicker() {
+    let libraryImagePicker: IImagePicker = ImagePicker(
+      configuration: ImagePicker.Configurations.OnePhotoConfiguration
+    )
+
+    libraryImagePicker.delegate = self
+    present(libraryImagePicker.pickerViewController, animated: true)
   }
 
 }
@@ -324,6 +320,7 @@ private extension ContactProfileViewController {
   private func setupMiddleNameTextField() {
     middleNameTextField.setPlaceholder(String(localized: "Enter middle name"))
     middleNameTextField.setTitle(String(localized: "Middle name"))
+    presenter.setupMiddleNameValidation(middleNameTextField)
 
     middleNameTextField.textField.didPressedKeyboardReturn = { textField in
       textField.resignFirstResponder()

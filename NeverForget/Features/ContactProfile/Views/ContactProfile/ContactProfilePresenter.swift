@@ -12,8 +12,11 @@ protocol IContactProfilePresenter: AnyObject {
   func viewDidDisappear()
   func closeProfile()
   func createContactDidPress()
+
   func setupLastNameValidation(_ textField: TitledTextField)
   func setupFirstNameValidation(_ textField: TitledTextField)
+  func setupMiddleNameValidation(_ textField: TitledTextField)
+
   func setInitialContactsFields(_ contact: Contact)
   func setContactImage(_ image: UIImage)
   func deleteContactImage()
@@ -85,6 +88,10 @@ extension ContactProfilePresenter {
 
   func setupFirstNameValidation(_ textField: TitledTextField) {
     interactor.setupFirstNameValidation(textField)
+  }
+
+  func setupMiddleNameValidation(_ textField: TitledTextField) {
+    interactor.setupMiddleNameValidation(textField)
   }
 
 }
