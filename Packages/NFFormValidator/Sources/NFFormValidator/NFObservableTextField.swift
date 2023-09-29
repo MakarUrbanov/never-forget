@@ -60,16 +60,16 @@ private extension NFObservableTextField {
     guard isValidating, let validateCallback else { return }
 
     let text = sender.text
-    let (newIsValid, errorMessage) = validateCallback(text)
+    let validationResult = validateCallback(text)
 
-    if isValid == newIsValid { return }
+    if isValid == validationResult.isValid { return }
 
-    isValid = newIsValid
+    isValid = validationResult.isValid
 
-    if newIsValid {
+    if validationResult.isValid {
       onValidCallback?()
     } else {
-      onInvalidCallback?(errorMessage)
+      onInvalidCallback?(validationResult.error)
     }
   }
 
@@ -78,8 +78,21 @@ private extension NFObservableTextField {
 // MARK: - Static
 public extension NFObservableTextField {
 
-  typealias ValidationCallback = (String?) -> (isValid: Bool, error: String?)
+  typealias ValidationCallback = (String?) -> ValidationResult
   typealias OnValidCallback = () -> Void
   typealias OnInvalidCallback = (_ errorMessage: String?) -> Void
+
+  struct ValidationResult {
+    public var isValid: Bool
+    public var error: String?
+
+    public static func valid() -> Self {
+      .init(isValid: true, error: nil)
+    }
+
+    public static func invalid(_ error: String) -> Self {
+      .init(isValid: false, error: error)
+    }
+  }
 
 }

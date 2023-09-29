@@ -5,13 +5,15 @@
 //  Created by Makar Mishchenko on 21.09.2023
 //
 
+import UIKit
+
 protocol IContactProfileRouter: AnyObject {
   func closeProfile()
 }
 
 class ContactProfileRouter: IContactProfileRouter {
 
-  weak var viewController: IContactProfileView?
+  weak var viewController: UIViewController?
   weak var coordinator: IContactProfileCoordinator?
 
   init(coordinator: IContactProfileCoordinator) {

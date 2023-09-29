@@ -15,7 +15,6 @@ protocol IContactsScreenView: UIViewController {
 
 // MARK: - ViewController
 class ContactsScreenViewController: UIViewController, IContactsScreenView {
-  
 
   // MARK: - Public properties
   private var presenter: IContactsScreenPresenter

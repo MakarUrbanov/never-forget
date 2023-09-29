@@ -9,7 +9,7 @@ import UIKit
 
 enum ContactProfileModuleBuilder {
 
-  static func buildEditContact(contact: Contact, coordinator: IContactProfileCoordinator) -> IContactProfileView {
+  static func buildEditContact(contact: Contact, coordinator: IContactProfileCoordinator) -> UIViewController {
     let interactor = ContactProfileInteractor(contact: contact)
     let router = ContactProfileRouter(coordinator: coordinator)
     let presenter = ContactProfilePresenter(interactor: interactor, router: router)
@@ -22,7 +22,7 @@ enum ContactProfileModuleBuilder {
     return viewController
   }
 
-  static func buildCreateContact(contact: Contact, coordinator: IContactProfileCoordinator) -> IContactProfileView {
+  static func buildCreateContact(contact: Contact, coordinator: IContactProfileCoordinator) -> UIViewController {
     let interactor = ContactProfileInteractor(contact: contact)
     let router = ContactProfileRouter(coordinator: coordinator)
     let presenter = ContactProfilePresenter(interactor: interactor, router: router)

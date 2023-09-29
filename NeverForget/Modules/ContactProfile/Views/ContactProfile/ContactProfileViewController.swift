@@ -7,19 +7,13 @@
 
 import AVFoundation
 import IQKeyboardManagerSwift
+import NFFormValidator
 import UIKit
 
-protocol IContactProfileView: UIViewController {
-  func setupInitialLastName(_ lastName: String)
-  func setupInitialFirstName(_ firstName: String)
-  func setupInitialMiddleName(_ middleName: String)
-  func setupInitialUsersImage(_ image: UIImage)
-}
-
-class ContactProfileViewController: UIViewController, IContactProfileView {
+class ContactProfileViewController: UIViewController {
 
   // MARK: - Public properties
-  private var presenter: IContactProfilePresenter
+  private var presenter: IContactProfilePresenterInput
 
   // MARK: - Private properties
   private let primaryButtonType: PrimaryButtonType
@@ -29,9 +23,13 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
   private lazy var contentContainerView = IQPreviousNextView()
 
   private lazy var usersImageView: IUsersPhotoView = UsersPhotoView()
+
+  private let fieldsValidationConfigurator: ContactProfileTextFieldValidationConfigurator
+  private lazy var fieldsStackView = UIStackView()
   private lazy var lastNameTextField = TitledTextField()
   private lazy var firstNameTextField = TitledTextField()
   private lazy var middleNameTextField = TitledTextField()
+
   private lazy var createContactButton = UIButton()
 
   private lazy var cameraImagePicker = CameraImagePicker()
@@ -40,9 +38,10 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
   )
 
   // MARK: - Init
-  init(presenter: IContactProfilePresenter, primaryButtonType: PrimaryButtonType) {
+  init(presenter: IContactProfilePresenterInput, primaryButtonType: PrimaryButtonType) {
     self.presenter = presenter
     self.primaryButtonType = primaryButtonType
+    self.fieldsValidationConfigurator = ContactProfileTextFieldValidationConfigurator(presenter: presenter)
 
     super.init(nibName: nil, bundle: nil)
   }
@@ -58,8 +57,7 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
 
     view.backgroundColor = UIColor(resource: .darkBackground)
 
-    initialize()
-
+    setupUI()
     presenter.viewDidLoad()
   }
 
@@ -70,12 +68,37 @@ class ContactProfileViewController: UIViewController, IContactProfileView {
 
 }
 
+// MARK: - IContactProfilePresenterOutput
+extension ContactProfileViewController: IContactProfilePresenterOutput {
+
+  func setLastName(_ lastName: String) {
+    lastNameTextField.textField.text = lastName
+  }
+
+  func setFirstName(_ firstName: String) {
+    firstNameTextField.textField.text = firstName
+  }
+
+  func setMiddleName(_ middleName: String) {
+    middleNameTextField.textField.text = middleName
+  }
+
+  func setContactImage(_ image: UIImage) {
+    usersImageView.setImage(image)
+  }
+
+  func deleteContactImage() {
+    usersImageView.reset()
+  }
+
+}
+
 // MARK: - Private methods
 private extension ContactProfileViewController {
 
   @objc
   private func didPressCreateContactButton() {
-    presenter.createContactDidPress()
+    presenter.didPressSaveContact()
   }
 
   private func setNewContactsPhoto(_ image: UIImage) {
@@ -146,33 +169,11 @@ extension ContactProfileViewController: UIImagePickerControllerDelegate & UINavi
 
 }
 
-// MARK: - Setup initial values
-extension ContactProfileViewController {
-
-  func setupInitialLastName(_ lastName: String) {
-    lastNameTextField.textField.text = lastName
-  }
-
-  func setupInitialFirstName(_ firstName: String) {
-    firstNameTextField.textField.text = firstName
-  }
-
-  func setupInitialMiddleName(_ middleName: String) {
-    middleNameTextField.textField.text = middleName
-  }
-
-  func setupInitialUsersImage(_ image: UIImage) {
-    usersImageView.setImage(image)
-  }
-
-}
-
 // MARK: - IUsersPhotoViewDelegate
 extension ContactProfileViewController: IUsersPhotoViewDelegate {
 
   func didPressDeleteImage() {
-    usersImageView.reset()
-    presenter.deleteContactImage()
+    presenter.didPressDeleteContactImage()
   }
 
   func didPressAddImage() {
@@ -198,7 +199,7 @@ extension ContactProfileViewController: IImagePickerDelegate {
 // MARK: - Setup UI methods
 private extension ContactProfileViewController {
 
-  private func initialize() {
+  private func setupUI() {
     setupNavigationItem()
 
     setupCreateContactButton()
@@ -206,9 +207,7 @@ private extension ContactProfileViewController {
     setupContentContainerView()
 
     setupUsersImageView()
-    setupLastNameTextField()
-    setupFirstNameTextField()
-    setupMiddleNameTextField()
+    setupFieldsStackView()
   }
 
   private func setupNavigationItem() {
@@ -219,13 +218,14 @@ private extension ContactProfileViewController {
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: closeImage,
       primaryAction: UIAction(handler: { [weak self] _ in
-        self?.presenter.closeProfile()
+        self?.presenter.didPressCloseProfile()
       })
     )
   }
 
   private func setupCreateContactButton() {
-    createContactButton.setTitle(String(localized: "Create"), for: .normal)
+    let buttonTitle = primaryButtonType == .create ? String(localized: "Create") : String(localized: "Save")
+    createContactButton.setTitle(buttonTitle, for: .normal)
     createContactButton.setTitleColor(UIColor(resource: .textLight100), for: .normal)
     createContactButton.setTitleColor(UIColor(resource: .textLight100).withAlphaComponent(0.6), for: .highlighted)
     createContactButton.backgroundColor = UIColor(resource: .main100)
@@ -279,40 +279,55 @@ private extension ContactProfileViewController {
     }
   }
 
-  private func setupLastNameTextField() {
-    lastNameTextField.setPlaceholder(String(localized: "Enter last name"))
-    lastNameTextField.isRequiredField = true
-    lastNameTextField.setTitle(String(localized: "Last name"))
-    presenter.setupLastNameValidation(lastNameTextField)
+  private func setupFieldsStackView() {
+    fieldsStackView.axis = .vertical
+    fieldsStackView.distribution = .fillEqually
+    fieldsStackView.spacing = UIConstants.spacingAmongTextFields
 
-    lastNameTextField.textField.didPressedKeyboardReturn = { [weak self] _ in
-      self?.firstNameTextField.textField.becomeFirstResponder()
-    }
+    contentContainerView.addSubview(fieldsStackView)
 
-    contentContainerView.addSubview(lastNameTextField)
-
-    lastNameTextField.snp.makeConstraints { make in
+    fieldsStackView.snp.makeConstraints { make in
       make.top.equalTo(usersImageView.snp.bottom).offset(UIConstants.spacingAmongTextFields)
-      make.horizontalEdges.equalToSuperview()
-      make.width.equalToSuperview()
-      make.height.equalTo(UIConstants.textFieldHeight)
+      make.width.horizontalEdges.equalToSuperview()
+      make.bottom.equalToSuperview().inset(40)
     }
+
+    setupFirstNameTextField()
+    setupLastNameTextField()
+    setupMiddleNameTextField()
   }
 
   private func setupFirstNameTextField() {
     firstNameTextField.setPlaceholder(String(localized: "Enter name"))
     firstNameTextField.isRequiredField = true
     firstNameTextField.setTitle(String(localized: "Name"))
-    presenter.setupFirstNameValidation(firstNameTextField)
+    fieldsValidationConfigurator.configureFirstName(titledTextField: firstNameTextField)
 
     firstNameTextField.textField.didPressedKeyboardReturn = { [weak self] _ in
+      self?.lastNameTextField.textField.becomeFirstResponder()
+    }
+
+    fieldsStackView.addArrangedSubview(firstNameTextField)
+
+    firstNameTextField.snp.makeConstraints { make in
+      make.width.equalToSuperview()
+      make.height.equalTo(UIConstants.textFieldHeight)
+    }
+  }
+
+  private func setupLastNameTextField() {
+    lastNameTextField.setPlaceholder(String(localized: "Enter last name"))
+    lastNameTextField.isRequiredField = true
+    lastNameTextField.setTitle(String(localized: "Last name"))
+    fieldsValidationConfigurator.configureLastName(titledTextField: lastNameTextField)
+
+    lastNameTextField.textField.didPressedKeyboardReturn = { [weak self] _ in
       self?.middleNameTextField.textField.becomeFirstResponder()
     }
 
-    contentContainerView.addSubview(firstNameTextField)
+    fieldsStackView.addArrangedSubview(lastNameTextField)
 
-    firstNameTextField.snp.makeConstraints { make in
-      make.top.equalTo(lastNameTextField.snp.bottom).offset(UIConstants.spacingAmongTextFields)
+    lastNameTextField.snp.makeConstraints { make in
       make.width.equalToSuperview()
       make.height.equalTo(UIConstants.textFieldHeight)
     }
@@ -321,18 +336,16 @@ private extension ContactProfileViewController {
   private func setupMiddleNameTextField() {
     middleNameTextField.setPlaceholder(String(localized: "Enter middle name"))
     middleNameTextField.setTitle(String(localized: "Middle name"))
-    presenter.setupMiddleNameValidation(middleNameTextField)
+    fieldsValidationConfigurator.configureMiddleName(titledTextField: middleNameTextField)
 
     middleNameTextField.textField.didPressedKeyboardReturn = { textField in
       textField.resignFirstResponder()
     }
 
-    contentContainerView.addSubview(middleNameTextField)
+    fieldsStackView.addArrangedSubview(middleNameTextField)
 
     middleNameTextField.snp.makeConstraints { make in
-      make.top.equalTo(firstNameTextField.snp.bottom).offset(UIConstants.spacingAmongTextFields)
       make.width.equalToSuperview()
-      make.bottom.equalToSuperview().inset(40)
       make.height.equalTo(UIConstants.textFieldHeight)
     }
   }
