@@ -41,7 +41,7 @@ extension ContactsScreenCoordinator {
 
   static let contactProfileContext = CoreDataStack.shared.backgroundContext
 
-  private func initializeContactProfileCoordinator() -> ContactProfileCoordinator {
+  private func initializeContactProfileCoordinator() -> IContactProfileCoordinator {
     let coordinator = ContactProfileCoordinator(navigationController: .init())
     coordinator.parentCoordinator = self
     childCoordinators.append(coordinator)

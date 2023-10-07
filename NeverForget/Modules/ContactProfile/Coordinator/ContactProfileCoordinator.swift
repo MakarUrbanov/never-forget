@@ -13,6 +13,9 @@ protocol IContactProfileCoordinator: NavigationCoordinator {
 
   func setContactProfileController(for contact: Contact)
   func setCreateContactProfileController()
+
+  func goToEventScreen(of event: Event)
+
   func close()
 }
 
@@ -38,8 +41,15 @@ class ContactProfileCoordinator: NavigationCoordinator, IContactProfileCoordinat
 
   func setCreateContactProfileController() {
     let contact = Contact(context: CoreDataStack.shared.backgroundContext)
+    contact.createLinkedBirthdayEvent()
+
     let viewController = ContactProfileModuleBuilder.buildCreateContact(contact: contact, coordinator: self)
     navigationController.viewControllers = [viewController]
+  }
+
+  func goToEventScreen(of event: Event) {
+    let eventViewController = EventScreenModuleBuilder.build()
+    navigationController.pushViewController(eventViewController, animated: true)
   }
 
   func close() {

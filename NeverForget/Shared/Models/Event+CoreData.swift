@@ -123,7 +123,7 @@ public extension Event {
   }
 
   enum EventType: Int16 {
-    case systemGenerated = 0
+    case birthday = 0
     case userCreated = 1
   }
 

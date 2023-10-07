@@ -15,7 +15,7 @@ class ContactProfileTextFieldValidationConfigurator {
     self.presenter = presenter
   }
 
-  func configureFirstName(titledTextField: TitledTextField) {
+  func configureFirstName(titledTextField: ITitledTextField) {
     let field = NFObservableTextField(textField: titledTextField.textField)
       .setupOnValid { [weak titledTextField] in
         titledTextField?.hideError()
@@ -38,7 +38,7 @@ class ContactProfileTextFieldValidationConfigurator {
     presenter?.addValidatorField(field)
   }
 
-  func configureLastName(titledTextField: TitledTextField) {
+  func configureLastName(titledTextField: ITitledTextField) {
     let field = NFObservableTextField(textField: titledTextField.textField)
       .setupOnValid { [weak titledTextField] in
         titledTextField?.hideError()
@@ -61,7 +61,7 @@ class ContactProfileTextFieldValidationConfigurator {
     presenter?.addValidatorField(field)
   }
 
-  func configureMiddleName(titledTextField: TitledTextField) {
+  func configureMiddleName(titledTextField: ITitledTextField) {
     let field = NFObservableTextField(textField: titledTextField.textField)
       .setupOnValid { [weak titledTextField] in
         titledTextField?.hideError()

@@ -9,6 +9,7 @@ import UIKit
 
 protocol IContactProfileRouter: AnyObject {
   func closeProfile()
+  func goToEventScreen(event: Event)
 }
 
 class ContactProfileRouter: IContactProfileRouter {
@@ -23,6 +24,10 @@ class ContactProfileRouter: IContactProfileRouter {
   // MARK: - Public methods
   func closeProfile() {
     coordinator?.close()
+  }
+
+  func goToEventScreen(event: Event) {
+    coordinator?.goToEventScreen(of: event)
   }
 
 }

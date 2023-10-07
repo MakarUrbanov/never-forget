@@ -22,6 +22,7 @@ protocol IContactProfilePresenterInput: AnyObject {
   func didChangeFirstName(_ firstName: String)
   func didChangeLastName(_ lastName: String)
   func didChangeMiddleName(_ middleName: String)
+  func goToBirthdayEventScreen()
 }
 
 protocol IContactProfilePresenterOutput: AnyObject {
@@ -29,6 +30,7 @@ protocol IContactProfilePresenterOutput: AnyObject {
   func setFirstName(_ firstName: String)
   func setMiddleName(_ middleName: String)
   func setContactImage(_ image: UIImage)
+  func setDateOfBirth(_ date: Date)
   func deleteContactImage()
 }
 
@@ -72,7 +74,6 @@ extension ContactProfilePresenter: IContactProfilePresenterInput {
 
   func didPressDeleteContactImage() {
     interactor.deleteContactImage()
-    
   }
 
   func addValidatorField(_ field: INFObservableField) {
@@ -91,6 +92,12 @@ extension ContactProfilePresenter: IContactProfilePresenterInput {
     interactor.middleNameDidChange(middleName)
   }
 
+  func goToBirthdayEventScreen() {
+    if let birthdayEvent = interactor.contact.birthdayEvent {
+      router.goToEventScreen(event: birthdayEvent)
+    }
+  }
+
 }
 
 // MARK: - IContactProfileInteractorOutput
@@ -102,7 +109,6 @@ extension ContactProfilePresenter: IContactProfileInteractorOutput {
 
 }
 
-
 // MARK: - Private methods
 private extension ContactProfilePresenter {
 
@@ -110,6 +116,10 @@ private extension ContactProfilePresenter {
     view?.setFirstName(contact.firstName)
     view?.setLastName(contact.lastName ?? "")
     view?.setMiddleName(contact.middleName ?? "")
+
+    if let birthdayEvent = contact.birthdayEvent {
+      view?.setDateOfBirth(birthdayEvent.originDate)
+    }
 
     if let photoData = contact.photoData, let contactImage = UIImage(data: photoData) {
       view?.setContactImage(contactImage)

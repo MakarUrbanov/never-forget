@@ -26,9 +26,10 @@ class ContactProfileViewController: UIViewController {
 
   private let fieldsValidationConfigurator: ContactProfileTextFieldValidationConfigurator
   private lazy var fieldsStackView = UIStackView()
-  private lazy var lastNameTextField = TitledTextField()
-  private lazy var firstNameTextField = TitledTextField()
-  private lazy var middleNameTextField = TitledTextField()
+  private lazy var lastNameTextField: ITitledTextField = TitledTextField()
+  private lazy var firstNameTextField: ITitledTextField = TitledTextField()
+  private lazy var middleNameTextField: ITitledTextField = TitledTextField()
+  private lazy var birthdayEventButton: ITitledButton = TitledButton()
 
   private lazy var createContactButton = UIButton()
 
@@ -87,6 +88,11 @@ extension ContactProfileViewController: IContactProfilePresenterOutput {
     usersImageView.setImage(image)
   }
 
+  func setDateOfBirth(_ date: Date) {
+    let dateFormatted = Date().formatterForRegion(format: "MM.dd.yyyy").string(from: date)
+    birthdayEventButton.setText(dateFormatted)
+  }
+
   func deleteContactImage() {
     usersImageView.reset()
   }
@@ -99,6 +105,11 @@ private extension ContactProfileViewController {
   @objc
   private func didPressCreateContactButton() {
     presenter.didPressSaveContact()
+  }
+
+  @objc
+  private func didPressBirthday() {
+    presenter.goToBirthdayEventScreen()
   }
 
   private func setNewContactsPhoto(_ image: UIImage) {
@@ -295,9 +306,12 @@ private extension ContactProfileViewController {
     setupFirstNameTextField()
     setupLastNameTextField()
     setupMiddleNameTextField()
+    setupBirthdayEventButton()
   }
 
   private func setupFirstNameTextField() {
+    firstNameTextField.textField.font = .systemFont(ofSize: 14, weight: .regular)
+    firstNameTextField.textField.textColor = UIColor(resource: .textLight100)
     firstNameTextField.setPlaceholder(String(localized: "Enter name"))
     firstNameTextField.isRequiredField = true
     firstNameTextField.setTitle(String(localized: "Name"))
@@ -316,6 +330,8 @@ private extension ContactProfileViewController {
   }
 
   private func setupLastNameTextField() {
+    lastNameTextField.textField.font = .systemFont(ofSize: 14, weight: .regular)
+    lastNameTextField.textField.textColor = UIColor(resource: .textLight100)
     lastNameTextField.setPlaceholder(String(localized: "Enter last name"))
     lastNameTextField.isRequiredField = true
     lastNameTextField.setTitle(String(localized: "Last name"))
@@ -334,6 +350,8 @@ private extension ContactProfileViewController {
   }
 
   private func setupMiddleNameTextField() {
+    middleNameTextField.textField.font = .systemFont(ofSize: 14, weight: .regular)
+    middleNameTextField.textField.textColor = UIColor(resource: .textLight100)
     middleNameTextField.setPlaceholder(String(localized: "Enter middle name"))
     middleNameTextField.setTitle(String(localized: "Middle name"))
     fieldsValidationConfigurator.configureMiddleName(titledTextField: middleNameTextField)
@@ -345,6 +363,26 @@ private extension ContactProfileViewController {
     fieldsStackView.addArrangedSubview(middleNameTextField)
 
     middleNameTextField.snp.makeConstraints { make in
+      make.width.equalToSuperview()
+      make.height.equalTo(UIConstants.textFieldHeight)
+    }
+  }
+
+  private func setupBirthdayEventButton() {
+    birthdayEventButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
+    birthdayEventButton.button.configuration?.titleTextAttributesTransformer = .init({
+      $0.merging(.init([
+        .font: UIFont.systemFont(ofSize: 14, weight: .regular)
+      ]))
+    })
+
+    birthdayEventButton.isRequiredField = true
+    birthdayEventButton.setTitle(String(localized: "Date of Birth"))
+    birthdayEventButton.children.addTarget(self, action: #selector(didPressBirthday), for: .touchUpInside)
+
+    fieldsStackView.addArrangedSubview(birthdayEventButton)
+
+    birthdayEventButton.snp.makeConstraints { make in
       make.width.equalToSuperview()
       make.height.equalTo(UIConstants.textFieldHeight)
     }

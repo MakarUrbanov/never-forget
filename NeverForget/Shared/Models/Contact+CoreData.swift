@@ -85,6 +85,23 @@ public class Contact: NSManagedObject, Identifiable {
 
 }
 
+// MARK: - Birthday event
+extension Contact {
+
+  var birthdayEvent: Event? {
+    ownedEvents.first(where: { $0.type == .birthday })
+  }
+
+  @discardableResult
+  public func createLinkedBirthdayEvent() -> Event {
+    let birthdayEvent = createLinkedEvent(of: .birthday)
+    birthdayEvent.name = String(localized: "Birthday")
+
+    return birthdayEvent
+  }
+
+}
+
 // MARK: - Photo
 public extension Contact {
 

@@ -1,32 +1,33 @@
 //
-//  TitledTextField.swift
+//  TitledView.swift
 //  NeverForget
 //
-//  Created by Makar Mishchenko on 22.09.2023.
+//  Created by Makar Mishchenko on 29.09.2023.
 //
 
+import NFCore
 import UIKit
 
-protocol ITitledTextField: UIStackView {
-  var textField: EnhancedTextField { get }
+protocol ITitledView: UIStackView {
   var isRequiredField: Bool { get set }
-  func setPlaceholder(_ placeholder: String)
+  var children: UIControl { get }
+
   func setTitle(_ title: String)
   func setError(_ errorText: String)
   func hideError()
 }
 
-class TitledTextField: UIStackView, ITitledTextField {
+class TitledView: UIStackView, ITitledView {
 
   var isRequiredField: Bool = false
-
-  lazy var textField: EnhancedTextField = .init()
+  private(set) var children: UIControl
 
   private lazy var titleStackView = UIStackView()
   private lazy var titleLabel = UILabel()
   private lazy var errorLabel = UILabel()
 
-  override init(frame: CGRect) {
+  init(children: UIControl) {
+    self.children = children
     super.init(frame: .zero)
 
     axis = .vertical
@@ -35,22 +36,8 @@ class TitledTextField: UIStackView, ITitledTextField {
     initialize()
   }
 
-  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Public methods
-  func setPlaceholder(_ placeholder: String) {
-    let attributedString = NSAttributedString(
-      string: placeholder,
-      attributes: [
-        .font: UIFont.systemFont(ofSize: 14, weight: .regular),
-        .foregroundColor: UIColor(resource: .textLight100).withAlphaComponent(0.3)
-      ]
-    )
-
-    textField.attributedPlaceholder = attributedString
   }
 
   func setTitle(_ title: String) {
@@ -59,18 +46,18 @@ class TitledTextField: UIStackView, ITitledTextField {
 
   func setError(_ errorText: String) {
     errorLabel.text = errorText
-    textField.layer.borderColor = UIConstants.borderErrorColor.cgColor
+    children.layer.borderColor = UIConstants.borderErrorColor.cgColor
   }
 
   func hideError() {
     errorLabel.text = ""
-    textField.layer.borderColor = UIConstants.borderColor.cgColor
+    children.layer.borderColor = UIConstants.borderColor.cgColor
   }
 
 }
 
 // MARK: - Private methods
-private extension TitledTextField {
+private extension TitledView {
 
   private func configureStringByIsRequiredFieldValue(_ string: String) -> String {
     string + (isRequiredField ? " *" : "")
@@ -79,11 +66,11 @@ private extension TitledTextField {
 }
 
 // MARK: - Setup UI
-private extension TitledTextField {
+private extension TitledView {
 
   private func initialize() {
     setupTitleStackView()
-    setupTextField()
+    setupChildren()
   }
 
   private func setupTitleStackView() {
@@ -125,17 +112,15 @@ private extension TitledTextField {
     titleStackView.addArrangedSubview(errorLabel)
   }
 
-  private func setupTextField() {
-    textField.layer.cornerRadius = 8
-    textField.leftView = UIView(frame: .init(origin: .zero, size: .init(width: 16, height: 0)))
-    textField.leftViewMode = .always
-    textField.layer.borderColor = UIConstants.borderColor.cgColor
-    textField.layer.borderWidth = 1
+  private func setupChildren() {
+    children.layer.cornerRadius = 8
+    children.layer.borderColor = UIConstants.borderColor.cgColor
+    children.layer.borderWidth = 1
 
-    addArrangedSubview(textField)
+    addArrangedSubview(children)
     setCustomSpacing(12, after: titleStackView)
 
-    textField.snp.makeConstraints { make in
+    children.snp.makeConstraints { make in
       make.horizontalEdges.equalToSuperview()
     }
   }
@@ -143,7 +128,7 @@ private extension TitledTextField {
 }
 
 // MARK: - Static
-extension TitledTextField {
+extension TitledView {
 
   enum UIConstants {
     static let borderColor = UIColor(resource: .textLight100).withAlphaComponent(0.08)
@@ -158,10 +143,11 @@ import SwiftUI
 #Preview {
   let viewController = UIViewController()
   viewController.view.backgroundColor = UIColor(resource: .darkBackground)
-  let textField = TitledTextField()
+  let textFieldChildren = UITextField()
+  textFieldChildren.placeholder = "TextField children"
+  let textField = TitledView(children: textFieldChildren)
   textField.isRequiredField = true
   textField.setTitle("Title")
-  textField.setPlaceholder("Placeholder...")
   textField.setError("Required field")
 
   viewController.view.addSubview(textField)

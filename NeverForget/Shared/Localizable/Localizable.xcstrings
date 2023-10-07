@@ -10,6 +10,9 @@
     "Adding a contact" : {
 
     },
+    "Adding an event" : {
+
+    },
     "Alphabetically" : {
       "comment" : "Sorting type",
       "localizations" : {
@@ -20,6 +23,9 @@
           }
         }
       }
+    },
+    "Birthday" : {
+
     },
     "By nearest event" : {
       "comment" : "Sorting type",
@@ -61,6 +67,9 @@
       }
     },
     "Create" : {
+
+    },
+    "Date of Birth" : {
 
     },
     "Delete" : {
