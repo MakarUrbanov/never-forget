@@ -237,11 +237,7 @@ private extension ContactProfileViewController {
   private func setupCreateContactButton() {
     let buttonTitle = primaryButtonType == .create ? String(localized: "Create") : String(localized: "Save")
     createContactButton.setTitle(buttonTitle, for: .normal)
-    createContactButton.setTitleColor(UIColor(resource: .textLight100), for: .normal)
-    createContactButton.setTitleColor(UIColor(resource: .textLight100).withAlphaComponent(0.6), for: .highlighted)
-    createContactButton.backgroundColor = UIColor(resource: .main100)
-    createContactButton.layer.cornerRadius = 8
-    createContactButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+    createContactButton.makePrimaryButton()
 
     createContactButton.addTarget(self, action: #selector(didPressCreateContactButton), for: .touchUpInside)
 

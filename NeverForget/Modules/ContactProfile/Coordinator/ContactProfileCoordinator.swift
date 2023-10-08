@@ -48,7 +48,11 @@ class ContactProfileCoordinator: NavigationCoordinator, IContactProfileCoordinat
   }
 
   func goToEventScreen(of event: Event) {
-    let eventViewController = EventScreenModuleBuilder.build()
+    guard let event = CoreDataStack.shared.existingObject(event, in: CoreDataStack.shared.backgroundContext) else {
+      fatalError("Event does't exist")
+    }
+
+    let eventViewController = EventScreenModuleBuilder.build(event: event)
     navigationController.pushViewController(eventViewController, animated: true)
   }
 

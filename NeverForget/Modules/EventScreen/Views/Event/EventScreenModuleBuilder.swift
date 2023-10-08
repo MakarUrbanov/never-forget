@@ -9,8 +9,8 @@ import UIKit
 
 enum EventScreenModuleBuilder {
 
-  static func build() -> UIViewController {
-    let interactor = EventScreenInteractor()
+  static func build(event: Event) -> UIViewController {
+    let interactor = EventScreenInteractor(event: event)
     let router = EventScreenRouter()
     let presenter = EventScreenPresenter(interactor: interactor, router: router)
     let viewController = EventScreenViewController(presenter: presenter)
