@@ -107,7 +107,6 @@ private extension ContactProfileViewController {
     presenter.didPressSaveContact()
   }
 
-  @objc
   private func didPressBirthday() {
     presenter.goToBirthdayEventScreen()
   }
@@ -239,7 +238,10 @@ private extension ContactProfileViewController {
     createContactButton.setTitle(buttonTitle, for: .normal)
     createContactButton.makePrimaryButton()
 
-    createContactButton.addTarget(self, action: #selector(didPressCreateContactButton), for: .touchUpInside)
+    let createContactAction = UIAction { [weak self] _ in
+      self?.didPressCreateContactButton()
+    }
+    createContactButton.addAction(createContactAction, for: .primaryActionTriggered)
 
     view.addSubview(createContactButton)
 
@@ -374,7 +376,11 @@ private extension ContactProfileViewController {
 
     birthdayEventButton.isRequiredField = true
     birthdayEventButton.setTitle(String(localized: "Date of Birth"))
-    birthdayEventButton.children.addTarget(self, action: #selector(didPressBirthday), for: .touchUpInside)
+
+    let pressBirthdayButtonAction = UIAction { [weak self] _ in
+      self?.didPressBirthday()
+    }
+    birthdayEventButton.children.addAction(pressBirthdayButtonAction, for: .primaryActionTriggered)
 
     fieldsStackView.addArrangedSubview(birthdayEventButton)
 

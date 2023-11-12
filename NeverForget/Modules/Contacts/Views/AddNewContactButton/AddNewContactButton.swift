@@ -18,7 +18,10 @@ class AddNewContactButton: UIButton, IAddNewContactButton {
 
     super.init(frame: .init(x: 0, y: 0, width: 36, height: 36))
 
-    addTarget(self, action: #selector(didTap), for: .touchUpInside)
+    let tapActions = UIAction { [weak self] _ in
+      self?.didTap()
+    }
+    self.addAction(tapActions, for: .primaryActionTriggered)
 
     clipsToBounds = true
     backgroundColor = UIColor(resource: .main100)
@@ -41,7 +44,6 @@ class AddNewContactButton: UIButton, IAddNewContactButton {
 // MARK: - Private methods
 private extension AddNewContactButton {
 
-  @objc
   func didTap() {
     presentCreateNewProfile()
   }

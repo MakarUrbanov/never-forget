@@ -21,8 +21,14 @@ class EventScreenViewController: UIViewController {
   private lazy var contentStackView = UIStackView()
   private lazy var originDatePickerButton = TitledButton()
 
-  init(presenter: IEventScreenPresenterInput) {
+  private let notificationRulesView: INotificationRulesView
+
+  init(presenter: IEventScreenPresenterInput, notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
     self.presenter = presenter
+    self.notificationRulesView = NotificationRulesModuleBuilder.build(
+      notificationsSchedulingRule: notificationsSchedulingRule
+    )
+
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -70,14 +76,13 @@ private extension EventScreenViewController {
     present(datePicker, animated: true)
   }
 
-  @objc
-  private func didPressSaveEventButton(_ sender: UIButton) {
+  private func didPressSaveEventButton() {
     // TODO: mmk implement
   }
 
   @objc
-  private func didPressOpenDatePicker(_ sender: UIButton) {
-    showDatePicker(from: sender)
+  private func didPressOpenDatePicker() {
+    showDatePicker(from: originDatePickerButton.button)
   }
 }
 
@@ -122,7 +127,7 @@ private extension EventScreenViewController {
   }
 
   private func setupNavigationBar() {
-    navigationItem.title = String(localized: "Adding an event")
+    navigationItem.title = String(localized: "Birthday")
     isModalInPresentation = true
 
     let arrowLeft = UIImage(systemName: "arrow.left")?.withTintColor(
@@ -142,7 +147,10 @@ private extension EventScreenViewController {
     saveButton.setTitle(String(localized: "Save"), for: .normal)
     saveButton.makePrimaryButton()
 
-    saveButton.addTarget(self, action: #selector(didPressSaveEventButton), for: .touchUpInside)
+    let saveButtonAction = UIAction { [weak self] _ in
+      self?.didPressSaveEventButton()
+    }
+    saveButton.addAction(saveButtonAction, for: .primaryActionTriggered)
 
     view.addSubview(saveButton)
 
@@ -185,12 +193,13 @@ private extension EventScreenViewController {
     contentView.addSubview(contentStackView)
 
     contentStackView.snp.makeConstraints { make in
-      make.top.equalToSuperview()
+      make.top.equalToSuperview().offset(UIConstants.spacingAmongFields)
       make.width.horizontalEdges.equalToSuperview()
       make.bottom.equalToSuperview().inset(40)
     }
 
     setupDatePicker()
+    setupNotificationRulesView()
   }
 
   private func setupDatePicker() {
@@ -203,13 +212,27 @@ private extension EventScreenViewController {
 
     originDatePickerButton.isRequiredField = true
     originDatePickerButton.setTitle(String(localized: "Date"))
-    originDatePickerButton.button.addTarget(self, action: #selector(didPressOpenDatePicker), for: .touchUpInside)
+
+    let openDatePickerAction = UIAction { [weak self] _ in
+      self?.didPressOpenDatePicker()
+    }
+    originDatePickerButton.button.addAction(openDatePickerAction, for: .primaryActionTriggered)
 
     contentStackView.addArrangedSubview(originDatePickerButton)
 
-    contentStackView.snp.makeConstraints { make in
+    originDatePickerButton.snp.makeConstraints { make in
       make.width.equalToSuperview()
-      make.height.equalTo(72)
+      make.height.equalTo(UIConstants.fieldHeight)
+    }
+  }
+
+  private func setupNotificationRulesView() {
+    contentStackView.addArrangedSubview(notificationRulesView)
+
+    notificationRulesView.snp.makeConstraints { make in
+      make.width.equalToSuperview()
+      make.height.greaterThanOrEqualTo(UIConstants.fieldHeight)
+      make.bottom.equalTo(notificationRulesView.snp.bottom)
     }
   }
 
@@ -221,6 +244,7 @@ extension EventScreenViewController {
   enum UIConstants {
     static let verticalInset: CGFloat = 16
     static let spacingAmongFields: CGFloat = 20
+    static let fieldHeight: CGFloat = 72
   }
 
 }

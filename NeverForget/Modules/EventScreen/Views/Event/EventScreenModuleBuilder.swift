@@ -13,7 +13,10 @@ enum EventScreenModuleBuilder {
     let interactor = EventScreenInteractor(event: event)
     let router = EventScreenRouter()
     let presenter = EventScreenPresenter(interactor: interactor, router: router)
-    let viewController = EventScreenViewController(presenter: presenter)
+    let viewController = EventScreenViewController(
+      presenter: presenter,
+      notificationsSchedulingRule: event.notificationScheduleRule
+    )
 
     presenter.view = viewController
     interactor.presenter = presenter

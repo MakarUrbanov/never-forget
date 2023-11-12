@@ -38,8 +38,15 @@ class UsersPhotoView: TouchableUIControl, IUsersPhotoView {
 
     initialize()
 
-    actionButtonView.addTarget(self, action: #selector(didPressActionButton), for: .touchUpInside)
-    addTarget(self, action: #selector(didPressSelf), for: .touchUpInside)
+    let pressActionButtonAction = UIAction { [weak self] _ in
+      self?.didPressActionButton()
+    }
+    actionButtonView.addAction(pressActionButtonAction, for: .primaryActionTriggered)
+
+    let pressSelfAction = UIAction { [weak self] _ in
+      self?.didPressSelf()
+    }
+    self.addAction(pressSelfAction, for: .primaryActionTriggered)
   }
 
   @available(*, unavailable)
@@ -83,8 +90,7 @@ private extension UsersPhotoView {
     actionButtonView.backgroundColor = Resources.trashIconBackgroundColor
   }
 
-  @objc
-  private func didPressActionButton(_ sender: UIControl) {
+  private func didPressActionButton() {
     if imageView.image == nil {
       delegate?.didPressAddImage()
     } else {
@@ -92,8 +98,7 @@ private extension UsersPhotoView {
     }
   }
 
-  @objc
-  private func didPressSelf(_ sender: UIControl) {
+  private func didPressSelf() {
     delegate?.didPressOnBodyWith(image: imageView.image)
   }
 
