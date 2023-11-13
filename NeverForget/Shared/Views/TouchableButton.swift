@@ -24,10 +24,4 @@ class TouchableButton: UIButton {
     alpha = 1
   }
 
-  private func setAnimatedAlpha(_ alpha: CGFloat) {
-    UIView.animate(withDuration: 0.15, delay: 0, options: .allowUserInteraction) {
-      self.alpha = alpha
-    }
-  }
-
 }

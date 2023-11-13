@@ -132,12 +132,6 @@ private extension SortHeaderMenu {
     }
   }
 
-  private func setAnimatedAlpha(_ alpha: CGFloat) {
-    UIView.animate(withDuration: UIConstants.alphaAnimationDuration, delay: 0, options: .allowUserInteraction) {
-      self.alpha = alpha
-    }
-  }
-
   private func getMenu() -> UIMenu {
     let alphabetically = UIAction(
       title: NSLocalizedString("Alphabetically", comment: "Sorting type"),
@@ -239,7 +233,6 @@ private extension SortHeaderMenu {
 extension SortHeaderMenu {
 
   enum UIConstants {
-    static let alphaAnimationDuration: CGFloat = 0.15
     static let highlightedAlpha = AppUIConstants.highlightedAlpha
     static let triangleRotateDown = CGFloat.pi * 0.999999
     static let triangleRotateUp: CGFloat = 0
