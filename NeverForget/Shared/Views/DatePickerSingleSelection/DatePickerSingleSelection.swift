@@ -1,5 +1,5 @@
 //
-//  EventDatePicker.swift
+//  DatePickerSingleSelection.swift
 //  NeverForget
 //
 //  Created by Makar Mishchenko on 08.10.2023.
@@ -9,39 +9,35 @@ import SnapKit
 import SwiftDate
 import UIKit
 
-protocol IEventDatePickerDelegate: AnyObject {
-  func didChangeDate(datePicker: IEventDatePicker, date: Date)
+protocol IDatePickerSingleSelectionDelegate: AnyObject {
+  func didChangeDate(datePicker: IDatePickerSingleSelection, date: Date)
 }
 
-protocol IEventDatePicker: UIViewController {
-  var delegate: IEventDatePickerDelegate? { get set }
-  var interval: DateInterval { get }
+protocol IDatePickerSingleSelection: UIView {
+  var delegate: IDatePickerSingleSelectionDelegate? { get set }
+  var availableDateRange: DateInterval { get }
 
   func setDate(date: Date)
 }
 
-class EventDatePicker: UIViewController, IEventDatePicker {
+class DatePickerSingleSelection: UIView, IDatePickerSingleSelection {
 
-  weak var delegate: IEventDatePickerDelegate?
-  var interval: DateInterval
+  weak var delegate: IDatePickerSingleSelectionDelegate?
+  var availableDateRange: DateInterval
 
   private lazy var selectionBehavior = UICalendarSelectionSingleDate(delegate: self)
   private lazy var calendarView = UICalendarView()
 
-  init(interval: DateInterval) {
-    self.interval = interval
+  init(availableDateRange: DateInterval) {
+    self.availableDateRange = availableDateRange
 
-    super.init(nibName: nil, bundle: nil)
+    super.init(frame: .zero)
+
+    initializeUI()
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    initializeUI()
   }
 
   func setDate(date: Date) {
@@ -50,17 +46,17 @@ class EventDatePicker: UIViewController, IEventDatePicker {
 
 }
 
-private extension EventDatePicker {
+private extension DatePickerSingleSelection {
 
   private func initializeUI() {
     setupCalendarView()
   }
 
   private func setupCalendarView() {
-    calendarView.availableDateRange = interval
+    calendarView.availableDateRange = availableDateRange
     calendarView.selectionBehavior = selectionBehavior
 
-    view.addSubview(calendarView)
+    addSubview(calendarView)
 
     calendarView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
@@ -69,7 +65,7 @@ private extension EventDatePicker {
 
 }
 
-extension EventDatePicker: UICalendarSelectionSingleDateDelegate {
+extension DatePickerSingleSelection: UICalendarSelectionSingleDateDelegate {
 
   func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
     if let date = dateComponents?.date {

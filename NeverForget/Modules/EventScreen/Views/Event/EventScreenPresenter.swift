@@ -12,10 +12,13 @@ protocol IEventScreenPresenterInput: AnyObject {
   func goBack()
   func getOriginDate() -> Date
   func didChangeOriginDate(_ newDate: Date)
+  func didPressOpenDatePicker()
+  func didPressSaveEventButton()
 }
 
 protocol IEventScreenPresenterOutput: AnyObject {
   func setOriginDate(_ date: Date)
+  func openDatePicker()
 }
 
 class EventScreenPresenter {
@@ -51,6 +54,14 @@ extension EventScreenPresenter: IEventScreenPresenterInput {
     let date = newDate.inDefaultRegion().date
     interactor.setOriginDate(date: date)
     view?.setOriginDate(date)
+  }
+
+  func didPressOpenDatePicker() {
+    view?.openDatePicker()
+  }
+
+  func didPressSaveEventButton() {
+    // TODO: mmk implement
   }
 
 }

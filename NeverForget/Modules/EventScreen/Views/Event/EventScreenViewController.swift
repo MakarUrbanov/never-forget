@@ -12,8 +12,6 @@ class EventScreenViewController: UIViewController {
 
   var presenter: IEventScreenPresenterInput
 
-  private lazy var datePicker: IEventDatePicker = EventDatePicker(interval: .init(start: .distantPast, end: .now))
-
   private lazy var scrollView = UIScrollView()
   private lazy var contentView = UIView()
   private lazy var saveButton = UIButton()
@@ -57,50 +55,27 @@ extension EventScreenViewController: IEventScreenPresenterOutput {
     originDatePickerButton.setText(formattedDate)
   }
 
+  func openDatePicker() {
+    let datePicker = EventDatePickerViewController()
+    datePicker.setSelectedDate(presenter.getOriginDate())
+
+    datePicker.setOnCancel { [weak datePicker] in
+      datePicker?.dismiss(animated: true)
+    }
+    datePicker.setOnSave { [weak datePicker, weak self] in
+      if let newDate = datePicker?.selectedDate {
+        self?.presenter.didChangeOriginDate(newDate)
+      }
+      datePicker?.dismiss(animated: true)
+    }
+
+    presentBottomSheet(datePicker, detents: [.contentSize])
+  }
+
 }
 
 // MARK: - Private
 private extension EventScreenViewController {
-
-  private func showDatePicker(from sender: UIView) {
-    if let popoverController = datePicker.popoverPresentationController {
-      popoverController.sourceView = sender
-      popoverController.sourceRect = .init(origin: .init(x: sender.bounds.midX, y: sender.bounds.maxY + 4), size: .zero)
-      popoverController.permittedArrowDirections = [.up]
-      popoverController.delegate = self
-    }
-
-    let originDate = presenter.getOriginDate()
-    datePicker.setDate(date: originDate)
-
-    present(datePicker, animated: true)
-  }
-
-  private func didPressSaveEventButton() {
-    // TODO: mmk implement
-  }
-
-  @objc
-  private func didPressOpenDatePicker() {
-    showDatePicker(from: originDatePickerButton.button)
-  }
-}
-
-// MARK: - UIPopoverPresentationControllerDelegate
-extension EventScreenViewController: UIPopoverPresentationControllerDelegate {
-
-  func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-    .none
-  }
-
-}
-
-// MARK: - IEventDatePickerDelegate
-extension EventScreenViewController: IEventDatePickerDelegate {
-
-  func didChangeDate(datePicker: IEventDatePicker, date: Date) {
-    presenter.didChangeOriginDate(date)
-  }
 
 }
 
@@ -118,12 +93,6 @@ private extension EventScreenViewController {
   }
 
   private func configureDatePicker() {
-    datePicker.delegate = self
-    datePicker.modalPresentationStyle = .popover
-
-    let datePickerWidth = view.bounds.width * 0.8
-    let datePickerHeight = datePickerWidth * 1.1
-    datePicker.preferredContentSize = .init(width: datePickerWidth, height: datePickerHeight)
   }
 
   private func setupNavigationBar() {
@@ -148,7 +117,7 @@ private extension EventScreenViewController {
     saveButton.makePrimaryButton()
 
     let saveButtonAction = UIAction { [weak self] _ in
-      self?.didPressSaveEventButton()
+      self?.presenter.didPressSaveEventButton()
     }
     saveButton.addAction(saveButtonAction, for: .primaryActionTriggered)
 
@@ -214,7 +183,7 @@ private extension EventScreenViewController {
     originDatePickerButton.setTitle(String(localized: "Date"))
 
     let openDatePickerAction = UIAction { [weak self] _ in
-      self?.didPressOpenDatePicker()
+      self?.presenter.didPressOpenDatePicker()
     }
     originDatePickerButton.button.addAction(openDatePickerAction, for: .primaryActionTriggered)
 
