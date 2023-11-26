@@ -9,22 +9,19 @@ import UIKit
 
 protocol INotificationRulesView: UIView {
   var parentViewController: UIViewController? { get set }
-  var notificationsSchedulingRule: Event.NotificationsSchedulingRule { get }
 }
 
 class NotificationRulesView: UIView, INotificationRulesView {
 
-  var presenter: INotificationRulesPresenterInput
-  var notificationsSchedulingRule: Event.NotificationsSchedulingRule
+  var viewModel: INotificationRulesViewModel
 
   weak var parentViewController: UIViewController?
 
   private lazy var titleButton: ITitledButton = TitledButton()
 //  private lazy var timesTableView = NotificationTimesTableView()
 
-  init(presenter: INotificationRulesPresenterInput, notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
-    self.presenter = presenter
-    self.notificationsSchedulingRule = notificationsSchedulingRule
+  init(viewModel: INotificationRulesViewModel) {
+    self.viewModel = viewModel
 
     super.init(frame: .zero)
 
@@ -44,30 +41,29 @@ extension NotificationRulesView {
     parentViewController?.dismiss(animated: true)
   }
 
-}
+  private func didPressSaveNotificationsType(newRule: Event.NotificationsSchedulingRule) {
+    viewModel.didPressSave(newRule)
 
-// MARK: - INotificationRulesPresenterOutput
-extension NotificationRulesView: INotificationRulesPresenterOutput {
+    let newRuleTitle = NotificationTextByType.get(newRule)
+    titleButton.setText(newRuleTitle)
 
-  func openNotificationsTypePicker() {
-    let notificationsTypeView = NotificationsTypeSelectorView(initialType: notificationsSchedulingRule)
-    notificationsTypeView.setOnSave { [weak self] newType in
-      self?.presenter.didPressSave(newType)
-    }
-    notificationsTypeView.setOnCancel { [weak self] in
-      self?.presenter.didPressCancel()
-    }
-
-    parentViewController?.presentBottomSheet(notificationsTypeView, detents: [.contentSize])
-  }
-
-  func dismissView() {
     dismiss()
   }
 
-  func setNewNotificationsSchedulingRule(_ rule: Event.NotificationsSchedulingRule) {
-    titleButton.setText(NotificationTextByType.get(rule))
-    notificationsSchedulingRule = rule
+  private func didPressCancelNotificationsType() {
+    dismiss()
+  }
+
+  private func openNotificationsTypePicker() {
+    let notificationsTypeView = NotificationsTypeSelectorView(initialType: viewModel.notificationsSchedulingRule.value)
+    notificationsTypeView.setOnSave { [weak self] newRule in
+      self?.didPressSaveNotificationsType(newRule: newRule)
+    }
+    notificationsTypeView.setOnCancel { [weak self] in
+      self?.didPressCancelNotificationsType()
+    }
+
+    parentViewController?.presentBottomSheet(notificationsTypeView, detents: [.contentSize])
   }
 
 }
@@ -82,10 +78,10 @@ private extension NotificationRulesView {
   private func setupNotificationRuleMenu() {
     titleButton.isRequiredField = true
     titleButton.setTitle(String(localized: "Notifications"))
-    let initialText = NotificationTextByType.get(notificationsSchedulingRule)
+    let initialText = NotificationTextByType.get(viewModel.notificationsSchedulingRule.value)
     titleButton.setText(initialText)
     titleButton.button.addAction(.init(handler: { [weak self] _ in
-      self?.presenter.openNotificationsTypePicker()
+      self?.openNotificationsTypePicker()
     }), for: .primaryActionTriggered)
 
     titleButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)

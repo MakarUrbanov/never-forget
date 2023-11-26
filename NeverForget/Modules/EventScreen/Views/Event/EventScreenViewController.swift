@@ -23,7 +23,7 @@ class EventScreenViewController: UIViewController {
 
   private lazy var notificationRulesView: INotificationRulesView = NotificationRulesModuleBuilder.build(
     notificationsSchedulingRule: notificationsSchedulingRule,
-    setNewNotificationsRuleType: { [weak self] ruleType in
+    saveNewNotificationsRuleType: { [weak self] ruleType in
       self?.presenter.didSetNewNotificationsRuleType(ruleType)
     }
   )

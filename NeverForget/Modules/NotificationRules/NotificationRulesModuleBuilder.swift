@@ -13,13 +13,12 @@ enum NotificationRulesModuleBuilder {
 
   static func build(
     notificationsSchedulingRule: RuleType,
-    setNewNotificationsRuleType: @escaping (RuleType) -> Void
+    saveNewNotificationsRuleType: @escaping (RuleType) -> Void
   ) -> INotificationRulesView {
-    let presenter = NotificationRulesPresenter()
-    presenter.setNewNotificationsRuleType = setNewNotificationsRuleType
-    let view = NotificationRulesView(presenter: presenter, notificationsSchedulingRule: notificationsSchedulingRule)
+    let viewModel = NotificationRulesViewModel(notificationsSchedulingRule: notificationsSchedulingRule)
+    viewModel.saveNewNotificationsRuleType = saveNewNotificationsRuleType
 
-    presenter.view = view
+    let view = NotificationRulesView(viewModel: viewModel)
 
     return view
   }
