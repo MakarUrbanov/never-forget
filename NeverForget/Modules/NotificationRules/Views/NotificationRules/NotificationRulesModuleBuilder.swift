@@ -9,8 +9,14 @@ import UIKit
 
 enum NotificationRulesModuleBuilder {
 
-  static func build(notificationsSchedulingRule: Event.NotificationsSchedulingRule) -> INotificationRulesView {
+  typealias RuleType = Event.NotificationsSchedulingRule
+
+  static func build(
+    notificationsSchedulingRule: RuleType,
+    setNewNotificationsRuleType: @escaping (RuleType) -> Void
+  ) -> INotificationRulesView {
     let presenter = NotificationRulesPresenter()
+    presenter.setNewNotificationsRuleType = setNewNotificationsRuleType
     let view = NotificationRulesView(presenter: presenter, notificationsSchedulingRule: notificationsSchedulingRule)
 
     presenter.view = view

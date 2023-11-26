@@ -8,26 +8,23 @@
 import UIKit
 
 protocol INotificationRulesView: UIView {
-
+  var parentViewController: UIViewController? { get set }
+  var notificationsSchedulingRule: Event.NotificationsSchedulingRule { get }
 }
 
 class NotificationRulesView: UIView, INotificationRulesView {
 
   var presenter: INotificationRulesPresenterInput
+  var notificationsSchedulingRule: Event.NotificationsSchedulingRule
 
-  private let notificationRuleMenu: ITitledMenu
-  private lazy var notificationTimesTableView = NotificationTimesTableView()
+  weak var parentViewController: UIViewController?
+
+  private lazy var titleButton: ITitledButton = TitledButton()
+//  private lazy var timesTableView = NotificationTimesTableView()
 
   init(presenter: INotificationRulesPresenterInput, notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
     self.presenter = presenter
-
-    // TODO: mmk compute initial menu item
-    self.notificationRuleMenu = TitledMenuButton(
-      menuConfiguration: NotificationsSchedulingMenu.menuConfiguration,
-      initialMenuItem: NotificationsSchedulingMenu.defineInitialMenuItem(
-        notificationsSchedulingRule: notificationsSchedulingRule
-      )
-    )
+    self.notificationsSchedulingRule = notificationsSchedulingRule
 
     super.init(frame: .zero)
 
@@ -40,8 +37,39 @@ class NotificationRulesView: UIView, INotificationRulesView {
 
 }
 
+// MARK: - Private methods
+extension NotificationRulesView {
+
+  private func dismiss() {
+    parentViewController?.dismiss(animated: true)
+  }
+
+}
+
 // MARK: - INotificationRulesPresenterOutput
 extension NotificationRulesView: INotificationRulesPresenterOutput {
+
+  func openNotificationsTypePicker() {
+    let notificationsTypeView = NotificationsTypeSelectorView(initialType: notificationsSchedulingRule)
+    notificationsTypeView.setOnSave { [weak self] newType in
+      self?.presenter.didPressSave(newType)
+    }
+    notificationsTypeView.setOnCancel { [weak self] in
+      self?.presenter.didPressCancel()
+    }
+
+    parentViewController?.presentBottomSheet(notificationsTypeView, detents: [.contentSize])
+  }
+
+  func dismissView() {
+    dismiss()
+  }
+
+  func setNewNotificationsSchedulingRule(_ rule: Event.NotificationsSchedulingRule) {
+    titleButton.setText(NotificationTextByType.get(rule))
+    notificationsSchedulingRule = rule
+  }
+
 }
 
 // MARK: - Setup UI
@@ -52,26 +80,36 @@ private extension NotificationRulesView {
   }
 
   private func setupNotificationRuleMenu() {
-    notificationRuleMenu.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
-    notificationRuleMenu.button.configuration?.titleTextAttributesTransformer = .init({
+    titleButton.isRequiredField = true
+    titleButton.setTitle(String(localized: "Notifications"))
+    let initialText = NotificationTextByType.get(notificationsSchedulingRule)
+    titleButton.setText(initialText)
+    titleButton.button.addAction(.init(handler: { [weak self] _ in
+      self?.presenter.openNotificationsTypePicker()
+    }), for: .primaryActionTriggered)
+
+    titleButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
+    titleButton.button.configuration?.titleTextAttributesTransformer = .init({
       $0.merging(.init([
         .font: UIFont.systemFont(ofSize: 14, weight: .regular)
       ]))
     })
 
-    notificationRuleMenu.setTitle(String(localized: "Notifications"))
+    addSubview(titleButton)
 
-    addSubview(notificationRuleMenu)
-
-    notificationRuleMenu.snp.makeConstraints { make in
+    titleButton.snp.makeConstraints { make in
       make.leading.top.trailing.width.equalToSuperview()
-      make.height.equalTo(72)
+      make.height.equalTo(UIConstants.fieldHeight)
     }
   }
 
 }
 
-// MARK: - Private methods
+// MARK: - Static
 extension NotificationRulesView {
+
+  private enum UIConstants {
+    static let fieldHeight: CGFloat = 72
+  }
 
 }

@@ -10,6 +10,7 @@ import Foundation
 protocol IEventScreenInteractorInput: AnyObject {
   func getOriginDate() -> Date
   func setOriginDate(date: Date)
+  func setNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule)
 }
 
 protocol IEventScreenInteractorOutput: AnyObject {
@@ -30,6 +31,10 @@ class EventScreenInteractor: IEventScreenInteractorInput {
 
   func setOriginDate(date: Date) {
     event.setOriginDate(date)
+  }
+
+  func setNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule) {
+    event.notificationScheduleRule = newType
   }
 
 }

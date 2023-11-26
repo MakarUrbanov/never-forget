@@ -14,11 +14,13 @@ protocol IEventScreenPresenterInput: AnyObject {
   func didChangeOriginDate(_ newDate: Date)
   func didPressOpenDatePicker()
   func didPressSaveEventButton()
+  func didSetNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule)
 }
 
 protocol IEventScreenPresenterOutput: AnyObject {
   func setOriginDate(_ date: Date)
   func openDatePicker()
+  func openNotificationsTypeSelector()
 }
 
 class EventScreenPresenter {
@@ -62,6 +64,10 @@ extension EventScreenPresenter: IEventScreenPresenterInput {
 
   func didPressSaveEventButton() {
     // TODO: mmk implement
+  }
+
+  func didSetNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule) {
+    interactor.setNewNotificationsRuleType(newType)
   }
 
 }

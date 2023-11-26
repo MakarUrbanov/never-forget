@@ -10,6 +10,7 @@ import UIKit
 
 protocol IEventDatePickerViewController: UIViewController {
   var selectedDate: Date? { get }
+
   func setOnSave(_ onSave: @escaping () -> Void)
   func setOnCancel(_ onCancel: @escaping () -> Void)
   func setSelectedDate(_ date: Date)

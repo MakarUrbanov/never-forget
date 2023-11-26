@@ -12,22 +12,29 @@ class EventScreenViewController: UIViewController {
 
   var presenter: IEventScreenPresenterInput
 
+  private let notificationsSchedulingRule: Event.NotificationsSchedulingRule
+
   private lazy var scrollView = UIScrollView()
   private lazy var contentView = UIView()
-  private lazy var saveButton = UIButton()
+  private lazy var saveButton = TouchableButton()
 
   private lazy var contentStackView = UIStackView()
   private lazy var originDatePickerButton = TitledButton()
 
-  private let notificationRulesView: INotificationRulesView
+  private lazy var notificationRulesView: INotificationRulesView = NotificationRulesModuleBuilder.build(
+    notificationsSchedulingRule: notificationsSchedulingRule,
+    setNewNotificationsRuleType: { [weak self] ruleType in
+      self?.presenter.didSetNewNotificationsRuleType(ruleType)
+    }
+  )
 
   init(presenter: IEventScreenPresenterInput, notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
     self.presenter = presenter
-    self.notificationRulesView = NotificationRulesModuleBuilder.build(
-      notificationsSchedulingRule: notificationsSchedulingRule
-    )
+    self.notificationsSchedulingRule = notificationsSchedulingRule
 
     super.init(nibName: nil, bundle: nil)
+
+    notificationRulesView.parentViewController = self
   }
 
   required init?(coder: NSCoder) {
@@ -70,6 +77,10 @@ extension EventScreenViewController: IEventScreenPresenterOutput {
     }
 
     presentBottomSheet(datePicker, detents: [.contentSize])
+  }
+
+  func openNotificationsTypeSelector() {
+    // TODO: mmk impl
   }
 
 }

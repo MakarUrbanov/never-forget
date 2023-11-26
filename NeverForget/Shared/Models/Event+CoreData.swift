@@ -38,7 +38,7 @@ public class Event: NSManagedObject, Identifiable {
     }
   }
 
-  @NSManaged public var notifications: Set<Notification>
+  @NSManaged public var notifications: Set<EventsNotification>
   @NSManaged public var contacts: Set<Contact>
 
   @NSManaged public var owner: Contact?

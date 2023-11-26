@@ -68,7 +68,6 @@ private extension TitledMenuButton {
       title: menuConfiguration.title,
       subtitle: menuConfiguration.subtitle,
       image: menuConfiguration.image,
-//      options: .singleSelection,
       preferredElementSize: menuConfiguration.preferredElementSize,
       children: actions
     )
