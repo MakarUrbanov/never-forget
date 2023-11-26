@@ -24,6 +24,7 @@ class NotificationsTypesTableView: UITableView {
     backgroundColor = .clear
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -39,7 +40,8 @@ extension NotificationsTypesTableView: UITableViewDelegate, UITableViewDataSourc
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView
-      .dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NotificationsTypeTableViewCell else {
+      .dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NotificationsTypeTableViewCell else
+    {
       return .init()
     }
 

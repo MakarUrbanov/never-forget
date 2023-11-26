@@ -76,7 +76,7 @@ private extension ContactProfileCoordinator {
   private func setupNavigationController() {
     navigationController.navigationBar.titleTextAttributes = [
       .font: UIFont.systemFont(ofSize: 16, weight: .bold),
-      .foregroundColor: UIColor(resource: .textLight100)
+      .foregroundColor: UIColor(resource: .textLight100),
     ]
   }
 

@@ -15,6 +15,7 @@ protocol IEventScreenPresenterInput: AnyObject {
   func didPressOpenDatePicker()
   func didPressSaveEventButton()
   func didSetNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule)
+  func getNotificationsSchedulingRule() -> Event.NotificationsSchedulingRule
 }
 
 protocol IEventScreenPresenterOutput: AnyObject {
@@ -70,8 +71,11 @@ extension EventScreenPresenter: IEventScreenPresenterInput {
     interactor.setNewNotificationsRuleType(newType)
   }
 
+  func getNotificationsSchedulingRule() -> Event.NotificationsSchedulingRule {
+    interactor.getNotificationsSchedulingRule()
+  }
+
 }
 
 // MARK: - IEventScreenInteractorOutput
-extension EventScreenPresenter: IEventScreenInteractorOutput {
-}
+extension EventScreenPresenter: IEventScreenInteractorOutput {}

@@ -42,7 +42,7 @@ class ContactProfileViewController: UIViewController {
   init(presenter: IContactProfilePresenterInput, primaryButtonType: PrimaryButtonType) {
     self.presenter = presenter
     self.primaryButtonType = primaryButtonType
-    self.fieldsValidationConfigurator = ContactProfileTextFieldValidationConfigurator(presenter: presenter)
+    fieldsValidationConfigurator = ContactProfileTextFieldValidationConfigurator(presenter: presenter)
 
     super.init(nibName: nil, bundle: nil)
   }
@@ -368,11 +368,11 @@ private extension ContactProfileViewController {
 
   private func setupBirthdayEventButton() {
     birthdayEventButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
-    birthdayEventButton.button.configuration?.titleTextAttributesTransformer = .init({
+    birthdayEventButton.button.configuration?.titleTextAttributesTransformer = .init {
       $0.merging(.init([
-        .font: UIFont.systemFont(ofSize: 14, weight: .regular)
+        .font: UIFont.systemFont(ofSize: 14, weight: .regular),
       ]))
-    })
+    }
 
     birthdayEventButton.isRequiredField = true
     birthdayEventButton.setTitle(String(localized: "Date of Birth"))

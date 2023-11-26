@@ -16,11 +16,12 @@ class NotificationsTypeSelectorView: UIViewController {
 
   init(initialType: Event.NotificationsSchedulingRule) {
     self.initialType = initialType
-    self.notificationsTypesTableView = NotificationsTypesTableView(initialType: initialType)
+    notificationsTypesTableView = NotificationsTypesTableView(initialType: initialType)
 
     super.init(nibName: nil, bundle: nil)
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -58,7 +59,7 @@ private extension NotificationsTypeSelectorView {
 
   private func recomputePreferredSize() {
     let height = notificationsTypesTableView.bounds.height + cancelSaveButtons.bounds.height + UIConstants.spacing * 2
-    self.preferredContentSize = .init(width: preferredContentSize.width, height: height)
+    preferredContentSize = .init(width: preferredContentSize.width, height: height)
   }
 
 }

@@ -72,12 +72,12 @@ private extension ContactsScreenInteractor {
 extension ContactsScreenInteractor {
 
   private static let fetchRequestSortByNearestEvents = Contact.fetchRequestWithSorting(descriptors: [
-    .init(keyPath: \Contact.nearestEventDate, ascending: true)
+    .init(keyPath: \Contact.nearestEventDate, ascending: true),
   ])
 
   private static let fetchRequestSortAlphabetically = Contact.fetchRequestWithSorting(descriptors: [
     .init(keyPath: \Contact.lastName, ascending: true),
-    .init(keyPath: \Contact.firstName, ascending: true)
+    .init(keyPath: \Contact.firstName, ascending: true),
   ])
 
 }

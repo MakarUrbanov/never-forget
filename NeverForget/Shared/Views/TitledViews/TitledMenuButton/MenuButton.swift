@@ -42,11 +42,16 @@ class MenuButton: ButtonPlaceholder, IMenuButton {
     setupUI()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willDisplayMenuFor configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+  override func contextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    willDisplayMenuFor configuration: UIContextMenuConfiguration,
+    animator: UIContextMenuInteractionAnimating?
+  ) {
     askForMenu()
 
     super.contextMenuInteraction(interaction, willDisplayMenuFor: configuration, animator: animator)
@@ -54,7 +59,11 @@ class MenuButton: ButtonPlaceholder, IMenuButton {
     openChevron()
   }
 
-  override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willEndFor configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+  override func contextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    willEndFor configuration: UIContextMenuConfiguration,
+    animator: UIContextMenuInteractionAnimating?
+  ) {
     super.contextMenuInteraction(interaction, willEndFor: configuration, animator: animator)
 
     closeChevron()
@@ -66,7 +75,7 @@ class MenuButton: ButtonPlaceholder, IMenuButton {
     }
 
     var point = super.menuAttachmentPoint(for: configuration)
-    point.x = self.frame.minX
+    point.x = frame.minX
 
     return point
   }

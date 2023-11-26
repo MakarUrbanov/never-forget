@@ -81,7 +81,7 @@ private extension ContactsScreenCoordinator {
   private func getContactsListView() -> IContactsScreenView {
     let context = CoreDataStack.shared.viewContext // TODO: mmk edit
     let fetchRequest = Contact.fetchRequestWithSorting(descriptors: [
-      .init(keyPath: \Contact.nearestEventDate, ascending: true)
+      .init(keyPath: \Contact.nearestEventDate, ascending: true),
     ])
     let contactsService = ContactsCoreDataService(context: context, fetchRequest: fetchRequest)
     let view = ContactsScreenModuleBuilder.build(coordinator: self, contactsService: contactsService)

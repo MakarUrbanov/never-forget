@@ -28,7 +28,7 @@ public extension UIView {
   @discardableResult
   func setAndGetDashedBorderLayer(settings: DashedBorder) -> CAShapeLayer {
     let shapeLayer = CAShapeLayer()
-    let frameSize = self.frame.size
+    let frameSize = frame.size
     let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
 
     shapeLayer.bounds = shapeRect
@@ -40,7 +40,7 @@ public extension UIView {
     shapeLayer.lineDashPattern = settings.dashPattern
     shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: settings.cornerRadius).cgPath
 
-    self.layer.addSublayer(shapeLayer)
+    layer.addSublayer(shapeLayer)
 
     return shapeLayer
   }

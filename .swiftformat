@@ -76,7 +76,7 @@
  --guardelse same-line
 
  ### Others
- --commas inline
+ --commas always
  --ifdef noindent
  --indent 2
  --linebreaks lf ##default

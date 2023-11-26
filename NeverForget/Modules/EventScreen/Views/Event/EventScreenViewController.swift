@@ -12,8 +12,6 @@ class EventScreenViewController: UIViewController {
 
   var presenter: IEventScreenPresenterInput
 
-  private let notificationsSchedulingRule: Event.NotificationsSchedulingRule
-
   private lazy var scrollView = UIScrollView()
   private lazy var contentView = UIView()
   private lazy var saveButton = TouchableButton()
@@ -22,21 +20,21 @@ class EventScreenViewController: UIViewController {
   private lazy var originDatePickerButton = TitledButton()
 
   private lazy var notificationRulesView: INotificationRulesView = NotificationRulesModuleBuilder.build(
-    notificationsSchedulingRule: notificationsSchedulingRule,
+    notificationsSchedulingRule: presenter.getNotificationsSchedulingRule(),
     saveNewNotificationsRuleType: { [weak self] ruleType in
       self?.presenter.didSetNewNotificationsRuleType(ruleType)
     }
   )
 
-  init(presenter: IEventScreenPresenterInput, notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
+  init(presenter: IEventScreenPresenterInput) {
     self.presenter = presenter
-    self.notificationsSchedulingRule = notificationsSchedulingRule
 
     super.init(nibName: nil, bundle: nil)
 
     notificationRulesView.parentViewController = self
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -86,9 +84,7 @@ extension EventScreenViewController: IEventScreenPresenterOutput {
 }
 
 // MARK: - Private
-private extension EventScreenViewController {
-
-}
+private extension EventScreenViewController {}
 
 // MARK: - Setup UI
 private extension EventScreenViewController {
@@ -103,8 +99,7 @@ private extension EventScreenViewController {
     setupContentStackView()
   }
 
-  private func configureDatePicker() {
-  }
+  private func configureDatePicker() {}
 
   private func setupNavigationBar() {
     navigationItem.title = String(localized: "Birthday")
@@ -184,11 +179,11 @@ private extension EventScreenViewController {
 
   private func setupDatePicker() {
     originDatePickerButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
-    originDatePickerButton.button.configuration?.titleTextAttributesTransformer = .init({
+    originDatePickerButton.button.configuration?.titleTextAttributesTransformer = .init {
       $0.merging(.init([
-        .font: UIFont.systemFont(ofSize: 14, weight: .regular)
+        .font: UIFont.systemFont(ofSize: 14, weight: .regular),
       ]))
-    })
+    }
 
     originDatePickerButton.isRequiredField = true
     originDatePickerButton.setTitle(String(localized: "Date"))

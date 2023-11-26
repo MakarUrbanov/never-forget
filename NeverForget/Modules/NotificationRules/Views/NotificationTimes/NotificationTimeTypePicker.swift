@@ -7,6 +7,4 @@
 
 import UIKit
 
-class NotificationTimeTypePicker: MenuButton {
-  
-}
+class NotificationTimeTypePicker: MenuButton {}

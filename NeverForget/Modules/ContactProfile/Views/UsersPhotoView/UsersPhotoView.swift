@@ -46,7 +46,7 @@ class UsersPhotoView: TouchableUIControl, IUsersPhotoView {
     let pressSelfAction = UIAction { [weak self] _ in
       self?.didPressSelf()
     }
-    self.addAction(pressSelfAction, for: .primaryActionTriggered)
+    addAction(pressSelfAction, for: .primaryActionTriggered)
   }
 
   @available(*, unavailable)

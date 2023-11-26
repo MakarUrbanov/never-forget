@@ -28,6 +28,7 @@ class NotificationRulesView: UIView, INotificationRulesView {
     setupUI()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -85,11 +86,11 @@ private extension NotificationRulesView {
     }), for: .primaryActionTriggered)
 
     titleButton.button.configuration?.baseForegroundColor = UIColor(resource: .textLight100)
-    titleButton.button.configuration?.titleTextAttributesTransformer = .init({
+    titleButton.button.configuration?.titleTextAttributesTransformer = .init {
       $0.merging(.init([
-        .font: UIFont.systemFont(ofSize: 14, weight: .regular)
+        .font: UIFont.systemFont(ofSize: 14, weight: .regular),
       ]))
-    })
+    }
 
     addSubview(titleButton)
 

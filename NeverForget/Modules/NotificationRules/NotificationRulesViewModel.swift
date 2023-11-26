@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Protocol
 protocol INotificationRulesViewModel: AnyObject {
   var notificationsSchedulingRule: Bindable<Event.NotificationsSchedulingRule> { get }
-  
+
   var saveNewNotificationsRuleType: ((Event.NotificationsSchedulingRule) -> Void)? { get set }
 
   func didPressSave(_ newRule: Event.NotificationsSchedulingRule)

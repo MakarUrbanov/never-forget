@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "NFLocalNotificationsManager",
   platforms: [
-    .iOS(.v16)
+    .iOS(.v16),
   ],
   products: [
     // Products define the executables and libraries a package produces, and make them visible to
@@ -14,10 +14,10 @@ let package = Package(
     .library(
       name: "NFLocalNotificationsManager",
       targets: ["NFLocalNotificationsManager"]
-    )
+    ),
   ],
   dependencies: [
-    .package(name: "NFLogger", path: "../NFLogger")
+    .package(name: "NFLogger", path: "../NFLogger"),
     // Dependencies declare other packages that this package depends on.
     // .package(url: /* package url */, from: "1.0.0"),
   ],
@@ -33,6 +33,6 @@ let package = Package(
     .testTarget(
       name: "NFLocalNotificationsManagerTests",
       dependencies: ["NFLocalNotificationsManager"]
-    )
+    ),
   ]
 )

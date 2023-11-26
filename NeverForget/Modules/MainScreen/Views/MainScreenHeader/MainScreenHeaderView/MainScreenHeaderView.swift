@@ -17,7 +17,7 @@ class MainScreenHeaderView: UIStackView, IMainScreenHeaderView {
   let pickersStackView = UIStackView()
   let pageSwitcher: IViewsSwitcherView = ViewsSwitcherView(buttons: [
     .init(text: NSLocalizedString("Calendar", comment: "switcher item. view name"), index: 0),
-    .init(text: NSLocalizedString("List", comment: "switcher item. view name"), index: 1)
+    .init(text: NSLocalizedString("List", comment: "switcher item. view name"), index: 1),
   ])
 
   // TODO: mmk доделать

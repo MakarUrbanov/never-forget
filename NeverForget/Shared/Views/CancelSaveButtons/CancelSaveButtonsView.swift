@@ -30,19 +30,20 @@ class CancelSaveButtonsView: UIStackView, ICancelSaveButtonsView {
     setupUI()
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   func setCancelButtonText(_ text: String) {
     cancelButton.configuration?.attributedTitle = .init(text, attributes: .init([
-      .font: UIConstants.font
+      .font: UIConstants.font,
     ]))
   }
 
   func setSaveButtonText(_ text: String) {
     saveButton.configuration?.attributedTitle = .init(text, attributes: .init([
-      .font: UIConstants.font
+      .font: UIConstants.font,
     ]))
   }
 
@@ -62,7 +63,7 @@ private extension CancelSaveButtonsView {
     cancelButton.configuration = .plain()
     cancelButton.configuration?.baseForegroundColor = .white
     cancelButton.configuration?.attributedTitle = .init(String(localized: "Cancel"), attributes: .init([
-      .font: UIConstants.font
+      .font: UIConstants.font,
     ]))
     cancelButton.layer.cornerRadius = 8
     cancelButton.layer.borderWidth = 1
@@ -79,7 +80,7 @@ private extension CancelSaveButtonsView {
     saveButton.configuration?.baseForegroundColor = .white
     saveButton.backgroundColor = UIColor(resource: .main100)
     saveButton.configuration?.attributedTitle = .init(String(localized: "Save"), attributes: .init([
-      .font: UIConstants.font
+      .font: UIConstants.font,
     ]))
     saveButton.layer.cornerRadius = 8
     saveButton.addAction(.init { [weak self] _ in

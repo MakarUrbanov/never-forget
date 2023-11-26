@@ -12,8 +12,10 @@ import UIKit
 class AddNewNotificationTimeButton: UITableViewCell {
 
   private var dashedBorderLayer: CAShapeLayer?
-  private lazy var addIcon = UIImageView(image: UIImage(systemName: "plus.circle.fill")?
-    .withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal))
+  private lazy var addIcon = UIImageView(
+    image: UIImage(systemName: "plus.circle.fill")?
+      .withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal)
+  )
   private lazy var titleLabel = UILabel()
   private lazy var stackView = UIStackView()
 
@@ -23,6 +25,7 @@ class AddNewNotificationTimeButton: UITableViewCell {
     setupUI()
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

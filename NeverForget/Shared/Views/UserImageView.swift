@@ -77,7 +77,7 @@ extension UserImageView {
       placeholderImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
       placeholderImage.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
       placeholderImage.centerXAnchor.constraint(equalTo: centerXAnchor),
-      placeholderImage.centerYAnchor.constraint(equalTo: centerYAnchor)
+      placeholderImage.centerYAnchor.constraint(equalTo: centerYAnchor),
     ])
   }
 

@@ -63,7 +63,7 @@ extension LocalNotificationsManager {
 
   func registerCategories() {
     notificationsManager.registerCategories([
-      Categories.birthdayNotification
+      Categories.birthdayNotification,
     ])
   }
 

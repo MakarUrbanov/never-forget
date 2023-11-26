@@ -7,6 +7,4 @@
 
 import UIKit
 
-class NotificationTimeCell: UITableViewCell {
-
-}
+class NotificationTimeCell: UITableViewCell {}

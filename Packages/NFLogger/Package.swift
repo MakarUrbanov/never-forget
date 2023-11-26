@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "NFLogger",
   platforms: [
-    .iOS(.v11)
+    .iOS(.v11),
   ],
   products: [
     // Products define the executables and libraries a package produces, and make them visible to
@@ -14,7 +14,7 @@ let package = Package(
     .library(
       name: "NFLogger",
       targets: ["NFLogger"]
-    )
+    ),
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
@@ -32,6 +32,6 @@ let package = Package(
     .testTarget(
       name: "NFLoggerTests",
       dependencies: ["NFLogger"]
-    )
+    ),
   ]
 )

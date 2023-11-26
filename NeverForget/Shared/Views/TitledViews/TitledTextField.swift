@@ -27,6 +27,7 @@ class TitledTextField: TitledView, ITitledTextField {
     super.init(children: textField)
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -37,7 +38,7 @@ class TitledTextField: TitledView, ITitledTextField {
       string: placeholder,
       attributes: [
         .font: UIFont.systemFont(ofSize: 14, weight: .regular),
-        .foregroundColor: UIColor(resource: .textLight100).withAlphaComponent(0.3)
+        .foregroundColor: UIColor(resource: .textLight100).withAlphaComponent(0.3),
       ]
     )
 

@@ -23,6 +23,7 @@ class TitledButton: TitledView, ITitledButton {
     super.init(children: button)
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

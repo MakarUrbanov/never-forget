@@ -37,6 +37,7 @@ class TitledMenuButton: TitledView, ITitledMenu {
     setupUI()
   }
 
+  @available(*, unavailable)
   required init(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -74,7 +75,7 @@ private extension TitledMenuButton {
   }
 
   private func generateActions() -> [UIAction] {
-    menuConfiguration.elements.map({ action in
+    menuConfiguration.elements.map { action in
       let state: UIAction.State = action.identifier == self.selectedItemIdentifier ? .on : .off
 
       return UIAction(title: action.title, subtitle: action.subtitle, state: state) { [weak self] _ in
@@ -84,7 +85,7 @@ private extension TitledMenuButton {
         self.button.setTitle(action.title, for: .normal)
         self.delegate?.didSelect(identifier: action.identifier, with: action.title)
       }
-    })
+    }
   }
 
 }

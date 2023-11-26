@@ -27,17 +27,20 @@ public extension UIViewController {
     case contentSize
   }
 
-  private func generateDetents(from detents: [BottomSheetDetents], on viewController: UIViewController) -> [UISheetPresentationController.Detent] {
+  private func generateDetents(
+    from detents: [BottomSheetDetents],
+    on viewController: UIViewController
+  ) -> [UISheetPresentationController.Detent] {
     detents.map { detent in
       switch detent {
         case .large:
-            .large()
+          .large()
         case .medium:
-            .medium()
+          .medium()
         case .custom(let height):
-            .custom { _ in height }
+          .custom { _ in height }
         case .contentSize:
-            .custom { [weak viewController] _ in viewController?.preferredContentSize.height }
+          .custom { [weak viewController] _ in viewController?.preferredContentSize.height }
       }
     }
   }

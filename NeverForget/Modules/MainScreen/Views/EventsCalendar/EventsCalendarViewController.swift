@@ -109,7 +109,7 @@ extension EventsCalendarViewController: INFCalendarDataSource {
         date: DateInRegion().dateByAdding(13, .day).dateByAdding(1, .month).date,
         backgroundImage: UIImage(named: "mockImage2"),
         badgeCount: 1
-      )
+      ),
     ]
   }()
 

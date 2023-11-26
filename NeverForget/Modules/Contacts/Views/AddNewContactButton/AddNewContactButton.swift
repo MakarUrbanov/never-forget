@@ -21,7 +21,7 @@ class AddNewContactButton: UIButton, IAddNewContactButton {
     let tapActions = UIAction { [weak self] _ in
       self?.didTap()
     }
-    self.addAction(tapActions, for: .primaryActionTriggered)
+    addAction(tapActions, for: .primaryActionTriggered)
 
     clipsToBounds = true
     backgroundColor = UIColor(resource: .main100)
