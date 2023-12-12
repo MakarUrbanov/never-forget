@@ -9,31 +9,36 @@ import Foundation
 
 // MARK: - Protocol
 protocol INotificationRulesViewModel: AnyObject {
+  var event: Event { get }
   var notificationsSchedulingRule: Bindable<Event.NotificationsSchedulingRule> { get }
 
   var saveNewNotificationsRuleType: ((Event.NotificationsSchedulingRule) -> Void)? { get set }
 
-  func didPressSave(_ newRule: Event.NotificationsSchedulingRule)
+  func didPressSaveNewRule(_ newRule: Event.NotificationsSchedulingRule)
 }
 
 // MARK: - ViewModel
 class NotificationRulesViewModel: INotificationRulesViewModel {
 
-  // MARK: - Properties
+  let event: Event
   let notificationsSchedulingRule: Bindable<Event.NotificationsSchedulingRule>
 
-  // MARK: - Callback
   var saveNewNotificationsRuleType: ((Event.NotificationsSchedulingRule) -> Void)?
 
-  // MARK: - Init
-  init(notificationsSchedulingRule: Event.NotificationsSchedulingRule) {
-    self.notificationsSchedulingRule = .init(notificationsSchedulingRule)
+  init(event: Event) {
+    self.event = event
+
+    self.notificationsSchedulingRule = .init(event.notificationScheduleRule)
   }
 
-  // MARK: - Methods
-  func didPressSave(_ newRule: Event.NotificationsSchedulingRule) {
+  func didPressSaveNewRule(_ newRule: Event.NotificationsSchedulingRule) {
     notificationsSchedulingRule.value = newRule
     saveNewNotificationsRuleType?(newRule)
   }
+
+}
+
+// MARK: - Private methods
+private extension NotificationRulesViewModel {
 
 }

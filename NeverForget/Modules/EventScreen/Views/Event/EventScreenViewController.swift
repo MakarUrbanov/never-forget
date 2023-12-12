@@ -20,7 +20,7 @@ class EventScreenViewController: UIViewController {
   private lazy var originDatePickerButton = TitledButton()
 
   private lazy var notificationRulesView: INotificationRulesView = NotificationRulesModuleBuilder.build(
-    notificationsSchedulingRule: presenter.getNotificationsSchedulingRule(),
+    event: presenter.getEvent(),
     saveNewNotificationsRuleType: { [weak self] ruleType in
       self?.presenter.didSetNewNotificationsRuleType(ruleType)
     }

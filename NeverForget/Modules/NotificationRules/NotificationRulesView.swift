@@ -18,7 +18,9 @@ class NotificationRulesView: UIView, INotificationRulesView {
   weak var parentViewController: UIViewController?
 
   private lazy var titleButton: ITitledButton = TitledButton()
-//  private lazy var timesTableView = NotificationTimesTableView()
+  private lazy var timesTableView = NotificationTimesTableView(
+    viewModel: NotificationTimesTableViewModel(event: viewModel.event)
+  )
 
   init(viewModel: INotificationRulesViewModel) {
     self.viewModel = viewModel
@@ -36,23 +38,19 @@ class NotificationRulesView: UIView, INotificationRulesView {
 }
 
 // MARK: - Private methods
-extension NotificationRulesView {
+private extension NotificationRulesView {
 
-  private func dismiss() {
+  private func dismissFromParentViewController() {
     parentViewController?.dismiss(animated: true)
   }
 
   private func didPressSaveNotificationsType(newRule: Event.NotificationsSchedulingRule) {
-    viewModel.didPressSave(newRule)
-
-    let newRuleTitle = NotificationTextByType.get(newRule)
-    titleButton.setText(newRuleTitle)
-
-    dismiss()
+    viewModel.didPressSaveNewRule(newRule)
+    dismissFromParentViewController()
   }
 
   private func didPressCancelNotificationsType() {
-    dismiss()
+    dismissFromParentViewController()
   }
 
   private func openNotificationsTypePicker() {
@@ -71,6 +69,13 @@ extension NotificationRulesView {
 
 // MARK: - Setup UI
 private extension NotificationRulesView {
+
+  private func setupBindings() {
+    viewModel.notificationsSchedulingRule.bind { [weak self] rule in
+      let newRuleTitle = NotificationTextByType.get(rule)
+      self?.titleButton.setText(newRuleTitle)
+    }
+  }
 
   private func setupUI() {
     setupNotificationRuleMenu()
@@ -98,6 +103,16 @@ private extension NotificationRulesView {
       make.leading.top.trailing.width.equalToSuperview()
       make.height.equalTo(UIConstants.fieldHeight)
     }
+  }
+
+  private func setupTimesTableViewByNotificationsRule() {
+    let rule = viewModel.notificationsSchedulingRule.value
+
+    if rule != .customSettings {
+      timesTableView.removeFromSuperview()
+      return
+    }
+
   }
 
 }

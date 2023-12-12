@@ -12,10 +12,10 @@ enum NotificationRulesModuleBuilder {
   typealias RuleType = Event.NotificationsSchedulingRule
 
   static func build(
-    notificationsSchedulingRule: RuleType,
+    event: Event,
     saveNewNotificationsRuleType: @escaping (RuleType) -> Void
   ) -> INotificationRulesView {
-    let viewModel = NotificationRulesViewModel(notificationsSchedulingRule: notificationsSchedulingRule)
+    let viewModel = NotificationRulesViewModel(event: event)
     viewModel.saveNewNotificationsRuleType = saveNewNotificationsRuleType
 
     let view = NotificationRulesView(viewModel: viewModel)

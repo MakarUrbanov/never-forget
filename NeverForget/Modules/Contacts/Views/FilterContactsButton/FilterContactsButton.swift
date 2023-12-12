@@ -64,10 +64,3 @@ private extension FilterContactsButton {
   }
 
 }
-
-
-import SwiftUI
-
-#Preview {
-  FilterContactsButton()
-}

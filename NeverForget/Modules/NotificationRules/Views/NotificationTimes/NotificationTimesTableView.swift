@@ -7,4 +7,17 @@
 
 import UIKit
 
-class NotificationTimesTableView: UITableView {}
+class NotificationTimesTableView: UITableView {
+
+  let viewModel: INotificationTimesTableViewModel
+
+  init(viewModel: INotificationTimesTableViewModel) {
+    self.viewModel = viewModel
+    super.init(frame: .zero, style: .plain)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+}

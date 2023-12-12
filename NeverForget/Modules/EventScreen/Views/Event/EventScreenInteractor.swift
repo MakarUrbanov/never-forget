@@ -11,7 +11,7 @@ protocol IEventScreenInteractorInput: AnyObject {
   func getOriginDate() -> Date
   func setOriginDate(date: Date)
   func setNewNotificationsRuleType(_ newType: Event.NotificationsSchedulingRule)
-  func getNotificationsSchedulingRule() -> Event.NotificationsSchedulingRule
+  func getEvent() -> Event
 }
 
 protocol IEventScreenInteractorOutput: AnyObject {}
@@ -37,8 +37,8 @@ class EventScreenInteractor: IEventScreenInteractorInput {
     event.notificationScheduleRule = newType
   }
 
-  func getNotificationsSchedulingRule() -> Event.NotificationsSchedulingRule {
-    event.notificationScheduleRule
+  func getEvent() -> Event {
+    event
   }
 
 }
