@@ -21,7 +21,6 @@ protocol IEventScreenPresenterInput: AnyObject {
 protocol IEventScreenPresenterOutput: AnyObject {
   func setOriginDate(_ date: Date)
   func openDatePicker()
-  func openNotificationsTypeSelector()
 }
 
 class EventScreenPresenter {

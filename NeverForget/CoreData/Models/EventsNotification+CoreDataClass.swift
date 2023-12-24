@@ -12,7 +12,8 @@ import Foundation
 @objc(EventsNotification)
 public class EventsNotification: NSManagedObject, Identifiable {
 
-  @NSManaged public var date: Date?
+  @NSManaged public var hour: NSNumber?
+  @NSManaged public var minute: NSNumber?
   @NSManaged public var event: Event?
 
   @NSManaged private var preEventTypeRaw: PreEventType.RawValue
@@ -34,25 +35,12 @@ public class EventsNotification: NSManagedObject, Identifiable {
 }
 
 // MARK: - Static
-extension EventsNotification {
+public extension EventsNotification {
 
-  static func fetchRequest() -> NSFetchRequest<EventsNotification> {
-    return NSFetchRequest<EventsNotification>(entityName: "EventsNotification")
-  }
-
-  static func fetchRequestWithSorting() -> NSFetchRequest<EventsNotification> {
-    let request = fetchRequest()
-    let sortDescriptors: SortDescriptor<EventsNotification> = .init(\.date, order: .forward)
-    request.sortDescriptors = [NSSortDescriptor(sortDescriptors)]
-
-    return request
-  }
-
-  public enum PreEventType: Int16 {
+  enum PreEventType: Int16 {
     case oneWeekBefore = 1
     case oneDayBefore = 2
     case onTheDayOfEvent = 3
   }
 
 }
-

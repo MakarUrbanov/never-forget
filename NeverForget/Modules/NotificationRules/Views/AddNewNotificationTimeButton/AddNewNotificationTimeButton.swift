@@ -9,7 +9,7 @@ import NFCore
 import SnapKit
 import UIKit
 
-class AddNewNotificationTimeButton: UITableViewCell {
+class AddNewNotificationTimeButton: TouchableTableViewCell {
 
   private var dashedBorderLayer: CAShapeLayer?
   private lazy var addIcon = UIImageView(
@@ -17,13 +17,21 @@ class AddNewNotificationTimeButton: UITableViewCell {
       .withTintColor(UIColor(resource: .main100), renderingMode: .alwaysOriginal)
   )
   private lazy var titleLabel = UILabel()
-  private lazy var stackView = UIStackView()
+  private lazy var stackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [addIcon, titleLabel])
+    stackView.spacing = 10
+    stackView.axis = .horizontal
+    stackView.alignment = .center
+
+    return stackView
+  }()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     setupUI()
   }
+
 
   @available(*, unavailable)
   required init?(coder: NSCoder) {
@@ -38,21 +46,6 @@ class AddNewNotificationTimeButton: UITableViewCell {
     updateDashedBorderLayer()
   }
 
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesBegan(touches, with: event)
-    setAnimatedAlpha(AppUIConstants.highlightedAlpha)
-  }
-
-  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesEnded(touches, with: event)
-    setAnimatedAlpha(1)
-  }
-
-  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesCancelled(touches, with: event)
-    alpha = 1
-  }
-
 }
 
 // MARK: - Setup UI
@@ -65,15 +58,8 @@ private extension AddNewNotificationTimeButton {
   private func setupStackView() {
     addSubview(stackView)
 
-    stackView.spacing = 10
-    stackView.axis = .horizontal
-    stackView.alignment = .center
-
     setupAddIcon()
     setupTitle()
-
-    stackView.addArrangedSubview(addIcon)
-    stackView.addArrangedSubview(titleLabel)
 
     stackView.snp.makeConstraints { make in
       make.centerX.height.equalToSuperview()
@@ -102,12 +88,21 @@ private extension AddNewNotificationTimeButton {
 
 }
 
+// MARK: - Static
+extension AddNewNotificationTimeButton {
+
+  enum Constants {
+    static let topPadding = 12
+  }
+
+}
+
 // MARK: - Preview
 import SwiftUI
 
 #Preview {
   let viewController = UIViewController()
-  let addButton = AddNewNotificationTimeButton(style: .default, reuseIdentifier: "test")
+  let addButton = AddNewNotificationTimeButton(frame: .zero)
   viewController.view.addSubview(addButton)
 
   addButton.snp.makeConstraints { make in

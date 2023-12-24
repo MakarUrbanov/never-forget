@@ -16,8 +16,6 @@ enum NotificationRulesModuleBuilder {
     saveNewNotificationsRuleType: @escaping (RuleType) -> Void
   ) -> INotificationRulesView {
     let viewModel = NotificationRulesViewModel(event: event)
-    viewModel.saveNewNotificationsRuleType = saveNewNotificationsRuleType
-
     let view = NotificationRulesView(viewModel: viewModel)
 
     return view

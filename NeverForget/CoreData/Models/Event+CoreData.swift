@@ -52,8 +52,10 @@ public class Event: NSManagedObject, Identifiable {
     name = ""
     notificationScheduleRuleRaw = NotificationsSchedulingRule.globalSettings.rawValue
     typeRaw = EventType.userCreated.rawValue
-    notifications = []
     contacts = []
+
+    let initialNotification = Self.getAndLinkInitialNotificationTime(for: self)
+    notifications = [initialNotification]
   }
 
   public func setOriginDate(_ date: Date) {
@@ -92,6 +94,7 @@ public extension Event {
 public extension Event {
 
   private static let calendar = Calendar.current
+  private static let initialTime: (hour: Int, minute: Int) = (10, 0)
 
   // MARK: - Static properties
   private static let todayRoundedDate: Date = DateInRegion(region: .UTC).dateAtStartOf(.day).date
@@ -106,6 +109,20 @@ public extension Event {
     request.sortDescriptors = descriptors
 
     return request
+  }
+
+  static func getAndLinkInitialNotificationTime(for event: Event) -> EventsNotification {
+    guard let context = event.managedObjectContext else {
+      fatalError("something went wrong on get event's context")
+    }
+
+    let notification = EventsNotification(context: context)
+    notification.hour = NSNumber(value: initialTime.hour)
+    notification.minute = NSNumber(value: initialTime.minute)
+
+    notification.event = event
+
+    return notification
   }
 
 }

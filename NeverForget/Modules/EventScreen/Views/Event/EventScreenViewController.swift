@@ -12,11 +12,39 @@ class EventScreenViewController: UIViewController {
 
   var presenter: IEventScreenPresenterInput
 
-  private lazy var scrollView = UIScrollView()
-  private lazy var contentView = UIView()
-  private lazy var saveButton = TouchableButton()
+  private lazy var scrollView: UIScrollView = {
+    let scrollView = UIScrollView()
+    scrollView.alwaysBounceVertical = true
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.keyboardDismissMode = .onDrag
+    scrollView.isDirectionalLockEnabled = true
 
-  private lazy var contentStackView = UIStackView()
+    return scrollView
+  }()
+
+  private lazy var saveButton: TouchableButton = {
+    let button = TouchableButton()
+
+    button.setTitle(String(localized: "Save"), for: .normal)
+    button.makePrimaryButton()
+
+    let saveButtonAction = UIAction { [weak self] _ in
+      self?.presenter.didPressSaveEventButton()
+    }
+    button.addAction(saveButtonAction, for: .primaryActionTriggered)
+
+    return button
+  }()
+
+  private lazy var contentStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [originDatePickerButton, notificationRulesView])
+    stackView.axis = .vertical
+    stackView.distribution = .fill
+    stackView.spacing = UIConstants.spacingAmongFields
+
+    return stackView
+  }()
+
   private lazy var originDatePickerButton = TitledButton()
 
   private lazy var notificationRulesView: INotificationRulesView = NotificationRulesModuleBuilder.build(
@@ -77,10 +105,6 @@ extension EventScreenViewController: IEventScreenPresenterOutput {
     presentBottomSheet(datePicker, detents: [.contentSize])
   }
 
-  func openNotificationsTypeSelector() {
-    // TODO: mmk impl
-  }
-
 }
 
 // MARK: - Private
@@ -95,7 +119,6 @@ private extension EventScreenViewController {
     setupNavigationBar()
     setupSaveButton()
     setupScrollView()
-    setupContentView()
     setupContentStackView()
   }
 
@@ -119,14 +142,6 @@ private extension EventScreenViewController {
   }
 
   private func setupSaveButton() {
-    saveButton.setTitle(String(localized: "Save"), for: .normal)
-    saveButton.makePrimaryButton()
-
-    let saveButtonAction = UIAction { [weak self] _ in
-      self?.presenter.didPressSaveEventButton()
-    }
-    saveButton.addAction(saveButtonAction, for: .primaryActionTriggered)
-
     view.addSubview(saveButton)
 
     saveButton.snp.makeConstraints { make in
@@ -137,11 +152,6 @@ private extension EventScreenViewController {
   }
 
   private func setupScrollView() {
-    scrollView.alwaysBounceVertical = true
-    scrollView.showsVerticalScrollIndicator = false
-    scrollView.keyboardDismissMode = .onDrag
-    scrollView.isDirectionalLockEnabled = true
-
     view.addSubview(scrollView)
 
     scrollView.snp.makeConstraints { make in
@@ -151,26 +161,14 @@ private extension EventScreenViewController {
     }
   }
 
-  private func setupContentView() {
-    scrollView.addSubview(contentView)
-
-    contentView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
-      make.width.equalToSuperview()
-    }
-  }
-
   private func setupContentStackView() {
-    contentStackView.axis = .vertical
-    contentStackView.distribution = .fillEqually
-    contentStackView.spacing = UIConstants.spacingAmongFields
-
-    contentView.addSubview(contentStackView)
+    scrollView.addSubview(contentStackView)
 
     contentStackView.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(UIConstants.spacingAmongFields)
       make.width.horizontalEdges.equalToSuperview()
       make.bottom.equalToSuperview().inset(40)
+      make.height.equalToSuperview()
     }
 
     setupDatePicker()
@@ -193,8 +191,6 @@ private extension EventScreenViewController {
     }
     originDatePickerButton.button.addAction(openDatePickerAction, for: .primaryActionTriggered)
 
-    contentStackView.addArrangedSubview(originDatePickerButton)
-
     originDatePickerButton.snp.makeConstraints { make in
       make.width.equalToSuperview()
       make.height.equalTo(UIConstants.fieldHeight)
@@ -202,8 +198,6 @@ private extension EventScreenViewController {
   }
 
   private func setupNotificationRulesView() {
-    contentStackView.addArrangedSubview(notificationRulesView)
-
     notificationRulesView.snp.makeConstraints { make in
       make.width.equalToSuperview()
       make.height.greaterThanOrEqualTo(UIConstants.fieldHeight)
@@ -222,4 +216,18 @@ extension EventScreenViewController {
     static let fieldHeight: CGFloat = 72
   }
 
+}
+
+import SwiftUI
+
+#Preview {
+  let context = CoreDataStack.shared.backgroundContext
+  let event = Event(context: context)
+  event.name = "Name of the event"
+  event.setOriginDate(.now)
+  event.type = .birthday
+
+  let viewController = EventScreenModuleBuilder.build(event: event)
+
+  return viewController.makePreview()
 }

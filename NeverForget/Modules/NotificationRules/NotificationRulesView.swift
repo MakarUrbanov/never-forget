@@ -13,20 +13,25 @@ protocol INotificationRulesView: UIView {
 
 class NotificationRulesView: UIView, INotificationRulesView {
 
-  var viewModel: INotificationRulesViewModel
-
+  // MARK: - Public vars
   weak var parentViewController: UIViewController?
 
+  // MARK: - Private vars
+  private let viewModel: INotificationRulesViewModel
+
+  // MARK: - UI
   private lazy var titleButton: ITitledButton = TitledButton()
-  private lazy var timesTableView = NotificationTimesTableView(
+  private lazy var timesTableView: INotificationTimesTableView = NotificationTimesTableView(
     viewModel: NotificationTimesTableViewModel(event: viewModel.event)
   )
 
+  // MARK: - Init
   init(viewModel: INotificationRulesViewModel) {
     self.viewModel = viewModel
 
     super.init(frame: .zero)
 
+    setupBindings()
     setupUI()
   }
 
@@ -40,16 +45,38 @@ class NotificationRulesView: UIView, INotificationRulesView {
 // MARK: - Private methods
 private extension NotificationRulesView {
 
+  private func setupBindings() {
+    viewModel.notificationsSchedulingRule.bind { [weak self] rule in
+      let newRuleTitle = NotificationTextByType.get(rule)
+      self?.titleButton.setText(newRuleTitle)
+
+      self?.updateNotificationTimesVisibility(by: rule)
+    }
+  }
+
   private func dismissFromParentViewController() {
     parentViewController?.dismiss(animated: true)
   }
 
-  private func didPressSaveNotificationsType(newRule: Event.NotificationsSchedulingRule) {
-    viewModel.didPressSaveNewRule(newRule)
+  private func didPressCancelNotificationsType() {
     dismissFromParentViewController()
   }
 
-  private func didPressCancelNotificationsType() {
+}
+
+// MARK: - Notifications Rule changing methods
+private extension NotificationRulesView {
+
+  private func updateNotificationTimesVisibility(by newRule: Event.NotificationsSchedulingRule) {
+    if newRule == .customSettings {
+      setupTimesTableView()
+    } else {
+      timesTableView.removeFromSuperview()
+    }
+  }
+
+  private func didPressSaveNotificationsType(newRule: Event.NotificationsSchedulingRule) {
+    viewModel.didPressSaveNewRule(newRule)
     dismissFromParentViewController()
   }
 
@@ -70,15 +97,9 @@ private extension NotificationRulesView {
 // MARK: - Setup UI
 private extension NotificationRulesView {
 
-  private func setupBindings() {
-    viewModel.notificationsSchedulingRule.bind { [weak self] rule in
-      let newRuleTitle = NotificationTextByType.get(rule)
-      self?.titleButton.setText(newRuleTitle)
-    }
-  }
-
   private func setupUI() {
     setupNotificationRuleMenu()
+    setupTimesTableView()
   }
 
   private func setupNotificationRuleMenu() {
@@ -105,14 +126,20 @@ private extension NotificationRulesView {
     }
   }
 
-  private func setupTimesTableViewByNotificationsRule() {
+  private func setupTimesTableView() {
     let rule = viewModel.notificationsSchedulingRule.value
 
     if rule != .customSettings {
-      timesTableView.removeFromSuperview()
       return
     }
 
+    addSubview(timesTableView)
+
+    timesTableView.snp.makeConstraints { make in
+      make.top.equalTo(titleButton.snp.bottom).offset(UIConstants.offsetAmongFields)
+      make.horizontalEdges.equalToSuperview()
+      make.bottom.equalToSuperview()
+    }
   }
 
 }
@@ -122,6 +149,8 @@ extension NotificationRulesView {
 
   private enum UIConstants {
     static let fieldHeight: CGFloat = 72
+    static let offsetAmongFields: CGFloat = 12
+    static let tableViewCellHeight: CGFloat = 44
   }
 
 }
